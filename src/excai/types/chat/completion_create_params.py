@@ -16,6 +16,7 @@ from .json_object_format_param import JsonObjectFormatParam
 from .json_schema_format_param import JsonSchemaFormatParam
 from ..stop_configuration_param import StopConfigurationParam
 from .chat_completion_tool_param import ChatCompletionToolParam
+from ..conversations.input_audio_param import InputAudioParam
 from ..chat_completion_stream_options_param import ChatCompletionStreamOptionsParam
 from .model_response_properties_create_param import ModelResponsePropertiesCreateParam
 from .chat_completion_message_tool_call_union_param import ChatCompletionMessageToolCallUnionParam
@@ -28,8 +29,6 @@ __all__ = [
     "BodyMessageSystem",
     "BodyMessageUser",
     "BodyMessageUserContentArrayOfContentPart",
-    "BodyMessageUserContentArrayOfContentPartInputAudio",
-    "BodyMessageUserContentArrayOfContentPartInputAudioInputAudio",
     "BodyMessageUserContentArrayOfContentPartFile",
     "BodyMessageUserContentArrayOfContentPartFileFile",
     "BodyMessageAssistant",
@@ -99,21 +98,6 @@ class BodyMessageSystem(TypedDict, total=False):
     """
 
 
-class BodyMessageUserContentArrayOfContentPartInputAudioInputAudio(TypedDict, total=False):
-    data: Required[str]
-    """Base64 encoded audio data."""
-
-    format: Required[Literal["wav", "mp3"]]
-    """The format of the encoded audio data. Currently supports "wav" and "mp3"."""
-
-
-class BodyMessageUserContentArrayOfContentPartInputAudio(TypedDict, total=False):
-    input_audio: Required[BodyMessageUserContentArrayOfContentPartInputAudioInputAudio]
-
-    type: Required[Literal["input_audio"]]
-    """The type of the content part. Always `input_audio`."""
-
-
 class BodyMessageUserContentArrayOfContentPartFileFile(TypedDict, total=False):
     file_data: str
     """
@@ -136,10 +120,7 @@ class BodyMessageUserContentArrayOfContentPartFile(TypedDict, total=False):
 
 
 BodyMessageUserContentArrayOfContentPart: TypeAlias = Union[
-    TextContentPartParam,
-    ImageContentPartParam,
-    BodyMessageUserContentArrayOfContentPartInputAudio,
-    BodyMessageUserContentArrayOfContentPartFile,
+    TextContentPartParam, ImageContentPartParam, InputAudioParam, BodyMessageUserContentArrayOfContentPartFile
 ]
 
 
