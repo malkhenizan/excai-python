@@ -136,6 +136,7 @@ from .text_response_format_configuration import TextResponseFormatConfiguration 
 from .audio_create_transcription_response import AudioCreateTranscriptionResponse as AudioCreateTranscriptionResponse
 from .organization_list_audit_logs_params import OrganizationListAuditLogsParams as OrganizationListAuditLogsParams
 from .vector_store_expiration_after_param import VectorStoreExpirationAfterParam as VectorStoreExpirationAfterParam
+from .auto_chunking_strategy_request_param import AutoChunkingStrategyRequestParam as AutoChunkingStrategyRequestParam
 from .chat_completion_stream_options_param import ChatCompletionStreamOptionsParam as ChatCompletionStreamOptionsParam
 from .realtime_create_client_secret_params import RealtimeCreateClientSecretParams as RealtimeCreateClientSecretParams
 from .organization_list_audit_logs_response import (
@@ -143,6 +144,9 @@ from .organization_list_audit_logs_response import (
 )
 from .realtime_create_client_secret_response import (
     RealtimeCreateClientSecretResponse as RealtimeCreateClientSecretResponse,
+)
+from .static_chunking_strategy_request_param import (
+    StaticChunkingStrategyRequestParam as StaticChunkingStrategyRequestParam,
 )
 from .model_response_properties_standard_param import (
     ModelResponsePropertiesStandardParam as ModelResponsePropertiesStandardParam,

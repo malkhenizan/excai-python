@@ -3,21 +3,10 @@
 from __future__ import annotations
 
 from typing import Union
-from typing_extensions import Literal, Required, TypeAlias, TypedDict
+from typing_extensions import Literal, TypeAlias
 
-__all__ = ["APIToolChoiceOptionParam", "AssistantsNamedToolChoice", "AssistantsNamedToolChoiceFunction"]
+from .assistants_named_tool_choice_param import AssistantsNamedToolChoiceParam
 
+__all__ = ["APIToolChoiceOptionParam"]
 
-class AssistantsNamedToolChoiceFunction(TypedDict, total=False):
-    name: Required[str]
-    """The name of the function to call."""
-
-
-class AssistantsNamedToolChoice(TypedDict, total=False):
-    type: Required[Literal["function", "code_interpreter", "file_search"]]
-    """The type of the tool. If type is `function`, the function name must be set"""
-
-    function: AssistantsNamedToolChoiceFunction
-
-
-APIToolChoiceOptionParam: TypeAlias = Union[Literal["none", "auto", "required"], AssistantsNamedToolChoice]
+APIToolChoiceOptionParam: TypeAlias = Union[Literal["none", "auto", "required"], AssistantsNamedToolChoiceParam]

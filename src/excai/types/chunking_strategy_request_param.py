@@ -3,23 +3,11 @@
 from __future__ import annotations
 
 from typing import Union
-from typing_extensions import Literal, Required, TypeAlias, TypedDict
+from typing_extensions import TypeAlias
 
-from .static_chunking_strategy_param import StaticChunkingStrategyParam
+from .auto_chunking_strategy_request_param import AutoChunkingStrategyRequestParam
+from .static_chunking_strategy_request_param import StaticChunkingStrategyRequestParam
 
-__all__ = ["ChunkingStrategyRequestParam", "Auto", "Static"]
+__all__ = ["ChunkingStrategyRequestParam"]
 
-
-class Auto(TypedDict, total=False):
-    type: Required[Literal["auto"]]
-    """Always `auto`."""
-
-
-class Static(TypedDict, total=False):
-    static: Required[StaticChunkingStrategyParam]
-
-    type: Required[Literal["static"]]
-    """Always `static`."""
-
-
-ChunkingStrategyRequestParam: TypeAlias = Union[Auto, Static]
+ChunkingStrategyRequestParam: TypeAlias = Union[AutoChunkingStrategyRequestParam, StaticChunkingStrategyRequestParam]

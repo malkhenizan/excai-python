@@ -1,15 +1,15 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Dict, List, Union, Optional
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal, Annotated, TypeAlias
 
+from .._utils import PropertyInfo
 from .._models import BaseModel
 from .response_tool import ResponseTool
 from .chat.verbosity import Verbosity
 from .realtime.prompt import Prompt
 from .reasoning_effort import ReasoningEffort
 from .realtime.tool_choice_mcp import ToolChoiceMcp
-from .realtime.tool_choice_options import ToolChoiceOptions
 from .realtime.tool_choice_function import ToolChoiceFunction
 from .text_response_format_configuration import TextResponseFormatConfiguration
 
@@ -18,9 +18,9 @@ __all__ = [
     "Reasoning",
     "Text",
     "ToolChoice",
-    "ToolChoiceToolChoiceAllowed",
+    "ToolChoiceAllowedTools",
     "ToolChoiceToolChoiceTypes",
-    "ToolChoiceToolChoiceCustom",
+    "ToolChoiceCustom",
 ]
 
 
@@ -79,7 +79,7 @@ class Text(BaseModel):
     """
 
 
-class ToolChoiceToolChoiceAllowed(BaseModel):
+class ToolChoiceAllowedTools(BaseModel):
     mode: Literal["auto", "required"]
     """Constrains the tools available to the model to a pre-defined set.
 
@@ -130,7 +130,7 @@ class ToolChoiceToolChoiceTypes(BaseModel):
     """
 
 
-class ToolChoiceToolChoiceCustom(BaseModel):
+class ToolChoiceCustom(BaseModel):
     name: str
     """The name of the custom tool to call."""
 
@@ -138,13 +138,9 @@ class ToolChoiceToolChoiceCustom(BaseModel):
     """For custom tool calling, the type is always `custom`."""
 
 
-ToolChoice: TypeAlias = Union[
-    ToolChoiceOptions,
-    ToolChoiceToolChoiceAllowed,
-    ToolChoiceToolChoiceTypes,
-    ToolChoiceFunction,
-    ToolChoiceMcp,
-    ToolChoiceToolChoiceCustom,
+ToolChoice: TypeAlias = Annotated[
+    Union[ToolChoiceAllowedTools, ToolChoiceToolChoiceTypes, ToolChoiceFunction, ToolChoiceMcp, ToolChoiceCustom],
+    PropertyInfo(discriminator="type"),
 ]
 
 
