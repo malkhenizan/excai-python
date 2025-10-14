@@ -5,9 +5,24 @@ from typing import Dict, List, Optional
 from typing_extensions import Literal
 
 from ...._models import BaseModel
-from ..eval_api_error import EvalAPIError
 
-__all__ = ["OutputItemListResponse", "Data", "DataSample", "DataSampleInput", "DataSampleOutput", "DataSampleUsage"]
+__all__ = [
+    "OutputItemListResponse",
+    "Data",
+    "DataSample",
+    "DataSampleError",
+    "DataSampleInput",
+    "DataSampleOutput",
+    "DataSampleUsage",
+]
+
+
+class DataSampleError(BaseModel):
+    code: str
+    """The error code."""
+
+    message: str
+    """The error message."""
 
 
 class DataSampleInput(BaseModel):
@@ -41,7 +56,7 @@ class DataSampleUsage(BaseModel):
 
 
 class DataSample(BaseModel):
-    error: EvalAPIError
+    error: DataSampleError
     """An object representing an error response from the Eval API."""
 
     finish_reason: str

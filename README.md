@@ -167,7 +167,7 @@ from excai import ExCai
 
 client = ExCai()
 
-client.audio.create_transcription(
+client.audio.transcribe_audio(
     file=Path("/path/to/file"),
     model="gpt-4o-transcribe",
 )

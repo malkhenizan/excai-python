@@ -15,8 +15,8 @@ from ...._response import (
     async_to_streamed_response_wrapper,
 )
 from ...._base_client import make_request_options
-from ....types.fine_tuning.jobs import checkpoint_list_params
-from ....types.fine_tuning.jobs.checkpoint_list_response import CheckpointListResponse
+from ....types.fine_tuning.jobs import checkpoint_retrieve_params
+from ....types.fine_tuning.jobs.checkpoint_retrieve_response import CheckpointRetrieveResponse
 
 __all__ = ["CheckpointsResource", "AsyncCheckpointsResource"]
 
@@ -41,7 +41,7 @@ class CheckpointsResource(SyncAPIResource):
         """
         return CheckpointsResourceWithStreamingResponse(self)
 
-    def list(
+    def retrieve(
         self,
         fine_tuning_job_id: str,
         *,
@@ -53,7 +53,7 @@ class CheckpointsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> CheckpointListResponse:
+    ) -> CheckpointRetrieveResponse:
         """
         List checkpoints for a fine-tuning job.
 
@@ -84,10 +84,10 @@ class CheckpointsResource(SyncAPIResource):
                         "after": after,
                         "limit": limit,
                     },
-                    checkpoint_list_params.CheckpointListParams,
+                    checkpoint_retrieve_params.CheckpointRetrieveParams,
                 ),
             ),
-            cast_to=CheckpointListResponse,
+            cast_to=CheckpointRetrieveResponse,
         )
 
 
@@ -111,7 +111,7 @@ class AsyncCheckpointsResource(AsyncAPIResource):
         """
         return AsyncCheckpointsResourceWithStreamingResponse(self)
 
-    async def list(
+    async def retrieve(
         self,
         fine_tuning_job_id: str,
         *,
@@ -123,7 +123,7 @@ class AsyncCheckpointsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> CheckpointListResponse:
+    ) -> CheckpointRetrieveResponse:
         """
         List checkpoints for a fine-tuning job.
 
@@ -154,10 +154,10 @@ class AsyncCheckpointsResource(AsyncAPIResource):
                         "after": after,
                         "limit": limit,
                     },
-                    checkpoint_list_params.CheckpointListParams,
+                    checkpoint_retrieve_params.CheckpointRetrieveParams,
                 ),
             ),
-            cast_to=CheckpointListResponse,
+            cast_to=CheckpointRetrieveResponse,
         )
 
 
@@ -165,8 +165,8 @@ class CheckpointsResourceWithRawResponse:
     def __init__(self, checkpoints: CheckpointsResource) -> None:
         self._checkpoints = checkpoints
 
-        self.list = to_raw_response_wrapper(
-            checkpoints.list,
+        self.retrieve = to_raw_response_wrapper(
+            checkpoints.retrieve,
         )
 
 
@@ -174,8 +174,8 @@ class AsyncCheckpointsResourceWithRawResponse:
     def __init__(self, checkpoints: AsyncCheckpointsResource) -> None:
         self._checkpoints = checkpoints
 
-        self.list = async_to_raw_response_wrapper(
-            checkpoints.list,
+        self.retrieve = async_to_raw_response_wrapper(
+            checkpoints.retrieve,
         )
 
 
@@ -183,8 +183,8 @@ class CheckpointsResourceWithStreamingResponse:
     def __init__(self, checkpoints: CheckpointsResource) -> None:
         self._checkpoints = checkpoints
 
-        self.list = to_streamed_response_wrapper(
-            checkpoints.list,
+        self.retrieve = to_streamed_response_wrapper(
+            checkpoints.retrieve,
         )
 
 
@@ -192,6 +192,6 @@ class AsyncCheckpointsResourceWithStreamingResponse:
     def __init__(self, checkpoints: AsyncCheckpointsResource) -> None:
         self._checkpoints = checkpoints
 
-        self.list = async_to_streamed_response_wrapper(
-            checkpoints.list,
+        self.retrieve = async_to_streamed_response_wrapper(
+            checkpoints.retrieve,
         )

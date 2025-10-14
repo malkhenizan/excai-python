@@ -17,10 +17,10 @@ from ...._response import (
     async_to_streamed_response_wrapper,
 )
 from ...._base_client import make_request_options
-from ....types.fine_tuning.checkpoints import permission_list_params, permission_create_params
-from ....types.fine_tuning.checkpoints.permission_list_response import PermissionListResponse
+from ....types.fine_tuning.checkpoints import permission_create_params, permission_retrieve_params
 from ....types.fine_tuning.checkpoints.permission_create_response import PermissionCreateResponse
 from ....types.fine_tuning.checkpoints.permission_delete_response import PermissionDeleteResponse
+from ....types.fine_tuning.checkpoints.permission_retrieve_response import PermissionRetrieveResponse
 
 __all__ = ["PermissionsResource", "AsyncPermissionsResource"]
 
@@ -87,7 +87,7 @@ class PermissionsResource(SyncAPIResource):
             cast_to=PermissionCreateResponse,
         )
 
-    def list(
+    def retrieve(
         self,
         fine_tuned_model_checkpoint: str,
         *,
@@ -101,7 +101,7 @@ class PermissionsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PermissionListResponse:
+    ) -> PermissionRetrieveResponse:
         """
         **NOTE:** This endpoint requires an [admin API key](../admin-api-keys).
 
@@ -143,10 +143,10 @@ class PermissionsResource(SyncAPIResource):
                         "order": order,
                         "project_id": project_id,
                     },
-                    permission_list_params.PermissionListParams,
+                    permission_retrieve_params.PermissionRetrieveParams,
                 ),
             ),
-            cast_to=PermissionListResponse,
+            cast_to=PermissionRetrieveResponse,
         )
 
     def delete(
@@ -255,7 +255,7 @@ class AsyncPermissionsResource(AsyncAPIResource):
             cast_to=PermissionCreateResponse,
         )
 
-    async def list(
+    async def retrieve(
         self,
         fine_tuned_model_checkpoint: str,
         *,
@@ -269,7 +269,7 @@ class AsyncPermissionsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PermissionListResponse:
+    ) -> PermissionRetrieveResponse:
         """
         **NOTE:** This endpoint requires an [admin API key](../admin-api-keys).
 
@@ -311,10 +311,10 @@ class AsyncPermissionsResource(AsyncAPIResource):
                         "order": order,
                         "project_id": project_id,
                     },
-                    permission_list_params.PermissionListParams,
+                    permission_retrieve_params.PermissionRetrieveParams,
                 ),
             ),
-            cast_to=PermissionListResponse,
+            cast_to=PermissionRetrieveResponse,
         )
 
     async def delete(
@@ -366,8 +366,8 @@ class PermissionsResourceWithRawResponse:
         self.create = to_raw_response_wrapper(
             permissions.create,
         )
-        self.list = to_raw_response_wrapper(
-            permissions.list,
+        self.retrieve = to_raw_response_wrapper(
+            permissions.retrieve,
         )
         self.delete = to_raw_response_wrapper(
             permissions.delete,
@@ -381,8 +381,8 @@ class AsyncPermissionsResourceWithRawResponse:
         self.create = async_to_raw_response_wrapper(
             permissions.create,
         )
-        self.list = async_to_raw_response_wrapper(
-            permissions.list,
+        self.retrieve = async_to_raw_response_wrapper(
+            permissions.retrieve,
         )
         self.delete = async_to_raw_response_wrapper(
             permissions.delete,
@@ -396,8 +396,8 @@ class PermissionsResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             permissions.create,
         )
-        self.list = to_streamed_response_wrapper(
-            permissions.list,
+        self.retrieve = to_streamed_response_wrapper(
+            permissions.retrieve,
         )
         self.delete = to_streamed_response_wrapper(
             permissions.delete,
@@ -411,8 +411,8 @@ class AsyncPermissionsResourceWithStreamingResponse:
         self.create = async_to_streamed_response_wrapper(
             permissions.create,
         )
-        self.list = async_to_streamed_response_wrapper(
-            permissions.list,
+        self.retrieve = async_to_streamed_response_wrapper(
+            permissions.retrieve,
         )
         self.delete = async_to_streamed_response_wrapper(
             permissions.delete,

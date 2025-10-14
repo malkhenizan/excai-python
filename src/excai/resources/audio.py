@@ -7,7 +7,7 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..types import audio_create_speech_params, audio_create_translation_params, audio_create_transcription_params
+from ..types import audio_generate_audio_params, audio_translate_audio_params, audio_transcribe_audio_params
 from .._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
 from .._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
 from .._compat import cached_property
@@ -27,8 +27,8 @@ from .._response import (
     async_to_custom_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.audio_create_translation_response import AudioCreateTranslationResponse
-from ..types.audio_create_transcription_response import AudioCreateTranscriptionResponse
+from ..types.audio_translate_audio_response import AudioTranslateAudioResponse
+from ..types.audio_transcribe_audio_response import AudioTranscribeAudioResponse
 
 __all__ = ["AudioResource", "AsyncAudioResource"]
 
@@ -53,7 +53,7 @@ class AudioResource(SyncAPIResource):
         """
         return AudioResourceWithStreamingResponse(self)
 
-    def create_speech(
+    def generate_audio(
         self,
         *,
         input: str,
@@ -114,7 +114,7 @@ class AudioResource(SyncAPIResource):
                     "response_format": response_format,
                     "speed": speed,
                 },
-                audio_create_speech_params.AudioCreateSpeechParams,
+                audio_generate_audio_params.AudioGenerateAudioParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -122,7 +122,7 @@ class AudioResource(SyncAPIResource):
             cast_to=BinaryAPIResponse,
         )
 
-    def create_transcription(
+    def transcribe_audio(
         self,
         *,
         file: FileTypes,
@@ -140,7 +140,7 @@ class AudioResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AudioCreateTranscriptionResponse:
+    ) -> AudioTranscribeAudioResponse:
         """
         Transcribes audio into the input language.
 
@@ -219,21 +219,21 @@ class AudioResource(SyncAPIResource):
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return cast(
-            AudioCreateTranscriptionResponse,
+            AudioTranscribeAudioResponse,
             self._post(
                 "/audio/transcriptions",
-                body=maybe_transform(body, audio_create_transcription_params.AudioCreateTranscriptionParams),
+                body=maybe_transform(body, audio_transcribe_audio_params.AudioTranscribeAudioParams),
                 files=files,
                 options=make_request_options(
                     extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
                 ),
                 cast_to=cast(
-                    Any, AudioCreateTranscriptionResponse
+                    Any, AudioTranscribeAudioResponse
                 ),  # Union types cannot be passed in as arguments in the type system
             ),
         )
 
-    def create_translation(
+    def translate_audio(
         self,
         *,
         file: FileTypes,
@@ -247,7 +247,7 @@ class AudioResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AudioCreateTranslationResponse:
+    ) -> AudioTranslateAudioResponse:
         """
         Translates audio into English.
 
@@ -294,16 +294,16 @@ class AudioResource(SyncAPIResource):
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return cast(
-            AudioCreateTranslationResponse,
+            AudioTranslateAudioResponse,
             self._post(
                 "/audio/translations",
-                body=maybe_transform(body, audio_create_translation_params.AudioCreateTranslationParams),
+                body=maybe_transform(body, audio_translate_audio_params.AudioTranslateAudioParams),
                 files=files,
                 options=make_request_options(
                     extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
                 ),
                 cast_to=cast(
-                    Any, AudioCreateTranslationResponse
+                    Any, AudioTranslateAudioResponse
                 ),  # Union types cannot be passed in as arguments in the type system
             ),
         )
@@ -329,7 +329,7 @@ class AsyncAudioResource(AsyncAPIResource):
         """
         return AsyncAudioResourceWithStreamingResponse(self)
 
-    async def create_speech(
+    async def generate_audio(
         self,
         *,
         input: str,
@@ -390,7 +390,7 @@ class AsyncAudioResource(AsyncAPIResource):
                     "response_format": response_format,
                     "speed": speed,
                 },
-                audio_create_speech_params.AudioCreateSpeechParams,
+                audio_generate_audio_params.AudioGenerateAudioParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -398,7 +398,7 @@ class AsyncAudioResource(AsyncAPIResource):
             cast_to=AsyncBinaryAPIResponse,
         )
 
-    async def create_transcription(
+    async def transcribe_audio(
         self,
         *,
         file: FileTypes,
@@ -416,7 +416,7 @@ class AsyncAudioResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AudioCreateTranscriptionResponse:
+    ) -> AudioTranscribeAudioResponse:
         """
         Transcribes audio into the input language.
 
@@ -495,23 +495,21 @@ class AsyncAudioResource(AsyncAPIResource):
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return cast(
-            AudioCreateTranscriptionResponse,
+            AudioTranscribeAudioResponse,
             await self._post(
                 "/audio/transcriptions",
-                body=await async_maybe_transform(
-                    body, audio_create_transcription_params.AudioCreateTranscriptionParams
-                ),
+                body=await async_maybe_transform(body, audio_transcribe_audio_params.AudioTranscribeAudioParams),
                 files=files,
                 options=make_request_options(
                     extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
                 ),
                 cast_to=cast(
-                    Any, AudioCreateTranscriptionResponse
+                    Any, AudioTranscribeAudioResponse
                 ),  # Union types cannot be passed in as arguments in the type system
             ),
         )
 
-    async def create_translation(
+    async def translate_audio(
         self,
         *,
         file: FileTypes,
@@ -525,7 +523,7 @@ class AsyncAudioResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AudioCreateTranslationResponse:
+    ) -> AudioTranslateAudioResponse:
         """
         Translates audio into English.
 
@@ -572,16 +570,16 @@ class AsyncAudioResource(AsyncAPIResource):
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return cast(
-            AudioCreateTranslationResponse,
+            AudioTranslateAudioResponse,
             await self._post(
                 "/audio/translations",
-                body=await async_maybe_transform(body, audio_create_translation_params.AudioCreateTranslationParams),
+                body=await async_maybe_transform(body, audio_translate_audio_params.AudioTranslateAudioParams),
                 files=files,
                 options=make_request_options(
                     extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
                 ),
                 cast_to=cast(
-                    Any, AudioCreateTranslationResponse
+                    Any, AudioTranslateAudioResponse
                 ),  # Union types cannot be passed in as arguments in the type system
             ),
         )
@@ -591,15 +589,15 @@ class AudioResourceWithRawResponse:
     def __init__(self, audio: AudioResource) -> None:
         self._audio = audio
 
-        self.create_speech = to_custom_raw_response_wrapper(
-            audio.create_speech,
+        self.generate_audio = to_custom_raw_response_wrapper(
+            audio.generate_audio,
             BinaryAPIResponse,
         )
-        self.create_transcription = to_raw_response_wrapper(
-            audio.create_transcription,
+        self.transcribe_audio = to_raw_response_wrapper(
+            audio.transcribe_audio,
         )
-        self.create_translation = to_raw_response_wrapper(
-            audio.create_translation,
+        self.translate_audio = to_raw_response_wrapper(
+            audio.translate_audio,
         )
 
 
@@ -607,15 +605,15 @@ class AsyncAudioResourceWithRawResponse:
     def __init__(self, audio: AsyncAudioResource) -> None:
         self._audio = audio
 
-        self.create_speech = async_to_custom_raw_response_wrapper(
-            audio.create_speech,
+        self.generate_audio = async_to_custom_raw_response_wrapper(
+            audio.generate_audio,
             AsyncBinaryAPIResponse,
         )
-        self.create_transcription = async_to_raw_response_wrapper(
-            audio.create_transcription,
+        self.transcribe_audio = async_to_raw_response_wrapper(
+            audio.transcribe_audio,
         )
-        self.create_translation = async_to_raw_response_wrapper(
-            audio.create_translation,
+        self.translate_audio = async_to_raw_response_wrapper(
+            audio.translate_audio,
         )
 
 
@@ -623,15 +621,15 @@ class AudioResourceWithStreamingResponse:
     def __init__(self, audio: AudioResource) -> None:
         self._audio = audio
 
-        self.create_speech = to_custom_streamed_response_wrapper(
-            audio.create_speech,
+        self.generate_audio = to_custom_streamed_response_wrapper(
+            audio.generate_audio,
             StreamedBinaryAPIResponse,
         )
-        self.create_transcription = to_streamed_response_wrapper(
-            audio.create_transcription,
+        self.transcribe_audio = to_streamed_response_wrapper(
+            audio.transcribe_audio,
         )
-        self.create_translation = to_streamed_response_wrapper(
-            audio.create_translation,
+        self.translate_audio = to_streamed_response_wrapper(
+            audio.translate_audio,
         )
 
 
@@ -639,13 +637,13 @@ class AsyncAudioResourceWithStreamingResponse:
     def __init__(self, audio: AsyncAudioResource) -> None:
         self._audio = audio
 
-        self.create_speech = async_to_custom_streamed_response_wrapper(
-            audio.create_speech,
+        self.generate_audio = async_to_custom_streamed_response_wrapper(
+            audio.generate_audio,
             AsyncStreamedBinaryAPIResponse,
         )
-        self.create_transcription = async_to_streamed_response_wrapper(
-            audio.create_transcription,
+        self.transcribe_audio = async_to_streamed_response_wrapper(
+            audio.transcribe_audio,
         )
-        self.create_translation = async_to_streamed_response_wrapper(
-            audio.create_translation,
+        self.translate_audio = async_to_streamed_response_wrapper(
+            audio.translate_audio,
         )

@@ -10,8 +10,8 @@ import pytest
 from excai import ExCai, AsyncExCai
 from excai.types import (
     ImageCreateEditResponse,
-    ImageCreateImageResponse,
     ImageCreateVariationResponse,
+    ImageCreateGenerationResponse,
 )
 from tests.utils import assert_matches_type
 
@@ -76,16 +76,16 @@ class TestImages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_image(self, client: ExCai) -> None:
-        image = client.images.create_image(
+    def test_method_create_generation(self, client: ExCai) -> None:
+        image = client.images.create_generation(
             prompt="A cute baby sea otter",
         )
-        assert_matches_type(ImageCreateImageResponse, image, path=["response"])
+        assert_matches_type(ImageCreateGenerationResponse, image, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_image_with_all_params(self, client: ExCai) -> None:
-        image = client.images.create_image(
+    def test_method_create_generation_with_all_params(self, client: ExCai) -> None:
+        image = client.images.create_generation(
             prompt="A cute baby sea otter",
             background="transparent",
             model="gpt-image-1",
@@ -99,31 +99,31 @@ class TestImages:
             style="vivid",
             user="user-1234",
         )
-        assert_matches_type(ImageCreateImageResponse, image, path=["response"])
+        assert_matches_type(ImageCreateGenerationResponse, image, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_create_image(self, client: ExCai) -> None:
-        response = client.images.with_raw_response.create_image(
+    def test_raw_response_create_generation(self, client: ExCai) -> None:
+        response = client.images.with_raw_response.create_generation(
             prompt="A cute baby sea otter",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         image = response.parse()
-        assert_matches_type(ImageCreateImageResponse, image, path=["response"])
+        assert_matches_type(ImageCreateGenerationResponse, image, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_create_image(self, client: ExCai) -> None:
-        with client.images.with_streaming_response.create_image(
+    def test_streaming_response_create_generation(self, client: ExCai) -> None:
+        with client.images.with_streaming_response.create_generation(
             prompt="A cute baby sea otter",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             image = response.parse()
-            assert_matches_type(ImageCreateImageResponse, image, path=["response"])
+            assert_matches_type(ImageCreateGenerationResponse, image, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -235,16 +235,16 @@ class TestAsyncImages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_image(self, async_client: AsyncExCai) -> None:
-        image = await async_client.images.create_image(
+    async def test_method_create_generation(self, async_client: AsyncExCai) -> None:
+        image = await async_client.images.create_generation(
             prompt="A cute baby sea otter",
         )
-        assert_matches_type(ImageCreateImageResponse, image, path=["response"])
+        assert_matches_type(ImageCreateGenerationResponse, image, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_image_with_all_params(self, async_client: AsyncExCai) -> None:
-        image = await async_client.images.create_image(
+    async def test_method_create_generation_with_all_params(self, async_client: AsyncExCai) -> None:
+        image = await async_client.images.create_generation(
             prompt="A cute baby sea otter",
             background="transparent",
             model="gpt-image-1",
@@ -258,31 +258,31 @@ class TestAsyncImages:
             style="vivid",
             user="user-1234",
         )
-        assert_matches_type(ImageCreateImageResponse, image, path=["response"])
+        assert_matches_type(ImageCreateGenerationResponse, image, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_create_image(self, async_client: AsyncExCai) -> None:
-        response = await async_client.images.with_raw_response.create_image(
+    async def test_raw_response_create_generation(self, async_client: AsyncExCai) -> None:
+        response = await async_client.images.with_raw_response.create_generation(
             prompt="A cute baby sea otter",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         image = await response.parse()
-        assert_matches_type(ImageCreateImageResponse, image, path=["response"])
+        assert_matches_type(ImageCreateGenerationResponse, image, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_create_image(self, async_client: AsyncExCai) -> None:
-        async with async_client.images.with_streaming_response.create_image(
+    async def test_streaming_response_create_generation(self, async_client: AsyncExCai) -> None:
+        async with async_client.images.with_streaming_response.create_generation(
             prompt="A cute baby sea otter",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             image = await response.parse()
-            assert_matches_type(ImageCreateImageResponse, image, path=["response"])
+            assert_matches_type(ImageCreateGenerationResponse, image, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

@@ -4,9 +4,51 @@ from typing import Optional
 from typing_extensions import Literal
 
 from .._models import BaseModel
-from .shared.openai_file import OpenAIFile
 
-__all__ = ["UploadCompleteResponse"]
+__all__ = ["UploadCompleteResponse", "File"]
+
+
+class File(BaseModel):
+    id: str
+    """The file identifier, which can be referenced in the API endpoints."""
+
+    bytes: int
+    """The size of the file, in bytes."""
+
+    created_at: int
+    """The Unix timestamp (in seconds) for when the file was created."""
+
+    filename: str
+    """The name of the file."""
+
+    object: Literal["file"]
+    """The object type, which is always `file`."""
+
+    purpose: Literal[
+        "assistants", "assistants_output", "batch", "batch_output", "fine-tune", "fine-tune-results", "vision"
+    ]
+    """The intended purpose of the file.
+
+    Supported values are `assistants`, `assistants_output`, `batch`, `batch_output`,
+    `fine-tune`, `fine-tune-results` and `vision`.
+    """
+
+    status: Literal["uploaded", "processed", "error"]
+    """Deprecated.
+
+    The current status of the file, which can be either `uploaded`, `processed`, or
+    `error`.
+    """
+
+    expires_at: Optional[int] = None
+    """The Unix timestamp (in seconds) for when the file will expire."""
+
+    status_details: Optional[str] = None
+    """Deprecated.
+
+    For details on why a fine-tuning training file failed validation, see the
+    `error` field on `fine_tuning.job`.
+    """
 
 
 class UploadCompleteResponse(BaseModel):
@@ -35,7 +77,7 @@ class UploadCompleteResponse(BaseModel):
     status: Literal["pending", "completed", "cancelled", "expired"]
     """The status of the Upload."""
 
-    file: Optional[OpenAIFile] = None
+    file: Optional[File] = None
     """The `File` object represents a document that has been uploaded to OpenAI."""
 
     object: Optional[Literal["upload"]] = None

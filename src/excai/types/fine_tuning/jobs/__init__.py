@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from .event_list_params import EventListParams as EventListParams
-from .event_list_response import EventListResponse as EventListResponse
-from .checkpoint_list_params import CheckpointListParams as CheckpointListParams
-from .checkpoint_list_response import CheckpointListResponse as CheckpointListResponse
+from .event_retrieve_params import EventRetrieveParams as EventRetrieveParams
+from .event_retrieve_response import EventRetrieveResponse as EventRetrieveResponse
+from .checkpoint_retrieve_params import CheckpointRetrieveParams as CheckpointRetrieveParams
+from .checkpoint_retrieve_response import CheckpointRetrieveResponse as CheckpointRetrieveResponse

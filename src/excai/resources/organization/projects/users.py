@@ -17,10 +17,12 @@ from ...._response import (
     async_to_streamed_response_wrapper,
 )
 from ...._base_client import make_request_options
-from ....types.organization.projects import user_list_params, user_create_params, user_update_params
-from ....types.organization.project_user import ProjectUser
+from ....types.organization.projects import user_add_params, user_list_params, user_update_params
+from ....types.organization.projects.user_add_response import UserAddResponse
 from ....types.organization.projects.user_list_response import UserListResponse
 from ....types.organization.projects.user_delete_response import UserDeleteResponse
+from ....types.organization.projects.user_update_response import UserUpdateResponse
+from ....types.organization.projects.user_retrieve_response import UserRetrieveResponse
 
 __all__ = ["UsersResource", "AsyncUsersResource"]
 
@@ -45,54 +47,6 @@ class UsersResource(SyncAPIResource):
         """
         return UsersResourceWithStreamingResponse(self)
 
-    def create(
-        self,
-        project_id: str,
-        *,
-        role: Literal["owner", "member"],
-        user_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProjectUser:
-        """Adds a user to the project.
-
-        Users must already be members of the organization to
-        be added to a project.
-
-        Args:
-          role: `owner` or `member`
-
-          user_id: The ID of the user.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not project_id:
-            raise ValueError(f"Expected a non-empty value for `project_id` but received {project_id!r}")
-        return self._post(
-            f"/organization/projects/{project_id}/users",
-            body=maybe_transform(
-                {
-                    "role": role,
-                    "user_id": user_id,
-                },
-                user_create_params.UserCreateParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ProjectUser,
-        )
-
     def retrieve(
         self,
         user_id: str,
@@ -104,7 +58,7 @@ class UsersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProjectUser:
+    ) -> UserRetrieveResponse:
         """
         Retrieves a user in the project.
 
@@ -126,7 +80,7 @@ class UsersResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ProjectUser,
+            cast_to=UserRetrieveResponse,
         )
 
     def update(
@@ -141,7 +95,7 @@ class UsersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProjectUser:
+    ) -> UserUpdateResponse:
         """
         Modifies a user's role in the project.
 
@@ -166,7 +120,7 @@ class UsersResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ProjectUser,
+            cast_to=UserUpdateResponse,
         )
 
     def list(
@@ -258,6 +212,54 @@ class UsersResource(SyncAPIResource):
             cast_to=UserDeleteResponse,
         )
 
+    def add(
+        self,
+        project_id: str,
+        *,
+        role: Literal["owner", "member"],
+        user_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> UserAddResponse:
+        """Adds a user to the project.
+
+        Users must already be members of the organization to
+        be added to a project.
+
+        Args:
+          role: `owner` or `member`
+
+          user_id: The ID of the user.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not project_id:
+            raise ValueError(f"Expected a non-empty value for `project_id` but received {project_id!r}")
+        return self._post(
+            f"/organization/projects/{project_id}/users",
+            body=maybe_transform(
+                {
+                    "role": role,
+                    "user_id": user_id,
+                },
+                user_add_params.UserAddParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserAddResponse,
+        )
+
 
 class AsyncUsersResource(AsyncAPIResource):
     @cached_property
@@ -279,54 +281,6 @@ class AsyncUsersResource(AsyncAPIResource):
         """
         return AsyncUsersResourceWithStreamingResponse(self)
 
-    async def create(
-        self,
-        project_id: str,
-        *,
-        role: Literal["owner", "member"],
-        user_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProjectUser:
-        """Adds a user to the project.
-
-        Users must already be members of the organization to
-        be added to a project.
-
-        Args:
-          role: `owner` or `member`
-
-          user_id: The ID of the user.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not project_id:
-            raise ValueError(f"Expected a non-empty value for `project_id` but received {project_id!r}")
-        return await self._post(
-            f"/organization/projects/{project_id}/users",
-            body=await async_maybe_transform(
-                {
-                    "role": role,
-                    "user_id": user_id,
-                },
-                user_create_params.UserCreateParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ProjectUser,
-        )
-
     async def retrieve(
         self,
         user_id: str,
@@ -338,7 +292,7 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProjectUser:
+    ) -> UserRetrieveResponse:
         """
         Retrieves a user in the project.
 
@@ -360,7 +314,7 @@ class AsyncUsersResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ProjectUser,
+            cast_to=UserRetrieveResponse,
         )
 
     async def update(
@@ -375,7 +329,7 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProjectUser:
+    ) -> UserUpdateResponse:
         """
         Modifies a user's role in the project.
 
@@ -400,7 +354,7 @@ class AsyncUsersResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ProjectUser,
+            cast_to=UserUpdateResponse,
         )
 
     async def list(
@@ -492,14 +446,59 @@ class AsyncUsersResource(AsyncAPIResource):
             cast_to=UserDeleteResponse,
         )
 
+    async def add(
+        self,
+        project_id: str,
+        *,
+        role: Literal["owner", "member"],
+        user_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> UserAddResponse:
+        """Adds a user to the project.
+
+        Users must already be members of the organization to
+        be added to a project.
+
+        Args:
+          role: `owner` or `member`
+
+          user_id: The ID of the user.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not project_id:
+            raise ValueError(f"Expected a non-empty value for `project_id` but received {project_id!r}")
+        return await self._post(
+            f"/organization/projects/{project_id}/users",
+            body=await async_maybe_transform(
+                {
+                    "role": role,
+                    "user_id": user_id,
+                },
+                user_add_params.UserAddParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserAddResponse,
+        )
+
 
 class UsersResourceWithRawResponse:
     def __init__(self, users: UsersResource) -> None:
         self._users = users
 
-        self.create = to_raw_response_wrapper(
-            users.create,
-        )
         self.retrieve = to_raw_response_wrapper(
             users.retrieve,
         )
@@ -512,15 +511,15 @@ class UsersResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             users.delete,
         )
+        self.add = to_raw_response_wrapper(
+            users.add,
+        )
 
 
 class AsyncUsersResourceWithRawResponse:
     def __init__(self, users: AsyncUsersResource) -> None:
         self._users = users
 
-        self.create = async_to_raw_response_wrapper(
-            users.create,
-        )
         self.retrieve = async_to_raw_response_wrapper(
             users.retrieve,
         )
@@ -533,15 +532,15 @@ class AsyncUsersResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             users.delete,
         )
+        self.add = async_to_raw_response_wrapper(
+            users.add,
+        )
 
 
 class UsersResourceWithStreamingResponse:
     def __init__(self, users: UsersResource) -> None:
         self._users = users
 
-        self.create = to_streamed_response_wrapper(
-            users.create,
-        )
         self.retrieve = to_streamed_response_wrapper(
             users.retrieve,
         )
@@ -554,15 +553,15 @@ class UsersResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             users.delete,
         )
+        self.add = to_streamed_response_wrapper(
+            users.add,
+        )
 
 
 class AsyncUsersResourceWithStreamingResponse:
     def __init__(self, users: AsyncUsersResource) -> None:
         self._users = users
 
-        self.create = async_to_streamed_response_wrapper(
-            users.create,
-        )
         self.retrieve = async_to_streamed_response_wrapper(
             users.retrieve,
         )
@@ -574,4 +573,7 @@ class AsyncUsersResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             users.delete,
+        )
+        self.add = async_to_streamed_response_wrapper(
+            users.add,
         )

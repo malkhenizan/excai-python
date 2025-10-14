@@ -15,8 +15,8 @@ from ...._response import (
     async_to_streamed_response_wrapper,
 )
 from ...._base_client import make_request_options
-from ....types.fine_tuning.jobs import event_list_params
-from ....types.fine_tuning.jobs.event_list_response import EventListResponse
+from ....types.fine_tuning.jobs import event_retrieve_params
+from ....types.fine_tuning.jobs.event_retrieve_response import EventRetrieveResponse
 
 __all__ = ["EventsResource", "AsyncEventsResource"]
 
@@ -41,7 +41,7 @@ class EventsResource(SyncAPIResource):
         """
         return EventsResourceWithStreamingResponse(self)
 
-    def list(
+    def retrieve(
         self,
         fine_tuning_job_id: str,
         *,
@@ -53,7 +53,7 @@ class EventsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> EventListResponse:
+    ) -> EventRetrieveResponse:
         """
         Get status updates for a fine-tuning job.
 
@@ -84,10 +84,10 @@ class EventsResource(SyncAPIResource):
                         "after": after,
                         "limit": limit,
                     },
-                    event_list_params.EventListParams,
+                    event_retrieve_params.EventRetrieveParams,
                 ),
             ),
-            cast_to=EventListResponse,
+            cast_to=EventRetrieveResponse,
         )
 
 
@@ -111,7 +111,7 @@ class AsyncEventsResource(AsyncAPIResource):
         """
         return AsyncEventsResourceWithStreamingResponse(self)
 
-    async def list(
+    async def retrieve(
         self,
         fine_tuning_job_id: str,
         *,
@@ -123,7 +123,7 @@ class AsyncEventsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> EventListResponse:
+    ) -> EventRetrieveResponse:
         """
         Get status updates for a fine-tuning job.
 
@@ -154,10 +154,10 @@ class AsyncEventsResource(AsyncAPIResource):
                         "after": after,
                         "limit": limit,
                     },
-                    event_list_params.EventListParams,
+                    event_retrieve_params.EventRetrieveParams,
                 ),
             ),
-            cast_to=EventListResponse,
+            cast_to=EventRetrieveResponse,
         )
 
 
@@ -165,8 +165,8 @@ class EventsResourceWithRawResponse:
     def __init__(self, events: EventsResource) -> None:
         self._events = events
 
-        self.list = to_raw_response_wrapper(
-            events.list,
+        self.retrieve = to_raw_response_wrapper(
+            events.retrieve,
         )
 
 
@@ -174,8 +174,8 @@ class AsyncEventsResourceWithRawResponse:
     def __init__(self, events: AsyncEventsResource) -> None:
         self._events = events
 
-        self.list = async_to_raw_response_wrapper(
-            events.list,
+        self.retrieve = async_to_raw_response_wrapper(
+            events.retrieve,
         )
 
 
@@ -183,8 +183,8 @@ class EventsResourceWithStreamingResponse:
     def __init__(self, events: EventsResource) -> None:
         self._events = events
 
-        self.list = to_streamed_response_wrapper(
-            events.list,
+        self.retrieve = to_streamed_response_wrapper(
+            events.retrieve,
         )
 
 
@@ -192,6 +192,6 @@ class AsyncEventsResourceWithStreamingResponse:
     def __init__(self, events: AsyncEventsResource) -> None:
         self._events = events
 
-        self.list = async_to_streamed_response_wrapper(
-            events.list,
+        self.retrieve = async_to_streamed_response_wrapper(
+            events.retrieve,
         )

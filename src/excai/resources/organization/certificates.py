@@ -18,7 +18,6 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.certificate import Certificate
 from ...types.organization import (
     certificate_list_params,
     certificate_update_params,
@@ -29,7 +28,10 @@ from ...types.organization import (
 )
 from ...types.organization.certificate_list_response import CertificateListResponse
 from ...types.organization.certificate_delete_response import CertificateDeleteResponse
+from ...types.organization.certificate_update_response import CertificateUpdateResponse
+from ...types.organization.certificate_upload_response import CertificateUploadResponse
 from ...types.organization.certificate_activate_response import CertificateActivateResponse
+from ...types.organization.certificate_retrieve_response import CertificateRetrieveResponse
 from ...types.organization.certificate_deactivate_response import CertificateDeactivateResponse
 
 __all__ = ["CertificatesResource", "AsyncCertificatesResource"]
@@ -66,7 +68,7 @@ class CertificatesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Certificate:
+    ) -> CertificateRetrieveResponse:
         """
         Get a certificate that has been uploaded to the organization.
 
@@ -95,7 +97,7 @@ class CertificatesResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform({"include": include}, certificate_retrieve_params.CertificateRetrieveParams),
             ),
-            cast_to=Certificate,
+            cast_to=CertificateRetrieveResponse,
         )
 
     def update(
@@ -109,7 +111,7 @@ class CertificatesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Certificate:
+    ) -> CertificateUpdateResponse:
         """Modify a certificate.
 
         Note that only the name can be modified.
@@ -133,7 +135,7 @@ class CertificatesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Certificate,
+            cast_to=CertificateUpdateResponse,
         )
 
     def list(
@@ -309,7 +311,7 @@ class CertificatesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Certificate:
+    ) -> CertificateUploadResponse:
         """Upload a certificate to the organization.
 
         This does **not** automatically
@@ -342,7 +344,7 @@ class CertificatesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Certificate,
+            cast_to=CertificateUploadResponse,
         )
 
 
@@ -377,7 +379,7 @@ class AsyncCertificatesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Certificate:
+    ) -> CertificateRetrieveResponse:
         """
         Get a certificate that has been uploaded to the organization.
 
@@ -408,7 +410,7 @@ class AsyncCertificatesResource(AsyncAPIResource):
                     {"include": include}, certificate_retrieve_params.CertificateRetrieveParams
                 ),
             ),
-            cast_to=Certificate,
+            cast_to=CertificateRetrieveResponse,
         )
 
     async def update(
@@ -422,7 +424,7 @@ class AsyncCertificatesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Certificate:
+    ) -> CertificateUpdateResponse:
         """Modify a certificate.
 
         Note that only the name can be modified.
@@ -446,7 +448,7 @@ class AsyncCertificatesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Certificate,
+            cast_to=CertificateUpdateResponse,
         )
 
     async def list(
@@ -622,7 +624,7 @@ class AsyncCertificatesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Certificate:
+    ) -> CertificateUploadResponse:
         """Upload a certificate to the organization.
 
         This does **not** automatically
@@ -655,7 +657,7 @@ class AsyncCertificatesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Certificate,
+            cast_to=CertificateUploadResponse,
         )
 
 

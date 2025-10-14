@@ -4,10 +4,16 @@ from typing import Dict, List, Union, Optional
 from typing_extensions import Literal, TypeAlias
 
 from ..._models import BaseModel
-from ..other_chunking_strategy_response_param import OtherChunkingStrategyResponseParam
-from ..static_chunking_strategy_response_param import StaticChunkingStrategyResponseParam
 
-__all__ = ["FileListResponse", "Data", "DataLastError", "DataChunkingStrategy"]
+__all__ = [
+    "FileListResponse",
+    "Data",
+    "DataLastError",
+    "DataChunkingStrategy",
+    "DataChunkingStrategyStaticChunkingStrategyResponseParam",
+    "DataChunkingStrategyStaticChunkingStrategyResponseParamStatic",
+    "DataChunkingStrategyOtherChunkingStrategyResponseParam",
+]
 
 
 class DataLastError(BaseModel):
@@ -18,7 +24,36 @@ class DataLastError(BaseModel):
     """A human-readable description of the error."""
 
 
-DataChunkingStrategy: TypeAlias = Union[StaticChunkingStrategyResponseParam, OtherChunkingStrategyResponseParam]
+class DataChunkingStrategyStaticChunkingStrategyResponseParamStatic(BaseModel):
+    chunk_overlap_tokens: int
+    """The number of tokens that overlap between chunks. The default value is `400`.
+
+    Note that the overlap must not exceed half of `max_chunk_size_tokens`.
+    """
+
+    max_chunk_size_tokens: int
+    """The maximum number of tokens in each chunk.
+
+    The default value is `800`. The minimum value is `100` and the maximum value is
+    `4096`.
+    """
+
+
+class DataChunkingStrategyStaticChunkingStrategyResponseParam(BaseModel):
+    static: DataChunkingStrategyStaticChunkingStrategyResponseParamStatic
+
+    type: Literal["static"]
+    """Always `static`."""
+
+
+class DataChunkingStrategyOtherChunkingStrategyResponseParam(BaseModel):
+    type: Literal["other"]
+    """Always `other`."""
+
+
+DataChunkingStrategy: TypeAlias = Union[
+    DataChunkingStrategyStaticChunkingStrategyResponseParam, DataChunkingStrategyOtherChunkingStrategyResponseParam
+]
 
 
 class Data(BaseModel):
