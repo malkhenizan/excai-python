@@ -1,15 +1,35 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List
+from typing_extensions import Literal
 
 from ...._models import BaseModel
-from ..project_user import ProjectUser
 
-__all__ = ["UserListResponse"]
+__all__ = ["UserListResponse", "Data"]
+
+
+class Data(BaseModel):
+    id: str
+    """The identifier, which can be referenced in API endpoints"""
+
+    added_at: int
+    """The Unix timestamp (in seconds) of when the project was added."""
+
+    email: str
+    """The email address of the user"""
+
+    name: str
+    """The name of the user"""
+
+    object: Literal["organization.project.user"]
+    """The object type, which is always `organization.project.user`"""
+
+    role: Literal["owner", "member"]
+    """`owner` or `member`"""
 
 
 class UserListResponse(BaseModel):
-    data: List[ProjectUser]
+    data: List[Data]
 
     first_id: str
 

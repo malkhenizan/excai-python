@@ -7,7 +7,7 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..types import moderation_create_params
+from ..types import moderation_classify_params
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -19,7 +19,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.moderation_create_response import ModerationCreateResponse
+from ..types.moderation_classify_response import ModerationClassifyResponse
 
 __all__ = ["ModerationsResource", "AsyncModerationsResource"]
 
@@ -44,10 +44,10 @@ class ModerationsResource(SyncAPIResource):
         """
         return ModerationsResourceWithStreamingResponse(self)
 
-    def create(
+    def classify(
         self,
         *,
-        input: Union[str, SequenceNotStr[str], Iterable[moderation_create_params.InputUnionMember2]],
+        input: Union[str, SequenceNotStr[str], Iterable[moderation_classify_params.InputUnionMember2]],
         model: Union[
             str,
             Literal[
@@ -64,7 +64,7 @@ class ModerationsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ModerationCreateResponse:
+    ) -> ModerationClassifyResponse:
         """Classifies if text and/or image inputs are potentially harmful.
 
         Learn more in
@@ -93,12 +93,12 @@ class ModerationsResource(SyncAPIResource):
                     "input": input,
                     "model": model,
                 },
-                moderation_create_params.ModerationCreateParams,
+                moderation_classify_params.ModerationClassifyParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ModerationCreateResponse,
+            cast_to=ModerationClassifyResponse,
         )
 
 
@@ -122,10 +122,10 @@ class AsyncModerationsResource(AsyncAPIResource):
         """
         return AsyncModerationsResourceWithStreamingResponse(self)
 
-    async def create(
+    async def classify(
         self,
         *,
-        input: Union[str, SequenceNotStr[str], Iterable[moderation_create_params.InputUnionMember2]],
+        input: Union[str, SequenceNotStr[str], Iterable[moderation_classify_params.InputUnionMember2]],
         model: Union[
             str,
             Literal[
@@ -142,7 +142,7 @@ class AsyncModerationsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ModerationCreateResponse:
+    ) -> ModerationClassifyResponse:
         """Classifies if text and/or image inputs are potentially harmful.
 
         Learn more in
@@ -171,12 +171,12 @@ class AsyncModerationsResource(AsyncAPIResource):
                     "input": input,
                     "model": model,
                 },
-                moderation_create_params.ModerationCreateParams,
+                moderation_classify_params.ModerationClassifyParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ModerationCreateResponse,
+            cast_to=ModerationClassifyResponse,
         )
 
 
@@ -184,8 +184,8 @@ class ModerationsResourceWithRawResponse:
     def __init__(self, moderations: ModerationsResource) -> None:
         self._moderations = moderations
 
-        self.create = to_raw_response_wrapper(
-            moderations.create,
+        self.classify = to_raw_response_wrapper(
+            moderations.classify,
         )
 
 
@@ -193,8 +193,8 @@ class AsyncModerationsResourceWithRawResponse:
     def __init__(self, moderations: AsyncModerationsResource) -> None:
         self._moderations = moderations
 
-        self.create = async_to_raw_response_wrapper(
-            moderations.create,
+        self.classify = async_to_raw_response_wrapper(
+            moderations.classify,
         )
 
 
@@ -202,8 +202,8 @@ class ModerationsResourceWithStreamingResponse:
     def __init__(self, moderations: ModerationsResource) -> None:
         self._moderations = moderations
 
-        self.create = to_streamed_response_wrapper(
-            moderations.create,
+        self.classify = to_streamed_response_wrapper(
+            moderations.classify,
         )
 
 
@@ -211,6 +211,6 @@ class AsyncModerationsResourceWithStreamingResponse:
     def __init__(self, moderations: AsyncModerationsResource) -> None:
         self._moderations = moderations
 
-        self.create = async_to_streamed_response_wrapper(
-            moderations.create,
+        self.classify = async_to_streamed_response_wrapper(
+            moderations.classify,
         )

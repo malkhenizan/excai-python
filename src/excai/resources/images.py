@@ -7,7 +7,7 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..types import image_create_edit_params, image_create_image_params, image_create_variation_params
+from ..types import image_create_edit_params, image_create_variation_params, image_create_generation_params
 from .._types import Body, Omit, Query, Headers, NotGiven, FileTypes, SequenceNotStr, omit, not_given
 from .._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
 from .._compat import cached_property
@@ -20,8 +20,8 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.image_create_edit_response import ImageCreateEditResponse
-from ..types.image_create_image_response import ImageCreateImageResponse
 from ..types.image_create_variation_response import ImageCreateVariationResponse
+from ..types.image_create_generation_response import ImageCreateGenerationResponse
 
 __all__ = ["ImagesResource", "AsyncImagesResource"]
 
@@ -145,7 +145,7 @@ class ImagesResource(SyncAPIResource):
             cast_to=ImageCreateEditResponse,
         )
 
-    def create_image(
+    def create_generation(
         self,
         *,
         prompt: str,
@@ -169,7 +169,7 @@ class ImagesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ImageCreateImageResponse:
+    ) -> ImageCreateGenerationResponse:
         """Creates an image given a prompt.
 
         [Learn more](/docs/guides/images).
@@ -255,12 +255,12 @@ class ImagesResource(SyncAPIResource):
                     "style": style,
                     "user": user,
                 },
-                image_create_image_params.ImageCreateImageParams,
+                image_create_generation_params.ImageCreateGenerationParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ImageCreateImageResponse,
+            cast_to=ImageCreateGenerationResponse,
         )
 
     def create_variation(
@@ -455,7 +455,7 @@ class AsyncImagesResource(AsyncAPIResource):
             cast_to=ImageCreateEditResponse,
         )
 
-    async def create_image(
+    async def create_generation(
         self,
         *,
         prompt: str,
@@ -479,7 +479,7 @@ class AsyncImagesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ImageCreateImageResponse:
+    ) -> ImageCreateGenerationResponse:
         """Creates an image given a prompt.
 
         [Learn more](/docs/guides/images).
@@ -565,12 +565,12 @@ class AsyncImagesResource(AsyncAPIResource):
                     "style": style,
                     "user": user,
                 },
-                image_create_image_params.ImageCreateImageParams,
+                image_create_generation_params.ImageCreateGenerationParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ImageCreateImageResponse,
+            cast_to=ImageCreateGenerationResponse,
         )
 
     async def create_variation(
@@ -653,8 +653,8 @@ class ImagesResourceWithRawResponse:
         self.create_edit = to_raw_response_wrapper(
             images.create_edit,
         )
-        self.create_image = to_raw_response_wrapper(
-            images.create_image,
+        self.create_generation = to_raw_response_wrapper(
+            images.create_generation,
         )
         self.create_variation = to_raw_response_wrapper(
             images.create_variation,
@@ -668,8 +668,8 @@ class AsyncImagesResourceWithRawResponse:
         self.create_edit = async_to_raw_response_wrapper(
             images.create_edit,
         )
-        self.create_image = async_to_raw_response_wrapper(
-            images.create_image,
+        self.create_generation = async_to_raw_response_wrapper(
+            images.create_generation,
         )
         self.create_variation = async_to_raw_response_wrapper(
             images.create_variation,
@@ -683,8 +683,8 @@ class ImagesResourceWithStreamingResponse:
         self.create_edit = to_streamed_response_wrapper(
             images.create_edit,
         )
-        self.create_image = to_streamed_response_wrapper(
-            images.create_image,
+        self.create_generation = to_streamed_response_wrapper(
+            images.create_generation,
         )
         self.create_variation = to_streamed_response_wrapper(
             images.create_variation,
@@ -698,8 +698,8 @@ class AsyncImagesResourceWithStreamingResponse:
         self.create_edit = async_to_streamed_response_wrapper(
             images.create_edit,
         )
-        self.create_image = async_to_streamed_response_wrapper(
-            images.create_image,
+        self.create_generation = async_to_streamed_response_wrapper(
+            images.create_generation,
         )
         self.create_variation = async_to_streamed_response_wrapper(
             images.create_variation,

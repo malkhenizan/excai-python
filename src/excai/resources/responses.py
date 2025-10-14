@@ -19,7 +19,6 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.reasoning_param import ReasoningParam
 from ..types.response_create_response import ResponseCreateResponse
 from ..types.response_retrieve_response import ResponseRetrieveResponse
 from ..types.response_list_input_items_response import ResponseListInputItemsResponse
@@ -126,7 +125,7 @@ class ResponsesResource(SyncAPIResource):
         metadata: Optional[Dict[str, str]] | Omit = omit,
         parallel_tool_calls: Optional[bool] | Omit = omit,
         previous_response_id: Optional[str] | Omit = omit,
-        reasoning: Optional[ReasoningParam] | Omit = omit,
+        reasoning: Optional[response_create_params.Reasoning] | Omit = omit,
         service_tier: Optional[Literal["auto", "default", "flex"]] | Omit = omit,
         store: Optional[bool] | Omit = omit,
         stream: Optional[bool] | Omit = omit,
@@ -568,7 +567,7 @@ class AsyncResponsesResource(AsyncAPIResource):
         metadata: Optional[Dict[str, str]] | Omit = omit,
         parallel_tool_calls: Optional[bool] | Omit = omit,
         previous_response_id: Optional[str] | Omit = omit,
-        reasoning: Optional[ReasoningParam] | Omit = omit,
+        reasoning: Optional[response_create_params.Reasoning] | Omit = omit,
         service_tier: Optional[Literal["auto", "default", "flex"]] | Omit = omit,
         store: Optional[bool] | Omit = omit,
         stream: Optional[bool] | Omit = omit,

@@ -16,10 +16,10 @@ from ...._response import (
 )
 from ...._base_client import make_request_options
 from ....types.organization.projects import service_account_list_params, service_account_create_params
-from ....types.organization.project_service_account import ProjectServiceAccount
 from ....types.organization.projects.service_account_list_response import ServiceAccountListResponse
 from ....types.organization.projects.service_account_create_response import ServiceAccountCreateResponse
 from ....types.organization.projects.service_account_delete_response import ServiceAccountDeleteResponse
+from ....types.organization.projects.service_account_retrieve_response import ServiceAccountRetrieveResponse
 
 __all__ = ["ServiceAccountsResource", "AsyncServiceAccountsResource"]
 
@@ -94,7 +94,7 @@ class ServiceAccountsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProjectServiceAccount:
+    ) -> ServiceAccountRetrieveResponse:
         """
         Retrieves a service account in the project.
 
@@ -116,7 +116,7 @@ class ServiceAccountsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ProjectServiceAccount,
+            cast_to=ServiceAccountRetrieveResponse,
         )
 
     def list(
@@ -279,7 +279,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProjectServiceAccount:
+    ) -> ServiceAccountRetrieveResponse:
         """
         Retrieves a service account in the project.
 
@@ -301,7 +301,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ProjectServiceAccount,
+            cast_to=ServiceAccountRetrieveResponse,
         )
 
     async def list(

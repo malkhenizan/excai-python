@@ -29,6 +29,7 @@ from .resources import (
     models,
     batches,
     uploads,
+    realtime,
     responses,
     assistants,
     embeddings,
@@ -45,7 +46,6 @@ from ._base_client import (
 from .resources.chat import chat
 from .resources.evals import evals
 from .resources.threads import threads
-from .resources.realtime import realtime
 from .resources.fine_tuning import fine_tuning
 from .resources.organization import organization
 from .resources.vector_stores import vector_stores
@@ -149,7 +149,7 @@ class ExCai(SyncAPIClient):
     @property
     @override
     def qs(self) -> Querystring:
-        return Querystring(array_format="brackets")
+        return Querystring(array_format="comma")
 
     @property
     @override
@@ -360,7 +360,7 @@ class AsyncExCai(AsyncAPIClient):
     @property
     @override
     def qs(self) -> Querystring:
-        return Querystring(array_format="brackets")
+        return Querystring(array_format="comma")
 
     @property
     @override

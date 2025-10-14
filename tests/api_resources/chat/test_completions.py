@@ -15,7 +15,7 @@ from excai.types.chat import (
     CompletionDeleteResponse,
     CompletionUpdateResponse,
     CompletionRetrieveResponse,
-    CompletionGetMessagesResponse,
+    CompletionListMessagesResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -325,54 +325,54 @@ class TestCompletions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_get_messages(self, client: ExCai) -> None:
-        completion = client.chat.completions.get_messages(
+    def test_method_list_messages(self, client: ExCai) -> None:
+        completion = client.chat.completions.list_messages(
             completion_id="completion_id",
         )
-        assert_matches_type(CompletionGetMessagesResponse, completion, path=["response"])
+        assert_matches_type(CompletionListMessagesResponse, completion, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_get_messages_with_all_params(self, client: ExCai) -> None:
-        completion = client.chat.completions.get_messages(
+    def test_method_list_messages_with_all_params(self, client: ExCai) -> None:
+        completion = client.chat.completions.list_messages(
             completion_id="completion_id",
             after="after",
             limit=0,
             order="asc",
         )
-        assert_matches_type(CompletionGetMessagesResponse, completion, path=["response"])
+        assert_matches_type(CompletionListMessagesResponse, completion, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_get_messages(self, client: ExCai) -> None:
-        response = client.chat.completions.with_raw_response.get_messages(
+    def test_raw_response_list_messages(self, client: ExCai) -> None:
+        response = client.chat.completions.with_raw_response.list_messages(
             completion_id="completion_id",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         completion = response.parse()
-        assert_matches_type(CompletionGetMessagesResponse, completion, path=["response"])
+        assert_matches_type(CompletionListMessagesResponse, completion, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_get_messages(self, client: ExCai) -> None:
-        with client.chat.completions.with_streaming_response.get_messages(
+    def test_streaming_response_list_messages(self, client: ExCai) -> None:
+        with client.chat.completions.with_streaming_response.list_messages(
             completion_id="completion_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             completion = response.parse()
-            assert_matches_type(CompletionGetMessagesResponse, completion, path=["response"])
+            assert_matches_type(CompletionListMessagesResponse, completion, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_get_messages(self, client: ExCai) -> None:
+    def test_path_params_list_messages(self, client: ExCai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `completion_id` but received ''"):
-            client.chat.completions.with_raw_response.get_messages(
+            client.chat.completions.with_raw_response.list_messages(
                 completion_id="",
             )
 
@@ -683,53 +683,53 @@ class TestAsyncCompletions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_get_messages(self, async_client: AsyncExCai) -> None:
-        completion = await async_client.chat.completions.get_messages(
+    async def test_method_list_messages(self, async_client: AsyncExCai) -> None:
+        completion = await async_client.chat.completions.list_messages(
             completion_id="completion_id",
         )
-        assert_matches_type(CompletionGetMessagesResponse, completion, path=["response"])
+        assert_matches_type(CompletionListMessagesResponse, completion, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_get_messages_with_all_params(self, async_client: AsyncExCai) -> None:
-        completion = await async_client.chat.completions.get_messages(
+    async def test_method_list_messages_with_all_params(self, async_client: AsyncExCai) -> None:
+        completion = await async_client.chat.completions.list_messages(
             completion_id="completion_id",
             after="after",
             limit=0,
             order="asc",
         )
-        assert_matches_type(CompletionGetMessagesResponse, completion, path=["response"])
+        assert_matches_type(CompletionListMessagesResponse, completion, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_get_messages(self, async_client: AsyncExCai) -> None:
-        response = await async_client.chat.completions.with_raw_response.get_messages(
+    async def test_raw_response_list_messages(self, async_client: AsyncExCai) -> None:
+        response = await async_client.chat.completions.with_raw_response.list_messages(
             completion_id="completion_id",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         completion = await response.parse()
-        assert_matches_type(CompletionGetMessagesResponse, completion, path=["response"])
+        assert_matches_type(CompletionListMessagesResponse, completion, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_get_messages(self, async_client: AsyncExCai) -> None:
-        async with async_client.chat.completions.with_streaming_response.get_messages(
+    async def test_streaming_response_list_messages(self, async_client: AsyncExCai) -> None:
+        async with async_client.chat.completions.with_streaming_response.list_messages(
             completion_id="completion_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             completion = await response.parse()
-            assert_matches_type(CompletionGetMessagesResponse, completion, path=["response"])
+            assert_matches_type(CompletionListMessagesResponse, completion, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_get_messages(self, async_client: AsyncExCai) -> None:
+    async def test_path_params_list_messages(self, async_client: AsyncExCai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `completion_id` but received ''"):
-            await async_client.chat.completions.with_raw_response.get_messages(
+            await async_client.chat.completions.with_raw_response.list_messages(
                 completion_id="",
             )

@@ -39,7 +39,6 @@ from ....types.fine_tuning.job_list_response import JobListResponse
 from ....types.fine_tuning.job_cancel_response import JobCancelResponse
 from ....types.fine_tuning.job_create_response import JobCreateResponse
 from ....types.fine_tuning.job_retrieve_response import JobRetrieveResponse
-from ....types.fine_tuning.fine_tune_method_param import FineTuneMethodParam
 
 __all__ = ["JobsResource", "AsyncJobsResource"]
 
@@ -80,7 +79,7 @@ class JobsResource(SyncAPIResource):
         hyperparameters: job_create_params.Hyperparameters | Omit = omit,
         integrations: Optional[Iterable[job_create_params.Integration]] | Omit = omit,
         metadata: Optional[Dict[str, str]] | Omit = omit,
-        method: FineTuneMethodParam | Omit = omit,
+        method: job_create_params.Method | Omit = omit,
         seed: Optional[int] | Omit = omit,
         suffix: Optional[str] | Omit = omit,
         validation_file: Optional[str] | Omit = omit,
@@ -341,7 +340,7 @@ class AsyncJobsResource(AsyncAPIResource):
         hyperparameters: job_create_params.Hyperparameters | Omit = omit,
         integrations: Optional[Iterable[job_create_params.Integration]] | Omit = omit,
         metadata: Optional[Dict[str, str]] | Omit = omit,
-        method: FineTuneMethodParam | Omit = omit,
+        method: job_create_params.Method | Omit = omit,
         seed: Optional[int] | Omit = omit,
         suffix: Optional[str] | Omit = omit,
         validation_file: Optional[str] | Omit = omit,

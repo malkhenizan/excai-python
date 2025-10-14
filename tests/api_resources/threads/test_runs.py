@@ -11,11 +11,11 @@ from excai import ExCai, AsyncExCai
 from tests.utils import assert_matches_type
 from excai.types.threads import (
     RunListResponse,
-    RunCancelResponse,
     RunCreateResponse,
-    RunUpdateResponse,
     RunRetrieveResponse,
-    RunCreateWithRunResponse,
+    RunCancelRunResponse,
+    RunCreateRunResponse,
+    RunUpdateRunResponse,
     RunSubmitToolOutputsResponse,
 )
 
@@ -29,7 +29,6 @@ class TestRuns:
     @parametrize
     def test_method_create(self, client: ExCai) -> None:
         run = client.threads.runs.create(
-            thread_id="thread_id",
             assistant_id="assistant_id",
         )
         assert_matches_type(RunCreateResponse, run, path=["response"])
@@ -38,34 +37,50 @@ class TestRuns:
     @parametrize
     def test_method_create_with_all_params(self, client: ExCai) -> None:
         run = client.threads.runs.create(
-            thread_id="thread_id",
             assistant_id="assistant_id",
-            include=["step_details.tool_calls[*].file_search.results[*].content"],
-            additional_instructions="additional_instructions",
-            additional_messages=[
-                {
-                    "content": "string",
-                    "role": "user",
-                    "attachments": [
-                        {
-                            "file_id": "file_id",
-                            "tools": [{"type": "code_interpreter"}],
-                        }
-                    ],
-                    "metadata": {"foo": "string"},
-                }
-            ],
             instructions="instructions",
             max_completion_tokens=256,
             max_prompt_tokens=256,
             metadata={"foo": "string"},
             model="gpt-4o",
             parallel_tool_calls=True,
-            reasoning_effort="low",
             response_format="auto",
             stream=True,
             temperature=1,
+            thread={
+                "messages": [
+                    {
+                        "content": "string",
+                        "role": "user",
+                        "attachments": [
+                            {
+                                "file_id": "file_id",
+                                "tools": [{"type": "code_interpreter"}],
+                            }
+                        ],
+                        "metadata": {"foo": "string"},
+                    }
+                ],
+                "metadata": {"foo": "string"},
+                "tool_resources": {
+                    "code_interpreter": {"file_ids": ["string"]},
+                    "file_search": {
+                        "vector_store_ids": ["string"],
+                        "vector_stores": [
+                            {
+                                "chunking_strategy": {"type": "auto"},
+                                "file_ids": ["string"],
+                                "metadata": {"foo": "string"},
+                            }
+                        ],
+                    },
+                },
+            },
             tool_choice="none",
+            tool_resources={
+                "code_interpreter": {"file_ids": ["string"]},
+                "file_search": {"vector_store_ids": ["string"]},
+            },
             tools=[{"type": "code_interpreter"}],
             top_p=1,
             truncation_strategy={
@@ -79,7 +94,6 @@ class TestRuns:
     @parametrize
     def test_raw_response_create(self, client: ExCai) -> None:
         response = client.threads.runs.with_raw_response.create(
-            thread_id="thread_id",
             assistant_id="assistant_id",
         )
 
@@ -92,7 +106,6 @@ class TestRuns:
     @parametrize
     def test_streaming_response_create(self, client: ExCai) -> None:
         with client.threads.runs.with_streaming_response.create(
-            thread_id="thread_id",
             assistant_id="assistant_id",
         ) as response:
             assert not response.is_closed
@@ -102,15 +115,6 @@ class TestRuns:
             assert_matches_type(RunCreateResponse, run, path=["response"])
 
         assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_create(self, client: ExCai) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
-            client.threads.runs.with_raw_response.create(
-                thread_id="",
-                assistant_id="assistant_id",
-            )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -160,68 +164,6 @@ class TestRuns:
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `run_id` but received ''"):
             client.threads.runs.with_raw_response.retrieve(
-                run_id="",
-                thread_id="thread_id",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_update(self, client: ExCai) -> None:
-        run = client.threads.runs.update(
-            run_id="run_id",
-            thread_id="thread_id",
-        )
-        assert_matches_type(RunUpdateResponse, run, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_update_with_all_params(self, client: ExCai) -> None:
-        run = client.threads.runs.update(
-            run_id="run_id",
-            thread_id="thread_id",
-            metadata={"foo": "string"},
-        )
-        assert_matches_type(RunUpdateResponse, run, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_update(self, client: ExCai) -> None:
-        response = client.threads.runs.with_raw_response.update(
-            run_id="run_id",
-            thread_id="thread_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        run = response.parse()
-        assert_matches_type(RunUpdateResponse, run, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_update(self, client: ExCai) -> None:
-        with client.threads.runs.with_streaming_response.update(
-            run_id="run_id",
-            thread_id="thread_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            run = response.parse()
-            assert_matches_type(RunUpdateResponse, run, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_update(self, client: ExCai) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
-            client.threads.runs.with_raw_response.update(
-                run_id="run_id",
-                thread_id="",
-            )
-
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `run_id` but received ''"):
-            client.threads.runs.with_raw_response.update(
                 run_id="",
                 thread_id="thread_id",
             )
@@ -282,17 +224,17 @@ class TestRuns:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_cancel(self, client: ExCai) -> None:
-        run = client.threads.runs.cancel(
+    def test_method_cancel_run(self, client: ExCai) -> None:
+        run = client.threads.runs.cancel_run(
             run_id="run_id",
             thread_id="thread_id",
         )
-        assert_matches_type(RunCancelResponse, run, path=["response"])
+        assert_matches_type(RunCancelRunResponse, run, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_cancel(self, client: ExCai) -> None:
-        response = client.threads.runs.with_raw_response.cancel(
+    def test_raw_response_cancel_run(self, client: ExCai) -> None:
+        response = client.threads.runs.with_raw_response.cancel_run(
             run_id="run_id",
             thread_id="thread_id",
         )
@@ -300,12 +242,12 @@ class TestRuns:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         run = response.parse()
-        assert_matches_type(RunCancelResponse, run, path=["response"])
+        assert_matches_type(RunCancelRunResponse, run, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_cancel(self, client: ExCai) -> None:
-        with client.threads.runs.with_streaming_response.cancel(
+    def test_streaming_response_cancel_run(self, client: ExCai) -> None:
+        with client.threads.runs.with_streaming_response.cancel_run(
             run_id="run_id",
             thread_id="thread_id",
         ) as response:
@@ -313,81 +255,66 @@ class TestRuns:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             run = response.parse()
-            assert_matches_type(RunCancelResponse, run, path=["response"])
+            assert_matches_type(RunCancelRunResponse, run, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_cancel(self, client: ExCai) -> None:
+    def test_path_params_cancel_run(self, client: ExCai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
-            client.threads.runs.with_raw_response.cancel(
+            client.threads.runs.with_raw_response.cancel_run(
                 run_id="run_id",
                 thread_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `run_id` but received ''"):
-            client.threads.runs.with_raw_response.cancel(
+            client.threads.runs.with_raw_response.cancel_run(
                 run_id="",
                 thread_id="thread_id",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_with_run(self, client: ExCai) -> None:
-        run = client.threads.runs.create_with_run(
+    def test_method_create_run(self, client: ExCai) -> None:
+        run = client.threads.runs.create_run(
+            thread_id="thread_id",
             assistant_id="assistant_id",
         )
-        assert_matches_type(RunCreateWithRunResponse, run, path=["response"])
+        assert_matches_type(RunCreateRunResponse, run, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_with_run_with_all_params(self, client: ExCai) -> None:
-        run = client.threads.runs.create_with_run(
+    def test_method_create_run_with_all_params(self, client: ExCai) -> None:
+        run = client.threads.runs.create_run(
+            thread_id="thread_id",
             assistant_id="assistant_id",
+            include=["step_details.tool_calls[*].file_search.results[*].content"],
+            additional_instructions="additional_instructions",
+            additional_messages=[
+                {
+                    "content": "string",
+                    "role": "user",
+                    "attachments": [
+                        {
+                            "file_id": "file_id",
+                            "tools": [{"type": "code_interpreter"}],
+                        }
+                    ],
+                    "metadata": {"foo": "string"},
+                }
+            ],
             instructions="instructions",
             max_completion_tokens=256,
             max_prompt_tokens=256,
             metadata={"foo": "string"},
             model="gpt-4o",
             parallel_tool_calls=True,
+            reasoning_effort="low",
             response_format="auto",
             stream=True,
             temperature=1,
-            thread={
-                "messages": [
-                    {
-                        "content": "string",
-                        "role": "user",
-                        "attachments": [
-                            {
-                                "file_id": "file_id",
-                                "tools": [{"type": "code_interpreter"}],
-                            }
-                        ],
-                        "metadata": {"foo": "string"},
-                    }
-                ],
-                "metadata": {"foo": "string"},
-                "tool_resources": {
-                    "code_interpreter": {"file_ids": ["string"]},
-                    "file_search": {
-                        "vector_store_ids": ["string"],
-                        "vector_stores": [
-                            {
-                                "chunking_strategy": {"type": "auto"},
-                                "file_ids": ["string"],
-                                "metadata": {"foo": "string"},
-                            }
-                        ],
-                    },
-                },
-            },
             tool_choice="none",
-            tool_resources={
-                "code_interpreter": {"file_ids": ["string"]},
-                "file_search": {"vector_store_ids": ["string"]},
-            },
             tools=[{"type": "code_interpreter"}],
             top_p=1,
             truncation_strategy={
@@ -395,33 +322,44 @@ class TestRuns:
                 "last_messages": 1,
             },
         )
-        assert_matches_type(RunCreateWithRunResponse, run, path=["response"])
+        assert_matches_type(RunCreateRunResponse, run, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_create_with_run(self, client: ExCai) -> None:
-        response = client.threads.runs.with_raw_response.create_with_run(
+    def test_raw_response_create_run(self, client: ExCai) -> None:
+        response = client.threads.runs.with_raw_response.create_run(
+            thread_id="thread_id",
             assistant_id="assistant_id",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         run = response.parse()
-        assert_matches_type(RunCreateWithRunResponse, run, path=["response"])
+        assert_matches_type(RunCreateRunResponse, run, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_create_with_run(self, client: ExCai) -> None:
-        with client.threads.runs.with_streaming_response.create_with_run(
+    def test_streaming_response_create_run(self, client: ExCai) -> None:
+        with client.threads.runs.with_streaming_response.create_run(
+            thread_id="thread_id",
             assistant_id="assistant_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             run = response.parse()
-            assert_matches_type(RunCreateWithRunResponse, run, path=["response"])
+            assert_matches_type(RunCreateRunResponse, run, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_create_run(self, client: ExCai) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
+            client.threads.runs.with_raw_response.create_run(
+                thread_id="",
+                assistant_id="assistant_id",
+            )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -496,6 +434,68 @@ class TestRuns:
                 tool_outputs=[{}],
             )
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_update_run(self, client: ExCai) -> None:
+        run = client.threads.runs.update_run(
+            run_id="run_id",
+            thread_id="thread_id",
+        )
+        assert_matches_type(RunUpdateRunResponse, run, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_update_run_with_all_params(self, client: ExCai) -> None:
+        run = client.threads.runs.update_run(
+            run_id="run_id",
+            thread_id="thread_id",
+            metadata={"foo": "string"},
+        )
+        assert_matches_type(RunUpdateRunResponse, run, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_update_run(self, client: ExCai) -> None:
+        response = client.threads.runs.with_raw_response.update_run(
+            run_id="run_id",
+            thread_id="thread_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        run = response.parse()
+        assert_matches_type(RunUpdateRunResponse, run, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_update_run(self, client: ExCai) -> None:
+        with client.threads.runs.with_streaming_response.update_run(
+            run_id="run_id",
+            thread_id="thread_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            run = response.parse()
+            assert_matches_type(RunUpdateRunResponse, run, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_update_run(self, client: ExCai) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
+            client.threads.runs.with_raw_response.update_run(
+                run_id="run_id",
+                thread_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `run_id` but received ''"):
+            client.threads.runs.with_raw_response.update_run(
+                run_id="",
+                thread_id="thread_id",
+            )
+
 
 class TestAsyncRuns:
     parametrize = pytest.mark.parametrize(
@@ -506,7 +506,6 @@ class TestAsyncRuns:
     @parametrize
     async def test_method_create(self, async_client: AsyncExCai) -> None:
         run = await async_client.threads.runs.create(
-            thread_id="thread_id",
             assistant_id="assistant_id",
         )
         assert_matches_type(RunCreateResponse, run, path=["response"])
@@ -515,34 +514,50 @@ class TestAsyncRuns:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncExCai) -> None:
         run = await async_client.threads.runs.create(
-            thread_id="thread_id",
             assistant_id="assistant_id",
-            include=["step_details.tool_calls[*].file_search.results[*].content"],
-            additional_instructions="additional_instructions",
-            additional_messages=[
-                {
-                    "content": "string",
-                    "role": "user",
-                    "attachments": [
-                        {
-                            "file_id": "file_id",
-                            "tools": [{"type": "code_interpreter"}],
-                        }
-                    ],
-                    "metadata": {"foo": "string"},
-                }
-            ],
             instructions="instructions",
             max_completion_tokens=256,
             max_prompt_tokens=256,
             metadata={"foo": "string"},
             model="gpt-4o",
             parallel_tool_calls=True,
-            reasoning_effort="low",
             response_format="auto",
             stream=True,
             temperature=1,
+            thread={
+                "messages": [
+                    {
+                        "content": "string",
+                        "role": "user",
+                        "attachments": [
+                            {
+                                "file_id": "file_id",
+                                "tools": [{"type": "code_interpreter"}],
+                            }
+                        ],
+                        "metadata": {"foo": "string"},
+                    }
+                ],
+                "metadata": {"foo": "string"},
+                "tool_resources": {
+                    "code_interpreter": {"file_ids": ["string"]},
+                    "file_search": {
+                        "vector_store_ids": ["string"],
+                        "vector_stores": [
+                            {
+                                "chunking_strategy": {"type": "auto"},
+                                "file_ids": ["string"],
+                                "metadata": {"foo": "string"},
+                            }
+                        ],
+                    },
+                },
+            },
             tool_choice="none",
+            tool_resources={
+                "code_interpreter": {"file_ids": ["string"]},
+                "file_search": {"vector_store_ids": ["string"]},
+            },
             tools=[{"type": "code_interpreter"}],
             top_p=1,
             truncation_strategy={
@@ -556,7 +571,6 @@ class TestAsyncRuns:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncExCai) -> None:
         response = await async_client.threads.runs.with_raw_response.create(
-            thread_id="thread_id",
             assistant_id="assistant_id",
         )
 
@@ -569,7 +583,6 @@ class TestAsyncRuns:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncExCai) -> None:
         async with async_client.threads.runs.with_streaming_response.create(
-            thread_id="thread_id",
             assistant_id="assistant_id",
         ) as response:
             assert not response.is_closed
@@ -579,15 +592,6 @@ class TestAsyncRuns:
             assert_matches_type(RunCreateResponse, run, path=["response"])
 
         assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_create(self, async_client: AsyncExCai) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
-            await async_client.threads.runs.with_raw_response.create(
-                thread_id="",
-                assistant_id="assistant_id",
-            )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -637,68 +641,6 @@ class TestAsyncRuns:
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `run_id` but received ''"):
             await async_client.threads.runs.with_raw_response.retrieve(
-                run_id="",
-                thread_id="thread_id",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_update(self, async_client: AsyncExCai) -> None:
-        run = await async_client.threads.runs.update(
-            run_id="run_id",
-            thread_id="thread_id",
-        )
-        assert_matches_type(RunUpdateResponse, run, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_update_with_all_params(self, async_client: AsyncExCai) -> None:
-        run = await async_client.threads.runs.update(
-            run_id="run_id",
-            thread_id="thread_id",
-            metadata={"foo": "string"},
-        )
-        assert_matches_type(RunUpdateResponse, run, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_update(self, async_client: AsyncExCai) -> None:
-        response = await async_client.threads.runs.with_raw_response.update(
-            run_id="run_id",
-            thread_id="thread_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        run = await response.parse()
-        assert_matches_type(RunUpdateResponse, run, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_update(self, async_client: AsyncExCai) -> None:
-        async with async_client.threads.runs.with_streaming_response.update(
-            run_id="run_id",
-            thread_id="thread_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            run = await response.parse()
-            assert_matches_type(RunUpdateResponse, run, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_update(self, async_client: AsyncExCai) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
-            await async_client.threads.runs.with_raw_response.update(
-                run_id="run_id",
-                thread_id="",
-            )
-
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `run_id` but received ''"):
-            await async_client.threads.runs.with_raw_response.update(
                 run_id="",
                 thread_id="thread_id",
             )
@@ -759,17 +701,17 @@ class TestAsyncRuns:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_cancel(self, async_client: AsyncExCai) -> None:
-        run = await async_client.threads.runs.cancel(
+    async def test_method_cancel_run(self, async_client: AsyncExCai) -> None:
+        run = await async_client.threads.runs.cancel_run(
             run_id="run_id",
             thread_id="thread_id",
         )
-        assert_matches_type(RunCancelResponse, run, path=["response"])
+        assert_matches_type(RunCancelRunResponse, run, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_cancel(self, async_client: AsyncExCai) -> None:
-        response = await async_client.threads.runs.with_raw_response.cancel(
+    async def test_raw_response_cancel_run(self, async_client: AsyncExCai) -> None:
+        response = await async_client.threads.runs.with_raw_response.cancel_run(
             run_id="run_id",
             thread_id="thread_id",
         )
@@ -777,12 +719,12 @@ class TestAsyncRuns:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         run = await response.parse()
-        assert_matches_type(RunCancelResponse, run, path=["response"])
+        assert_matches_type(RunCancelRunResponse, run, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_cancel(self, async_client: AsyncExCai) -> None:
-        async with async_client.threads.runs.with_streaming_response.cancel(
+    async def test_streaming_response_cancel_run(self, async_client: AsyncExCai) -> None:
+        async with async_client.threads.runs.with_streaming_response.cancel_run(
             run_id="run_id",
             thread_id="thread_id",
         ) as response:
@@ -790,81 +732,66 @@ class TestAsyncRuns:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             run = await response.parse()
-            assert_matches_type(RunCancelResponse, run, path=["response"])
+            assert_matches_type(RunCancelRunResponse, run, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_cancel(self, async_client: AsyncExCai) -> None:
+    async def test_path_params_cancel_run(self, async_client: AsyncExCai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
-            await async_client.threads.runs.with_raw_response.cancel(
+            await async_client.threads.runs.with_raw_response.cancel_run(
                 run_id="run_id",
                 thread_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `run_id` but received ''"):
-            await async_client.threads.runs.with_raw_response.cancel(
+            await async_client.threads.runs.with_raw_response.cancel_run(
                 run_id="",
                 thread_id="thread_id",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_with_run(self, async_client: AsyncExCai) -> None:
-        run = await async_client.threads.runs.create_with_run(
+    async def test_method_create_run(self, async_client: AsyncExCai) -> None:
+        run = await async_client.threads.runs.create_run(
+            thread_id="thread_id",
             assistant_id="assistant_id",
         )
-        assert_matches_type(RunCreateWithRunResponse, run, path=["response"])
+        assert_matches_type(RunCreateRunResponse, run, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_with_run_with_all_params(self, async_client: AsyncExCai) -> None:
-        run = await async_client.threads.runs.create_with_run(
+    async def test_method_create_run_with_all_params(self, async_client: AsyncExCai) -> None:
+        run = await async_client.threads.runs.create_run(
+            thread_id="thread_id",
             assistant_id="assistant_id",
+            include=["step_details.tool_calls[*].file_search.results[*].content"],
+            additional_instructions="additional_instructions",
+            additional_messages=[
+                {
+                    "content": "string",
+                    "role": "user",
+                    "attachments": [
+                        {
+                            "file_id": "file_id",
+                            "tools": [{"type": "code_interpreter"}],
+                        }
+                    ],
+                    "metadata": {"foo": "string"},
+                }
+            ],
             instructions="instructions",
             max_completion_tokens=256,
             max_prompt_tokens=256,
             metadata={"foo": "string"},
             model="gpt-4o",
             parallel_tool_calls=True,
+            reasoning_effort="low",
             response_format="auto",
             stream=True,
             temperature=1,
-            thread={
-                "messages": [
-                    {
-                        "content": "string",
-                        "role": "user",
-                        "attachments": [
-                            {
-                                "file_id": "file_id",
-                                "tools": [{"type": "code_interpreter"}],
-                            }
-                        ],
-                        "metadata": {"foo": "string"},
-                    }
-                ],
-                "metadata": {"foo": "string"},
-                "tool_resources": {
-                    "code_interpreter": {"file_ids": ["string"]},
-                    "file_search": {
-                        "vector_store_ids": ["string"],
-                        "vector_stores": [
-                            {
-                                "chunking_strategy": {"type": "auto"},
-                                "file_ids": ["string"],
-                                "metadata": {"foo": "string"},
-                            }
-                        ],
-                    },
-                },
-            },
             tool_choice="none",
-            tool_resources={
-                "code_interpreter": {"file_ids": ["string"]},
-                "file_search": {"vector_store_ids": ["string"]},
-            },
             tools=[{"type": "code_interpreter"}],
             top_p=1,
             truncation_strategy={
@@ -872,33 +799,44 @@ class TestAsyncRuns:
                 "last_messages": 1,
             },
         )
-        assert_matches_type(RunCreateWithRunResponse, run, path=["response"])
+        assert_matches_type(RunCreateRunResponse, run, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_create_with_run(self, async_client: AsyncExCai) -> None:
-        response = await async_client.threads.runs.with_raw_response.create_with_run(
+    async def test_raw_response_create_run(self, async_client: AsyncExCai) -> None:
+        response = await async_client.threads.runs.with_raw_response.create_run(
+            thread_id="thread_id",
             assistant_id="assistant_id",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         run = await response.parse()
-        assert_matches_type(RunCreateWithRunResponse, run, path=["response"])
+        assert_matches_type(RunCreateRunResponse, run, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_create_with_run(self, async_client: AsyncExCai) -> None:
-        async with async_client.threads.runs.with_streaming_response.create_with_run(
+    async def test_streaming_response_create_run(self, async_client: AsyncExCai) -> None:
+        async with async_client.threads.runs.with_streaming_response.create_run(
+            thread_id="thread_id",
             assistant_id="assistant_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             run = await response.parse()
-            assert_matches_type(RunCreateWithRunResponse, run, path=["response"])
+            assert_matches_type(RunCreateRunResponse, run, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_create_run(self, async_client: AsyncExCai) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
+            await async_client.threads.runs.with_raw_response.create_run(
+                thread_id="",
+                assistant_id="assistant_id",
+            )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -971,4 +909,66 @@ class TestAsyncRuns:
                 run_id="",
                 thread_id="thread_id",
                 tool_outputs=[{}],
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_update_run(self, async_client: AsyncExCai) -> None:
+        run = await async_client.threads.runs.update_run(
+            run_id="run_id",
+            thread_id="thread_id",
+        )
+        assert_matches_type(RunUpdateRunResponse, run, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_update_run_with_all_params(self, async_client: AsyncExCai) -> None:
+        run = await async_client.threads.runs.update_run(
+            run_id="run_id",
+            thread_id="thread_id",
+            metadata={"foo": "string"},
+        )
+        assert_matches_type(RunUpdateRunResponse, run, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_update_run(self, async_client: AsyncExCai) -> None:
+        response = await async_client.threads.runs.with_raw_response.update_run(
+            run_id="run_id",
+            thread_id="thread_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        run = await response.parse()
+        assert_matches_type(RunUpdateRunResponse, run, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_update_run(self, async_client: AsyncExCai) -> None:
+        async with async_client.threads.runs.with_streaming_response.update_run(
+            run_id="run_id",
+            thread_id="thread_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            run = await response.parse()
+            assert_matches_type(RunUpdateRunResponse, run, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_update_run(self, async_client: AsyncExCai) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
+            await async_client.threads.runs.with_raw_response.update_run(
+                run_id="run_id",
+                thread_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `run_id` but received ''"):
+            await async_client.threads.runs.with_raw_response.update_run(
+                run_id="",
+                thread_id="thread_id",
             )

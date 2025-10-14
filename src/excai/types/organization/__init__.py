@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from .project_user import ProjectUser as ProjectUser
 from .user_list_params import UserListParams as UserListParams
 from .invite_list_params import InviteListParams as InviteListParams
 from .user_list_response import UserListResponse as UserListResponse
@@ -22,7 +21,6 @@ from .invite_delete_response import InviteDeleteResponse as InviteDeleteResponse
 from .user_retrieve_response import UserRetrieveResponse as UserRetrieveResponse
 from .certificate_list_params import CertificateListParams as CertificateListParams
 from .project_create_response import ProjectCreateResponse as ProjectCreateResponse
-from .project_service_account import ProjectServiceAccount as ProjectServiceAccount
 from .project_update_response import ProjectUpdateResponse as ProjectUpdateResponse
 from .usage_embeddings_params import UsageEmbeddingsParams as UsageEmbeddingsParams
 from .invite_retrieve_response import InviteRetrieveResponse as InviteRetrieveResponse
@@ -43,12 +41,15 @@ from .admin_api_key_list_response import AdminAPIKeyListResponse as AdminAPIKeyL
 from .certificate_activate_params import CertificateActivateParams as CertificateActivateParams
 from .certificate_delete_response import CertificateDeleteResponse as CertificateDeleteResponse
 from .certificate_retrieve_params import CertificateRetrieveParams as CertificateRetrieveParams
+from .certificate_update_response import CertificateUpdateResponse as CertificateUpdateResponse
+from .certificate_upload_response import CertificateUploadResponse as CertificateUploadResponse
 from .usage_audio_speeches_params import UsageAudioSpeechesParams as UsageAudioSpeechesParams
 from .usage_vector_stores_response import UsageVectorStoresResponse as UsageVectorStoresResponse
 from .admin_api_key_create_response import AdminAPIKeyCreateResponse as AdminAPIKeyCreateResponse
 from .admin_api_key_delete_response import AdminAPIKeyDeleteResponse as AdminAPIKeyDeleteResponse
 from .certificate_activate_response import CertificateActivateResponse as CertificateActivateResponse
 from .certificate_deactivate_params import CertificateDeactivateParams as CertificateDeactivateParams
+from .certificate_retrieve_response import CertificateRetrieveResponse as CertificateRetrieveResponse
 from .usage_audio_speeches_response import UsageAudioSpeechesResponse as UsageAudioSpeechesResponse
 from .admin_api_key_retrieve_response import AdminAPIKeyRetrieveResponse as AdminAPIKeyRetrieveResponse
 from .certificate_deactivate_response import CertificateDeactivateResponse as CertificateDeactivateResponse

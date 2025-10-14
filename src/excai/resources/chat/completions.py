@@ -21,16 +21,15 @@ from ...types.chat import (
     completion_list_params,
     completion_create_params,
     completion_update_params,
-    completion_get_messages_params,
+    completion_list_messages_params,
 )
 from ..._base_client import make_request_options
 from ...types.chat.completion_list_response import CompletionListResponse
 from ...types.chat.completion_create_response import CompletionCreateResponse
 from ...types.chat.completion_delete_response import CompletionDeleteResponse
 from ...types.chat.completion_update_response import CompletionUpdateResponse
-from ...types.evals.chat_completion_tool_param import ChatCompletionToolParam
 from ...types.chat.completion_retrieve_response import CompletionRetrieveResponse
-from ...types.chat.completion_get_messages_response import CompletionGetMessagesResponse
+from ...types.chat.completion_list_messages_response import CompletionListMessagesResponse
 
 __all__ = ["CompletionsResource", "AsyncCompletionsResource"]
 
@@ -141,7 +140,7 @@ class CompletionsResource(SyncAPIResource):
         stream_options: Optional[completion_create_params.StreamOptions] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         tool_choice: completion_create_params.ToolChoice | Omit = omit,
-        tools: Iterable[ChatCompletionToolParam] | Omit = omit,
+        tools: Iterable[completion_create_params.Tool] | Omit = omit,
         top_logprobs: Optional[int] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
         user: str | Omit = omit,
@@ -589,7 +588,7 @@ class CompletionsResource(SyncAPIResource):
             cast_to=CompletionDeleteResponse,
         )
 
-    def get_messages(
+    def list_messages(
         self,
         completion_id: str,
         *,
@@ -602,7 +601,7 @@ class CompletionsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> CompletionGetMessagesResponse:
+    ) -> CompletionListMessagesResponse:
         """Get the messages in a stored chat completion.
 
         Only Chat Completions that have
@@ -639,10 +638,10 @@ class CompletionsResource(SyncAPIResource):
                         "limit": limit,
                         "order": order,
                     },
-                    completion_get_messages_params.CompletionGetMessagesParams,
+                    completion_list_messages_params.CompletionListMessagesParams,
                 ),
             ),
-            cast_to=CompletionGetMessagesResponse,
+            cast_to=CompletionListMessagesResponse,
         )
 
 
@@ -752,7 +751,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
         stream_options: Optional[completion_create_params.StreamOptions] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         tool_choice: completion_create_params.ToolChoice | Omit = omit,
-        tools: Iterable[ChatCompletionToolParam] | Omit = omit,
+        tools: Iterable[completion_create_params.Tool] | Omit = omit,
         top_logprobs: Optional[int] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
         user: str | Omit = omit,
@@ -1200,7 +1199,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
             cast_to=CompletionDeleteResponse,
         )
 
-    async def get_messages(
+    async def list_messages(
         self,
         completion_id: str,
         *,
@@ -1213,7 +1212,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> CompletionGetMessagesResponse:
+    ) -> CompletionListMessagesResponse:
         """Get the messages in a stored chat completion.
 
         Only Chat Completions that have
@@ -1250,10 +1249,10 @@ class AsyncCompletionsResource(AsyncAPIResource):
                         "limit": limit,
                         "order": order,
                     },
-                    completion_get_messages_params.CompletionGetMessagesParams,
+                    completion_list_messages_params.CompletionListMessagesParams,
                 ),
             ),
-            cast_to=CompletionGetMessagesResponse,
+            cast_to=CompletionListMessagesResponse,
         )
 
 
@@ -1276,8 +1275,8 @@ class CompletionsResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             completions.delete,
         )
-        self.get_messages = to_raw_response_wrapper(
-            completions.get_messages,
+        self.list_messages = to_raw_response_wrapper(
+            completions.list_messages,
         )
 
 
@@ -1300,8 +1299,8 @@ class AsyncCompletionsResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             completions.delete,
         )
-        self.get_messages = async_to_raw_response_wrapper(
-            completions.get_messages,
+        self.list_messages = async_to_raw_response_wrapper(
+            completions.list_messages,
         )
 
 
@@ -1324,8 +1323,8 @@ class CompletionsResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             completions.delete,
         )
-        self.get_messages = to_streamed_response_wrapper(
-            completions.get_messages,
+        self.list_messages = to_streamed_response_wrapper(
+            completions.list_messages,
         )
 
 
@@ -1348,6 +1347,6 @@ class AsyncCompletionsResourceWithStreamingResponse:
         self.delete = async_to_streamed_response_wrapper(
             completions.delete,
         )
-        self.get_messages = async_to_streamed_response_wrapper(
-            completions.get_messages,
+        self.list_messages = async_to_streamed_response_wrapper(
+            completions.list_messages,
         )

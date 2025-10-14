@@ -3,17 +3,9 @@
 from typing import Dict, List, Union, Optional
 from typing_extensions import Literal, TypeAlias
 
+from pydantic import Field as FieldInfo
+
 from ..._models import BaseModel
-from .truncation_object import TruncationObject
-from .run_completion_usage import RunCompletionUsage
-from .run_tool_call_object import RunToolCallObject
-from ..shared.assistant_tools_code import AssistantToolsCode
-from ..shared.response_format_text import ResponseFormatText
-from .assistants_named_tool_choice import AssistantsNamedToolChoice
-from ..shared.assistant_tools_function import AssistantToolsFunction
-from ..shared.assistant_tools_file_search import AssistantToolsFileSearch
-from ..shared.response_format_json_object import ResponseFormatJsonObject
-from ..shared.response_format_json_schema import ResponseFormatJsonSchema
 
 __all__ = [
     "RunSubmitToolOutputsResponse",
@@ -21,9 +13,25 @@ __all__ = [
     "LastError",
     "RequiredAction",
     "RequiredActionSubmitToolOutputs",
+    "RequiredActionSubmitToolOutputsToolCall",
+    "RequiredActionSubmitToolOutputsToolCallFunction",
     "ResponseFormat",
+    "ResponseFormatResponseFormatText",
+    "ResponseFormatResponseFormatJsonObject",
+    "ResponseFormatResponseFormatJsonSchema",
+    "ResponseFormatResponseFormatJsonSchemaJsonSchema",
     "ToolChoice",
+    "ToolChoiceAssistantsNamedToolChoice",
+    "ToolChoiceAssistantsNamedToolChoiceFunction",
     "Tool",
+    "ToolAssistantToolsCode",
+    "ToolAssistantToolsFileSearch",
+    "ToolAssistantToolsFileSearchFileSearch",
+    "ToolAssistantToolsFileSearchFileSearchRankingOptions",
+    "ToolAssistantToolsFunction",
+    "ToolAssistantToolsFunctionFunction",
+    "TruncationStrategy",
+    "Usage",
 ]
 
 
@@ -44,8 +52,35 @@ class LastError(BaseModel):
     """A human-readable description of the error."""
 
 
+class RequiredActionSubmitToolOutputsToolCallFunction(BaseModel):
+    arguments: str
+    """The arguments that the model expects you to pass to the function."""
+
+    name: str
+    """The name of the function."""
+
+
+class RequiredActionSubmitToolOutputsToolCall(BaseModel):
+    id: str
+    """The ID of the tool call.
+
+    This ID must be referenced when you submit the tool outputs in using the
+    [Submit tool outputs to run](/docs/api-reference/runs/submitToolOutputs)
+    endpoint.
+    """
+
+    function: RequiredActionSubmitToolOutputsToolCallFunction
+    """The function definition."""
+
+    type: Literal["function"]
+    """The type of tool call the output is required for.
+
+    For now, this is always `function`.
+    """
+
+
 class RequiredActionSubmitToolOutputs(BaseModel):
-    tool_calls: List[RunToolCallObject]
+    tool_calls: List[RequiredActionSubmitToolOutputsToolCall]
     """A list of the relevant tool calls."""
 
 
@@ -57,13 +92,200 @@ class RequiredAction(BaseModel):
     """For now, this is always `submit_tool_outputs`."""
 
 
+class ResponseFormatResponseFormatText(BaseModel):
+    type: Literal["text"]
+    """The type of response format being defined. Always `text`."""
+
+
+class ResponseFormatResponseFormatJsonObject(BaseModel):
+    type: Literal["json_object"]
+    """The type of response format being defined. Always `json_object`."""
+
+
+class ResponseFormatResponseFormatJsonSchemaJsonSchema(BaseModel):
+    name: str
+    """The name of the response format.
+
+    Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length
+    of 64.
+    """
+
+    description: Optional[str] = None
+    """
+    A description of what the response format is for, used by the model to determine
+    how to respond in the format.
+    """
+
+    schema_: Optional[Dict[str, object]] = FieldInfo(alias="schema", default=None)
+    """
+    The schema for the response format, described as a JSON Schema object. Learn how
+    to build JSON schemas [here](https://json-schema.org/).
+    """
+
+    strict: Optional[bool] = None
+    """
+    Whether to enable strict schema adherence when generating the output. If set to
+    true, the model will always follow the exact schema defined in the `schema`
+    field. Only a subset of JSON Schema is supported when `strict` is `true`. To
+    learn more, read the
+    [Structured Outputs guide](/docs/guides/structured-outputs).
+    """
+
+
+class ResponseFormatResponseFormatJsonSchema(BaseModel):
+    json_schema: ResponseFormatResponseFormatJsonSchemaJsonSchema
+    """Structured Outputs configuration options, including a JSON Schema."""
+
+    type: Literal["json_schema"]
+    """The type of response format being defined. Always `json_schema`."""
+
+
 ResponseFormat: TypeAlias = Union[
-    Literal["auto"], ResponseFormatText, ResponseFormatJsonObject, ResponseFormatJsonSchema, None
+    Literal["auto"],
+    ResponseFormatResponseFormatText,
+    ResponseFormatResponseFormatJsonObject,
+    ResponseFormatResponseFormatJsonSchema,
+    None,
 ]
 
-ToolChoice: TypeAlias = Union[Literal["none", "auto", "required"], AssistantsNamedToolChoice, None]
 
-Tool: TypeAlias = Union[AssistantToolsCode, AssistantToolsFileSearch, AssistantToolsFunction]
+class ToolChoiceAssistantsNamedToolChoiceFunction(BaseModel):
+    name: str
+    """The name of the function to call."""
+
+
+class ToolChoiceAssistantsNamedToolChoice(BaseModel):
+    type: Literal["function", "code_interpreter", "file_search"]
+    """The type of the tool. If type is `function`, the function name must be set"""
+
+    function: Optional[ToolChoiceAssistantsNamedToolChoiceFunction] = None
+
+
+ToolChoice: TypeAlias = Union[Literal["none", "auto", "required"], ToolChoiceAssistantsNamedToolChoice, None]
+
+
+class ToolAssistantToolsCode(BaseModel):
+    type: Literal["code_interpreter"]
+    """The type of tool being defined: `code_interpreter`"""
+
+
+class ToolAssistantToolsFileSearchFileSearchRankingOptions(BaseModel):
+    score_threshold: float
+    """The score threshold for the file search.
+
+    All values must be a floating point number between 0 and 1.
+    """
+
+    ranker: Optional[Literal["auto", "default_2024_08_21"]] = None
+    """The ranker to use for the file search.
+
+    If not specified will use the `auto` ranker.
+    """
+
+
+class ToolAssistantToolsFileSearchFileSearch(BaseModel):
+    max_num_results: Optional[int] = None
+    """The maximum number of results the file search tool should output.
+
+    The default is 20 for `gpt-4*` models and 5 for `gpt-3.5-turbo`. This number
+    should be between 1 and 50 inclusive.
+
+    Note that the file search tool may output fewer than `max_num_results` results.
+    See the
+    [file search tool documentation](/docs/assistants/tools/file-search#customizing-file-search-settings)
+    for more information.
+    """
+
+    ranking_options: Optional[ToolAssistantToolsFileSearchFileSearchRankingOptions] = None
+    """The ranking options for the file search.
+
+    If not specified, the file search tool will use the `auto` ranker and a
+    score_threshold of 0.
+
+    See the
+    [file search tool documentation](/docs/assistants/tools/file-search#customizing-file-search-settings)
+    for more information.
+    """
+
+
+class ToolAssistantToolsFileSearch(BaseModel):
+    type: Literal["file_search"]
+    """The type of tool being defined: `file_search`"""
+
+    file_search: Optional[ToolAssistantToolsFileSearchFileSearch] = None
+    """Overrides for the file search tool."""
+
+
+class ToolAssistantToolsFunctionFunction(BaseModel):
+    name: str
+    """The name of the function to be called.
+
+    Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length
+    of 64.
+    """
+
+    description: Optional[str] = None
+    """
+    A description of what the function does, used by the model to choose when and
+    how to call the function.
+    """
+
+    parameters: Optional[Dict[str, object]] = None
+    """The parameters the functions accepts, described as a JSON Schema object.
+
+    See the [guide](/docs/guides/function-calling) for examples, and the
+    [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
+    documentation about the format.
+
+    Omitting `parameters` defines a function with an empty parameter list.
+    """
+
+    strict: Optional[bool] = None
+    """Whether to enable strict schema adherence when generating the function call.
+
+    If set to true, the model will follow the exact schema defined in the
+    `parameters` field. Only a subset of JSON Schema is supported when `strict` is
+    `true`. Learn more about Structured Outputs in the
+    [function calling guide](docs/guides/function-calling).
+    """
+
+
+class ToolAssistantToolsFunction(BaseModel):
+    function: ToolAssistantToolsFunctionFunction
+
+    type: Literal["function"]
+    """The type of tool being defined: `function`"""
+
+
+Tool: TypeAlias = Union[ToolAssistantToolsCode, ToolAssistantToolsFileSearch, ToolAssistantToolsFunction]
+
+
+class TruncationStrategy(BaseModel):
+    type: Literal["auto", "last_messages"]
+    """The truncation strategy to use for the thread.
+
+    The default is `auto`. If set to `last_messages`, the thread will be truncated
+    to the n most recent messages in the thread. When set to `auto`, messages in the
+    middle of the thread will be dropped to fit the context length of the model,
+    `max_prompt_tokens`.
+    """
+
+    last_messages: Optional[int] = None
+    """
+    The number of most recent messages from the thread when constructing the context
+    for the run.
+    """
+
+
+class Usage(BaseModel):
+    completion_tokens: int
+    """Number of completion tokens used over the course of the run."""
+
+    prompt_tokens: int
+    """Number of prompt tokens used over the course of the run."""
+
+    total_tokens: int
+    """Total number of tokens used (prompt + completion)."""
 
 
 class RunSubmitToolOutputsResponse(BaseModel):
@@ -216,13 +438,13 @@ class RunSubmitToolOutputsResponse(BaseModel):
     this run.
     """
 
-    truncation_strategy: Optional[TruncationObject] = None
+    truncation_strategy: Optional[TruncationStrategy] = None
     """Controls for how a thread will be truncated prior to the run.
 
     Use this to control the intial context window of the run.
     """
 
-    usage: Optional[RunCompletionUsage] = None
+    usage: Optional[Usage] = None
     """Usage statistics related to the run.
 
     This value will be `null` if the run is not in a terminal state (i.e.
