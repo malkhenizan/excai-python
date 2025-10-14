@@ -1,4 +1,4 @@
 configured_endpoints: 189
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/odel%2Fexcai-08b057e117004fdfe7b8f605f7a710ab3c0d30a99670199545437615acacf27b.yml
-openapi_spec_hash: cf432dbe286f69cfe94299728d4c1b8b
-config_hash: 704f332e8d99f837d4be13ce00bdd2b3
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/odel%2Fexcai-cb27d67daedf4e8919ef4d4d71e3e18467971ff26f209bb56792bdaa8e32bb15.yml
+openapi_spec_hash: 6624c7e389ec5c636c036f0c5d200ae5
+config_hash: 29219efa87a85eeae8af05ffa543ac7f

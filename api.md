@@ -701,6 +701,7 @@ Types:
 from excai.types.threads import (
     APIResponseFormatOption,
     APIToolChoiceOption,
+    AssistantsNamedToolChoice,
     Run,
     Truncation,
     RunListResponse,
@@ -776,10 +777,12 @@ Types:
 
 ```python
 from excai.types import (
+    AutoChunkingStrategyRequestParam,
     ChunkingStrategyRequestParam,
     ComparisonFilter,
     CompoundFilter,
     StaticChunkingStrategy,
+    StaticChunkingStrategyRequestParam,
     VectorStoreExpirationAfter,
     VectorStoreObject,
     VectorStoreListResponse,
