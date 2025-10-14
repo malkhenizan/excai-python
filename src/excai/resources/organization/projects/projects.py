@@ -94,7 +94,7 @@ class ProjectsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/odel-blue-squad/EXCAi-Server#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
         """
         return ProjectsResourceWithRawResponse(self)
 
@@ -103,7 +103,7 @@ class ProjectsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/odel-blue-squad/EXCAi-Server#with_streaming_response
+        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
         """
         return ProjectsResourceWithStreamingResponse(self)
 
@@ -344,7 +344,7 @@ class AsyncProjectsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/odel-blue-squad/EXCAi-Server#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncProjectsResourceWithRawResponse(self)
 
@@ -353,7 +353,7 @@ class AsyncProjectsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/odel-blue-squad/EXCAi-Server#with_streaming_response
+        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
         """
         return AsyncProjectsResourceWithStreamingResponse(self)
 
