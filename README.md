@@ -29,9 +29,12 @@ const client = new ExCai({
   apiKey: process.env['EXCAI_API_KEY'], // This is the default and can be omitted
 });
 
-const assistant = await client.assistants.create({ model: 'gpt-4o' });
+const completion = await client.chat.completions.create({
+  messages: [{ role: 'user', content: 'Hello, how are you?' }],
+  model: 'gpt-4o',
+});
 
-console.log(assistant.id);
+console.log(completion.id);
 ```
 
 ### Request & Response types
@@ -46,8 +49,7 @@ const client = new ExCai({
   apiKey: process.env['EXCAI_API_KEY'], // This is the default and can be omitted
 });
 
-const params: ExCai.AssistantCreateParams = { model: 'gpt-4o' };
-const assistant: ExCai.AssistantCreateResponse = await client.assistants.create(params);
+const completions: ExCai.Chat.CompletionListResponse = await client.chat.completions.list();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -102,7 +104,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const assistant = await client.assistants.create({ model: 'gpt-4o' }).catch(async (err) => {
+const completions = await client.chat.completions.list().catch(async (err) => {
   if (err instanceof ExCai.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -142,7 +144,7 @@ const client = new ExCai({
 });
 
 // Or, configure per-request:
-await client.assistants.create({ model: 'gpt-4o' }, {
+await client.chat.completions.list({
   maxRetries: 5,
 });
 ```
@@ -159,7 +161,7 @@ const client = new ExCai({
 });
 
 // Override per-request:
-await client.assistants.create({ model: 'gpt-4o' }, {
+await client.chat.completions.list({
   timeout: 5 * 1000,
 });
 ```
@@ -180,13 +182,13 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const client = new ExCai();
 
-const response = await client.assistants.create({ model: 'gpt-4o' }).asResponse();
+const response = await client.chat.completions.list().asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: assistant, response: raw } = await client.assistants.create({ model: 'gpt-4o' }).withResponse();
+const { data: completions, response: raw } = await client.chat.completions.list().withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(assistant.id);
+console.log(completions.first_id);
 ```
 
 ### Making custom/undocumented requests
@@ -290,12 +292,9 @@ const client = new ExCai({
 });
 
 // Override per-request:
-await client.assistants.create(
-  { model: 'gpt-4o' },
-  {
-    httpAgent: new http.Agent({ keepAlive: false }),
-  },
-);
+await client.chat.completions.list({
+  httpAgent: new http.Agent({ keepAlive: false }),
+});
 ```
 
 ## Semantic versioning
