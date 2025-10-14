@@ -16,9 +16,12 @@ The REST API documentation can be found on [main.excai.ai](https://main.excai.ai
 ## Installation
 
 ```sh
-# install from PyPI
-pip install excai
+# install from the production repo
+pip install git+ssh://git@github.com/malkhenizan/excai-python.git
 ```
+
+> [!NOTE]
+> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install excai`
 
 ## Usage
 
@@ -32,10 +35,16 @@ client = ExCai(
     api_key=os.environ.get("EXCAI_API_KEY"),  # This is the default and can be omitted
 )
 
-assistant = client.assistants.create(
+completion = client.chat.completions.create(
+    messages=[
+        {
+            "role": "user",
+            "content": "Hello, how are you?",
+        }
+    ],
     model="gpt-4o",
 )
-print(assistant.id)
+print(completion.id)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -58,10 +67,16 @@ client = AsyncExCai(
 
 
 async def main() -> None:
-    assistant = await client.assistants.create(
+    completion = await client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": "Hello, how are you?",
+            }
+        ],
         model="gpt-4o",
     )
-    print(assistant.id)
+    print(completion.id)
 
 
 asyncio.run(main())
@@ -76,8 +91,8 @@ By default, the async client uses `httpx` for HTTP requests. However, for improv
 You can enable this by installing `aiohttp`:
 
 ```sh
-# install from PyPI
-pip install excai[aiohttp]
+# install from the production repo
+pip install 'excai[aiohttp] @ git+ssh://git@github.com/malkhenizan/excai-python.git'
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
@@ -93,10 +108,16 @@ async def main() -> None:
         api_key="My API Key",
         http_client=DefaultAioHttpClient(),
     ) as client:
-        assistant = await client.assistants.create(
+        completion = await client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": "Hello, how are you?",
+                }
+            ],
             model="gpt-4o",
         )
-        print(assistant.id)
+        print(completion.id)
 
 
 asyncio.run(main())
@@ -120,11 +141,20 @@ from excai import ExCai
 
 client = ExCai()
 
-assistant = client.assistants.create(
+completion = client.chat.completions.create(
+    messages=[
+        {
+            "content": "string",
+            "role": "developer",
+        }
+    ],
     model="gpt-4o",
-    tool_resources={},
+    audio={
+        "format": "wav",
+        "voice": "ash",
+    },
 )
-print(assistant.tool_resources)
+print(completion.audio)
 ```
 
 ## File uploads
@@ -161,9 +191,7 @@ from excai import ExCai
 client = ExCai()
 
 try:
-    client.assistants.create(
-        model="gpt-4o",
-    )
+    client.chat.completions.list()
 except excai.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
@@ -206,9 +234,7 @@ client = ExCai(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).assistants.create(
-    model="gpt-4o",
-)
+client.with_options(max_retries=5).chat.completions.list()
 ```
 
 ### Timeouts
@@ -231,9 +257,7 @@ client = ExCai(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).assistants.create(
-    model="gpt-4o",
-)
+client.with_options(timeout=5.0).chat.completions.list()
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -274,13 +298,11 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from excai import ExCai
 
 client = ExCai()
-response = client.assistants.with_raw_response.create(
-    model="gpt-4o",
-)
+response = client.chat.completions.with_raw_response.list()
 print(response.headers.get('X-My-Header'))
 
-assistant = response.parse()  # get the object that `assistants.create()` would have returned
-print(assistant.id)
+completion = response.parse()  # get the object that `chat.completions.list()` would have returned
+print(completion.first_id)
 ```
 
 These methods return an [`APIResponse`](https://github.com/malkhenizan/excai-python/tree/main/src/excai/_response.py) object.
@@ -294,9 +316,7 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.assistants.with_streaming_response.create(
-    model="gpt-4o",
-) as response:
+with client.chat.completions.with_streaming_response.list() as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():
