@@ -4,8 +4,8 @@ from typing import Sequence
 
 import pytest
 
-from excai._types import FileTypes
-from excai._utils import extract_files
+from excai_sdk._types import FileTypes
+from excai_sdk._utils import extract_files
 
 
 def test_removes_files_from_input() -> None:

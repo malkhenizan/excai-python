@@ -9,8 +9,8 @@ import httpx
 import pytest
 from respx import MockRouter
 
-from excai import Excai, AsyncExcai
-from excai._response import (
+from excai_sdk import ExcaiSDK, AsyncExcaiSDK
+from excai_sdk._response import (
     BinaryAPIResponse,
     AsyncBinaryAPIResponse,
     StreamedBinaryAPIResponse,
@@ -25,7 +25,7 @@ class TestCalls:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    def test_method_create(self, client: Excai, respx_mock: MockRouter) -> None:
+    def test_method_create(self, client: ExcaiSDK, respx_mock: MockRouter) -> None:
         respx_mock.post("/realtime/calls").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
         call = client.realtime.calls.create(
             sdp="sdp",
@@ -37,7 +37,7 @@ class TestCalls:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    def test_method_create_with_all_params(self, client: Excai, respx_mock: MockRouter) -> None:
+    def test_method_create_with_all_params(self, client: ExcaiSDK, respx_mock: MockRouter) -> None:
         respx_mock.post("/realtime/calls").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
         call = client.realtime.calls.create(
             sdp="sdp",
@@ -104,7 +104,7 @@ class TestCalls:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    def test_raw_response_create(self, client: Excai, respx_mock: MockRouter) -> None:
+    def test_raw_response_create(self, client: ExcaiSDK, respx_mock: MockRouter) -> None:
         respx_mock.post("/realtime/calls").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
         call = client.realtime.calls.with_raw_response.create(
@@ -118,7 +118,7 @@ class TestCalls:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    def test_streaming_response_create(self, client: Excai, respx_mock: MockRouter) -> None:
+    def test_streaming_response_create(self, client: ExcaiSDK, respx_mock: MockRouter) -> None:
         respx_mock.post("/realtime/calls").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
         with client.realtime.calls.with_streaming_response.create(
             sdp="sdp",
@@ -134,7 +134,7 @@ class TestCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_accept(self, client: Excai) -> None:
+    def test_method_accept(self, client: ExcaiSDK) -> None:
         call = client.realtime.calls.accept(
             call_id="call_id",
             type="realtime",
@@ -143,7 +143,7 @@ class TestCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_accept_with_all_params(self, client: Excai) -> None:
+    def test_method_accept_with_all_params(self, client: ExcaiSDK) -> None:
         call = client.realtime.calls.accept(
             call_id="call_id",
             type="realtime",
@@ -204,7 +204,7 @@ class TestCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_accept(self, client: Excai) -> None:
+    def test_raw_response_accept(self, client: ExcaiSDK) -> None:
         response = client.realtime.calls.with_raw_response.accept(
             call_id="call_id",
             type="realtime",
@@ -217,7 +217,7 @@ class TestCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_accept(self, client: Excai) -> None:
+    def test_streaming_response_accept(self, client: ExcaiSDK) -> None:
         with client.realtime.calls.with_streaming_response.accept(
             call_id="call_id",
             type="realtime",
@@ -232,7 +232,7 @@ class TestCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_accept(self, client: Excai) -> None:
+    def test_path_params_accept(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `call_id` but received ''"):
             client.realtime.calls.with_raw_response.accept(
                 call_id="",
@@ -241,7 +241,7 @@ class TestCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_hangup(self, client: Excai) -> None:
+    def test_method_hangup(self, client: ExcaiSDK) -> None:
         call = client.realtime.calls.hangup(
             "call_id",
         )
@@ -249,7 +249,7 @@ class TestCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_hangup(self, client: Excai) -> None:
+    def test_raw_response_hangup(self, client: ExcaiSDK) -> None:
         response = client.realtime.calls.with_raw_response.hangup(
             "call_id",
         )
@@ -261,7 +261,7 @@ class TestCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_hangup(self, client: Excai) -> None:
+    def test_streaming_response_hangup(self, client: ExcaiSDK) -> None:
         with client.realtime.calls.with_streaming_response.hangup(
             "call_id",
         ) as response:
@@ -275,7 +275,7 @@ class TestCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_hangup(self, client: Excai) -> None:
+    def test_path_params_hangup(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `call_id` but received ''"):
             client.realtime.calls.with_raw_response.hangup(
                 "",
@@ -283,7 +283,7 @@ class TestCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_refer(self, client: Excai) -> None:
+    def test_method_refer(self, client: ExcaiSDK) -> None:
         call = client.realtime.calls.refer(
             call_id="call_id",
             target_uri="tel:+14155550123",
@@ -292,7 +292,7 @@ class TestCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_refer(self, client: Excai) -> None:
+    def test_raw_response_refer(self, client: ExcaiSDK) -> None:
         response = client.realtime.calls.with_raw_response.refer(
             call_id="call_id",
             target_uri="tel:+14155550123",
@@ -305,7 +305,7 @@ class TestCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_refer(self, client: Excai) -> None:
+    def test_streaming_response_refer(self, client: ExcaiSDK) -> None:
         with client.realtime.calls.with_streaming_response.refer(
             call_id="call_id",
             target_uri="tel:+14155550123",
@@ -320,7 +320,7 @@ class TestCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_refer(self, client: Excai) -> None:
+    def test_path_params_refer(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `call_id` but received ''"):
             client.realtime.calls.with_raw_response.refer(
                 call_id="",
@@ -329,7 +329,7 @@ class TestCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_reject(self, client: Excai) -> None:
+    def test_method_reject(self, client: ExcaiSDK) -> None:
         call = client.realtime.calls.reject(
             call_id="call_id",
         )
@@ -337,7 +337,7 @@ class TestCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_reject_with_all_params(self, client: Excai) -> None:
+    def test_method_reject_with_all_params(self, client: ExcaiSDK) -> None:
         call = client.realtime.calls.reject(
             call_id="call_id",
             status_code=486,
@@ -346,7 +346,7 @@ class TestCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_reject(self, client: Excai) -> None:
+    def test_raw_response_reject(self, client: ExcaiSDK) -> None:
         response = client.realtime.calls.with_raw_response.reject(
             call_id="call_id",
         )
@@ -358,7 +358,7 @@ class TestCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_reject(self, client: Excai) -> None:
+    def test_streaming_response_reject(self, client: ExcaiSDK) -> None:
         with client.realtime.calls.with_streaming_response.reject(
             call_id="call_id",
         ) as response:
@@ -372,7 +372,7 @@ class TestCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_reject(self, client: Excai) -> None:
+    def test_path_params_reject(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `call_id` but received ''"):
             client.realtime.calls.with_raw_response.reject(
                 call_id="",
@@ -386,7 +386,7 @@ class TestAsyncCalls:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    async def test_method_create(self, async_client: AsyncExcai, respx_mock: MockRouter) -> None:
+    async def test_method_create(self, async_client: AsyncExcaiSDK, respx_mock: MockRouter) -> None:
         respx_mock.post("/realtime/calls").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
         call = await async_client.realtime.calls.create(
             sdp="sdp",
@@ -398,7 +398,7 @@ class TestAsyncCalls:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    async def test_method_create_with_all_params(self, async_client: AsyncExcai, respx_mock: MockRouter) -> None:
+    async def test_method_create_with_all_params(self, async_client: AsyncExcaiSDK, respx_mock: MockRouter) -> None:
         respx_mock.post("/realtime/calls").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
         call = await async_client.realtime.calls.create(
             sdp="sdp",
@@ -465,7 +465,7 @@ class TestAsyncCalls:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    async def test_raw_response_create(self, async_client: AsyncExcai, respx_mock: MockRouter) -> None:
+    async def test_raw_response_create(self, async_client: AsyncExcaiSDK, respx_mock: MockRouter) -> None:
         respx_mock.post("/realtime/calls").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
         call = await async_client.realtime.calls.with_raw_response.create(
@@ -479,7 +479,7 @@ class TestAsyncCalls:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    async def test_streaming_response_create(self, async_client: AsyncExcai, respx_mock: MockRouter) -> None:
+    async def test_streaming_response_create(self, async_client: AsyncExcaiSDK, respx_mock: MockRouter) -> None:
         respx_mock.post("/realtime/calls").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
         async with async_client.realtime.calls.with_streaming_response.create(
             sdp="sdp",
@@ -495,7 +495,7 @@ class TestAsyncCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_accept(self, async_client: AsyncExcai) -> None:
+    async def test_method_accept(self, async_client: AsyncExcaiSDK) -> None:
         call = await async_client.realtime.calls.accept(
             call_id="call_id",
             type="realtime",
@@ -504,7 +504,7 @@ class TestAsyncCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_accept_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_accept_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         call = await async_client.realtime.calls.accept(
             call_id="call_id",
             type="realtime",
@@ -565,7 +565,7 @@ class TestAsyncCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_accept(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_accept(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.realtime.calls.with_raw_response.accept(
             call_id="call_id",
             type="realtime",
@@ -578,7 +578,7 @@ class TestAsyncCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_accept(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_accept(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.realtime.calls.with_streaming_response.accept(
             call_id="call_id",
             type="realtime",
@@ -593,7 +593,7 @@ class TestAsyncCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_accept(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_accept(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `call_id` but received ''"):
             await async_client.realtime.calls.with_raw_response.accept(
                 call_id="",
@@ -602,7 +602,7 @@ class TestAsyncCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_hangup(self, async_client: AsyncExcai) -> None:
+    async def test_method_hangup(self, async_client: AsyncExcaiSDK) -> None:
         call = await async_client.realtime.calls.hangup(
             "call_id",
         )
@@ -610,7 +610,7 @@ class TestAsyncCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_hangup(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_hangup(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.realtime.calls.with_raw_response.hangup(
             "call_id",
         )
@@ -622,7 +622,7 @@ class TestAsyncCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_hangup(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_hangup(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.realtime.calls.with_streaming_response.hangup(
             "call_id",
         ) as response:
@@ -636,7 +636,7 @@ class TestAsyncCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_hangup(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_hangup(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `call_id` but received ''"):
             await async_client.realtime.calls.with_raw_response.hangup(
                 "",
@@ -644,7 +644,7 @@ class TestAsyncCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_refer(self, async_client: AsyncExcai) -> None:
+    async def test_method_refer(self, async_client: AsyncExcaiSDK) -> None:
         call = await async_client.realtime.calls.refer(
             call_id="call_id",
             target_uri="tel:+14155550123",
@@ -653,7 +653,7 @@ class TestAsyncCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_refer(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_refer(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.realtime.calls.with_raw_response.refer(
             call_id="call_id",
             target_uri="tel:+14155550123",
@@ -666,7 +666,7 @@ class TestAsyncCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_refer(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_refer(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.realtime.calls.with_streaming_response.refer(
             call_id="call_id",
             target_uri="tel:+14155550123",
@@ -681,7 +681,7 @@ class TestAsyncCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_refer(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_refer(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `call_id` but received ''"):
             await async_client.realtime.calls.with_raw_response.refer(
                 call_id="",
@@ -690,7 +690,7 @@ class TestAsyncCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_reject(self, async_client: AsyncExcai) -> None:
+    async def test_method_reject(self, async_client: AsyncExcaiSDK) -> None:
         call = await async_client.realtime.calls.reject(
             call_id="call_id",
         )
@@ -698,7 +698,7 @@ class TestAsyncCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_reject_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_reject_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         call = await async_client.realtime.calls.reject(
             call_id="call_id",
             status_code=486,
@@ -707,7 +707,7 @@ class TestAsyncCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_reject(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_reject(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.realtime.calls.with_raw_response.reject(
             call_id="call_id",
         )
@@ -719,7 +719,7 @@ class TestAsyncCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_reject(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_reject(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.realtime.calls.with_streaming_response.reject(
             call_id="call_id",
         ) as response:
@@ -733,7 +733,7 @@ class TestAsyncCalls:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_reject(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_reject(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `call_id` but received ''"):
             await async_client.realtime.calls.with_raw_response.reject(
                 call_id="",

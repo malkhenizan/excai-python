@@ -7,9 +7,9 @@ from typing import Any, cast
 
 import pytest
 
-from excai import Excai, AsyncExcai
+from excai_sdk import ExcaiSDK, AsyncExcaiSDK
 from tests.utils import assert_matches_type
-from excai.types.fine_tuning.checkpoints import (
+from excai_sdk.types.fine_tuning.checkpoints import (
     PermissionDeleteResponse,
     ListFineTuningCheckpointPermissionResponse,
 )
@@ -22,7 +22,7 @@ class TestPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create(self, client: Excai) -> None:
+    def test_method_create(self, client: ExcaiSDK) -> None:
         permission = client.fine_tuning.checkpoints.permissions.create(
             fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
             project_ids=["string"],
@@ -31,7 +31,7 @@ class TestPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_create(self, client: Excai) -> None:
+    def test_raw_response_create(self, client: ExcaiSDK) -> None:
         response = client.fine_tuning.checkpoints.permissions.with_raw_response.create(
             fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
             project_ids=["string"],
@@ -44,7 +44,7 @@ class TestPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_create(self, client: Excai) -> None:
+    def test_streaming_response_create(self, client: ExcaiSDK) -> None:
         with client.fine_tuning.checkpoints.permissions.with_streaming_response.create(
             fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
             project_ids=["string"],
@@ -59,7 +59,7 @@ class TestPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_create(self, client: Excai) -> None:
+    def test_path_params_create(self, client: ExcaiSDK) -> None:
         with pytest.raises(
             ValueError, match=r"Expected a non-empty value for `fine_tuned_model_checkpoint` but received ''"
         ):
@@ -70,7 +70,7 @@ class TestPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_list(self, client: Excai) -> None:
+    def test_method_list(self, client: ExcaiSDK) -> None:
         permission = client.fine_tuning.checkpoints.permissions.list(
             fine_tuned_model_checkpoint="ft-AF1WoRqd3aJAHsqc9NY7iL8F",
         )
@@ -78,7 +78,7 @@ class TestPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_list_with_all_params(self, client: Excai) -> None:
+    def test_method_list_with_all_params(self, client: ExcaiSDK) -> None:
         permission = client.fine_tuning.checkpoints.permissions.list(
             fine_tuned_model_checkpoint="ft-AF1WoRqd3aJAHsqc9NY7iL8F",
             after="after",
@@ -90,7 +90,7 @@ class TestPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_list(self, client: Excai) -> None:
+    def test_raw_response_list(self, client: ExcaiSDK) -> None:
         response = client.fine_tuning.checkpoints.permissions.with_raw_response.list(
             fine_tuned_model_checkpoint="ft-AF1WoRqd3aJAHsqc9NY7iL8F",
         )
@@ -102,7 +102,7 @@ class TestPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_list(self, client: Excai) -> None:
+    def test_streaming_response_list(self, client: ExcaiSDK) -> None:
         with client.fine_tuning.checkpoints.permissions.with_streaming_response.list(
             fine_tuned_model_checkpoint="ft-AF1WoRqd3aJAHsqc9NY7iL8F",
         ) as response:
@@ -116,7 +116,7 @@ class TestPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_list(self, client: Excai) -> None:
+    def test_path_params_list(self, client: ExcaiSDK) -> None:
         with pytest.raises(
             ValueError, match=r"Expected a non-empty value for `fine_tuned_model_checkpoint` but received ''"
         ):
@@ -126,7 +126,7 @@ class TestPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_delete(self, client: Excai) -> None:
+    def test_method_delete(self, client: ExcaiSDK) -> None:
         permission = client.fine_tuning.checkpoints.permissions.delete(
             permission_id="cp_zc4Q7MP6XxulcVzj4MZdwsAB",
             fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
@@ -135,7 +135,7 @@ class TestPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_delete(self, client: Excai) -> None:
+    def test_raw_response_delete(self, client: ExcaiSDK) -> None:
         response = client.fine_tuning.checkpoints.permissions.with_raw_response.delete(
             permission_id="cp_zc4Q7MP6XxulcVzj4MZdwsAB",
             fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
@@ -148,7 +148,7 @@ class TestPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_delete(self, client: Excai) -> None:
+    def test_streaming_response_delete(self, client: ExcaiSDK) -> None:
         with client.fine_tuning.checkpoints.permissions.with_streaming_response.delete(
             permission_id="cp_zc4Q7MP6XxulcVzj4MZdwsAB",
             fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
@@ -163,7 +163,7 @@ class TestPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_delete(self, client: Excai) -> None:
+    def test_path_params_delete(self, client: ExcaiSDK) -> None:
         with pytest.raises(
             ValueError, match=r"Expected a non-empty value for `fine_tuned_model_checkpoint` but received ''"
         ):
@@ -186,7 +186,7 @@ class TestAsyncPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create(self, async_client: AsyncExcai) -> None:
+    async def test_method_create(self, async_client: AsyncExcaiSDK) -> None:
         permission = await async_client.fine_tuning.checkpoints.permissions.create(
             fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
             project_ids=["string"],
@@ -195,7 +195,7 @@ class TestAsyncPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_create(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_create(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.fine_tuning.checkpoints.permissions.with_raw_response.create(
             fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
             project_ids=["string"],
@@ -208,7 +208,7 @@ class TestAsyncPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_create(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.fine_tuning.checkpoints.permissions.with_streaming_response.create(
             fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
             project_ids=["string"],
@@ -223,7 +223,7 @@ class TestAsyncPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_create(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_create(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(
             ValueError, match=r"Expected a non-empty value for `fine_tuned_model_checkpoint` but received ''"
         ):
@@ -234,7 +234,7 @@ class TestAsyncPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_list(self, async_client: AsyncExcai) -> None:
+    async def test_method_list(self, async_client: AsyncExcaiSDK) -> None:
         permission = await async_client.fine_tuning.checkpoints.permissions.list(
             fine_tuned_model_checkpoint="ft-AF1WoRqd3aJAHsqc9NY7iL8F",
         )
@@ -242,7 +242,7 @@ class TestAsyncPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_list_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_list_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         permission = await async_client.fine_tuning.checkpoints.permissions.list(
             fine_tuned_model_checkpoint="ft-AF1WoRqd3aJAHsqc9NY7iL8F",
             after="after",
@@ -254,7 +254,7 @@ class TestAsyncPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_list(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_list(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.fine_tuning.checkpoints.permissions.with_raw_response.list(
             fine_tuned_model_checkpoint="ft-AF1WoRqd3aJAHsqc9NY7iL8F",
         )
@@ -266,7 +266,7 @@ class TestAsyncPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_list(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_list(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.fine_tuning.checkpoints.permissions.with_streaming_response.list(
             fine_tuned_model_checkpoint="ft-AF1WoRqd3aJAHsqc9NY7iL8F",
         ) as response:
@@ -280,7 +280,7 @@ class TestAsyncPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_list(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_list(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(
             ValueError, match=r"Expected a non-empty value for `fine_tuned_model_checkpoint` but received ''"
         ):
@@ -290,7 +290,7 @@ class TestAsyncPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_delete(self, async_client: AsyncExcai) -> None:
+    async def test_method_delete(self, async_client: AsyncExcaiSDK) -> None:
         permission = await async_client.fine_tuning.checkpoints.permissions.delete(
             permission_id="cp_zc4Q7MP6XxulcVzj4MZdwsAB",
             fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
@@ -299,7 +299,7 @@ class TestAsyncPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_delete(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_delete(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.fine_tuning.checkpoints.permissions.with_raw_response.delete(
             permission_id="cp_zc4Q7MP6XxulcVzj4MZdwsAB",
             fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
@@ -312,7 +312,7 @@ class TestAsyncPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_delete(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_delete(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.fine_tuning.checkpoints.permissions.with_streaming_response.delete(
             permission_id="cp_zc4Q7MP6XxulcVzj4MZdwsAB",
             fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
@@ -327,7 +327,7 @@ class TestAsyncPermissions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_delete(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_delete(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(
             ValueError, match=r"Expected a non-empty value for `fine_tuned_model_checkpoint` but received ''"
         ):

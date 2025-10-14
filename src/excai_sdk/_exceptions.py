@@ -18,11 +18,11 @@ __all__ = [
 ]
 
 
-class ExcaiError(Exception):
+class ExcaiSDKError(Exception):
     pass
 
 
-class APIError(ExcaiError):
+class APIError(ExcaiSDKError):
     message: str
     request: httpx.Request
 

@@ -7,13 +7,13 @@ from typing import Any, cast
 
 import pytest
 
-from excai import Excai, AsyncExcai
-from excai.types import (
+from excai_sdk import ExcaiSDK, AsyncExcaiSDK
+from tests.utils import assert_matches_type
+from excai_sdk.types import (
     RealtimeCreateSessionResponse,
     RealtimeCreateClientSecretResponse,
     RealtimeCreateTranscriptionSessionResponse,
 )
-from tests.utils import assert_matches_type
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -23,13 +23,13 @@ class TestRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_client_secret(self, client: Excai) -> None:
+    def test_method_create_client_secret(self, client: ExcaiSDK) -> None:
         realtime = client.realtime.create_client_secret()
         assert_matches_type(RealtimeCreateClientSecretResponse, realtime, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_client_secret_with_all_params(self, client: Excai) -> None:
+    def test_method_create_client_secret_with_all_params(self, client: ExcaiSDK) -> None:
         realtime = client.realtime.create_client_secret(
             expires_after={
                 "anchor": "created_at",
@@ -95,7 +95,7 @@ class TestRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_create_client_secret(self, client: Excai) -> None:
+    def test_raw_response_create_client_secret(self, client: ExcaiSDK) -> None:
         response = client.realtime.with_raw_response.create_client_secret()
 
         assert response.is_closed is True
@@ -105,7 +105,7 @@ class TestRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_create_client_secret(self, client: Excai) -> None:
+    def test_streaming_response_create_client_secret(self, client: ExcaiSDK) -> None:
         with client.realtime.with_streaming_response.create_client_secret() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -117,7 +117,7 @@ class TestRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_session(self, client: Excai) -> None:
+    def test_method_create_session(self, client: ExcaiSDK) -> None:
         realtime = client.realtime.create_session(
             client_secret={
                 "expires_at": 0,
@@ -128,7 +128,7 @@ class TestRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_session_with_all_params(self, client: Excai) -> None:
+    def test_method_create_session_with_all_params(self, client: ExcaiSDK) -> None:
         realtime = client.realtime.create_session(
             client_secret={
                 "expires_at": 0,
@@ -170,7 +170,7 @@ class TestRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_create_session(self, client: Excai) -> None:
+    def test_raw_response_create_session(self, client: ExcaiSDK) -> None:
         response = client.realtime.with_raw_response.create_session(
             client_secret={
                 "expires_at": 0,
@@ -185,7 +185,7 @@ class TestRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_create_session(self, client: Excai) -> None:
+    def test_streaming_response_create_session(self, client: ExcaiSDK) -> None:
         with client.realtime.with_streaming_response.create_session(
             client_secret={
                 "expires_at": 0,
@@ -202,13 +202,13 @@ class TestRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_transcription_session(self, client: Excai) -> None:
+    def test_method_create_transcription_session(self, client: ExcaiSDK) -> None:
         realtime = client.realtime.create_transcription_session()
         assert_matches_type(RealtimeCreateTranscriptionSessionResponse, realtime, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_transcription_session_with_all_params(self, client: Excai) -> None:
+    def test_method_create_transcription_session_with_all_params(self, client: ExcaiSDK) -> None:
         realtime = client.realtime.create_transcription_session(
             include=["item.input_audio_transcription.logprobs"],
             input_audio_format="pcm16",
@@ -229,7 +229,7 @@ class TestRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_create_transcription_session(self, client: Excai) -> None:
+    def test_raw_response_create_transcription_session(self, client: ExcaiSDK) -> None:
         response = client.realtime.with_raw_response.create_transcription_session()
 
         assert response.is_closed is True
@@ -239,7 +239,7 @@ class TestRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_create_transcription_session(self, client: Excai) -> None:
+    def test_streaming_response_create_transcription_session(self, client: ExcaiSDK) -> None:
         with client.realtime.with_streaming_response.create_transcription_session() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -257,13 +257,13 @@ class TestAsyncRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_client_secret(self, async_client: AsyncExcai) -> None:
+    async def test_method_create_client_secret(self, async_client: AsyncExcaiSDK) -> None:
         realtime = await async_client.realtime.create_client_secret()
         assert_matches_type(RealtimeCreateClientSecretResponse, realtime, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_client_secret_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_create_client_secret_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         realtime = await async_client.realtime.create_client_secret(
             expires_after={
                 "anchor": "created_at",
@@ -329,7 +329,7 @@ class TestAsyncRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_create_client_secret(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_create_client_secret(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.realtime.with_raw_response.create_client_secret()
 
         assert response.is_closed is True
@@ -339,7 +339,7 @@ class TestAsyncRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_create_client_secret(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_create_client_secret(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.realtime.with_streaming_response.create_client_secret() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -351,7 +351,7 @@ class TestAsyncRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_session(self, async_client: AsyncExcai) -> None:
+    async def test_method_create_session(self, async_client: AsyncExcaiSDK) -> None:
         realtime = await async_client.realtime.create_session(
             client_secret={
                 "expires_at": 0,
@@ -362,7 +362,7 @@ class TestAsyncRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_session_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_create_session_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         realtime = await async_client.realtime.create_session(
             client_secret={
                 "expires_at": 0,
@@ -404,7 +404,7 @@ class TestAsyncRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_create_session(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_create_session(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.realtime.with_raw_response.create_session(
             client_secret={
                 "expires_at": 0,
@@ -419,7 +419,7 @@ class TestAsyncRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_create_session(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_create_session(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.realtime.with_streaming_response.create_session(
             client_secret={
                 "expires_at": 0,
@@ -436,13 +436,13 @@ class TestAsyncRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_transcription_session(self, async_client: AsyncExcai) -> None:
+    async def test_method_create_transcription_session(self, async_client: AsyncExcaiSDK) -> None:
         realtime = await async_client.realtime.create_transcription_session()
         assert_matches_type(RealtimeCreateTranscriptionSessionResponse, realtime, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_transcription_session_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_create_transcription_session_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         realtime = await async_client.realtime.create_transcription_session(
             include=["item.input_audio_transcription.logprobs"],
             input_audio_format="pcm16",
@@ -463,7 +463,7 @@ class TestAsyncRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_create_transcription_session(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_create_transcription_session(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.realtime.with_raw_response.create_transcription_session()
 
         assert response.is_closed is True
@@ -473,7 +473,7 @@ class TestAsyncRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_create_transcription_session(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_create_transcription_session(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.realtime.with_streaming_response.create_transcription_session() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

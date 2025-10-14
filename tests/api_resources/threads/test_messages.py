@@ -7,9 +7,9 @@ from typing import Any, cast
 
 import pytest
 
-from excai import Excai, AsyncExcai
+from excai_sdk import ExcaiSDK, AsyncExcaiSDK
 from tests.utils import assert_matches_type
-from excai.types.threads import (
+from excai_sdk.types.threads import (
     Message,
     MessageListResponse,
     MessageDeleteResponse,
@@ -23,7 +23,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create(self, client: Excai) -> None:
+    def test_method_create(self, client: ExcaiSDK) -> None:
         message = client.threads.messages.create(
             thread_id="thread_id",
             content="string",
@@ -33,7 +33,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_with_all_params(self, client: Excai) -> None:
+    def test_method_create_with_all_params(self, client: ExcaiSDK) -> None:
         message = client.threads.messages.create(
             thread_id="thread_id",
             content="string",
@@ -50,7 +50,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_create(self, client: Excai) -> None:
+    def test_raw_response_create(self, client: ExcaiSDK) -> None:
         response = client.threads.messages.with_raw_response.create(
             thread_id="thread_id",
             content="string",
@@ -64,7 +64,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_create(self, client: Excai) -> None:
+    def test_streaming_response_create(self, client: ExcaiSDK) -> None:
         with client.threads.messages.with_streaming_response.create(
             thread_id="thread_id",
             content="string",
@@ -80,7 +80,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_create(self, client: Excai) -> None:
+    def test_path_params_create(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
             client.threads.messages.with_raw_response.create(
                 thread_id="",
@@ -90,7 +90,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve(self, client: Excai) -> None:
+    def test_method_retrieve(self, client: ExcaiSDK) -> None:
         message = client.threads.messages.retrieve(
             message_id="message_id",
             thread_id="thread_id",
@@ -99,7 +99,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_retrieve(self, client: Excai) -> None:
+    def test_raw_response_retrieve(self, client: ExcaiSDK) -> None:
         response = client.threads.messages.with_raw_response.retrieve(
             message_id="message_id",
             thread_id="thread_id",
@@ -112,7 +112,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve(self, client: Excai) -> None:
+    def test_streaming_response_retrieve(self, client: ExcaiSDK) -> None:
         with client.threads.messages.with_streaming_response.retrieve(
             message_id="message_id",
             thread_id="thread_id",
@@ -127,7 +127,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_retrieve(self, client: Excai) -> None:
+    def test_path_params_retrieve(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
             client.threads.messages.with_raw_response.retrieve(
                 message_id="message_id",
@@ -142,7 +142,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_update(self, client: Excai) -> None:
+    def test_method_update(self, client: ExcaiSDK) -> None:
         message = client.threads.messages.update(
             message_id="message_id",
             thread_id="thread_id",
@@ -151,7 +151,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_update_with_all_params(self, client: Excai) -> None:
+    def test_method_update_with_all_params(self, client: ExcaiSDK) -> None:
         message = client.threads.messages.update(
             message_id="message_id",
             thread_id="thread_id",
@@ -161,7 +161,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_update(self, client: Excai) -> None:
+    def test_raw_response_update(self, client: ExcaiSDK) -> None:
         response = client.threads.messages.with_raw_response.update(
             message_id="message_id",
             thread_id="thread_id",
@@ -174,7 +174,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_update(self, client: Excai) -> None:
+    def test_streaming_response_update(self, client: ExcaiSDK) -> None:
         with client.threads.messages.with_streaming_response.update(
             message_id="message_id",
             thread_id="thread_id",
@@ -189,7 +189,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_update(self, client: Excai) -> None:
+    def test_path_params_update(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
             client.threads.messages.with_raw_response.update(
                 message_id="message_id",
@@ -204,7 +204,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_list(self, client: Excai) -> None:
+    def test_method_list(self, client: ExcaiSDK) -> None:
         message = client.threads.messages.list(
             thread_id="thread_id",
         )
@@ -212,7 +212,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_list_with_all_params(self, client: Excai) -> None:
+    def test_method_list_with_all_params(self, client: ExcaiSDK) -> None:
         message = client.threads.messages.list(
             thread_id="thread_id",
             after="after",
@@ -225,7 +225,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_list(self, client: Excai) -> None:
+    def test_raw_response_list(self, client: ExcaiSDK) -> None:
         response = client.threads.messages.with_raw_response.list(
             thread_id="thread_id",
         )
@@ -237,7 +237,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_list(self, client: Excai) -> None:
+    def test_streaming_response_list(self, client: ExcaiSDK) -> None:
         with client.threads.messages.with_streaming_response.list(
             thread_id="thread_id",
         ) as response:
@@ -251,7 +251,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_list(self, client: Excai) -> None:
+    def test_path_params_list(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
             client.threads.messages.with_raw_response.list(
                 thread_id="",
@@ -259,7 +259,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_delete(self, client: Excai) -> None:
+    def test_method_delete(self, client: ExcaiSDK) -> None:
         message = client.threads.messages.delete(
             message_id="message_id",
             thread_id="thread_id",
@@ -268,7 +268,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_delete(self, client: Excai) -> None:
+    def test_raw_response_delete(self, client: ExcaiSDK) -> None:
         response = client.threads.messages.with_raw_response.delete(
             message_id="message_id",
             thread_id="thread_id",
@@ -281,7 +281,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_delete(self, client: Excai) -> None:
+    def test_streaming_response_delete(self, client: ExcaiSDK) -> None:
         with client.threads.messages.with_streaming_response.delete(
             message_id="message_id",
             thread_id="thread_id",
@@ -296,7 +296,7 @@ class TestMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_delete(self, client: Excai) -> None:
+    def test_path_params_delete(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
             client.threads.messages.with_raw_response.delete(
                 message_id="message_id",
@@ -317,7 +317,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create(self, async_client: AsyncExcai) -> None:
+    async def test_method_create(self, async_client: AsyncExcaiSDK) -> None:
         message = await async_client.threads.messages.create(
             thread_id="thread_id",
             content="string",
@@ -327,7 +327,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_create_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         message = await async_client.threads.messages.create(
             thread_id="thread_id",
             content="string",
@@ -344,7 +344,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_create(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_create(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.threads.messages.with_raw_response.create(
             thread_id="thread_id",
             content="string",
@@ -358,7 +358,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_create(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.threads.messages.with_streaming_response.create(
             thread_id="thread_id",
             content="string",
@@ -374,7 +374,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_create(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_create(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
             await async_client.threads.messages.with_raw_response.create(
                 thread_id="",
@@ -384,7 +384,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncExcai) -> None:
+    async def test_method_retrieve(self, async_client: AsyncExcaiSDK) -> None:
         message = await async_client.threads.messages.retrieve(
             message_id="message_id",
             thread_id="thread_id",
@@ -393,7 +393,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_retrieve(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.threads.messages.with_raw_response.retrieve(
             message_id="message_id",
             thread_id="thread_id",
@@ -406,7 +406,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_retrieve(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.threads.messages.with_streaming_response.retrieve(
             message_id="message_id",
             thread_id="thread_id",
@@ -421,7 +421,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_retrieve(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
             await async_client.threads.messages.with_raw_response.retrieve(
                 message_id="message_id",
@@ -436,7 +436,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_update(self, async_client: AsyncExcai) -> None:
+    async def test_method_update(self, async_client: AsyncExcaiSDK) -> None:
         message = await async_client.threads.messages.update(
             message_id="message_id",
             thread_id="thread_id",
@@ -445,7 +445,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_update_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_update_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         message = await async_client.threads.messages.update(
             message_id="message_id",
             thread_id="thread_id",
@@ -455,7 +455,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_update(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_update(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.threads.messages.with_raw_response.update(
             message_id="message_id",
             thread_id="thread_id",
@@ -468,7 +468,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_update(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_update(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.threads.messages.with_streaming_response.update(
             message_id="message_id",
             thread_id="thread_id",
@@ -483,7 +483,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_update(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_update(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
             await async_client.threads.messages.with_raw_response.update(
                 message_id="message_id",
@@ -498,7 +498,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_list(self, async_client: AsyncExcai) -> None:
+    async def test_method_list(self, async_client: AsyncExcaiSDK) -> None:
         message = await async_client.threads.messages.list(
             thread_id="thread_id",
         )
@@ -506,7 +506,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_list_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_list_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         message = await async_client.threads.messages.list(
             thread_id="thread_id",
             after="after",
@@ -519,7 +519,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_list(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_list(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.threads.messages.with_raw_response.list(
             thread_id="thread_id",
         )
@@ -531,7 +531,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_list(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_list(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.threads.messages.with_streaming_response.list(
             thread_id="thread_id",
         ) as response:
@@ -545,7 +545,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_list(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_list(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
             await async_client.threads.messages.with_raw_response.list(
                 thread_id="",
@@ -553,7 +553,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_delete(self, async_client: AsyncExcai) -> None:
+    async def test_method_delete(self, async_client: AsyncExcaiSDK) -> None:
         message = await async_client.threads.messages.delete(
             message_id="message_id",
             thread_id="thread_id",
@@ -562,7 +562,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_delete(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_delete(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.threads.messages.with_raw_response.delete(
             message_id="message_id",
             thread_id="thread_id",
@@ -575,7 +575,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_delete(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_delete(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.threads.messages.with_streaming_response.delete(
             message_id="message_id",
             thread_id="thread_id",
@@ -590,7 +590,7 @@ class TestAsyncMessages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_delete(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_delete(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `thread_id` but received ''"):
             await async_client.threads.messages.with_raw_response.delete(
                 message_id="message_id",
