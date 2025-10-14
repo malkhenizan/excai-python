@@ -7,9 +7,9 @@ from typing import Any, cast
 
 import pytest
 
-from excai import Excai, AsyncExcai
+from excai_sdk import ExcaiSDK, AsyncExcaiSDK
 from tests.utils import assert_matches_type
-from excai.types.organization.projects import (
+from excai_sdk.types.organization.projects import (
     ProjectRateLimit,
     RateLimitListResponse,
 )
@@ -22,7 +22,7 @@ class TestRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_update(self, client: Excai) -> None:
+    def test_method_update(self, client: ExcaiSDK) -> None:
         rate_limit = client.organization.projects.rate_limits.update(
             rate_limit_id="rate_limit_id",
             project_id="project_id",
@@ -31,7 +31,7 @@ class TestRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_update_with_all_params(self, client: Excai) -> None:
+    def test_method_update_with_all_params(self, client: ExcaiSDK) -> None:
         rate_limit = client.organization.projects.rate_limits.update(
             rate_limit_id="rate_limit_id",
             project_id="project_id",
@@ -46,7 +46,7 @@ class TestRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_update(self, client: Excai) -> None:
+    def test_raw_response_update(self, client: ExcaiSDK) -> None:
         response = client.organization.projects.rate_limits.with_raw_response.update(
             rate_limit_id="rate_limit_id",
             project_id="project_id",
@@ -59,7 +59,7 @@ class TestRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_update(self, client: Excai) -> None:
+    def test_streaming_response_update(self, client: ExcaiSDK) -> None:
         with client.organization.projects.rate_limits.with_streaming_response.update(
             rate_limit_id="rate_limit_id",
             project_id="project_id",
@@ -74,7 +74,7 @@ class TestRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_update(self, client: Excai) -> None:
+    def test_path_params_update(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             client.organization.projects.rate_limits.with_raw_response.update(
                 rate_limit_id="rate_limit_id",
@@ -89,7 +89,7 @@ class TestRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_list(self, client: Excai) -> None:
+    def test_method_list(self, client: ExcaiSDK) -> None:
         rate_limit = client.organization.projects.rate_limits.list(
             project_id="project_id",
         )
@@ -97,7 +97,7 @@ class TestRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_list_with_all_params(self, client: Excai) -> None:
+    def test_method_list_with_all_params(self, client: ExcaiSDK) -> None:
         rate_limit = client.organization.projects.rate_limits.list(
             project_id="project_id",
             after="after",
@@ -108,7 +108,7 @@ class TestRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_list(self, client: Excai) -> None:
+    def test_raw_response_list(self, client: ExcaiSDK) -> None:
         response = client.organization.projects.rate_limits.with_raw_response.list(
             project_id="project_id",
         )
@@ -120,7 +120,7 @@ class TestRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_list(self, client: Excai) -> None:
+    def test_streaming_response_list(self, client: ExcaiSDK) -> None:
         with client.organization.projects.rate_limits.with_streaming_response.list(
             project_id="project_id",
         ) as response:
@@ -134,7 +134,7 @@ class TestRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_list(self, client: Excai) -> None:
+    def test_path_params_list(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             client.organization.projects.rate_limits.with_raw_response.list(
                 project_id="",
@@ -148,7 +148,7 @@ class TestAsyncRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_update(self, async_client: AsyncExcai) -> None:
+    async def test_method_update(self, async_client: AsyncExcaiSDK) -> None:
         rate_limit = await async_client.organization.projects.rate_limits.update(
             rate_limit_id="rate_limit_id",
             project_id="project_id",
@@ -157,7 +157,7 @@ class TestAsyncRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_update_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_update_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         rate_limit = await async_client.organization.projects.rate_limits.update(
             rate_limit_id="rate_limit_id",
             project_id="project_id",
@@ -172,7 +172,7 @@ class TestAsyncRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_update(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_update(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.organization.projects.rate_limits.with_raw_response.update(
             rate_limit_id="rate_limit_id",
             project_id="project_id",
@@ -185,7 +185,7 @@ class TestAsyncRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_update(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_update(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.organization.projects.rate_limits.with_streaming_response.update(
             rate_limit_id="rate_limit_id",
             project_id="project_id",
@@ -200,7 +200,7 @@ class TestAsyncRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_update(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_update(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             await async_client.organization.projects.rate_limits.with_raw_response.update(
                 rate_limit_id="rate_limit_id",
@@ -215,7 +215,7 @@ class TestAsyncRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_list(self, async_client: AsyncExcai) -> None:
+    async def test_method_list(self, async_client: AsyncExcaiSDK) -> None:
         rate_limit = await async_client.organization.projects.rate_limits.list(
             project_id="project_id",
         )
@@ -223,7 +223,7 @@ class TestAsyncRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_list_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_list_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         rate_limit = await async_client.organization.projects.rate_limits.list(
             project_id="project_id",
             after="after",
@@ -234,7 +234,7 @@ class TestAsyncRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_list(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_list(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.organization.projects.rate_limits.with_raw_response.list(
             project_id="project_id",
         )
@@ -246,7 +246,7 @@ class TestAsyncRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_list(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_list(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.organization.projects.rate_limits.with_streaming_response.list(
             project_id="project_id",
         ) as response:
@@ -260,7 +260,7 @@ class TestAsyncRateLimits:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_list(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_list(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             await async_client.organization.projects.rate_limits.with_raw_response.list(
                 project_id="",

@@ -5,15 +5,25 @@ import typing as _t
 from . import types
 from ._types import NOT_GIVEN, Omit, NoneType, NotGiven, Transport, ProxiesTypes, omit, not_given
 from ._utils import file_from_path
-from ._client import Excai, Client, Stream, Timeout, Transport, AsyncExcai, AsyncClient, AsyncStream, RequestOptions
+from ._client import (
+    Client,
+    Stream,
+    Timeout,
+    ExcaiSDK,
+    Transport,
+    AsyncClient,
+    AsyncStream,
+    AsyncExcaiSDK,
+    RequestOptions,
+)
 from ._models import BaseModel
 from ._version import __title__, __version__
 from ._response import APIResponse as APIResponse, AsyncAPIResponse as AsyncAPIResponse
 from ._constants import DEFAULT_TIMEOUT, DEFAULT_MAX_RETRIES, DEFAULT_CONNECTION_LIMITS
 from ._exceptions import (
     APIError,
-    ExcaiError,
     ConflictError,
+    ExcaiSDKError,
     NotFoundError,
     APIStatusError,
     RateLimitError,
@@ -41,7 +51,7 @@ __all__ = [
     "not_given",
     "Omit",
     "omit",
-    "ExcaiError",
+    "ExcaiSDKError",
     "APIError",
     "APIStatusError",
     "APITimeoutError",
@@ -61,8 +71,8 @@ __all__ = [
     "AsyncClient",
     "Stream",
     "AsyncStream",
-    "Excai",
-    "AsyncExcai",
+    "ExcaiSDK",
+    "AsyncExcaiSDK",
     "file_from_path",
     "BaseModel",
     "DEFAULT_TIMEOUT",
@@ -81,12 +91,12 @@ _setup_logging()
 # Update the __module__ attribute for exported symbols so that
 # error messages point to this module instead of the module
 # it was originally defined in, e.g.
-# excai._exceptions.NotFoundError -> excai.NotFoundError
+# excai_sdk._exceptions.NotFoundError -> excai_sdk.NotFoundError
 __locals = locals()
 for __name in __all__:
     if not __name.startswith("__"):
         try:
-            __locals[__name].__module__ = "excai"
+            __locals[__name].__module__ = "excai_sdk"
         except (TypeError, AttributeError):
             # Some of our exported symbols are builtins which we can't set attributes for.
             pass

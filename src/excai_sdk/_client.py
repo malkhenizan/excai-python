@@ -36,7 +36,7 @@ from .resources import (
     moderations,
 )
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import ExcaiError, APIStatusError
+from ._exceptions import ExcaiSDKError, APIStatusError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -53,10 +53,19 @@ from .resources.organization import organization
 from .resources.conversations import conversations
 from .resources.vector_stores import vector_stores
 
-__all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Excai", "AsyncExcai", "Client", "AsyncClient"]
+__all__ = [
+    "Timeout",
+    "Transport",
+    "ProxiesTypes",
+    "RequestOptions",
+    "ExcaiSDK",
+    "AsyncExcaiSDK",
+    "Client",
+    "AsyncClient",
+]
 
 
-class Excai(SyncAPIClient):
+class ExcaiSDK(SyncAPIClient):
     assistants: assistants.AssistantsResource
     audio: audio.AudioResource
     batches: batches.BatchesResource
@@ -79,8 +88,8 @@ class Excai(SyncAPIClient):
     vector_stores: vector_stores.VectorStoresResource
     videos: videos.VideosResource
     chatkit: chatkit.ChatkitResource
-    with_raw_response: ExcaiWithRawResponse
-    with_streaming_response: ExcaiWithStreamedResponse
+    with_raw_response: ExcaiSDKWithRawResponse
+    with_streaming_response: ExcaiSDKWithStreamedResponse
 
     # client options
     api_key: str
@@ -108,20 +117,20 @@ class Excai(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous Excai client instance.
+        """Construct a new synchronous ExcaiSDK client instance.
 
         This automatically infers the `api_key` argument from the `EXCAI_API_KEY` environment variable if it is not provided.
         """
         if api_key is None:
             api_key = os.environ.get("EXCAI_API_KEY")
         if api_key is None:
-            raise ExcaiError(
+            raise ExcaiSDKError(
                 "The api_key client option must be set either by passing api_key to the client or by setting the EXCAI_API_KEY environment variable"
             )
         self.api_key = api_key
 
         if base_url is None:
-            base_url = os.environ.get("EXCAI_BASE_URL")
+            base_url = os.environ.get("EXCAI_SDK_BASE_URL")
         if base_url is None:
             base_url = f"https://api-main.excai.ai/api/v1"
 
@@ -158,8 +167,8 @@ class Excai(SyncAPIClient):
         self.vector_stores = vector_stores.VectorStoresResource(self)
         self.videos = videos.VideosResource(self)
         self.chatkit = chatkit.ChatkitResource(self)
-        self.with_raw_response = ExcaiWithRawResponse(self)
-        self.with_streaming_response = ExcaiWithStreamedResponse(self)
+        self.with_raw_response = ExcaiSDKWithRawResponse(self)
+        self.with_streaming_response = ExcaiSDKWithStreamedResponse(self)
 
     @property
     @override
@@ -266,7 +275,7 @@ class Excai(SyncAPIClient):
         return APIStatusError(err_msg, response=response, body=body)
 
 
-class AsyncExcai(AsyncAPIClient):
+class AsyncExcaiSDK(AsyncAPIClient):
     assistants: assistants.AsyncAssistantsResource
     audio: audio.AsyncAudioResource
     batches: batches.AsyncBatchesResource
@@ -289,8 +298,8 @@ class AsyncExcai(AsyncAPIClient):
     vector_stores: vector_stores.AsyncVectorStoresResource
     videos: videos.AsyncVideosResource
     chatkit: chatkit.AsyncChatkitResource
-    with_raw_response: AsyncExcaiWithRawResponse
-    with_streaming_response: AsyncExcaiWithStreamedResponse
+    with_raw_response: AsyncExcaiSDKWithRawResponse
+    with_streaming_response: AsyncExcaiSDKWithStreamedResponse
 
     # client options
     api_key: str
@@ -318,20 +327,20 @@ class AsyncExcai(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async AsyncExcai client instance.
+        """Construct a new async AsyncExcaiSDK client instance.
 
         This automatically infers the `api_key` argument from the `EXCAI_API_KEY` environment variable if it is not provided.
         """
         if api_key is None:
             api_key = os.environ.get("EXCAI_API_KEY")
         if api_key is None:
-            raise ExcaiError(
+            raise ExcaiSDKError(
                 "The api_key client option must be set either by passing api_key to the client or by setting the EXCAI_API_KEY environment variable"
             )
         self.api_key = api_key
 
         if base_url is None:
-            base_url = os.environ.get("EXCAI_BASE_URL")
+            base_url = os.environ.get("EXCAI_SDK_BASE_URL")
         if base_url is None:
             base_url = f"https://api-main.excai.ai/api/v1"
 
@@ -368,8 +377,8 @@ class AsyncExcai(AsyncAPIClient):
         self.vector_stores = vector_stores.AsyncVectorStoresResource(self)
         self.videos = videos.AsyncVideosResource(self)
         self.chatkit = chatkit.AsyncChatkitResource(self)
-        self.with_raw_response = AsyncExcaiWithRawResponse(self)
-        self.with_streaming_response = AsyncExcaiWithStreamedResponse(self)
+        self.with_raw_response = AsyncExcaiSDKWithRawResponse(self)
+        self.with_streaming_response = AsyncExcaiSDKWithStreamedResponse(self)
 
     @property
     @override
@@ -476,8 +485,8 @@ class AsyncExcai(AsyncAPIClient):
         return APIStatusError(err_msg, response=response, body=body)
 
 
-class ExcaiWithRawResponse:
-    def __init__(self, client: Excai) -> None:
+class ExcaiSDKWithRawResponse:
+    def __init__(self, client: ExcaiSDK) -> None:
         self.assistants = assistants.AssistantsResourceWithRawResponse(client.assistants)
         self.audio = audio.AudioResourceWithRawResponse(client.audio)
         self.batches = batches.BatchesResourceWithRawResponse(client.batches)
@@ -502,8 +511,8 @@ class ExcaiWithRawResponse:
         self.chatkit = chatkit.ChatkitResourceWithRawResponse(client.chatkit)
 
 
-class AsyncExcaiWithRawResponse:
-    def __init__(self, client: AsyncExcai) -> None:
+class AsyncExcaiSDKWithRawResponse:
+    def __init__(self, client: AsyncExcaiSDK) -> None:
         self.assistants = assistants.AsyncAssistantsResourceWithRawResponse(client.assistants)
         self.audio = audio.AsyncAudioResourceWithRawResponse(client.audio)
         self.batches = batches.AsyncBatchesResourceWithRawResponse(client.batches)
@@ -528,8 +537,8 @@ class AsyncExcaiWithRawResponse:
         self.chatkit = chatkit.AsyncChatkitResourceWithRawResponse(client.chatkit)
 
 
-class ExcaiWithStreamedResponse:
-    def __init__(self, client: Excai) -> None:
+class ExcaiSDKWithStreamedResponse:
+    def __init__(self, client: ExcaiSDK) -> None:
         self.assistants = assistants.AssistantsResourceWithStreamingResponse(client.assistants)
         self.audio = audio.AudioResourceWithStreamingResponse(client.audio)
         self.batches = batches.BatchesResourceWithStreamingResponse(client.batches)
@@ -554,8 +563,8 @@ class ExcaiWithStreamedResponse:
         self.chatkit = chatkit.ChatkitResourceWithStreamingResponse(client.chatkit)
 
 
-class AsyncExcaiWithStreamedResponse:
-    def __init__(self, client: AsyncExcai) -> None:
+class AsyncExcaiSDKWithStreamedResponse:
+    def __init__(self, client: AsyncExcaiSDK) -> None:
         self.assistants = assistants.AsyncAssistantsResourceWithStreamingResponse(client.assistants)
         self.audio = audio.AsyncAudioResourceWithStreamingResponse(client.audio)
         self.batches = batches.AsyncBatchesResourceWithStreamingResponse(client.batches)
@@ -580,6 +589,6 @@ class AsyncExcaiWithStreamedResponse:
         self.chatkit = chatkit.AsyncChatkitResourceWithStreamingResponse(client.chatkit)
 
 
-Client = Excai
+Client = ExcaiSDK
 
-AsyncClient = AsyncExcai
+AsyncClient = AsyncExcaiSDK

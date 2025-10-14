@@ -7,10 +7,10 @@ from typing import Any, cast
 
 import pytest
 
-from excai import Excai, AsyncExcai
-from excai.types import ConversationDeleteResponse
+from excai_sdk import ExcaiSDK, AsyncExcaiSDK
 from tests.utils import assert_matches_type
-from excai.types.conversations import ConversationResource
+from excai_sdk.types import ConversationDeleteResponse
+from excai_sdk.types.conversations import ConversationResource
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -20,13 +20,13 @@ class TestConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create(self, client: Excai) -> None:
+    def test_method_create(self, client: ExcaiSDK) -> None:
         conversation = client.conversations.create()
         assert_matches_type(ConversationResource, conversation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_with_all_params(self, client: Excai) -> None:
+    def test_method_create_with_all_params(self, client: ExcaiSDK) -> None:
         conversation = client.conversations.create(
             items=[
                 {
@@ -41,7 +41,7 @@ class TestConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_create(self, client: Excai) -> None:
+    def test_raw_response_create(self, client: ExcaiSDK) -> None:
         response = client.conversations.with_raw_response.create()
 
         assert response.is_closed is True
@@ -51,7 +51,7 @@ class TestConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_create(self, client: Excai) -> None:
+    def test_streaming_response_create(self, client: ExcaiSDK) -> None:
         with client.conversations.with_streaming_response.create() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -63,7 +63,7 @@ class TestConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve(self, client: Excai) -> None:
+    def test_method_retrieve(self, client: ExcaiSDK) -> None:
         conversation = client.conversations.retrieve(
             "conv_123",
         )
@@ -71,7 +71,7 @@ class TestConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_retrieve(self, client: Excai) -> None:
+    def test_raw_response_retrieve(self, client: ExcaiSDK) -> None:
         response = client.conversations.with_raw_response.retrieve(
             "conv_123",
         )
@@ -83,7 +83,7 @@ class TestConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve(self, client: Excai) -> None:
+    def test_streaming_response_retrieve(self, client: ExcaiSDK) -> None:
         with client.conversations.with_streaming_response.retrieve(
             "conv_123",
         ) as response:
@@ -97,7 +97,7 @@ class TestConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_retrieve(self, client: Excai) -> None:
+    def test_path_params_retrieve(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_id` but received ''"):
             client.conversations.with_raw_response.retrieve(
                 "",
@@ -105,7 +105,7 @@ class TestConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_update(self, client: Excai) -> None:
+    def test_method_update(self, client: ExcaiSDK) -> None:
         conversation = client.conversations.update(
             conversation_id="conv_123",
             metadata={"foo": "string"},
@@ -114,7 +114,7 @@ class TestConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_update(self, client: Excai) -> None:
+    def test_raw_response_update(self, client: ExcaiSDK) -> None:
         response = client.conversations.with_raw_response.update(
             conversation_id="conv_123",
             metadata={"foo": "string"},
@@ -127,7 +127,7 @@ class TestConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_update(self, client: Excai) -> None:
+    def test_streaming_response_update(self, client: ExcaiSDK) -> None:
         with client.conversations.with_streaming_response.update(
             conversation_id="conv_123",
             metadata={"foo": "string"},
@@ -142,7 +142,7 @@ class TestConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_update(self, client: Excai) -> None:
+    def test_path_params_update(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_id` but received ''"):
             client.conversations.with_raw_response.update(
                 conversation_id="",
@@ -151,7 +151,7 @@ class TestConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_delete(self, client: Excai) -> None:
+    def test_method_delete(self, client: ExcaiSDK) -> None:
         conversation = client.conversations.delete(
             "conv_123",
         )
@@ -159,7 +159,7 @@ class TestConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_delete(self, client: Excai) -> None:
+    def test_raw_response_delete(self, client: ExcaiSDK) -> None:
         response = client.conversations.with_raw_response.delete(
             "conv_123",
         )
@@ -171,7 +171,7 @@ class TestConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_delete(self, client: Excai) -> None:
+    def test_streaming_response_delete(self, client: ExcaiSDK) -> None:
         with client.conversations.with_streaming_response.delete(
             "conv_123",
         ) as response:
@@ -185,7 +185,7 @@ class TestConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_delete(self, client: Excai) -> None:
+    def test_path_params_delete(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_id` but received ''"):
             client.conversations.with_raw_response.delete(
                 "",
@@ -199,13 +199,13 @@ class TestAsyncConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create(self, async_client: AsyncExcai) -> None:
+    async def test_method_create(self, async_client: AsyncExcaiSDK) -> None:
         conversation = await async_client.conversations.create()
         assert_matches_type(ConversationResource, conversation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_create_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         conversation = await async_client.conversations.create(
             items=[
                 {
@@ -220,7 +220,7 @@ class TestAsyncConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_create(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_create(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.conversations.with_raw_response.create()
 
         assert response.is_closed is True
@@ -230,7 +230,7 @@ class TestAsyncConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_create(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.conversations.with_streaming_response.create() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -242,7 +242,7 @@ class TestAsyncConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncExcai) -> None:
+    async def test_method_retrieve(self, async_client: AsyncExcaiSDK) -> None:
         conversation = await async_client.conversations.retrieve(
             "conv_123",
         )
@@ -250,7 +250,7 @@ class TestAsyncConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_retrieve(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.conversations.with_raw_response.retrieve(
             "conv_123",
         )
@@ -262,7 +262,7 @@ class TestAsyncConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_retrieve(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.conversations.with_streaming_response.retrieve(
             "conv_123",
         ) as response:
@@ -276,7 +276,7 @@ class TestAsyncConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_retrieve(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_id` but received ''"):
             await async_client.conversations.with_raw_response.retrieve(
                 "",
@@ -284,7 +284,7 @@ class TestAsyncConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_update(self, async_client: AsyncExcai) -> None:
+    async def test_method_update(self, async_client: AsyncExcaiSDK) -> None:
         conversation = await async_client.conversations.update(
             conversation_id="conv_123",
             metadata={"foo": "string"},
@@ -293,7 +293,7 @@ class TestAsyncConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_update(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_update(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.conversations.with_raw_response.update(
             conversation_id="conv_123",
             metadata={"foo": "string"},
@@ -306,7 +306,7 @@ class TestAsyncConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_update(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_update(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.conversations.with_streaming_response.update(
             conversation_id="conv_123",
             metadata={"foo": "string"},
@@ -321,7 +321,7 @@ class TestAsyncConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_update(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_update(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_id` but received ''"):
             await async_client.conversations.with_raw_response.update(
                 conversation_id="",
@@ -330,7 +330,7 @@ class TestAsyncConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_delete(self, async_client: AsyncExcai) -> None:
+    async def test_method_delete(self, async_client: AsyncExcaiSDK) -> None:
         conversation = await async_client.conversations.delete(
             "conv_123",
         )
@@ -338,7 +338,7 @@ class TestAsyncConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_delete(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_delete(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.conversations.with_raw_response.delete(
             "conv_123",
         )
@@ -350,7 +350,7 @@ class TestAsyncConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_delete(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_delete(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.conversations.with_streaming_response.delete(
             "conv_123",
         ) as response:
@@ -364,7 +364,7 @@ class TestAsyncConversations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_delete(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_delete(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_id` but received ''"):
             await async_client.conversations.with_raw_response.delete(
                 "",

@@ -7,9 +7,9 @@ from typing import Any, cast
 
 import pytest
 
-from excai import Excai, AsyncExcai
-from excai.types import ChatkitUploadFileResponse
+from excai_sdk import ExcaiSDK, AsyncExcaiSDK
 from tests.utils import assert_matches_type
+from excai_sdk.types import ChatkitUploadFileResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -19,7 +19,7 @@ class TestChatkit:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_upload_file(self, client: Excai) -> None:
+    def test_method_upload_file(self, client: ExcaiSDK) -> None:
         chatkit = client.chatkit.upload_file(
             file=b"raw file contents",
         )
@@ -27,7 +27,7 @@ class TestChatkit:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_upload_file(self, client: Excai) -> None:
+    def test_raw_response_upload_file(self, client: ExcaiSDK) -> None:
         response = client.chatkit.with_raw_response.upload_file(
             file=b"raw file contents",
         )
@@ -39,7 +39,7 @@ class TestChatkit:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_upload_file(self, client: Excai) -> None:
+    def test_streaming_response_upload_file(self, client: ExcaiSDK) -> None:
         with client.chatkit.with_streaming_response.upload_file(
             file=b"raw file contents",
         ) as response:
@@ -59,7 +59,7 @@ class TestAsyncChatkit:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_upload_file(self, async_client: AsyncExcai) -> None:
+    async def test_method_upload_file(self, async_client: AsyncExcaiSDK) -> None:
         chatkit = await async_client.chatkit.upload_file(
             file=b"raw file contents",
         )
@@ -67,7 +67,7 @@ class TestAsyncChatkit:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_upload_file(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_upload_file(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.chatkit.with_raw_response.upload_file(
             file=b"raw file contents",
         )
@@ -79,7 +79,7 @@ class TestAsyncChatkit:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_upload_file(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_upload_file(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.chatkit.with_streaming_response.upload_file(
             file=b"raw file contents",
         ) as response:

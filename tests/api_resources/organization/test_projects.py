@@ -7,9 +7,9 @@ from typing import Any, cast
 
 import pytest
 
-from excai import Excai, AsyncExcai
+from excai_sdk import ExcaiSDK, AsyncExcaiSDK
 from tests.utils import assert_matches_type
-from excai.types.organization import (
+from excai_sdk.types.organization import (
     Project,
     ProjectListResponse,
 )
@@ -22,7 +22,7 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create(self, client: Excai) -> None:
+    def test_method_create(self, client: ExcaiSDK) -> None:
         project = client.organization.projects.create(
             name="name",
         )
@@ -30,7 +30,7 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_with_all_params(self, client: Excai) -> None:
+    def test_method_create_with_all_params(self, client: ExcaiSDK) -> None:
         project = client.organization.projects.create(
             name="name",
             geography="US",
@@ -39,7 +39,7 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_create(self, client: Excai) -> None:
+    def test_raw_response_create(self, client: ExcaiSDK) -> None:
         response = client.organization.projects.with_raw_response.create(
             name="name",
         )
@@ -51,7 +51,7 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_create(self, client: Excai) -> None:
+    def test_streaming_response_create(self, client: ExcaiSDK) -> None:
         with client.organization.projects.with_streaming_response.create(
             name="name",
         ) as response:
@@ -65,7 +65,7 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve(self, client: Excai) -> None:
+    def test_method_retrieve(self, client: ExcaiSDK) -> None:
         project = client.organization.projects.retrieve(
             "project_id",
         )
@@ -73,7 +73,7 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_retrieve(self, client: Excai) -> None:
+    def test_raw_response_retrieve(self, client: ExcaiSDK) -> None:
         response = client.organization.projects.with_raw_response.retrieve(
             "project_id",
         )
@@ -85,7 +85,7 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve(self, client: Excai) -> None:
+    def test_streaming_response_retrieve(self, client: ExcaiSDK) -> None:
         with client.organization.projects.with_streaming_response.retrieve(
             "project_id",
         ) as response:
@@ -99,7 +99,7 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_retrieve(self, client: Excai) -> None:
+    def test_path_params_retrieve(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             client.organization.projects.with_raw_response.retrieve(
                 "",
@@ -107,7 +107,7 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_update(self, client: Excai) -> None:
+    def test_method_update(self, client: ExcaiSDK) -> None:
         project = client.organization.projects.update(
             project_id="project_id",
             name="name",
@@ -116,7 +116,7 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_update(self, client: Excai) -> None:
+    def test_raw_response_update(self, client: ExcaiSDK) -> None:
         response = client.organization.projects.with_raw_response.update(
             project_id="project_id",
             name="name",
@@ -129,7 +129,7 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_update(self, client: Excai) -> None:
+    def test_streaming_response_update(self, client: ExcaiSDK) -> None:
         with client.organization.projects.with_streaming_response.update(
             project_id="project_id",
             name="name",
@@ -144,7 +144,7 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_update(self, client: Excai) -> None:
+    def test_path_params_update(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             client.organization.projects.with_raw_response.update(
                 project_id="",
@@ -153,13 +153,13 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_list(self, client: Excai) -> None:
+    def test_method_list(self, client: ExcaiSDK) -> None:
         project = client.organization.projects.list()
         assert_matches_type(ProjectListResponse, project, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_list_with_all_params(self, client: Excai) -> None:
+    def test_method_list_with_all_params(self, client: ExcaiSDK) -> None:
         project = client.organization.projects.list(
             after="after",
             include_archived=True,
@@ -169,7 +169,7 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_list(self, client: Excai) -> None:
+    def test_raw_response_list(self, client: ExcaiSDK) -> None:
         response = client.organization.projects.with_raw_response.list()
 
         assert response.is_closed is True
@@ -179,7 +179,7 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_list(self, client: Excai) -> None:
+    def test_streaming_response_list(self, client: ExcaiSDK) -> None:
         with client.organization.projects.with_streaming_response.list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -191,7 +191,7 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_archive(self, client: Excai) -> None:
+    def test_method_archive(self, client: ExcaiSDK) -> None:
         project = client.organization.projects.archive(
             "project_id",
         )
@@ -199,7 +199,7 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_archive(self, client: Excai) -> None:
+    def test_raw_response_archive(self, client: ExcaiSDK) -> None:
         response = client.organization.projects.with_raw_response.archive(
             "project_id",
         )
@@ -211,7 +211,7 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_archive(self, client: Excai) -> None:
+    def test_streaming_response_archive(self, client: ExcaiSDK) -> None:
         with client.organization.projects.with_streaming_response.archive(
             "project_id",
         ) as response:
@@ -225,7 +225,7 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_archive(self, client: Excai) -> None:
+    def test_path_params_archive(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             client.organization.projects.with_raw_response.archive(
                 "",
@@ -239,7 +239,7 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create(self, async_client: AsyncExcai) -> None:
+    async def test_method_create(self, async_client: AsyncExcaiSDK) -> None:
         project = await async_client.organization.projects.create(
             name="name",
         )
@@ -247,7 +247,7 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_create_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         project = await async_client.organization.projects.create(
             name="name",
             geography="US",
@@ -256,7 +256,7 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_create(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_create(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.organization.projects.with_raw_response.create(
             name="name",
         )
@@ -268,7 +268,7 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_create(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.organization.projects.with_streaming_response.create(
             name="name",
         ) as response:
@@ -282,7 +282,7 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncExcai) -> None:
+    async def test_method_retrieve(self, async_client: AsyncExcaiSDK) -> None:
         project = await async_client.organization.projects.retrieve(
             "project_id",
         )
@@ -290,7 +290,7 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_retrieve(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.organization.projects.with_raw_response.retrieve(
             "project_id",
         )
@@ -302,7 +302,7 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_retrieve(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.organization.projects.with_streaming_response.retrieve(
             "project_id",
         ) as response:
@@ -316,7 +316,7 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_retrieve(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             await async_client.organization.projects.with_raw_response.retrieve(
                 "",
@@ -324,7 +324,7 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_update(self, async_client: AsyncExcai) -> None:
+    async def test_method_update(self, async_client: AsyncExcaiSDK) -> None:
         project = await async_client.organization.projects.update(
             project_id="project_id",
             name="name",
@@ -333,7 +333,7 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_update(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_update(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.organization.projects.with_raw_response.update(
             project_id="project_id",
             name="name",
@@ -346,7 +346,7 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_update(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_update(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.organization.projects.with_streaming_response.update(
             project_id="project_id",
             name="name",
@@ -361,7 +361,7 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_update(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_update(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             await async_client.organization.projects.with_raw_response.update(
                 project_id="",
@@ -370,13 +370,13 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_list(self, async_client: AsyncExcai) -> None:
+    async def test_method_list(self, async_client: AsyncExcaiSDK) -> None:
         project = await async_client.organization.projects.list()
         assert_matches_type(ProjectListResponse, project, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_list_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_list_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         project = await async_client.organization.projects.list(
             after="after",
             include_archived=True,
@@ -386,7 +386,7 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_list(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_list(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.organization.projects.with_raw_response.list()
 
         assert response.is_closed is True
@@ -396,7 +396,7 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_list(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_list(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.organization.projects.with_streaming_response.list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -408,7 +408,7 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_archive(self, async_client: AsyncExcai) -> None:
+    async def test_method_archive(self, async_client: AsyncExcaiSDK) -> None:
         project = await async_client.organization.projects.archive(
             "project_id",
         )
@@ -416,7 +416,7 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_archive(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_archive(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.organization.projects.with_raw_response.archive(
             "project_id",
         )
@@ -428,7 +428,7 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_archive(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_archive(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.organization.projects.with_streaming_response.archive(
             "project_id",
         ) as response:
@@ -442,7 +442,7 @@ class TestAsyncProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_archive(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_archive(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             await async_client.organization.projects.with_raw_response.archive(
                 "",
