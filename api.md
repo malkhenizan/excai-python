@@ -6,7 +6,6 @@ Types:
 from excai.types import (
     AssistantObject,
     AssistantSupportedModels,
-    AssistantTool,
     FileSearchRanker,
     ReasoningEffort,
     AssistantListResponse,

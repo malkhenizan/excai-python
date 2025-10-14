@@ -38,7 +38,6 @@ from ....types.threads.run import Run
 from ....types.reasoning_effort import ReasoningEffort
 from ....types.chat.metadata_param import MetadataParam
 from ....types.create_thread_param import CreateThreadParam
-from ....types.assistant_tool_param import AssistantToolParam
 from ....types.threads.truncation_param import TruncationParam
 from ....types.threads.run_list_response import RunListResponse
 from ....types.assistant_supported_models import AssistantSupportedModels
@@ -92,7 +91,7 @@ class RunsResource(SyncAPIResource):
         stream: Optional[bool] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         tool_choice: Optional[APIToolChoiceOptionParam] | Omit = omit,
-        tools: Optional[Iterable[AssistantToolParam]] | Omit = omit,
+        tools: Optional[Iterable[run_create_params.Tool]] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
         truncation_strategy: Optional[TruncationParam] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -499,7 +498,7 @@ class RunsResource(SyncAPIResource):
         thread: CreateThreadParam | Omit = omit,
         tool_choice: Optional[APIToolChoiceOptionParam] | Omit = omit,
         tool_resources: Optional[run_create_with_run_params.ToolResources] | Omit = omit,
-        tools: Optional[Iterable[AssistantToolParam]] | Omit = omit,
+        tools: Optional[Iterable[run_create_with_run_params.Tool]] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
         truncation_strategy: Optional[TruncationParam] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -739,7 +738,7 @@ class AsyncRunsResource(AsyncAPIResource):
         stream: Optional[bool] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         tool_choice: Optional[APIToolChoiceOptionParam] | Omit = omit,
-        tools: Optional[Iterable[AssistantToolParam]] | Omit = omit,
+        tools: Optional[Iterable[run_create_params.Tool]] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
         truncation_strategy: Optional[TruncationParam] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -1146,7 +1145,7 @@ class AsyncRunsResource(AsyncAPIResource):
         thread: CreateThreadParam | Omit = omit,
         tool_choice: Optional[APIToolChoiceOptionParam] | Omit = omit,
         tool_resources: Optional[run_create_with_run_params.ToolResources] | Omit = omit,
-        tools: Optional[Iterable[AssistantToolParam]] | Omit = omit,
+        tools: Optional[Iterable[run_create_with_run_params.Tool]] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
         truncation_strategy: Optional[TruncationParam] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.

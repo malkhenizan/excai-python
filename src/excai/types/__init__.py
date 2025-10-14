@@ -14,7 +14,6 @@ from .video_size import VideoSize as VideoSize
 from .video_model import VideoModel as VideoModel
 from .response_tool import ResponseTool as ResponseTool
 from .video_seconds import VideoSeconds as VideoSeconds
-from .assistant_tool import AssistantTool as AssistantTool
 from .partial_images import PartialImages as PartialImages
 from .usage_response import UsageResponse as UsageResponse
 from .video_resource import VideoResource as VideoResource
@@ -48,7 +47,6 @@ from .response_tool_param import ResponseToolParam as ResponseToolParam
 from .vector_store_object import VectorStoreObject as VectorStoreObject
 from .video_create_params import VideoCreateParams as VideoCreateParams
 from .video_list_response import VideoListResponse as VideoListResponse
-from .assistant_tool_param import AssistantToolParam as AssistantToolParam
 from .audit_log_actor_user import AuditLogActorUser as AuditLogActorUser
 from .audit_log_event_type import AuditLogEventType as AuditLogEventType
 from .eval_delete_response import EvalDeleteResponse as EvalDeleteResponse
