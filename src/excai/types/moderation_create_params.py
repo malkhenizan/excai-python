@@ -9,15 +9,15 @@ from .._types import SequenceNotStr
 
 __all__ = [
     "ModerationCreateParams",
-    "InputModerationMultiModalArray",
-    "InputModerationMultiModalArrayImageURL",
-    "InputModerationMultiModalArrayImageURLImageURL",
-    "InputModerationMultiModalArrayText",
+    "InputUnionMember2",
+    "InputUnionMember2UnionMember0",
+    "InputUnionMember2UnionMember0ImageURL",
+    "InputUnionMember2UnionMember1",
 ]
 
 
 class ModerationCreateParams(TypedDict, total=False):
-    input: Required[Union[str, SequenceNotStr[str], Iterable[InputModerationMultiModalArray]]]
+    input: Required[Union[str, SequenceNotStr[str], Iterable[InputUnionMember2]]]
     """Input (or inputs) to classify.
 
     Can be a single string, an array of strings, or an array of multi-modal input
@@ -32,27 +32,25 @@ class ModerationCreateParams(TypedDict, total=False):
     ]
     """The content moderation model you would like to use.
 
-    Learn more in
-    [the moderation guide](https://platform.excai.com/docs/guides/moderation), and
-    learn about available models
-    [here](https://platform.excai.com/docs/models#moderation).
+    Learn more in [the moderation guide](/docs/guides/moderation), and learn about
+    available models [here](/docs/models#moderation).
     """
 
 
-class InputModerationMultiModalArrayImageURLImageURL(TypedDict, total=False):
+class InputUnionMember2UnionMember0ImageURL(TypedDict, total=False):
     url: Required[str]
     """Either a URL of the image or the base64 encoded image data."""
 
 
-class InputModerationMultiModalArrayImageURL(TypedDict, total=False):
-    image_url: Required[InputModerationMultiModalArrayImageURLImageURL]
+class InputUnionMember2UnionMember0(TypedDict, total=False):
+    image_url: Required[InputUnionMember2UnionMember0ImageURL]
     """Contains either an image URL or a data URL for a base64 encoded image."""
 
     type: Required[Literal["image_url"]]
     """Always `image_url`."""
 
 
-class InputModerationMultiModalArrayText(TypedDict, total=False):
+class InputUnionMember2UnionMember1(TypedDict, total=False):
     text: Required[str]
     """A string of text to classify."""
 
@@ -60,6 +58,4 @@ class InputModerationMultiModalArrayText(TypedDict, total=False):
     """Always `text`."""
 
 
-InputModerationMultiModalArray: TypeAlias = Union[
-    InputModerationMultiModalArrayImageURL, InputModerationMultiModalArrayText
-]
+InputUnionMember2: TypeAlias = Union[InputUnionMember2UnionMember0, InputUnionMember2UnionMember1]

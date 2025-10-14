@@ -21,7 +21,7 @@ __all__ = [
     "RunCreateParams",
     "AdditionalMessage",
     "AdditionalMessageContentArrayOfContentPart",
-    "AdditionalMessageContentArrayOfContentPartText",
+    "AdditionalMessageContentArrayOfContentPartMessageRequestContentTextObject",
     "AdditionalMessageAttachment",
     "AdditionalMessageAttachmentTool",
     "ResponseFormat",
@@ -33,9 +33,8 @@ __all__ = [
 class RunCreateParams(TypedDict, total=False):
     assistant_id: Required[str]
     """
-    The ID of the
-    [assistant](https://platform.excai.com/docs/api-reference/assistants) to use to
-    execute this run.
+    The ID of the [assistant](/docs/api-reference/assistants) to use to execute this
+    run.
     """
 
     include: List[Literal["step_details.tool_calls[*].file_search.results[*].content"]]
@@ -46,7 +45,7 @@ class RunCreateParams(TypedDict, total=False):
     search result content.
 
     See the
-    [file search tool documentation](https://platform.excai.com/docs/assistants/tools/file-search#customizing-file-search-settings)
+    [file search tool documentation](/docs/assistants/tools/file-search#customizing-file-search-settings)
     for more information.
     """
 
@@ -62,9 +61,8 @@ class RunCreateParams(TypedDict, total=False):
 
     instructions: Optional[str]
     """
-    Overrides the
-    [instructions](https://platform.excai.com/docs/api-reference/assistants/createAssistant)
-    of the assistant. This is useful for modifying the behavior on a per-run basis.
+    Overrides the [instructions](/docs/api-reference/assistants/createAssistant) of
+    the assistant. This is useful for modifying the behavior on a per-run basis.
     """
 
     max_completion_tokens: Optional[int]
@@ -98,12 +96,6 @@ class RunCreateParams(TypedDict, total=False):
     model: Union[
         str,
         Literal[
-            "gpt-5",
-            "gpt-5-mini",
-            "gpt-5-nano",
-            "gpt-5-2025-08-07",
-            "gpt-5-mini-2025-08-07",
-            "gpt-5-nano-2025-08-07",
             "gpt-4.1",
             "gpt-4.1-mini",
             "gpt-4.1-nano",
@@ -143,43 +135,39 @@ class RunCreateParams(TypedDict, total=False):
         ],
         None,
     ]
-    """
-    The ID of the [Model](https://platform.excai.com/docs/api-reference/models) to
-    be used to execute this run. If a value is provided here, it will override the
-    model associated with the assistant. If not, the model associated with the
-    assistant will be used.
+    """The ID of the [Model](/docs/api-reference/models) to be used to execute this
+    run.
+
+    If a value is provided here, it will override the model associated with the
+    assistant. If not, the model associated with the assistant will be used.
     """
 
     parallel_tool_calls: bool
     """
     Whether to enable
-    [parallel function calling](https://platform.excai.com/docs/guides/function-calling#configuring-parallel-function-calling)
+    [parallel function calling](/docs/guides/function-calling#configuring-parallel-function-calling)
     during tool use.
     """
 
-    reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]]
-    """
-    Constrains effort on reasoning for
-    [reasoning models](https://platform.excai.com/docs/guides/reasoning). Currently
-    supported values are `minimal`, `low`, `medium`, and `high`. Reducing reasoning
-    effort can result in faster responses and fewer tokens used on reasoning in a
-    response.
+    reasoning_effort: Optional[Literal["low", "medium", "high"]]
+    """**o-series models only**
 
-    Note: The `gpt-5-pro` model defaults to (and only supports) `high` reasoning
-    effort.
+    Constrains effort on reasoning for
+    [reasoning models](https://platform.openai.com/docs/guides/reasoning). Currently
+    supported values are `low`, `medium`, and `high`. Reducing reasoning effort can
+    result in faster responses and fewer tokens used on reasoning in a response.
     """
 
     response_format: Optional[ResponseFormat]
     """Specifies the format that the model must output.
 
-    Compatible with [GPT-4o](https://platform.excai.com/docs/models#gpt-4o),
-    [GPT-4 Turbo](https://platform.excai.com/docs/models#gpt-4-turbo-and-gpt-4), and
-    all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
+    Compatible with [GPT-4o](/docs/models#gpt-4o),
+    [GPT-4 Turbo](/docs/models#gpt-4-turbo-and-gpt-4), and all GPT-3.5 Turbo models
+    since `gpt-3.5-turbo-1106`.
 
     Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured
     Outputs which ensures the model will match your supplied JSON schema. Learn more
-    in the
-    [Structured Outputs guide](https://platform.excai.com/docs/guides/structured-outputs).
+    in the [Structured Outputs guide](/docs/guides/structured-outputs).
 
     Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the
     message the model generates is valid JSON.
@@ -236,11 +224,11 @@ class RunCreateParams(TypedDict, total=False):
     truncation_strategy: Optional[TruncationObjectParam]
     """Controls for how a thread will be truncated prior to the run.
 
-    Use this to control the initial context window of the run.
+    Use this to control the intial context window of the run.
     """
 
 
-class AdditionalMessageContentArrayOfContentPartText(TypedDict, total=False):
+class AdditionalMessageContentArrayOfContentPartMessageRequestContentTextObject(TypedDict, total=False):
     text: Required[str]
     """Text content to be sent to the model"""
 
@@ -251,7 +239,7 @@ class AdditionalMessageContentArrayOfContentPartText(TypedDict, total=False):
 AdditionalMessageContentArrayOfContentPart: TypeAlias = Union[
     MessageContentImageFileObjectParam,
     MessageContentImageURLObjectParam,
-    AdditionalMessageContentArrayOfContentPartText,
+    AdditionalMessageContentArrayOfContentPartMessageRequestContentTextObject,
 ]
 
 AdditionalMessageAttachmentTool: TypeAlias = Union[AssistantToolsCode, AssistantToolsFileSearchTypeOnlyParam]

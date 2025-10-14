@@ -41,7 +41,6 @@ class ImageCreateVariationParams(TypedDict, total=False):
 
     user: str
     """
-    A unique identifier representing your end-user, which can help EXCai to monitor
-    and detect abuse.
-    [Learn more](https://platform.excai.com/docs/guides/safety-best-practices#end-user-ids).
+    A unique identifier representing your end-user, which can help OpenAI to monitor
+    and detect abuse. [Learn more](/docs/guides/safety-best-practices#end-user-ids).
     """

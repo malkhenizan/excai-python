@@ -2,13 +2,20 @@
 
 from __future__ import annotations
 
-from typing import Iterable, Optional
+from typing import Iterable
 from typing_extensions import Literal, Required, TypedDict
 
-from .summary import Summary
-from .reasoning_text_content import ReasoningTextContent
+__all__ = ["ReasoningItem", "Summary"]
 
-__all__ = ["ReasoningItem"]
+
+class Summary(TypedDict, total=False):
+    text: Required[str]
+    """
+    A short summary of the reasoning used by the model when generating the response.
+    """
+
+    type: Required[Literal["summary_text"]]
+    """The type of the object. Always `summary_text`."""
 
 
 class ReasoningItem(TypedDict, total=False):
@@ -16,19 +23,10 @@ class ReasoningItem(TypedDict, total=False):
     """The unique identifier of the reasoning content."""
 
     summary: Required[Iterable[Summary]]
-    """Reasoning summary content."""
+    """Reasoning text contents."""
 
     type: Required[Literal["reasoning"]]
     """The type of the object. Always `reasoning`."""
-
-    content: Iterable[ReasoningTextContent]
-    """Reasoning text content."""
-
-    encrypted_content: Optional[str]
-    """
-    The encrypted content of the reasoning item - populated when a response is
-    generated with `reasoning.encrypted_content` in the `include` parameter.
-    """
 
     status: Literal["in_progress", "completed", "incomplete"]
     """The status of the item.

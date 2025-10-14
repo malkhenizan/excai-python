@@ -33,19 +33,17 @@ class ThreadUpdateParams(TypedDict, total=False):
 class ToolResourcesCodeInterpreter(TypedDict, total=False):
     file_ids: SequenceNotStr[str]
     """
-    A list of [file](https://platform.excai.com/docs/api-reference/files) IDs made
-    available to the `code_interpreter` tool. There can be a maximum of 20 files
-    associated with the tool.
+    A list of [file](/docs/api-reference/files) IDs made available to the
+    `code_interpreter` tool. There can be a maximum of 20 files associated with the
+    tool.
     """
 
 
 class ToolResourcesFileSearch(TypedDict, total=False):
     vector_store_ids: SequenceNotStr[str]
     """
-    The
-    [vector store](https://platform.excai.com/docs/api-reference/vector-stores/object)
-    attached to this thread. There can be a maximum of 1 vector store attached to
-    the thread.
+    The [vector store](/docs/api-reference/vector-stores/object) attached to this
+    thread. There can be a maximum of 1 vector store attached to the thread.
     """
 
 

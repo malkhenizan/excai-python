@@ -4,47 +4,40 @@ from typing import Dict, List, Optional
 from typing_extensions import Literal
 
 from .._models import BaseModel
-from .batch_error import BatchError
-from .batch_request_counts import BatchRequestCounts
 
-__all__ = ["BatchCancelResponse", "Errors", "Usage", "UsageInputTokensDetails", "UsageOutputTokensDetails"]
+__all__ = ["BatchCancelResponse", "Errors", "ErrorsData", "RequestCounts"]
+
+
+class ErrorsData(BaseModel):
+    code: Optional[str] = None
+    """An error code identifying the error type."""
+
+    line: Optional[int] = None
+    """The line number of the input file where the error occurred, if applicable."""
+
+    message: Optional[str] = None
+    """A human-readable message providing more details about the error."""
+
+    param: Optional[str] = None
+    """The name of the parameter that caused the error, if applicable."""
 
 
 class Errors(BaseModel):
-    data: Optional[List[BatchError]] = None
+    data: Optional[List[ErrorsData]] = None
 
     object: Optional[str] = None
     """The object type, which is always `list`."""
 
 
-class UsageInputTokensDetails(BaseModel):
-    cached_tokens: int
-    """The number of tokens that were retrieved from the cache.
+class RequestCounts(BaseModel):
+    completed: int
+    """Number of requests that have been completed successfully."""
 
-    [More on prompt caching](https://platform.excai.com/docs/guides/prompt-caching).
-    """
+    failed: int
+    """Number of requests that have failed."""
 
-
-class UsageOutputTokensDetails(BaseModel):
-    reasoning_tokens: int
-    """The number of reasoning tokens."""
-
-
-class Usage(BaseModel):
-    input_tokens: int
-    """The number of input tokens."""
-
-    input_tokens_details: UsageInputTokensDetails
-    """A detailed breakdown of the input tokens."""
-
-    output_tokens: int
-    """The number of output tokens."""
-
-    output_tokens_details: UsageOutputTokensDetails
-    """A detailed breakdown of the output tokens."""
-
-    total_tokens: int
-    """The total number of tokens used."""
+    total: int
+    """Total number of requests in the batch."""
 
 
 class BatchCancelResponse(BaseModel):
@@ -57,7 +50,7 @@ class BatchCancelResponse(BaseModel):
     """The Unix timestamp (in seconds) for when the batch was created."""
 
     endpoint: str
-    """The EXCai API endpoint used by the batch."""
+    """The OpenAI API endpoint used by the batch."""
 
     input_file_id: str
     """The ID of the input file for the batch."""
@@ -109,24 +102,8 @@ class BatchCancelResponse(BaseModel):
     a maximum length of 512 characters.
     """
 
-    model: Optional[str] = None
-    """Model ID used to process the batch, like `gpt-5-2025-08-07`.
-
-    EXCai offers a wide range of models with different capabilities, performance
-    characteristics, and price points. Refer to the
-    [model guide](https://platform.excai.com/docs/models) to browse and compare
-    available models.
-    """
-
     output_file_id: Optional[str] = None
     """The ID of the file containing the outputs of successfully executed requests."""
 
-    request_counts: Optional[BatchRequestCounts] = None
+    request_counts: Optional[RequestCounts] = None
     """The request counts for different statuses within the batch."""
-
-    usage: Optional[Usage] = None
-    """
-    Represents token usage details including input tokens, output tokens, a
-    breakdown of output tokens, and the total tokens used. Only populated on batches
-    created after September 7, 2025.
-    """

@@ -54,12 +54,6 @@ class AssistantsResource(SyncAPIResource):
         model: Union[
             str,
             Literal[
-                "gpt-5",
-                "gpt-5-mini",
-                "gpt-5-nano",
-                "gpt-5-2025-08-07",
-                "gpt-5-mini-2025-08-07",
-                "gpt-5-nano-2025-08-07",
                 "gpt-4.1",
                 "gpt-4.1-mini",
                 "gpt-4.1-nano",
@@ -102,7 +96,7 @@ class AssistantsResource(SyncAPIResource):
         instructions: Optional[str] | Omit = omit,
         metadata: Optional[Dict[str, str]] | Omit = omit,
         name: Optional[str] | Omit = omit,
-        reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]] | Omit = omit,
+        reasoning_effort: Optional[Literal["low", "medium", "high"]] | Omit = omit,
         response_format: Optional[assistant_create_params.ResponseFormat] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         tool_resources: Optional[assistant_create_params.ToolResources] | Omit = omit,
@@ -120,10 +114,8 @@ class AssistantsResource(SyncAPIResource):
 
         Args:
           model: ID of the model to use. You can use the
-              [List models](https://platform.excai.com/docs/api-reference/models/list) API to
-              see all of your available models, or see our
-              [Model overview](https://platform.excai.com/docs/models) for descriptions of
-              them.
+              [List models](/docs/api-reference/models/list) API to see all of your available
+              models, or see our [Model overview](/docs/models) for descriptions of them.
 
           description: The description of the assistant. The maximum length is 512 characters.
 
@@ -139,24 +131,21 @@ class AssistantsResource(SyncAPIResource):
 
           name: The name of the assistant. The maximum length is 256 characters.
 
-          reasoning_effort: Constrains effort on reasoning for
-              [reasoning models](https://platform.excai.com/docs/guides/reasoning). Currently
-              supported values are `minimal`, `low`, `medium`, and `high`. Reducing reasoning
-              effort can result in faster responses and fewer tokens used on reasoning in a
-              response.
+          reasoning_effort: **o-series models only**
 
-              Note: The `gpt-5-pro` model defaults to (and only supports) `high` reasoning
-              effort.
+              Constrains effort on reasoning for
+              [reasoning models](https://platform.openai.com/docs/guides/reasoning). Currently
+              supported values are `low`, `medium`, and `high`. Reducing reasoning effort can
+              result in faster responses and fewer tokens used on reasoning in a response.
 
           response_format: Specifies the format that the model must output. Compatible with
-              [GPT-4o](https://platform.excai.com/docs/models#gpt-4o),
-              [GPT-4 Turbo](https://platform.excai.com/docs/models#gpt-4-turbo-and-gpt-4), and
-              all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
+              [GPT-4o](/docs/models#gpt-4o),
+              [GPT-4 Turbo](/docs/models#gpt-4-turbo-and-gpt-4), and all GPT-3.5 Turbo models
+              since `gpt-3.5-turbo-1106`.
 
               Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured
               Outputs which ensures the model will match your supplied JSON schema. Learn more
-              in the
-              [Structured Outputs guide](https://platform.excai.com/docs/guides/structured-outputs).
+              in the [Structured Outputs guide](/docs/guides/structured-outputs).
 
               Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the
               message the model generates is valid JSON.
@@ -263,12 +252,6 @@ class AssistantsResource(SyncAPIResource):
         model: Union[
             str,
             Literal[
-                "gpt-5",
-                "gpt-5-mini",
-                "gpt-5-nano",
-                "gpt-5-2025-08-07",
-                "gpt-5-mini-2025-08-07",
-                "gpt-5-nano-2025-08-07",
                 "gpt-4.1",
                 "gpt-4.1-mini",
                 "gpt-4.1-nano",
@@ -309,7 +292,7 @@ class AssistantsResource(SyncAPIResource):
         ]
         | Omit = omit,
         name: Optional[str] | Omit = omit,
-        reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]] | Omit = omit,
+        reasoning_effort: Optional[Literal["low", "medium", "high"]] | Omit = omit,
         response_format: Optional[assistant_update_params.ResponseFormat] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         tool_resources: Optional[assistant_update_params.ToolResources] | Omit = omit,
@@ -340,31 +323,26 @@ class AssistantsResource(SyncAPIResource):
               a maximum length of 512 characters.
 
           model: ID of the model to use. You can use the
-              [List models](https://platform.excai.com/docs/api-reference/models/list) API to
-              see all of your available models, or see our
-              [Model overview](https://platform.excai.com/docs/models) for descriptions of
-              them.
+              [List models](/docs/api-reference/models/list) API to see all of your available
+              models, or see our [Model overview](/docs/models) for descriptions of them.
 
           name: The name of the assistant. The maximum length is 256 characters.
 
-          reasoning_effort: Constrains effort on reasoning for
-              [reasoning models](https://platform.excai.com/docs/guides/reasoning). Currently
-              supported values are `minimal`, `low`, `medium`, and `high`. Reducing reasoning
-              effort can result in faster responses and fewer tokens used on reasoning in a
-              response.
+          reasoning_effort: **o-series models only**
 
-              Note: The `gpt-5-pro` model defaults to (and only supports) `high` reasoning
-              effort.
+              Constrains effort on reasoning for
+              [reasoning models](https://platform.openai.com/docs/guides/reasoning). Currently
+              supported values are `low`, `medium`, and `high`. Reducing reasoning effort can
+              result in faster responses and fewer tokens used on reasoning in a response.
 
           response_format: Specifies the format that the model must output. Compatible with
-              [GPT-4o](https://platform.excai.com/docs/models#gpt-4o),
-              [GPT-4 Turbo](https://platform.excai.com/docs/models#gpt-4-turbo-and-gpt-4), and
-              all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
+              [GPT-4o](/docs/models#gpt-4o),
+              [GPT-4 Turbo](/docs/models#gpt-4-turbo-and-gpt-4), and all GPT-3.5 Turbo models
+              since `gpt-3.5-turbo-1106`.
 
               Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured
               Outputs which ensures the model will match your supplied JSON schema. Learn more
-              in the
-              [Structured Outputs guide](https://platform.excai.com/docs/guides/structured-outputs).
+              in the [Structured Outputs guide](/docs/guides/structured-outputs).
 
               Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the
               message the model generates is valid JSON.
@@ -553,12 +531,6 @@ class AsyncAssistantsResource(AsyncAPIResource):
         model: Union[
             str,
             Literal[
-                "gpt-5",
-                "gpt-5-mini",
-                "gpt-5-nano",
-                "gpt-5-2025-08-07",
-                "gpt-5-mini-2025-08-07",
-                "gpt-5-nano-2025-08-07",
                 "gpt-4.1",
                 "gpt-4.1-mini",
                 "gpt-4.1-nano",
@@ -601,7 +573,7 @@ class AsyncAssistantsResource(AsyncAPIResource):
         instructions: Optional[str] | Omit = omit,
         metadata: Optional[Dict[str, str]] | Omit = omit,
         name: Optional[str] | Omit = omit,
-        reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]] | Omit = omit,
+        reasoning_effort: Optional[Literal["low", "medium", "high"]] | Omit = omit,
         response_format: Optional[assistant_create_params.ResponseFormat] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         tool_resources: Optional[assistant_create_params.ToolResources] | Omit = omit,
@@ -619,10 +591,8 @@ class AsyncAssistantsResource(AsyncAPIResource):
 
         Args:
           model: ID of the model to use. You can use the
-              [List models](https://platform.excai.com/docs/api-reference/models/list) API to
-              see all of your available models, or see our
-              [Model overview](https://platform.excai.com/docs/models) for descriptions of
-              them.
+              [List models](/docs/api-reference/models/list) API to see all of your available
+              models, or see our [Model overview](/docs/models) for descriptions of them.
 
           description: The description of the assistant. The maximum length is 512 characters.
 
@@ -638,24 +608,21 @@ class AsyncAssistantsResource(AsyncAPIResource):
 
           name: The name of the assistant. The maximum length is 256 characters.
 
-          reasoning_effort: Constrains effort on reasoning for
-              [reasoning models](https://platform.excai.com/docs/guides/reasoning). Currently
-              supported values are `minimal`, `low`, `medium`, and `high`. Reducing reasoning
-              effort can result in faster responses and fewer tokens used on reasoning in a
-              response.
+          reasoning_effort: **o-series models only**
 
-              Note: The `gpt-5-pro` model defaults to (and only supports) `high` reasoning
-              effort.
+              Constrains effort on reasoning for
+              [reasoning models](https://platform.openai.com/docs/guides/reasoning). Currently
+              supported values are `low`, `medium`, and `high`. Reducing reasoning effort can
+              result in faster responses and fewer tokens used on reasoning in a response.
 
           response_format: Specifies the format that the model must output. Compatible with
-              [GPT-4o](https://platform.excai.com/docs/models#gpt-4o),
-              [GPT-4 Turbo](https://platform.excai.com/docs/models#gpt-4-turbo-and-gpt-4), and
-              all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
+              [GPT-4o](/docs/models#gpt-4o),
+              [GPT-4 Turbo](/docs/models#gpt-4-turbo-and-gpt-4), and all GPT-3.5 Turbo models
+              since `gpt-3.5-turbo-1106`.
 
               Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured
               Outputs which ensures the model will match your supplied JSON schema. Learn more
-              in the
-              [Structured Outputs guide](https://platform.excai.com/docs/guides/structured-outputs).
+              in the [Structured Outputs guide](/docs/guides/structured-outputs).
 
               Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the
               message the model generates is valid JSON.
@@ -762,12 +729,6 @@ class AsyncAssistantsResource(AsyncAPIResource):
         model: Union[
             str,
             Literal[
-                "gpt-5",
-                "gpt-5-mini",
-                "gpt-5-nano",
-                "gpt-5-2025-08-07",
-                "gpt-5-mini-2025-08-07",
-                "gpt-5-nano-2025-08-07",
                 "gpt-4.1",
                 "gpt-4.1-mini",
                 "gpt-4.1-nano",
@@ -808,7 +769,7 @@ class AsyncAssistantsResource(AsyncAPIResource):
         ]
         | Omit = omit,
         name: Optional[str] | Omit = omit,
-        reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]] | Omit = omit,
+        reasoning_effort: Optional[Literal["low", "medium", "high"]] | Omit = omit,
         response_format: Optional[assistant_update_params.ResponseFormat] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         tool_resources: Optional[assistant_update_params.ToolResources] | Omit = omit,
@@ -839,31 +800,26 @@ class AsyncAssistantsResource(AsyncAPIResource):
               a maximum length of 512 characters.
 
           model: ID of the model to use. You can use the
-              [List models](https://platform.excai.com/docs/api-reference/models/list) API to
-              see all of your available models, or see our
-              [Model overview](https://platform.excai.com/docs/models) for descriptions of
-              them.
+              [List models](/docs/api-reference/models/list) API to see all of your available
+              models, or see our [Model overview](/docs/models) for descriptions of them.
 
           name: The name of the assistant. The maximum length is 256 characters.
 
-          reasoning_effort: Constrains effort on reasoning for
-              [reasoning models](https://platform.excai.com/docs/guides/reasoning). Currently
-              supported values are `minimal`, `low`, `medium`, and `high`. Reducing reasoning
-              effort can result in faster responses and fewer tokens used on reasoning in a
-              response.
+          reasoning_effort: **o-series models only**
 
-              Note: The `gpt-5-pro` model defaults to (and only supports) `high` reasoning
-              effort.
+              Constrains effort on reasoning for
+              [reasoning models](https://platform.openai.com/docs/guides/reasoning). Currently
+              supported values are `low`, `medium`, and `high`. Reducing reasoning effort can
+              result in faster responses and fewer tokens used on reasoning in a response.
 
           response_format: Specifies the format that the model must output. Compatible with
-              [GPT-4o](https://platform.excai.com/docs/models#gpt-4o),
-              [GPT-4 Turbo](https://platform.excai.com/docs/models#gpt-4-turbo-and-gpt-4), and
-              all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
+              [GPT-4o](/docs/models#gpt-4o),
+              [GPT-4 Turbo](/docs/models#gpt-4-turbo-and-gpt-4), and all GPT-3.5 Turbo models
+              since `gpt-3.5-turbo-1106`.
 
               Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured
               Outputs which ensures the model will match your supplied JSON schema. Learn more
-              in the
-              [Structured Outputs guide](https://platform.excai.com/docs/guides/structured-outputs).
+              in the [Structured Outputs guide](/docs/guides/structured-outputs).
 
               Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the
               message the model generates is valid JSON.

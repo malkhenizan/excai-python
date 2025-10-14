@@ -53,7 +53,6 @@ class TestAudio:
             instructions="instructions",
             response_format="mp3",
             speed=0.25,
-            stream_format="sse",
         )
         assert audio.is_closed
         assert audio.json() == {"foo": "bar"}
@@ -109,7 +108,6 @@ class TestAudio:
         audio = client.audio.create_transcription(
             file=b"raw file contents",
             model="gpt-4o-transcribe",
-            chunking_strategy="auto",
             include=["logprobs"],
             language="language",
             prompt="prompt",
@@ -228,7 +226,6 @@ class TestAsyncAudio:
             instructions="instructions",
             response_format="mp3",
             speed=0.25,
-            stream_format="sse",
         )
         assert audio.is_closed
         assert await audio.json() == {"foo": "bar"}
@@ -284,7 +281,6 @@ class TestAsyncAudio:
         audio = await async_client.audio.create_transcription(
             file=b"raw file contents",
             model="gpt-4o-transcribe",
-            chunking_strategy="auto",
             include=["logprobs"],
             language="language",
             prompt="prompt",

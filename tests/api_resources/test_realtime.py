@@ -10,7 +10,6 @@ import pytest
 from excai import ExCai, AsyncExCai
 from excai.types import (
     RealtimeCreateSessionResponse,
-    RealtimeCreateClientSecretResponse,
     RealtimeCreateTranscriptionSessionResponse,
 )
 from tests.utils import assert_matches_type
@@ -23,129 +22,26 @@ class TestRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_client_secret(self, client: ExCai) -> None:
-        realtime = client.realtime.create_client_secret()
-        assert_matches_type(RealtimeCreateClientSecretResponse, realtime, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_create_client_secret_with_all_params(self, client: ExCai) -> None:
-        realtime = client.realtime.create_client_secret(
-            expires_after={
-                "anchor": "created_at",
-                "seconds": 10,
-            },
-            session={
-                "type": "realtime",
-                "audio": {
-                    "input": {
-                        "format": {
-                            "rate": 24000,
-                            "type": "audio/pcm",
-                        },
-                        "noise_reduction": {"type": "near_field"},
-                        "transcription": {
-                            "language": "language",
-                            "model": "whisper-1",
-                            "prompt": "prompt",
-                        },
-                        "turn_detection": {
-                            "type": "server_vad",
-                            "create_response": True,
-                            "idle_timeout_ms": 5000,
-                            "interrupt_response": True,
-                            "prefix_padding_ms": 0,
-                            "silence_duration_ms": 0,
-                            "threshold": 0,
-                        },
-                    },
-                    "output": {
-                        "format": {
-                            "rate": 24000,
-                            "type": "audio/pcm",
-                        },
-                        "speed": 0.25,
-                        "voice": "ash",
-                    },
-                },
-                "include": ["item.input_audio_transcription.logprobs"],
-                "instructions": "instructions",
-                "max_output_tokens": 0,
-                "model": "string",
-                "output_modalities": ["text"],
-                "prompt": {
-                    "id": "id",
-                    "variables": {"foo": "string"},
-                    "version": "version",
-                },
-                "tool_choice": "none",
-                "tools": [
-                    {
-                        "description": "description",
-                        "name": "name",
-                        "parameters": {},
-                        "type": "function",
-                    }
-                ],
-                "tracing": "auto",
-                "truncation": "auto",
-            },
-        )
-        assert_matches_type(RealtimeCreateClientSecretResponse, realtime, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_create_client_secret(self, client: ExCai) -> None:
-        response = client.realtime.with_raw_response.create_client_secret()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        realtime = response.parse()
-        assert_matches_type(RealtimeCreateClientSecretResponse, realtime, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_create_client_secret(self, client: ExCai) -> None:
-        with client.realtime.with_streaming_response.create_client_secret() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            realtime = response.parse()
-            assert_matches_type(RealtimeCreateClientSecretResponse, realtime, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     def test_method_create_session(self, client: ExCai) -> None:
-        realtime = client.realtime.create_session(
-            client_secret={
-                "expires_at": 0,
-                "value": "value",
-            },
-        )
+        realtime = client.realtime.create_session()
         assert_matches_type(RealtimeCreateSessionResponse, realtime, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create_session_with_all_params(self, client: ExCai) -> None:
         realtime = client.realtime.create_session(
-            client_secret={
-                "expires_at": 0,
-                "value": "value",
+            input_audio_format="pcm16",
+            input_audio_noise_reduction={"type": "near_field"},
+            input_audio_transcription={
+                "language": "language",
+                "model": "model",
+                "prompt": "prompt",
             },
-            input_audio_format="input_audio_format",
-            input_audio_transcription={"model": "model"},
             instructions="instructions",
             max_response_output_tokens=0,
             modalities=["text"],
-            output_audio_format="output_audio_format",
-            prompt={
-                "id": "id",
-                "variables": {"foo": "string"},
-                "version": "version",
-            },
-            speed=0.25,
+            model="gpt-4o-realtime-preview",
+            output_audio_format="pcm16",
             temperature=0,
             tool_choice="tool_choice",
             tools=[
@@ -156,13 +52,14 @@ class TestRealtime:
                     "type": "function",
                 }
             ],
-            tracing="auto",
-            truncation="auto",
             turn_detection={
+                "create_response": True,
+                "eagerness": "low",
+                "interrupt_response": True,
                 "prefix_padding_ms": 0,
                 "silence_duration_ms": 0,
                 "threshold": 0,
-                "type": "type",
+                "type": "server_vad",
             },
             voice="ash",
         )
@@ -171,12 +68,7 @@ class TestRealtime:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_create_session(self, client: ExCai) -> None:
-        response = client.realtime.with_raw_response.create_session(
-            client_secret={
-                "expires_at": 0,
-                "value": "value",
-            },
-        )
+        response = client.realtime.with_raw_response.create_session()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -186,12 +78,7 @@ class TestRealtime:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_create_session(self, client: ExCai) -> None:
-        with client.realtime.with_streaming_response.create_session(
-            client_secret={
-                "expires_at": 0,
-                "value": "value",
-            },
-        ) as response:
+        with client.realtime.with_streaming_response.create_session() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -210,15 +97,19 @@ class TestRealtime:
     @parametrize
     def test_method_create_transcription_session_with_all_params(self, client: ExCai) -> None:
         realtime = client.realtime.create_transcription_session(
-            include=["item.input_audio_transcription.logprobs"],
+            include=["string"],
             input_audio_format="pcm16",
             input_audio_noise_reduction={"type": "near_field"},
             input_audio_transcription={
                 "language": "language",
-                "model": "whisper-1",
+                "model": "gpt-4o-transcribe",
                 "prompt": "prompt",
             },
+            modalities=["text"],
             turn_detection={
+                "create_response": True,
+                "eagerness": "low",
+                "interrupt_response": True,
                 "prefix_padding_ms": 0,
                 "silence_duration_ms": 0,
                 "threshold": 0,
@@ -257,129 +148,26 @@ class TestAsyncRealtime:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_client_secret(self, async_client: AsyncExCai) -> None:
-        realtime = await async_client.realtime.create_client_secret()
-        assert_matches_type(RealtimeCreateClientSecretResponse, realtime, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_create_client_secret_with_all_params(self, async_client: AsyncExCai) -> None:
-        realtime = await async_client.realtime.create_client_secret(
-            expires_after={
-                "anchor": "created_at",
-                "seconds": 10,
-            },
-            session={
-                "type": "realtime",
-                "audio": {
-                    "input": {
-                        "format": {
-                            "rate": 24000,
-                            "type": "audio/pcm",
-                        },
-                        "noise_reduction": {"type": "near_field"},
-                        "transcription": {
-                            "language": "language",
-                            "model": "whisper-1",
-                            "prompt": "prompt",
-                        },
-                        "turn_detection": {
-                            "type": "server_vad",
-                            "create_response": True,
-                            "idle_timeout_ms": 5000,
-                            "interrupt_response": True,
-                            "prefix_padding_ms": 0,
-                            "silence_duration_ms": 0,
-                            "threshold": 0,
-                        },
-                    },
-                    "output": {
-                        "format": {
-                            "rate": 24000,
-                            "type": "audio/pcm",
-                        },
-                        "speed": 0.25,
-                        "voice": "ash",
-                    },
-                },
-                "include": ["item.input_audio_transcription.logprobs"],
-                "instructions": "instructions",
-                "max_output_tokens": 0,
-                "model": "string",
-                "output_modalities": ["text"],
-                "prompt": {
-                    "id": "id",
-                    "variables": {"foo": "string"},
-                    "version": "version",
-                },
-                "tool_choice": "none",
-                "tools": [
-                    {
-                        "description": "description",
-                        "name": "name",
-                        "parameters": {},
-                        "type": "function",
-                    }
-                ],
-                "tracing": "auto",
-                "truncation": "auto",
-            },
-        )
-        assert_matches_type(RealtimeCreateClientSecretResponse, realtime, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_create_client_secret(self, async_client: AsyncExCai) -> None:
-        response = await async_client.realtime.with_raw_response.create_client_secret()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        realtime = await response.parse()
-        assert_matches_type(RealtimeCreateClientSecretResponse, realtime, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_create_client_secret(self, async_client: AsyncExCai) -> None:
-        async with async_client.realtime.with_streaming_response.create_client_secret() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            realtime = await response.parse()
-            assert_matches_type(RealtimeCreateClientSecretResponse, realtime, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     async def test_method_create_session(self, async_client: AsyncExCai) -> None:
-        realtime = await async_client.realtime.create_session(
-            client_secret={
-                "expires_at": 0,
-                "value": "value",
-            },
-        )
+        realtime = await async_client.realtime.create_session()
         assert_matches_type(RealtimeCreateSessionResponse, realtime, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create_session_with_all_params(self, async_client: AsyncExCai) -> None:
         realtime = await async_client.realtime.create_session(
-            client_secret={
-                "expires_at": 0,
-                "value": "value",
+            input_audio_format="pcm16",
+            input_audio_noise_reduction={"type": "near_field"},
+            input_audio_transcription={
+                "language": "language",
+                "model": "model",
+                "prompt": "prompt",
             },
-            input_audio_format="input_audio_format",
-            input_audio_transcription={"model": "model"},
             instructions="instructions",
             max_response_output_tokens=0,
             modalities=["text"],
-            output_audio_format="output_audio_format",
-            prompt={
-                "id": "id",
-                "variables": {"foo": "string"},
-                "version": "version",
-            },
-            speed=0.25,
+            model="gpt-4o-realtime-preview",
+            output_audio_format="pcm16",
             temperature=0,
             tool_choice="tool_choice",
             tools=[
@@ -390,13 +178,14 @@ class TestAsyncRealtime:
                     "type": "function",
                 }
             ],
-            tracing="auto",
-            truncation="auto",
             turn_detection={
+                "create_response": True,
+                "eagerness": "low",
+                "interrupt_response": True,
                 "prefix_padding_ms": 0,
                 "silence_duration_ms": 0,
                 "threshold": 0,
-                "type": "type",
+                "type": "server_vad",
             },
             voice="ash",
         )
@@ -405,12 +194,7 @@ class TestAsyncRealtime:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_create_session(self, async_client: AsyncExCai) -> None:
-        response = await async_client.realtime.with_raw_response.create_session(
-            client_secret={
-                "expires_at": 0,
-                "value": "value",
-            },
-        )
+        response = await async_client.realtime.with_raw_response.create_session()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -420,12 +204,7 @@ class TestAsyncRealtime:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_create_session(self, async_client: AsyncExCai) -> None:
-        async with async_client.realtime.with_streaming_response.create_session(
-            client_secret={
-                "expires_at": 0,
-                "value": "value",
-            },
-        ) as response:
+        async with async_client.realtime.with_streaming_response.create_session() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -444,15 +223,19 @@ class TestAsyncRealtime:
     @parametrize
     async def test_method_create_transcription_session_with_all_params(self, async_client: AsyncExCai) -> None:
         realtime = await async_client.realtime.create_transcription_session(
-            include=["item.input_audio_transcription.logprobs"],
+            include=["string"],
             input_audio_format="pcm16",
             input_audio_noise_reduction={"type": "near_field"},
             input_audio_transcription={
                 "language": "language",
-                "model": "whisper-1",
+                "model": "gpt-4o-transcribe",
                 "prompt": "prompt",
             },
+            modalities=["text"],
             turn_detection={
+                "create_response": True,
+                "eagerness": "low",
+                "interrupt_response": True,
                 "prefix_padding_ms": 0,
                 "silence_duration_ms": 0,
                 "threshold": 0,

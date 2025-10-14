@@ -87,8 +87,7 @@ class ThreadsResource(SyncAPIResource):
         Create a thread.
 
         Args:
-          messages: A list of [messages](https://platform.excai.com/docs/api-reference/messages) to
-              start the thread with.
+          messages: A list of [messages](/docs/api-reference/messages) to start the thread with.
 
           metadata: Set of 16 key-value pairs that can be attached to an object. This can be useful
               for storing additional information about the object in a structured format, and
@@ -292,8 +291,7 @@ class AsyncThreadsResource(AsyncAPIResource):
         Create a thread.
 
         Args:
-          messages: A list of [messages](https://platform.excai.com/docs/api-reference/messages) to
-              start the thread with.
+          messages: A list of [messages](/docs/api-reference/messages) to start the thread with.
 
           metadata: Set of 16 key-value pairs that can be attached to an object. This can be useful
               for storing additional information about the object in a structured format, and

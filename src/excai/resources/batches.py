@@ -54,7 +54,6 @@ class BatchesResource(SyncAPIResource):
         endpoint: Literal["/v1/responses", "/v1/chat/completions", "/v1/embeddings", "/v1/completions"],
         input_file_id: str,
         metadata: Optional[Dict[str, str]] | Omit = omit,
-        output_expires_after: batch_create_params.OutputExpiresAfter | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -76,13 +75,12 @@ class BatchesResource(SyncAPIResource):
 
           input_file_id: The ID of an uploaded file that contains requests for the new batch.
 
-              See [upload file](https://platform.excai.com/docs/api-reference/files/create)
-              for how to upload a file.
+              See [upload file](/docs/api-reference/files/create) for how to upload a file.
 
               Your input file must be formatted as a
-              [JSONL file](https://platform.excai.com/docs/api-reference/batch/request-input),
-              and must be uploaded with the purpose `batch`. The file can contain up to 50,000
-              requests, and can be up to 200 MB in size.
+              [JSONL file](/docs/api-reference/batch/request-input), and must be uploaded with
+              the purpose `batch`. The file can contain up to 50,000 requests, and can be up
+              to 200 MB in size.
 
           metadata: Set of 16 key-value pairs that can be attached to an object. This can be useful
               for storing additional information about the object in a structured format, and
@@ -90,9 +88,6 @@ class BatchesResource(SyncAPIResource):
 
               Keys are strings with a maximum length of 64 characters. Values are strings with
               a maximum length of 512 characters.
-
-          output_expires_after: The expiration policy for the output and/or error file that are generated for a
-              batch.
 
           extra_headers: Send extra headers
 
@@ -110,7 +105,6 @@ class BatchesResource(SyncAPIResource):
                     "endpoint": endpoint,
                     "input_file_id": input_file_id,
                     "metadata": metadata,
-                    "output_expires_after": output_expires_after,
                 },
                 batch_create_params.BatchCreateParams,
             ),
@@ -268,7 +262,6 @@ class AsyncBatchesResource(AsyncAPIResource):
         endpoint: Literal["/v1/responses", "/v1/chat/completions", "/v1/embeddings", "/v1/completions"],
         input_file_id: str,
         metadata: Optional[Dict[str, str]] | Omit = omit,
-        output_expires_after: batch_create_params.OutputExpiresAfter | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -290,13 +283,12 @@ class AsyncBatchesResource(AsyncAPIResource):
 
           input_file_id: The ID of an uploaded file that contains requests for the new batch.
 
-              See [upload file](https://platform.excai.com/docs/api-reference/files/create)
-              for how to upload a file.
+              See [upload file](/docs/api-reference/files/create) for how to upload a file.
 
               Your input file must be formatted as a
-              [JSONL file](https://platform.excai.com/docs/api-reference/batch/request-input),
-              and must be uploaded with the purpose `batch`. The file can contain up to 50,000
-              requests, and can be up to 200 MB in size.
+              [JSONL file](/docs/api-reference/batch/request-input), and must be uploaded with
+              the purpose `batch`. The file can contain up to 50,000 requests, and can be up
+              to 200 MB in size.
 
           metadata: Set of 16 key-value pairs that can be attached to an object. This can be useful
               for storing additional information about the object in a structured format, and
@@ -304,9 +296,6 @@ class AsyncBatchesResource(AsyncAPIResource):
 
               Keys are strings with a maximum length of 64 characters. Values are strings with
               a maximum length of 512 characters.
-
-          output_expires_after: The expiration policy for the output and/or error file that are generated for a
-              batch.
 
           extra_headers: Send extra headers
 
@@ -324,7 +313,6 @@ class AsyncBatchesResource(AsyncAPIResource):
                     "endpoint": endpoint,
                     "input_file_id": input_file_id,
                     "metadata": metadata,
-                    "output_expires_after": output_expires_after,
                 },
                 batch_create_params.BatchCreateParams,
             ),

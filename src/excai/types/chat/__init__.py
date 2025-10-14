@@ -18,9 +18,3 @@ from .chat_completion_message_tool_call import ChatCompletionMessageToolCall as 
 from .chat_completion_message_tool_call_param import (
     ChatCompletionMessageToolCallParam as ChatCompletionMessageToolCallParam,
 )
-from .chat_completion_message_custom_tool_call import (
-    ChatCompletionMessageCustomToolCall as ChatCompletionMessageCustomToolCall,
-)
-from .chat_completion_message_custom_tool_call_param import (
-    ChatCompletionMessageCustomToolCallParam as ChatCompletionMessageCustomToolCallParam,
-)

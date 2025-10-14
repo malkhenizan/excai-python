@@ -24,7 +24,7 @@ __all__ = [
     "Thread",
     "ThreadMessage",
     "ThreadMessageContentArrayOfContentPart",
-    "ThreadMessageContentArrayOfContentPartText",
+    "ThreadMessageContentArrayOfContentPartMessageRequestContentTextObject",
     "ThreadMessageAttachment",
     "ThreadMessageAttachmentTool",
     "ThreadToolResources",
@@ -32,9 +32,9 @@ __all__ = [
     "ThreadToolResourcesFileSearch",
     "ThreadToolResourcesFileSearchVectorStore",
     "ThreadToolResourcesFileSearchVectorStoreChunkingStrategy",
-    "ThreadToolResourcesFileSearchVectorStoreChunkingStrategyAuto",
-    "ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStatic",
-    "ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticStatic",
+    "ThreadToolResourcesFileSearchVectorStoreChunkingStrategyAutoChunkingStrategy",
+    "ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategy",
+    "ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategyStatic",
     "ToolChoice",
     "ToolResources",
     "ToolResourcesCodeInterpreter",
@@ -46,9 +46,8 @@ __all__ = [
 class RunCreateWithRunParams(TypedDict, total=False):
     assistant_id: Required[str]
     """
-    The ID of the
-    [assistant](https://platform.excai.com/docs/api-reference/assistants) to use to
-    execute this run.
+    The ID of the [assistant](/docs/api-reference/assistants) to use to execute this
+    run.
     """
 
     instructions: Optional[str]
@@ -88,12 +87,6 @@ class RunCreateWithRunParams(TypedDict, total=False):
     model: Union[
         str,
         Literal[
-            "gpt-5",
-            "gpt-5-mini",
-            "gpt-5-nano",
-            "gpt-5-2025-08-07",
-            "gpt-5-mini-2025-08-07",
-            "gpt-5-nano-2025-08-07",
             "gpt-4.1",
             "gpt-4.1-mini",
             "gpt-4.1-nano",
@@ -129,31 +122,30 @@ class RunCreateWithRunParams(TypedDict, total=False):
         ],
         None,
     ]
-    """
-    The ID of the [Model](https://platform.excai.com/docs/api-reference/models) to
-    be used to execute this run. If a value is provided here, it will override the
-    model associated with the assistant. If not, the model associated with the
-    assistant will be used.
+    """The ID of the [Model](/docs/api-reference/models) to be used to execute this
+    run.
+
+    If a value is provided here, it will override the model associated with the
+    assistant. If not, the model associated with the assistant will be used.
     """
 
     parallel_tool_calls: bool
     """
     Whether to enable
-    [parallel function calling](https://platform.excai.com/docs/guides/function-calling#configuring-parallel-function-calling)
+    [parallel function calling](/docs/guides/function-calling#configuring-parallel-function-calling)
     during tool use.
     """
 
     response_format: Optional[ResponseFormat]
     """Specifies the format that the model must output.
 
-    Compatible with [GPT-4o](https://platform.excai.com/docs/models#gpt-4o),
-    [GPT-4 Turbo](https://platform.excai.com/docs/models#gpt-4-turbo-and-gpt-4), and
-    all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
+    Compatible with [GPT-4o](/docs/models#gpt-4o),
+    [GPT-4 Turbo](/docs/models#gpt-4-turbo-and-gpt-4), and all GPT-3.5 Turbo models
+    since `gpt-3.5-turbo-1106`.
 
     Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured
     Outputs which ensures the model will match your supplied JSON schema. Learn more
-    in the
-    [Structured Outputs guide](https://platform.excai.com/docs/guides/structured-outputs).
+    in the [Structured Outputs guide](/docs/guides/structured-outputs).
 
     Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the
     message the model generates is valid JSON.
@@ -225,7 +217,7 @@ class RunCreateWithRunParams(TypedDict, total=False):
     truncation_strategy: Optional[TruncationObjectParam]
     """Controls for how a thread will be truncated prior to the run.
 
-    Use this to control the initial context window of the run.
+    Use this to control the intial context window of the run.
     """
 
 
@@ -234,7 +226,7 @@ ResponseFormat: TypeAlias = Union[
 ]
 
 
-class ThreadMessageContentArrayOfContentPartText(TypedDict, total=False):
+class ThreadMessageContentArrayOfContentPartMessageRequestContentTextObject(TypedDict, total=False):
     text: Required[str]
     """Text content to be sent to the model"""
 
@@ -243,7 +235,9 @@ class ThreadMessageContentArrayOfContentPartText(TypedDict, total=False):
 
 
 ThreadMessageContentArrayOfContentPart: TypeAlias = Union[
-    MessageContentImageFileObjectParam, MessageContentImageURLObjectParam, ThreadMessageContentArrayOfContentPartText
+    MessageContentImageFileObjectParam,
+    MessageContentImageURLObjectParam,
+    ThreadMessageContentArrayOfContentPartMessageRequestContentTextObject,
 ]
 
 ThreadMessageAttachmentTool: TypeAlias = Union[AssistantToolsCode, AssistantToolsFileSearchTypeOnlyParam]
@@ -287,18 +281,18 @@ class ThreadMessage(TypedDict, total=False):
 class ThreadToolResourcesCodeInterpreter(TypedDict, total=False):
     file_ids: SequenceNotStr[str]
     """
-    A list of [file](https://platform.excai.com/docs/api-reference/files) IDs made
-    available to the `code_interpreter` tool. There can be a maximum of 20 files
-    associated with the tool.
+    A list of [file](/docs/api-reference/files) IDs made available to the
+    `code_interpreter` tool. There can be a maximum of 20 files associated with the
+    tool.
     """
 
 
-class ThreadToolResourcesFileSearchVectorStoreChunkingStrategyAuto(TypedDict, total=False):
+class ThreadToolResourcesFileSearchVectorStoreChunkingStrategyAutoChunkingStrategy(TypedDict, total=False):
     type: Required[Literal["auto"]]
     """Always `auto`."""
 
 
-class ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticStatic(TypedDict, total=False):
+class ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategyStatic(TypedDict, total=False):
     chunk_overlap_tokens: Required[int]
     """The number of tokens that overlap between chunks. The default value is `400`.
 
@@ -313,16 +307,16 @@ class ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticStatic(Typed
     """
 
 
-class ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStatic(TypedDict, total=False):
-    static: Required[ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticStatic]
+class ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategy(TypedDict, total=False):
+    static: Required[ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategyStatic]
 
     type: Required[Literal["static"]]
     """Always `static`."""
 
 
 ThreadToolResourcesFileSearchVectorStoreChunkingStrategy: TypeAlias = Union[
-    ThreadToolResourcesFileSearchVectorStoreChunkingStrategyAuto,
-    ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStatic,
+    ThreadToolResourcesFileSearchVectorStoreChunkingStrategyAutoChunkingStrategy,
+    ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategy,
 ]
 
 
@@ -334,9 +328,9 @@ class ThreadToolResourcesFileSearchVectorStore(TypedDict, total=False):
     """
 
     file_ids: SequenceNotStr[str]
-    """
-    A list of [file](https://platform.excai.com/docs/api-reference/files) IDs to add
-    to the vector store. There can be a maximum of 10000 files in a vector store.
+    """A list of [file](/docs/api-reference/files) IDs to add to the vector store.
+
+    There can be a maximum of 10000 files in a vector store.
     """
 
     metadata: Optional[Dict[str, str]]
@@ -353,16 +347,13 @@ class ThreadToolResourcesFileSearchVectorStore(TypedDict, total=False):
 class ThreadToolResourcesFileSearch(TypedDict, total=False):
     vector_store_ids: SequenceNotStr[str]
     """
-    The
-    [vector store](https://platform.excai.com/docs/api-reference/vector-stores/object)
-    attached to this thread. There can be a maximum of 1 vector store attached to
-    the thread.
+    The [vector store](/docs/api-reference/vector-stores/object) attached to this
+    thread. There can be a maximum of 1 vector store attached to the thread.
     """
 
     vector_stores: Iterable[ThreadToolResourcesFileSearchVectorStore]
     """
-    A helper to create a
-    [vector store](https://platform.excai.com/docs/api-reference/vector-stores/object)
+    A helper to create a [vector store](/docs/api-reference/vector-stores/object)
     with file_ids and attach it to this thread. There can be a maximum of 1 vector
     store attached to the thread.
     """
@@ -376,10 +367,7 @@ class ThreadToolResources(TypedDict, total=False):
 
 class Thread(TypedDict, total=False):
     messages: Iterable[ThreadMessage]
-    """
-    A list of [messages](https://platform.excai.com/docs/api-reference/messages) to
-    start the thread with.
-    """
+    """A list of [messages](/docs/api-reference/messages) to start the thread with."""
 
     metadata: Optional[Dict[str, str]]
     """Set of 16 key-value pairs that can be attached to an object.
@@ -406,19 +394,18 @@ ToolChoice: TypeAlias = Union[Literal["none", "auto", "required"], AssistantsNam
 class ToolResourcesCodeInterpreter(TypedDict, total=False):
     file_ids: SequenceNotStr[str]
     """
-    A list of [file](https://platform.excai.com/docs/api-reference/files) IDs made
-    available to the `code_interpreter` tool. There can be a maximum of 20 files
-    associated with the tool.
+    A list of [file](/docs/api-reference/files) IDs made available to the
+    `code_interpreter` tool. There can be a maximum of 20 files associated with the
+    tool.
     """
 
 
 class ToolResourcesFileSearch(TypedDict, total=False):
     vector_store_ids: SequenceNotStr[str]
     """
-    The ID of the
-    [vector store](https://platform.excai.com/docs/api-reference/vector-stores/object)
-    attached to this assistant. There can be a maximum of 1 vector store attached to
-    the assistant.
+    The ID of the [vector store](/docs/api-reference/vector-stores/object) attached
+    to this assistant. There can be a maximum of 1 vector store attached to the
+    assistant.
     """
 
 

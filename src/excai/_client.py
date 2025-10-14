@@ -27,7 +27,6 @@ from .resources import (
     files,
     images,
     models,
-    videos,
     batches,
     uploads,
     responses,
@@ -45,13 +44,10 @@ from ._base_client import (
 )
 from .resources.chat import chat
 from .resources.evals import evals
-from .resources.chatkit import chatkit
 from .resources.threads import threads
 from .resources.realtime import realtime
-from .resources.containers import containers
 from .resources.fine_tuning import fine_tuning
 from .resources.organization import organization
-from .resources.conversations import conversations
 from .resources.vector_stores import vector_stores
 
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "ExCai", "AsyncExCai", "Client", "AsyncClient"]
@@ -63,8 +59,6 @@ class ExCai(SyncAPIClient):
     batches: batches.BatchesResource
     chat: chat.ChatResource
     completions: completions.CompletionsResource
-    containers: containers.ContainersResource
-    conversations: conversations.ConversationsResource
     embeddings: embeddings.EmbeddingsResource
     evals: evals.EvalsResource
     files: files.FilesResource
@@ -78,8 +72,6 @@ class ExCai(SyncAPIClient):
     threads: threads.ThreadsResource
     uploads: uploads.UploadsResource
     vector_stores: vector_stores.VectorStoresResource
-    videos: videos.VideosResource
-    chatkit: chatkit.ChatkitResource
     with_raw_response: ExCaiWithRawResponse
     with_streaming_response: ExCaiWithStreamedResponse
 
@@ -138,8 +130,6 @@ class ExCai(SyncAPIClient):
         self.batches = batches.BatchesResource(self)
         self.chat = chat.ChatResource(self)
         self.completions = completions.CompletionsResource(self)
-        self.containers = containers.ContainersResource(self)
-        self.conversations = conversations.ConversationsResource(self)
         self.embeddings = embeddings.EmbeddingsResource(self)
         self.evals = evals.EvalsResource(self)
         self.files = files.FilesResource(self)
@@ -153,8 +143,6 @@ class ExCai(SyncAPIClient):
         self.threads = threads.ThreadsResource(self)
         self.uploads = uploads.UploadsResource(self)
         self.vector_stores = vector_stores.VectorStoresResource(self)
-        self.videos = videos.VideosResource(self)
-        self.chatkit = chatkit.ChatkitResource(self)
         self.with_raw_response = ExCaiWithRawResponse(self)
         self.with_streaming_response = ExCaiWithStreamedResponse(self)
 
@@ -282,8 +270,6 @@ class AsyncExCai(AsyncAPIClient):
     batches: batches.AsyncBatchesResource
     chat: chat.AsyncChatResource
     completions: completions.AsyncCompletionsResource
-    containers: containers.AsyncContainersResource
-    conversations: conversations.AsyncConversationsResource
     embeddings: embeddings.AsyncEmbeddingsResource
     evals: evals.AsyncEvalsResource
     files: files.AsyncFilesResource
@@ -297,8 +283,6 @@ class AsyncExCai(AsyncAPIClient):
     threads: threads.AsyncThreadsResource
     uploads: uploads.AsyncUploadsResource
     vector_stores: vector_stores.AsyncVectorStoresResource
-    videos: videos.AsyncVideosResource
-    chatkit: chatkit.AsyncChatkitResource
     with_raw_response: AsyncExCaiWithRawResponse
     with_streaming_response: AsyncExCaiWithStreamedResponse
 
@@ -357,8 +341,6 @@ class AsyncExCai(AsyncAPIClient):
         self.batches = batches.AsyncBatchesResource(self)
         self.chat = chat.AsyncChatResource(self)
         self.completions = completions.AsyncCompletionsResource(self)
-        self.containers = containers.AsyncContainersResource(self)
-        self.conversations = conversations.AsyncConversationsResource(self)
         self.embeddings = embeddings.AsyncEmbeddingsResource(self)
         self.evals = evals.AsyncEvalsResource(self)
         self.files = files.AsyncFilesResource(self)
@@ -372,8 +354,6 @@ class AsyncExCai(AsyncAPIClient):
         self.threads = threads.AsyncThreadsResource(self)
         self.uploads = uploads.AsyncUploadsResource(self)
         self.vector_stores = vector_stores.AsyncVectorStoresResource(self)
-        self.videos = videos.AsyncVideosResource(self)
-        self.chatkit = chatkit.AsyncChatkitResource(self)
         self.with_raw_response = AsyncExCaiWithRawResponse(self)
         self.with_streaming_response = AsyncExCaiWithStreamedResponse(self)
 
@@ -502,8 +482,6 @@ class ExCaiWithRawResponse:
         self.batches = batches.BatchesResourceWithRawResponse(client.batches)
         self.chat = chat.ChatResourceWithRawResponse(client.chat)
         self.completions = completions.CompletionsResourceWithRawResponse(client.completions)
-        self.containers = containers.ContainersResourceWithRawResponse(client.containers)
-        self.conversations = conversations.ConversationsResourceWithRawResponse(client.conversations)
         self.embeddings = embeddings.EmbeddingsResourceWithRawResponse(client.embeddings)
         self.evals = evals.EvalsResourceWithRawResponse(client.evals)
         self.files = files.FilesResourceWithRawResponse(client.files)
@@ -517,8 +495,6 @@ class ExCaiWithRawResponse:
         self.threads = threads.ThreadsResourceWithRawResponse(client.threads)
         self.uploads = uploads.UploadsResourceWithRawResponse(client.uploads)
         self.vector_stores = vector_stores.VectorStoresResourceWithRawResponse(client.vector_stores)
-        self.videos = videos.VideosResourceWithRawResponse(client.videos)
-        self.chatkit = chatkit.ChatkitResourceWithRawResponse(client.chatkit)
 
 
 class AsyncExCaiWithRawResponse:
@@ -528,8 +504,6 @@ class AsyncExCaiWithRawResponse:
         self.batches = batches.AsyncBatchesResourceWithRawResponse(client.batches)
         self.chat = chat.AsyncChatResourceWithRawResponse(client.chat)
         self.completions = completions.AsyncCompletionsResourceWithRawResponse(client.completions)
-        self.containers = containers.AsyncContainersResourceWithRawResponse(client.containers)
-        self.conversations = conversations.AsyncConversationsResourceWithRawResponse(client.conversations)
         self.embeddings = embeddings.AsyncEmbeddingsResourceWithRawResponse(client.embeddings)
         self.evals = evals.AsyncEvalsResourceWithRawResponse(client.evals)
         self.files = files.AsyncFilesResourceWithRawResponse(client.files)
@@ -543,8 +517,6 @@ class AsyncExCaiWithRawResponse:
         self.threads = threads.AsyncThreadsResourceWithRawResponse(client.threads)
         self.uploads = uploads.AsyncUploadsResourceWithRawResponse(client.uploads)
         self.vector_stores = vector_stores.AsyncVectorStoresResourceWithRawResponse(client.vector_stores)
-        self.videos = videos.AsyncVideosResourceWithRawResponse(client.videos)
-        self.chatkit = chatkit.AsyncChatkitResourceWithRawResponse(client.chatkit)
 
 
 class ExCaiWithStreamedResponse:
@@ -554,8 +526,6 @@ class ExCaiWithStreamedResponse:
         self.batches = batches.BatchesResourceWithStreamingResponse(client.batches)
         self.chat = chat.ChatResourceWithStreamingResponse(client.chat)
         self.completions = completions.CompletionsResourceWithStreamingResponse(client.completions)
-        self.containers = containers.ContainersResourceWithStreamingResponse(client.containers)
-        self.conversations = conversations.ConversationsResourceWithStreamingResponse(client.conversations)
         self.embeddings = embeddings.EmbeddingsResourceWithStreamingResponse(client.embeddings)
         self.evals = evals.EvalsResourceWithStreamingResponse(client.evals)
         self.files = files.FilesResourceWithStreamingResponse(client.files)
@@ -569,8 +539,6 @@ class ExCaiWithStreamedResponse:
         self.threads = threads.ThreadsResourceWithStreamingResponse(client.threads)
         self.uploads = uploads.UploadsResourceWithStreamingResponse(client.uploads)
         self.vector_stores = vector_stores.VectorStoresResourceWithStreamingResponse(client.vector_stores)
-        self.videos = videos.VideosResourceWithStreamingResponse(client.videos)
-        self.chatkit = chatkit.ChatkitResourceWithStreamingResponse(client.chatkit)
 
 
 class AsyncExCaiWithStreamedResponse:
@@ -580,8 +548,6 @@ class AsyncExCaiWithStreamedResponse:
         self.batches = batches.AsyncBatchesResourceWithStreamingResponse(client.batches)
         self.chat = chat.AsyncChatResourceWithStreamingResponse(client.chat)
         self.completions = completions.AsyncCompletionsResourceWithStreamingResponse(client.completions)
-        self.containers = containers.AsyncContainersResourceWithStreamingResponse(client.containers)
-        self.conversations = conversations.AsyncConversationsResourceWithStreamingResponse(client.conversations)
         self.embeddings = embeddings.AsyncEmbeddingsResourceWithStreamingResponse(client.embeddings)
         self.evals = evals.AsyncEvalsResourceWithStreamingResponse(client.evals)
         self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
@@ -595,8 +561,6 @@ class AsyncExCaiWithStreamedResponse:
         self.threads = threads.AsyncThreadsResourceWithStreamingResponse(client.threads)
         self.uploads = uploads.AsyncUploadsResourceWithStreamingResponse(client.uploads)
         self.vector_stores = vector_stores.AsyncVectorStoresResourceWithStreamingResponse(client.vector_stores)
-        self.videos = videos.AsyncVideosResourceWithStreamingResponse(client.videos)
-        self.chatkit = chatkit.AsyncChatkitResourceWithStreamingResponse(client.chatkit)
 
 
 Client = ExCai

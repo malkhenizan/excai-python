@@ -9,7 +9,7 @@ __all__ = ["RefusalContent"]
 
 class RefusalContent(BaseModel):
     refusal: str
-    """The refusal explanation from the model."""
+    """The refusal explanationfrom the model."""
 
     type: Literal["refusal"]
     """The type of the refusal. Always `refusal`."""

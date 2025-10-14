@@ -9,7 +9,7 @@ class InputTokensDetails(BaseModel):
     cached_tokens: int
     """The number of tokens that were retrieved from the cache.
 
-    [More on prompt caching](https://platform.excai.com/docs/guides/prompt-caching).
+    [More on prompt caching](/docs/guides/prompt-caching).
     """
 
 

@@ -8,14 +8,6 @@ from .jobs import (
     JobsResourceWithStreamingResponse,
     AsyncJobsResourceWithStreamingResponse,
 )
-from .alpha import (
-    AlphaResource,
-    AsyncAlphaResource,
-    AlphaResourceWithRawResponse,
-    AsyncAlphaResourceWithRawResponse,
-    AlphaResourceWithStreamingResponse,
-    AsyncAlphaResourceWithStreamingResponse,
-)
 from .checkpoints import (
     CheckpointsResource,
     AsyncCheckpointsResource,
@@ -34,12 +26,6 @@ from .fine_tuning import (
 )
 
 __all__ = [
-    "AlphaResource",
-    "AsyncAlphaResource",
-    "AlphaResourceWithRawResponse",
-    "AsyncAlphaResourceWithRawResponse",
-    "AlphaResourceWithStreamingResponse",
-    "AsyncAlphaResourceWithStreamingResponse",
     "CheckpointsResource",
     "AsyncCheckpointsResource",
     "CheckpointsResourceWithRawResponse",

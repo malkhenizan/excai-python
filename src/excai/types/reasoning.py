@@ -9,16 +9,13 @@ __all__ = ["Reasoning"]
 
 
 class Reasoning(BaseModel):
-    effort: Optional[Literal["minimal", "low", "medium", "high"]] = None
-    """
-    Constrains effort on reasoning for
-    [reasoning models](https://platform.excai.com/docs/guides/reasoning). Currently
-    supported values are `minimal`, `low`, `medium`, and `high`. Reducing reasoning
-    effort can result in faster responses and fewer tokens used on reasoning in a
-    response.
+    effort: Optional[Literal["low", "medium", "high"]] = None
+    """**o-series models only**
 
-    Note: The `gpt-5-pro` model defaults to (and only supports) `high` reasoning
-    effort.
+    Constrains effort on reasoning for
+    [reasoning models](https://platform.openai.com/docs/guides/reasoning). Currently
+    supported values are `low`, `medium`, and `high`. Reducing reasoning effort can
+    result in faster responses and fewer tokens used on reasoning in a response.
     """
 
     generate_summary: Optional[Literal["auto", "concise", "detailed"]] = None

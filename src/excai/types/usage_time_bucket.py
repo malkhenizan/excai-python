@@ -1,9 +1,8 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List, Union
-from typing_extensions import Literal, Annotated, TypeAlias
+from typing_extensions import Literal, TypeAlias
 
-from .._utils import PropertyInfo
 from .._models import BaseModel
 from .costs_result import CostsResult
 from .usage_images_result import UsageImagesResult
@@ -17,19 +16,16 @@ from .usage_code_interpreter_sessions_result import UsageCodeInterpreterSessions
 
 __all__ = ["UsageTimeBucket", "Result"]
 
-Result: TypeAlias = Annotated[
-    Union[
-        UsageCompletionsResult,
-        UsageEmbeddingsResult,
-        UsageModerationsResult,
-        UsageImagesResult,
-        UsageAudioSpeechesResult,
-        UsageAudioTranscriptionsResult,
-        UsageVectorStoresResult,
-        UsageCodeInterpreterSessionsResult,
-        CostsResult,
-    ],
-    PropertyInfo(discriminator="object"),
+Result: TypeAlias = Union[
+    UsageCompletionsResult,
+    UsageEmbeddingsResult,
+    UsageModerationsResult,
+    UsageImagesResult,
+    UsageAudioSpeechesResult,
+    UsageAudioTranscriptionsResult,
+    UsageVectorStoresResult,
+    UsageCodeInterpreterSessionsResult,
+    CostsResult,
 ]
 
 

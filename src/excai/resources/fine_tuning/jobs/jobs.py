@@ -36,10 +36,8 @@ from ...._response import (
 from ...._base_client import make_request_options
 from ....types.fine_tuning import job_list_params, job_create_params
 from ....types.fine_tuning.job_list_response import JobListResponse
-from ....types.fine_tuning.job_pause_response import JobPauseResponse
 from ....types.fine_tuning.job_cancel_response import JobCancelResponse
 from ....types.fine_tuning.job_create_response import JobCreateResponse
-from ....types.fine_tuning.job_resume_response import JobResumeResponse
 from ....types.fine_tuning.job_retrieve_response import JobRetrieveResponse
 from ....types.fine_tuning.fine_tune_method_param import FineTuneMethodParam
 
@@ -100,30 +98,26 @@ class JobsResource(SyncAPIResource):
         Response includes details of the enqueued job including job status and the name
         of the fine-tuned models once complete.
 
-        [Learn more about fine-tuning](https://platform.excai.com/docs/guides/model-optimization)
+        [Learn more about fine-tuning](/docs/guides/fine-tuning)
 
         Args:
           model: The name of the model to fine-tune. You can select one of the
-              [supported models](https://platform.excai.com/docs/guides/fine-tuning#which-models-can-be-fine-tuned).
+              [supported models](/docs/guides/fine-tuning#which-models-can-be-fine-tuned).
 
           training_file: The ID of an uploaded file that contains training data.
 
-              See [upload file](https://platform.excai.com/docs/api-reference/files/create)
-              for how to upload a file.
+              See [upload file](/docs/api-reference/files/create) for how to upload a file.
 
               Your dataset must be formatted as a JSONL file. Additionally, you must upload
               your file with the purpose `fine-tune`.
 
               The contents of the file should differ depending on if the model uses the
-              [chat](https://platform.excai.com/docs/api-reference/fine-tuning/chat-input),
-              [completions](https://platform.excai.com/docs/api-reference/fine-tuning/completions-input)
-              format, or if the fine-tuning method uses the
-              [preference](https://platform.excai.com/docs/api-reference/fine-tuning/preference-input)
-              format.
+              [chat](/docs/api-reference/fine-tuning/chat-input),
+              [completions](/docs/api-reference/fine-tuning/completions-input) format, or if
+              the fine-tuning method uses the
+              [preference](/docs/api-reference/fine-tuning/preference-input) format.
 
-              See the
-              [fine-tuning guide](https://platform.excai.com/docs/guides/model-optimization)
-              for more details.
+              See the [fine-tuning guide](/docs/guides/fine-tuning) for more details.
 
           hyperparameters: The hyperparameters used for the fine-tuning job. This value is now deprecated
               in favor of `method`, and should be passed in under the `method` parameter.
@@ -147,7 +141,7 @@ class JobsResource(SyncAPIResource):
               name.
 
               For example, a `suffix` of "custom-model-name" would produce a model name like
-              `ft:gpt-4o-mini:excai:custom-model-name:7p4lURel`.
+              `ft:gpt-4o-mini:openai:custom-model-name:7p4lURel`.
 
           validation_file: The ID of an uploaded file that contains validation data.
 
@@ -159,9 +153,7 @@ class JobsResource(SyncAPIResource):
               Your dataset must be formatted as a JSONL file. You must upload your file with
               the purpose `fine-tune`.
 
-              See the
-              [fine-tuning guide](https://platform.excai.com/docs/guides/model-optimization)
-              for more details.
+              See the [fine-tuning guide](/docs/guides/fine-tuning) for more details.
 
           extra_headers: Send extra headers
 
@@ -207,7 +199,7 @@ class JobsResource(SyncAPIResource):
         """
         Get info about a fine-tuning job.
 
-        [Learn more about fine-tuning](https://platform.excai.com/docs/guides/model-optimization)
+        [Learn more about fine-tuning](/docs/guides/fine-tuning)
 
         Args:
           extra_headers: Send extra headers
@@ -312,72 +304,6 @@ class JobsResource(SyncAPIResource):
             cast_to=JobCancelResponse,
         )
 
-    def pause(
-        self,
-        fine_tuning_job_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> JobPauseResponse:
-        """
-        Pause a fine-tune job.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not fine_tuning_job_id:
-            raise ValueError(f"Expected a non-empty value for `fine_tuning_job_id` but received {fine_tuning_job_id!r}")
-        return self._post(
-            f"/fine_tuning/jobs/{fine_tuning_job_id}/pause",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=JobPauseResponse,
-        )
-
-    def resume(
-        self,
-        fine_tuning_job_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> JobResumeResponse:
-        """
-        Resume a fine-tune job.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not fine_tuning_job_id:
-            raise ValueError(f"Expected a non-empty value for `fine_tuning_job_id` but received {fine_tuning_job_id!r}")
-        return self._post(
-            f"/fine_tuning/jobs/{fine_tuning_job_id}/resume",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=JobResumeResponse,
-        )
-
 
 class AsyncJobsResource(AsyncAPIResource):
     @cached_property
@@ -433,30 +359,26 @@ class AsyncJobsResource(AsyncAPIResource):
         Response includes details of the enqueued job including job status and the name
         of the fine-tuned models once complete.
 
-        [Learn more about fine-tuning](https://platform.excai.com/docs/guides/model-optimization)
+        [Learn more about fine-tuning](/docs/guides/fine-tuning)
 
         Args:
           model: The name of the model to fine-tune. You can select one of the
-              [supported models](https://platform.excai.com/docs/guides/fine-tuning#which-models-can-be-fine-tuned).
+              [supported models](/docs/guides/fine-tuning#which-models-can-be-fine-tuned).
 
           training_file: The ID of an uploaded file that contains training data.
 
-              See [upload file](https://platform.excai.com/docs/api-reference/files/create)
-              for how to upload a file.
+              See [upload file](/docs/api-reference/files/create) for how to upload a file.
 
               Your dataset must be formatted as a JSONL file. Additionally, you must upload
               your file with the purpose `fine-tune`.
 
               The contents of the file should differ depending on if the model uses the
-              [chat](https://platform.excai.com/docs/api-reference/fine-tuning/chat-input),
-              [completions](https://platform.excai.com/docs/api-reference/fine-tuning/completions-input)
-              format, or if the fine-tuning method uses the
-              [preference](https://platform.excai.com/docs/api-reference/fine-tuning/preference-input)
-              format.
+              [chat](/docs/api-reference/fine-tuning/chat-input),
+              [completions](/docs/api-reference/fine-tuning/completions-input) format, or if
+              the fine-tuning method uses the
+              [preference](/docs/api-reference/fine-tuning/preference-input) format.
 
-              See the
-              [fine-tuning guide](https://platform.excai.com/docs/guides/model-optimization)
-              for more details.
+              See the [fine-tuning guide](/docs/guides/fine-tuning) for more details.
 
           hyperparameters: The hyperparameters used for the fine-tuning job. This value is now deprecated
               in favor of `method`, and should be passed in under the `method` parameter.
@@ -480,7 +402,7 @@ class AsyncJobsResource(AsyncAPIResource):
               name.
 
               For example, a `suffix` of "custom-model-name" would produce a model name like
-              `ft:gpt-4o-mini:excai:custom-model-name:7p4lURel`.
+              `ft:gpt-4o-mini:openai:custom-model-name:7p4lURel`.
 
           validation_file: The ID of an uploaded file that contains validation data.
 
@@ -492,9 +414,7 @@ class AsyncJobsResource(AsyncAPIResource):
               Your dataset must be formatted as a JSONL file. You must upload your file with
               the purpose `fine-tune`.
 
-              See the
-              [fine-tuning guide](https://platform.excai.com/docs/guides/model-optimization)
-              for more details.
+              See the [fine-tuning guide](/docs/guides/fine-tuning) for more details.
 
           extra_headers: Send extra headers
 
@@ -540,7 +460,7 @@ class AsyncJobsResource(AsyncAPIResource):
         """
         Get info about a fine-tuning job.
 
-        [Learn more about fine-tuning](https://platform.excai.com/docs/guides/model-optimization)
+        [Learn more about fine-tuning](/docs/guides/fine-tuning)
 
         Args:
           extra_headers: Send extra headers
@@ -645,72 +565,6 @@ class AsyncJobsResource(AsyncAPIResource):
             cast_to=JobCancelResponse,
         )
 
-    async def pause(
-        self,
-        fine_tuning_job_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> JobPauseResponse:
-        """
-        Pause a fine-tune job.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not fine_tuning_job_id:
-            raise ValueError(f"Expected a non-empty value for `fine_tuning_job_id` but received {fine_tuning_job_id!r}")
-        return await self._post(
-            f"/fine_tuning/jobs/{fine_tuning_job_id}/pause",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=JobPauseResponse,
-        )
-
-    async def resume(
-        self,
-        fine_tuning_job_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> JobResumeResponse:
-        """
-        Resume a fine-tune job.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not fine_tuning_job_id:
-            raise ValueError(f"Expected a non-empty value for `fine_tuning_job_id` but received {fine_tuning_job_id!r}")
-        return await self._post(
-            f"/fine_tuning/jobs/{fine_tuning_job_id}/resume",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=JobResumeResponse,
-        )
-
 
 class JobsResourceWithRawResponse:
     def __init__(self, jobs: JobsResource) -> None:
@@ -727,12 +581,6 @@ class JobsResourceWithRawResponse:
         )
         self.cancel = to_raw_response_wrapper(
             jobs.cancel,
-        )
-        self.pause = to_raw_response_wrapper(
-            jobs.pause,
-        )
-        self.resume = to_raw_response_wrapper(
-            jobs.resume,
         )
 
     @cached_property
@@ -760,12 +608,6 @@ class AsyncJobsResourceWithRawResponse:
         self.cancel = async_to_raw_response_wrapper(
             jobs.cancel,
         )
-        self.pause = async_to_raw_response_wrapper(
-            jobs.pause,
-        )
-        self.resume = async_to_raw_response_wrapper(
-            jobs.resume,
-        )
 
     @cached_property
     def checkpoints(self) -> AsyncCheckpointsResourceWithRawResponse:
@@ -792,12 +634,6 @@ class JobsResourceWithStreamingResponse:
         self.cancel = to_streamed_response_wrapper(
             jobs.cancel,
         )
-        self.pause = to_streamed_response_wrapper(
-            jobs.pause,
-        )
-        self.resume = to_streamed_response_wrapper(
-            jobs.resume,
-        )
 
     @cached_property
     def checkpoints(self) -> CheckpointsResourceWithStreamingResponse:
@@ -823,12 +659,6 @@ class AsyncJobsResourceWithStreamingResponse:
         )
         self.cancel = async_to_streamed_response_wrapper(
             jobs.cancel,
-        )
-        self.pause = async_to_streamed_response_wrapper(
-            jobs.pause,
-        )
-        self.resume = async_to_streamed_response_wrapper(
-            jobs.resume,
         )
 
     @cached_property

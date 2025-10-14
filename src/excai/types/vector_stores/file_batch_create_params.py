@@ -14,10 +14,10 @@ __all__ = ["FileBatchCreateParams", "ChunkingStrategy"]
 
 class FileBatchCreateParams(TypedDict, total=False):
     file_ids: Required[SequenceNotStr[str]]
-    """
-    A list of [File](https://platform.excai.com/docs/api-reference/files) IDs that
-    the vector store should use. Useful for tools like `file_search` that can access
-    files.
+    """A list of [File](/docs/api-reference/files) IDs that the vector store should
+    use.
+
+    Useful for tools like `file_search` that can access files.
     """
 
     attributes: Optional[Dict[str, Union[str, float, bool]]]
@@ -32,8 +32,7 @@ class FileBatchCreateParams(TypedDict, total=False):
     chunking_strategy: ChunkingStrategy
     """The chunking strategy used to chunk the file(s).
 
-    If not set, will use the `auto` strategy. Only applicable if `file_ids` is
-    non-empty.
+    If not set, will use the `auto` strategy.
     """
 
 

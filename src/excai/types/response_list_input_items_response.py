@@ -6,30 +6,19 @@ from typing_extensions import Literal, Annotated, TypeAlias
 from .._utils import PropertyInfo
 from .._models import BaseModel
 from .output_message import OutputMessage
-from .shared.input_audio import InputAudio
-from .shared.mcp_tool_call import McpToolCall
-from .shared.mcp_list_tools import McpListTools
 from .shared.computer_tool_call import ComputerToolCall
 from .shared.input_file_content import InputFileContent
 from .shared.input_text_content import InputTextContent
-from .shared.image_gen_tool_call import ImageGenToolCall
 from .shared.input_image_content import InputImageContent
-from .shared.mcp_approval_request import McpApprovalRequest
 from .shared.web_search_tool_call import WebSearchToolCall
 from .shared.file_search_tool_call import FileSearchToolCall
-from .shared.local_shell_tool_call import LocalShellToolCall
-from .shared.code_interpreter_tool_call import CodeInterpreterToolCall
 from .shared.function_tool_call_resource import FunctionToolCallResource
-from .shared.local_shell_tool_call_output import LocalShellToolCallOutput
-from .shared.mcp_approval_response_resource import McpApprovalResponseResource
 from .shared.computer_tool_call_output_resource import ComputerToolCallOutputResource
 from .shared.function_tool_call_output_resource import FunctionToolCallOutputResource
 
 __all__ = ["ResponseListInputItemsResponse", "Data", "DataMessage", "DataMessageContent"]
 
-DataMessageContent: TypeAlias = Annotated[
-    Union[InputTextContent, InputImageContent, InputFileContent, InputAudio], PropertyInfo(discriminator="type")
-]
+DataMessageContent: TypeAlias = Union[InputTextContent, InputImageContent, InputFileContent]
 
 
 class DataMessage(BaseModel):
@@ -66,14 +55,6 @@ Data: TypeAlias = Annotated[
         WebSearchToolCall,
         FunctionToolCallResource,
         FunctionToolCallOutputResource,
-        ImageGenToolCall,
-        CodeInterpreterToolCall,
-        LocalShellToolCall,
-        LocalShellToolCallOutput,
-        McpListTools,
-        McpApprovalRequest,
-        McpApprovalResponseResource,
-        McpToolCall,
     ],
     PropertyInfo(discriminator="type"),
 ]

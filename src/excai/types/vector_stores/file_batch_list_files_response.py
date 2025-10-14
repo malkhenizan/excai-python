@@ -1,9 +1,8 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Dict, List, Union, Optional
-from typing_extensions import Literal, Annotated, TypeAlias
+from typing_extensions import Literal, TypeAlias
 
-from ..._utils import PropertyInfo
 from ..._models import BaseModel
 from ..other_chunking_strategy_response_param import OtherChunkingStrategyResponseParam
 from ..static_chunking_strategy_response_param import StaticChunkingStrategyResponseParam
@@ -13,15 +12,13 @@ __all__ = ["FileBatchListFilesResponse", "Data", "DataLastError", "DataChunkingS
 
 class DataLastError(BaseModel):
     code: Literal["server_error", "unsupported_file", "invalid_file"]
-    """One of `server_error`, `unsupported_file`, or `invalid_file`."""
+    """One of `server_error` or `rate_limit_exceeded`."""
 
     message: str
     """A human-readable description of the error."""
 
 
-DataChunkingStrategy: TypeAlias = Annotated[
-    Union[StaticChunkingStrategyResponseParam, OtherChunkingStrategyResponseParam], PropertyInfo(discriminator="type")
-]
+DataChunkingStrategy: TypeAlias = Union[StaticChunkingStrategyResponseParam, OtherChunkingStrategyResponseParam]
 
 
 class Data(BaseModel):
@@ -55,10 +52,8 @@ class Data(BaseModel):
 
     vector_store_id: str
     """
-    The ID of the
-    [vector store](https://platform.excai.com/docs/api-reference/vector-stores/object)
-    that the [File](https://platform.excai.com/docs/api-reference/files) is attached
-    to.
+    The ID of the [vector store](/docs/api-reference/vector-stores/object) that the
+    [File](/docs/api-reference/files) is attached to.
     """
 
     attributes: Optional[Dict[str, Union[str, float, bool]]] = None

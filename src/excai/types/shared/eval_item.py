@@ -1,13 +1,12 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Union, Optional
+from typing import Union, Optional
 from typing_extensions import Literal, TypeAlias
 
 from ..._models import BaseModel
-from .input_audio import InputAudio
 from .input_text_content import InputTextContent
 
-__all__ = ["EvalItem", "Content", "ContentOutputText", "ContentInputImage"]
+__all__ = ["EvalItem", "Content", "ContentOutputText"]
 
 
 class ContentOutputText(BaseModel):
@@ -18,26 +17,12 @@ class ContentOutputText(BaseModel):
     """The type of the output text. Always `output_text`."""
 
 
-class ContentInputImage(BaseModel):
-    image_url: str
-    """The URL of the image input."""
-
-    type: Literal["input_image"]
-    """The type of the image input. Always `input_image`."""
-
-    detail: Optional[str] = None
-    """The detail level of the image to be sent to the model.
-
-    One of `high`, `low`, or `auto`. Defaults to `auto`.
-    """
-
-
-Content: TypeAlias = Union[str, InputTextContent, ContentOutputText, ContentInputImage, InputAudio, List[object]]
+Content: TypeAlias = Union[str, InputTextContent, ContentOutputText]
 
 
 class EvalItem(BaseModel):
     content: Content
-    """Inputs to the model - can contain template strings."""
+    """Text inputs to the model - can contain template strings."""
 
     role: Literal["user", "assistant", "system", "developer"]
     """The role of the message input.

@@ -1,16 +1,15 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List, Union
-from typing_extensions import Literal, Annotated, TypeAlias
+from typing_extensions import Literal, TypeAlias
 
-from .._utils import PropertyInfo
 from .._models import BaseModel
 from .shared.refusal_content import RefusalContent
 from .shared.output_text_content import OutputTextContent
 
 __all__ = ["OutputMessage", "Content"]
 
-Content: TypeAlias = Annotated[Union[OutputTextContent, RefusalContent], PropertyInfo(discriminator="type")]
+Content: TypeAlias = Union[OutputTextContent, RefusalContent]
 
 
 class OutputMessage(BaseModel):

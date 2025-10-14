@@ -15,7 +15,7 @@ class ImageCreateEditParams(TypedDict, total=False):
     """The image(s) to edit. Must be a supported image file or an array of images.
 
     For `gpt-image-1`, each image should be a `png`, `webp`, or `jpg` file less than
-    50MB. You can provide up to 16 images.
+    25MB. You can provide up to 16 images.
 
     For `dall-e-2`, you can only provide one image, and it should be a square `png`
     file less than 4MB.
@@ -28,25 +28,6 @@ class ImageCreateEditParams(TypedDict, total=False):
     `gpt-image-1`.
     """
 
-    background: Optional[Literal["transparent", "opaque", "auto"]]
-    """
-    Allows to set transparency for the background of the generated image(s). This
-    parameter is only supported for `gpt-image-1`. Must be one of `transparent`,
-    `opaque` or `auto` (default value). When `auto` is used, the model will
-    automatically determine the best background for the image.
-
-    If `transparent`, the output format needs to support transparency, so it should
-    be set to either `png` (default value) or `webp`.
-    """
-
-    input_fidelity: Optional[Literal["high", "low"]]
-    """
-    Control how much effort the model will exert to match the style and features,
-    especially facial features, of input images. This parameter is only supported
-    for `gpt-image-1`. Unsupported for `gpt-image-1-mini`. Supports `high` and
-    `low`. Defaults to `low`.
-    """
-
     mask: FileTypes
     """An additional image whose fully transparent areas (e.g.
 
@@ -55,7 +36,7 @@ class ImageCreateEditParams(TypedDict, total=False):
     valid PNG file, less than 4MB, and have the same dimensions as `image`.
     """
 
-    model: Union[str, Literal["dall-e-2", "gpt-image-1", "gpt-image-1-mini"], None]
+    model: Union[str, Literal["dall-e-2", "gpt-image-1"], None]
     """The model to use for image generation.
 
     Only `dall-e-2` and `gpt-image-1` are supported. Defaults to `dall-e-2` unless a
@@ -64,31 +45,6 @@ class ImageCreateEditParams(TypedDict, total=False):
 
     n: Optional[int]
     """The number of images to generate. Must be between 1 and 10."""
-
-    output_compression: Optional[int]
-    """The compression level (0-100%) for the generated images.
-
-    This parameter is only supported for `gpt-image-1` with the `webp` or `jpeg`
-    output formats, and defaults to 100.
-    """
-
-    output_format: Optional[Literal["png", "jpeg", "webp"]]
-    """The format in which the generated images are returned.
-
-    This parameter is only supported for `gpt-image-1`. Must be one of `png`,
-    `jpeg`, or `webp`. The default value is `png`.
-    """
-
-    partial_images: Optional[int]
-    """The number of partial images to generate.
-
-    This parameter is used for streaming responses that return partial images. Value
-    must be between 0 and 3. When set to 0, the response will be a single image sent
-    in one streaming event.
-
-    Note that the final image may be sent before the full number of partial images
-    are generated if the full image is generated more quickly.
-    """
 
     quality: Optional[Literal["standard", "low", "medium", "high", "auto"]]
     """The quality of the image that will be generated.
@@ -113,17 +69,8 @@ class ImageCreateEditParams(TypedDict, total=False):
     `1024x1024` for `dall-e-2`.
     """
 
-    stream: Optional[bool]
-    """Edit the image in streaming mode.
-
-    Defaults to `false`. See the
-    [Image generation guide](https://platform.excai.com/docs/guides/image-generation)
-    for more information.
-    """
-
     user: str
     """
-    A unique identifier representing your end-user, which can help EXCai to monitor
-    and detect abuse.
-    [Learn more](https://platform.excai.com/docs/guides/safety-best-practices#end-user-ids).
+    A unique identifier representing your end-user, which can help OpenAI to monitor
+    and detect abuse. [Learn more](/docs/guides/safety-best-practices#end-user-ids).
     """

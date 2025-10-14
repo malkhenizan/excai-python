@@ -6,7 +6,7 @@ from typing_extensions import Literal, Required, TypedDict
 
 from .._types import FileTypes
 
-__all__ = ["FileUploadParams", "ExpiresAfter"]
+__all__ = ["FileUploadParams"]
 
 
 class FileUploadParams(TypedDict, total=False):
@@ -20,25 +20,4 @@ class FileUploadParams(TypedDict, total=False):
     API - `fine-tune`: Used for fine-tuning - `vision`: Images used for vision
     fine-tuning - `user_data`: Flexible file type for any purpose - `evals`: Used
     for eval data sets
-    """
-
-    expires_after: ExpiresAfter
-    """The expiration policy for a file.
-
-    By default, files with `purpose=batch` expire after 30 days and all other files
-    are persisted until they are manually deleted.
-    """
-
-
-class ExpiresAfter(TypedDict, total=False):
-    anchor: Required[Literal["created_at"]]
-    """Anchor timestamp after which the expiration policy applies.
-
-    Supported anchors: `created_at`.
-    """
-
-    seconds: Required[int]
-    """The number of seconds after the anchor time that the file will expire.
-
-    Must be between 3600 (1 hour) and 2592000 (30 days).
     """

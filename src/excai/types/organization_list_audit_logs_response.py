@@ -31,46 +31,24 @@ __all__ = [
     "DataCheckpointPermissionCreated",
     "DataCheckpointPermissionCreatedData",
     "DataCheckpointPermissionDeleted",
-    "DataExternalKeyRegistered",
-    "DataExternalKeyRemoved",
-    "DataGroupCreated",
-    "DataGroupCreatedData",
-    "DataGroupDeleted",
-    "DataGroupUpdated",
-    "DataGroupUpdatedChangesRequested",
     "DataInviteAccepted",
     "DataInviteDeleted",
     "DataInviteSent",
     "DataInviteSentData",
-    "DataIPAllowlistConfigActivated",
-    "DataIPAllowlistConfigActivatedConfig",
-    "DataIPAllowlistConfigDeactivated",
-    "DataIPAllowlistConfigDeactivatedConfig",
-    "DataIPAllowlistCreated",
-    "DataIPAllowlistDeleted",
-    "DataIPAllowlistUpdated",
     "DataLoginFailed",
     "DataLogoutFailed",
     "DataOrganizationUpdated",
     "DataOrganizationUpdatedChangesRequested",
+    "DataOrganizationUpdatedChangesRequestedSettings",
     "DataProject",
     "DataProjectArchived",
     "DataProjectCreated",
     "DataProjectCreatedData",
-    "DataProjectDeleted",
     "DataProjectUpdated",
     "DataProjectUpdatedChangesRequested",
     "DataRateLimitDeleted",
     "DataRateLimitUpdated",
     "DataRateLimitUpdatedChangesRequested",
-    "DataRoleAssignmentCreated",
-    "DataRoleAssignmentDeleted",
-    "DataRoleCreated",
-    "DataRoleDeleted",
-    "DataRoleUpdated",
-    "DataRoleUpdatedChangesRequested",
-    "DataScimDisabled",
-    "DataScimEnabled",
     "DataServiceAccountCreated",
     "DataServiceAccountCreatedData",
     "DataServiceAccountDeleted",
@@ -241,50 +219,6 @@ class DataCheckpointPermissionDeleted(BaseModel):
     """The ID of the checkpoint permission."""
 
 
-class DataExternalKeyRegistered(BaseModel):
-    id: Optional[str] = None
-    """The ID of the external key configuration."""
-
-    data: Optional[object] = None
-    """The configuration for the external key."""
-
-
-class DataExternalKeyRemoved(BaseModel):
-    id: Optional[str] = None
-    """The ID of the external key configuration."""
-
-
-class DataGroupCreatedData(BaseModel):
-    group_name: Optional[str] = None
-    """The group name."""
-
-
-class DataGroupCreated(BaseModel):
-    id: Optional[str] = None
-    """The ID of the group."""
-
-    data: Optional[DataGroupCreatedData] = None
-    """Information about the created group."""
-
-
-class DataGroupDeleted(BaseModel):
-    id: Optional[str] = None
-    """The ID of the group."""
-
-
-class DataGroupUpdatedChangesRequested(BaseModel):
-    group_name: Optional[str] = None
-    """The updated group name."""
-
-
-class DataGroupUpdated(BaseModel):
-    id: Optional[str] = None
-    """The ID of the group."""
-
-    changes_requested: Optional[DataGroupUpdatedChangesRequested] = None
-    """The payload used to update the group."""
-
-
 class DataInviteAccepted(BaseModel):
     id: Optional[str] = None
     """The ID of the invite."""
@@ -311,62 +245,6 @@ class DataInviteSent(BaseModel):
     """The payload used to create the invite."""
 
 
-class DataIPAllowlistConfigActivatedConfig(BaseModel):
-    id: Optional[str] = None
-    """The ID of the IP allowlist configuration."""
-
-    name: Optional[str] = None
-    """The name of the IP allowlist configuration."""
-
-
-class DataIPAllowlistConfigActivated(BaseModel):
-    configs: Optional[List[DataIPAllowlistConfigActivatedConfig]] = None
-    """The configurations that were activated."""
-
-
-class DataIPAllowlistConfigDeactivatedConfig(BaseModel):
-    id: Optional[str] = None
-    """The ID of the IP allowlist configuration."""
-
-    name: Optional[str] = None
-    """The name of the IP allowlist configuration."""
-
-
-class DataIPAllowlistConfigDeactivated(BaseModel):
-    configs: Optional[List[DataIPAllowlistConfigDeactivatedConfig]] = None
-    """The configurations that were deactivated."""
-
-
-class DataIPAllowlistCreated(BaseModel):
-    id: Optional[str] = None
-    """The ID of the IP allowlist configuration."""
-
-    allowed_ips: Optional[List[str]] = None
-    """The IP addresses or CIDR ranges included in the configuration."""
-
-    name: Optional[str] = None
-    """The name of the IP allowlist configuration."""
-
-
-class DataIPAllowlistDeleted(BaseModel):
-    id: Optional[str] = None
-    """The ID of the IP allowlist configuration."""
-
-    allowed_ips: Optional[List[str]] = None
-    """The IP addresses or CIDR ranges that were in the configuration."""
-
-    name: Optional[str] = None
-    """The name of the IP allowlist configuration."""
-
-
-class DataIPAllowlistUpdated(BaseModel):
-    id: Optional[str] = None
-    """The ID of the IP allowlist configuration."""
-
-    allowed_ips: Optional[List[str]] = None
-    """The updated set of IP addresses or CIDR ranges in the configuration."""
-
-
 class DataLoginFailed(BaseModel):
     error_code: Optional[str] = None
     """The error code of the failure."""
@@ -383,40 +261,31 @@ class DataLogoutFailed(BaseModel):
     """The error message of the failure."""
 
 
-class DataOrganizationUpdatedChangesRequested(BaseModel):
-    api_call_logging: Optional[str] = None
-    """How your organization logs data from supported API calls.
-
-    One of `disabled`, `enabled_per_call`, `enabled_for_all_projects`, or
-    `enabled_for_selected_projects`
-    """
-
-    api_call_logging_project_ids: Optional[str] = None
-    """
-    The list of project ids if api_call_logging is set to
-    `enabled_for_selected_projects`
-    """
-
-    description: Optional[str] = None
-    """The organization description."""
-
-    name: Optional[str] = None
-    """The organization name."""
-
+class DataOrganizationUpdatedChangesRequestedSettings(BaseModel):
     threads_ui_visibility: Optional[str] = None
     """
     Visibility of the threads page which shows messages created with the Assistants
     API and Playground. One of `ANY_ROLE`, `OWNERS`, or `NONE`.
     """
 
-    title: Optional[str] = None
-    """The organization title."""
-
     usage_dashboard_visibility: Optional[str] = None
     """
     Visibility of the usage dashboard which shows activity and costs for your
     organization. One of `ANY_ROLE` or `OWNERS`.
     """
+
+
+class DataOrganizationUpdatedChangesRequested(BaseModel):
+    description: Optional[str] = None
+    """The organization description."""
+
+    name: Optional[str] = None
+    """The organization name."""
+
+    settings: Optional[DataOrganizationUpdatedChangesRequestedSettings] = None
+
+    title: Optional[str] = None
+    """The organization title."""
 
 
 class DataOrganizationUpdated(BaseModel):
@@ -454,11 +323,6 @@ class DataProjectCreated(BaseModel):
 
     data: Optional[DataProjectCreatedData] = None
     """The payload used to create the project."""
-
-
-class DataProjectDeleted(BaseModel):
-    id: Optional[str] = None
-    """The project ID."""
 
 
 class DataProjectUpdatedChangesRequested(BaseModel):
@@ -505,103 +369,6 @@ class DataRateLimitUpdated(BaseModel):
 
     changes_requested: Optional[DataRateLimitUpdatedChangesRequested] = None
     """The payload used to update the rate limits."""
-
-
-class DataRoleAssignmentCreated(BaseModel):
-    id: Optional[str] = None
-    """The identifier of the role assignment."""
-
-    principal_id: Optional[str] = None
-    """The principal (user or group) that received the role."""
-
-    principal_type: Optional[str] = None
-    """The type of principal (user or group) that received the role."""
-
-    resource_id: Optional[str] = None
-    """The resource the role assignment is scoped to."""
-
-    resource_type: Optional[str] = None
-    """The type of resource the role assignment is scoped to."""
-
-
-class DataRoleAssignmentDeleted(BaseModel):
-    id: Optional[str] = None
-    """The identifier of the role assignment."""
-
-    principal_id: Optional[str] = None
-    """The principal (user or group) that had the role removed."""
-
-    principal_type: Optional[str] = None
-    """The type of principal (user or group) that had the role removed."""
-
-    resource_id: Optional[str] = None
-    """The resource the role assignment was scoped to."""
-
-    resource_type: Optional[str] = None
-    """The type of resource the role assignment was scoped to."""
-
-
-class DataRoleCreated(BaseModel):
-    id: Optional[str] = None
-    """The role ID."""
-
-    permissions: Optional[List[str]] = None
-    """The permissions granted by the role."""
-
-    resource_id: Optional[str] = None
-    """The resource the role is scoped to."""
-
-    resource_type: Optional[str] = None
-    """The type of resource the role belongs to."""
-
-    role_name: Optional[str] = None
-    """The name of the role."""
-
-
-class DataRoleDeleted(BaseModel):
-    id: Optional[str] = None
-    """The role ID."""
-
-
-class DataRoleUpdatedChangesRequested(BaseModel):
-    description: Optional[str] = None
-    """The updated role description, when provided."""
-
-    metadata: Optional[object] = None
-    """Additional metadata stored on the role."""
-
-    permissions_added: Optional[List[str]] = None
-    """The permissions added to the role."""
-
-    permissions_removed: Optional[List[str]] = None
-    """The permissions removed from the role."""
-
-    resource_id: Optional[str] = None
-    """The resource the role is scoped to."""
-
-    resource_type: Optional[str] = None
-    """The type of resource the role belongs to."""
-
-    role_name: Optional[str] = None
-    """The updated role name, when provided."""
-
-
-class DataRoleUpdated(BaseModel):
-    id: Optional[str] = None
-    """The role ID."""
-
-    changes_requested: Optional[DataRoleUpdatedChangesRequested] = None
-    """The payload used to update the role."""
-
-
-class DataScimDisabled(BaseModel):
-    id: Optional[str] = None
-    """The ID of the SCIM was disabled for."""
-
-
-class DataScimEnabled(BaseModel):
-    id: Optional[str] = None
-    """The ID of the SCIM was enabled for."""
 
 
 class DataServiceAccountCreatedData(BaseModel):
@@ -680,26 +447,11 @@ class Data(BaseModel):
         "api_key.created",
         "api_key.updated",
         "api_key.deleted",
-        "certificate.created",
-        "certificate.updated",
-        "certificate.deleted",
-        "certificates.activated",
-        "certificates.deactivated",
-        "checkpoint.permission.created",
-        "checkpoint.permission.deleted",
-        "external_key.registered",
-        "external_key.removed",
-        "group.created",
-        "group.updated",
-        "group.deleted",
+        "checkpoint_permission.created",
+        "checkpoint_permission.deleted",
         "invite.sent",
         "invite.accepted",
         "invite.deleted",
-        "ip_allowlist.created",
-        "ip_allowlist.updated",
-        "ip_allowlist.deleted",
-        "ip_allowlist.config.activated",
-        "ip_allowlist.config.deactivated",
         "login.succeeded",
         "login.failed",
         "logout.succeeded",
@@ -708,20 +460,11 @@ class Data(BaseModel):
         "project.created",
         "project.updated",
         "project.archived",
-        "project.deleted",
-        "rate_limit.updated",
-        "rate_limit.deleted",
-        "resource.deleted",
-        "role.created",
-        "role.updated",
-        "role.deleted",
-        "role.assignment.created",
-        "role.assignment.deleted",
-        "scim.enabled",
-        "scim.disabled",
         "service_account.created",
         "service_account.updated",
         "service_account.deleted",
+        "rate_limit.updated",
+        "rate_limit.deleted",
         "user.added",
         "user.updated",
         "user.deleted",
@@ -757,7 +500,7 @@ class Data(BaseModel):
     """The details for events with this `type`."""
 
     checkpoint_permission_created: Optional[DataCheckpointPermissionCreated] = FieldInfo(
-        alias="checkpoint.permission.created", default=None
+        alias="checkpoint_permission.created", default=None
     )
     """
     The project and fine-tuned model checkpoint that the checkpoint permission was
@@ -765,25 +508,8 @@ class Data(BaseModel):
     """
 
     checkpoint_permission_deleted: Optional[DataCheckpointPermissionDeleted] = FieldInfo(
-        alias="checkpoint.permission.deleted", default=None
+        alias="checkpoint_permission.deleted", default=None
     )
-    """The details for events with this `type`."""
-
-    external_key_registered: Optional[DataExternalKeyRegistered] = FieldInfo(
-        alias="external_key.registered", default=None
-    )
-    """The details for events with this `type`."""
-
-    external_key_removed: Optional[DataExternalKeyRemoved] = FieldInfo(alias="external_key.removed", default=None)
-    """The details for events with this `type`."""
-
-    group_created: Optional[DataGroupCreated] = FieldInfo(alias="group.created", default=None)
-    """The details for events with this `type`."""
-
-    group_deleted: Optional[DataGroupDeleted] = FieldInfo(alias="group.deleted", default=None)
-    """The details for events with this `type`."""
-
-    group_updated: Optional[DataGroupUpdated] = FieldInfo(alias="group.updated", default=None)
     """The details for events with this `type`."""
 
     invite_accepted: Optional[DataInviteAccepted] = FieldInfo(alias="invite.accepted", default=None)
@@ -795,36 +521,11 @@ class Data(BaseModel):
     invite_sent: Optional[DataInviteSent] = FieldInfo(alias="invite.sent", default=None)
     """The details for events with this `type`."""
 
-    ip_allowlist_config_activated: Optional[DataIPAllowlistConfigActivated] = FieldInfo(
-        alias="ip_allowlist.config.activated", default=None
-    )
-    """The details for events with this `type`."""
-
-    ip_allowlist_config_deactivated: Optional[DataIPAllowlistConfigDeactivated] = FieldInfo(
-        alias="ip_allowlist.config.deactivated", default=None
-    )
-    """The details for events with this `type`."""
-
-    ip_allowlist_created: Optional[DataIPAllowlistCreated] = FieldInfo(alias="ip_allowlist.created", default=None)
-    """The details for events with this `type`."""
-
-    ip_allowlist_deleted: Optional[DataIPAllowlistDeleted] = FieldInfo(alias="ip_allowlist.deleted", default=None)
-    """The details for events with this `type`."""
-
-    ip_allowlist_updated: Optional[DataIPAllowlistUpdated] = FieldInfo(alias="ip_allowlist.updated", default=None)
-    """The details for events with this `type`."""
-
     login_failed: Optional[DataLoginFailed] = FieldInfo(alias="login.failed", default=None)
     """The details for events with this `type`."""
 
-    login_succeeded: Optional[object] = FieldInfo(alias="login.succeeded", default=None)
-    """This event has no additional fields beyond the standard audit log attributes."""
-
     logout_failed: Optional[DataLogoutFailed] = FieldInfo(alias="logout.failed", default=None)
     """The details for events with this `type`."""
-
-    logout_succeeded: Optional[object] = FieldInfo(alias="logout.succeeded", default=None)
-    """This event has no additional fields beyond the standard audit log attributes."""
 
     organization_updated: Optional[DataOrganizationUpdated] = FieldInfo(alias="organization.updated", default=None)
     """The details for events with this `type`."""
@@ -832,17 +533,13 @@ class Data(BaseModel):
     project: Optional[DataProject] = None
     """The project that the action was scoped to.
 
-    Absent for actions not scoped to projects. Note that any admin actions taken via
-    Admin API keys are associated with the default project.
+    Absent for actions not scoped to projects.
     """
 
     project_archived: Optional[DataProjectArchived] = FieldInfo(alias="project.archived", default=None)
     """The details for events with this `type`."""
 
     project_created: Optional[DataProjectCreated] = FieldInfo(alias="project.created", default=None)
-    """The details for events with this `type`."""
-
-    project_deleted: Optional[DataProjectDeleted] = FieldInfo(alias="project.deleted", default=None)
     """The details for events with this `type`."""
 
     project_updated: Optional[DataProjectUpdated] = FieldInfo(alias="project.updated", default=None)
@@ -852,31 +549,6 @@ class Data(BaseModel):
     """The details for events with this `type`."""
 
     rate_limit_updated: Optional[DataRateLimitUpdated] = FieldInfo(alias="rate_limit.updated", default=None)
-    """The details for events with this `type`."""
-
-    role_assignment_created: Optional[DataRoleAssignmentCreated] = FieldInfo(
-        alias="role.assignment.created", default=None
-    )
-    """The details for events with this `type`."""
-
-    role_assignment_deleted: Optional[DataRoleAssignmentDeleted] = FieldInfo(
-        alias="role.assignment.deleted", default=None
-    )
-    """The details for events with this `type`."""
-
-    role_created: Optional[DataRoleCreated] = FieldInfo(alias="role.created", default=None)
-    """The details for events with this `type`."""
-
-    role_deleted: Optional[DataRoleDeleted] = FieldInfo(alias="role.deleted", default=None)
-    """The details for events with this `type`."""
-
-    role_updated: Optional[DataRoleUpdated] = FieldInfo(alias="role.updated", default=None)
-    """The details for events with this `type`."""
-
-    scim_disabled: Optional[DataScimDisabled] = FieldInfo(alias="scim.disabled", default=None)
-    """The details for events with this `type`."""
-
-    scim_enabled: Optional[DataScimEnabled] = FieldInfo(alias="scim.enabled", default=None)
     """The details for events with this `type`."""
 
     service_account_created: Optional[DataServiceAccountCreated] = FieldInfo(

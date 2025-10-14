@@ -1,11 +1,11 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Dict, List, Union, Optional
-from typing_extensions import Literal, Annotated, TypeAlias
+from typing_extensions import Literal, TypeAlias
 
-from ..._utils import PropertyInfo
 from ..._models import BaseModel
 from .truncation_object import TruncationObject
+from .run_completion_usage import RunCompletionUsage
 from .run_tool_call_object import RunToolCallObject
 from ..shared.assistant_tools_code import AssistantToolsCode
 from ..shared.response_format_text import ResponseFormatText
@@ -24,7 +24,6 @@ __all__ = [
     "ResponseFormat",
     "ToolChoice",
     "Tool",
-    "Usage",
 ]
 
 
@@ -64,20 +63,7 @@ ResponseFormat: TypeAlias = Union[
 
 ToolChoice: TypeAlias = Union[Literal["none", "auto", "required"], AssistantsNamedToolChoice, None]
 
-Tool: TypeAlias = Annotated[
-    Union[AssistantToolsCode, AssistantToolsFileSearch, AssistantToolsFunction], PropertyInfo(discriminator="type")
-]
-
-
-class Usage(BaseModel):
-    completion_tokens: int
-    """Number of completion tokens used over the course of the run."""
-
-    prompt_tokens: int
-    """Number of prompt tokens used over the course of the run."""
-
-    total_tokens: int
-    """Total number of tokens used (prompt + completion)."""
+Tool: TypeAlias = Union[AssistantToolsCode, AssistantToolsFileSearch, AssistantToolsFunction]
 
 
 class RunUpdateResponse(BaseModel):
@@ -86,9 +72,8 @@ class RunUpdateResponse(BaseModel):
 
     assistant_id: str
     """
-    The ID of the
-    [assistant](https://platform.excai.com/docs/api-reference/assistants) used for
-    execution of this run.
+    The ID of the [assistant](/docs/api-reference/assistants) used for execution of
+    this run.
     """
 
     cancelled_at: Optional[int] = None
@@ -114,8 +99,7 @@ class RunUpdateResponse(BaseModel):
 
     instructions: str
     """
-    The instructions that the
-    [assistant](https://platform.excai.com/docs/api-reference/assistants) used for
+    The instructions that the [assistant](/docs/api-reference/assistants) used for
     this run.
     """
 
@@ -146,9 +130,8 @@ class RunUpdateResponse(BaseModel):
 
     model: str
     """
-    The model that the
-    [assistant](https://platform.excai.com/docs/api-reference/assistants) used for
-    this run.
+    The model that the [assistant](/docs/api-reference/assistants) used for this
+    run.
     """
 
     object: Literal["thread.run"]
@@ -157,7 +140,7 @@ class RunUpdateResponse(BaseModel):
     parallel_tool_calls: bool
     """
     Whether to enable
-    [parallel function calling](https://platform.excai.com/docs/guides/function-calling#configuring-parallel-function-calling)
+    [parallel function calling](/docs/guides/function-calling#configuring-parallel-function-calling)
     during tool use.
     """
 
@@ -170,14 +153,13 @@ class RunUpdateResponse(BaseModel):
     response_format: Optional[ResponseFormat] = None
     """Specifies the format that the model must output.
 
-    Compatible with [GPT-4o](https://platform.excai.com/docs/models#gpt-4o),
-    [GPT-4 Turbo](https://platform.excai.com/docs/models#gpt-4-turbo-and-gpt-4), and
-    all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
+    Compatible with [GPT-4o](/docs/models#gpt-4o),
+    [GPT-4 Turbo](/docs/models#gpt-4-turbo-and-gpt-4), and all GPT-3.5 Turbo models
+    since `gpt-3.5-turbo-1106`.
 
     Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured
     Outputs which ensures the model will match your supplied JSON schema. Learn more
-    in the
-    [Structured Outputs guide](https://platform.excai.com/docs/guides/structured-outputs).
+    in the [Structured Outputs guide](/docs/guides/structured-outputs).
 
     Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the
     message the model generates is valid JSON.
@@ -213,8 +195,8 @@ class RunUpdateResponse(BaseModel):
 
     thread_id: str
     """
-    The ID of the [thread](https://platform.excai.com/docs/api-reference/threads)
-    that was executed on as a part of this run.
+    The ID of the [thread](/docs/api-reference/threads) that was executed on as a
+    part of this run.
     """
 
     tool_choice: Optional[ToolChoice] = None
@@ -230,18 +212,17 @@ class RunUpdateResponse(BaseModel):
 
     tools: List[Tool]
     """
-    The list of tools that the
-    [assistant](https://platform.excai.com/docs/api-reference/assistants) used for
+    The list of tools that the [assistant](/docs/api-reference/assistants) used for
     this run.
     """
 
     truncation_strategy: Optional[TruncationObject] = None
     """Controls for how a thread will be truncated prior to the run.
 
-    Use this to control the initial context window of the run.
+    Use this to control the intial context window of the run.
     """
 
-    usage: Optional[Usage] = None
+    usage: Optional[RunCompletionUsage] = None
     """Usage statistics related to the run.
 
     This value will be `null` if the run is not in a terminal state (i.e.

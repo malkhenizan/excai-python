@@ -89,7 +89,7 @@ class JobCancelResponse(BaseModel):
     """The compiled results file ID(s) for the fine-tuning job.
 
     You can retrieve the results with the
-    [Files API](https://platform.excai.com/docs/api-reference/files/retrieve-contents).
+    [Files API](/docs/api-reference/files/retrieve-contents).
     """
 
     seed: int
@@ -111,14 +111,14 @@ class JobCancelResponse(BaseModel):
     """The file ID used for training.
 
     You can retrieve the training data with the
-    [Files API](https://platform.excai.com/docs/api-reference/files/retrieve-contents).
+    [Files API](/docs/api-reference/files/retrieve-contents).
     """
 
     validation_file: Optional[str] = None
     """The file ID used for validation.
 
     You can retrieve the validation results with the
-    [Files API](https://platform.excai.com/docs/api-reference/files/retrieve-contents).
+    [Files API](/docs/api-reference/files/retrieve-contents).
     """
 
     estimated_finish: Optional[int] = None

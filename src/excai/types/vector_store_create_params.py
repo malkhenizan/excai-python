@@ -25,10 +25,10 @@ class VectorStoreCreateParams(TypedDict, total=False):
     """The expiration policy for a vector store."""
 
     file_ids: SequenceNotStr[str]
-    """
-    A list of [File](https://platform.excai.com/docs/api-reference/files) IDs that
-    the vector store should use. Useful for tools like `file_search` that can access
-    files.
+    """A list of [File](/docs/api-reference/files) IDs that the vector store should
+    use.
+
+    Useful for tools like `file_search` that can access files.
     """
 
     metadata: Optional[Dict[str, str]]

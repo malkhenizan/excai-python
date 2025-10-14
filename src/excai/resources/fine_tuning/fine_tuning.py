@@ -12,14 +12,6 @@ from .jobs.jobs import (
     AsyncJobsResourceWithStreamingResponse,
 )
 from ..._resource import SyncAPIResource, AsyncAPIResource
-from .alpha.alpha import (
-    AlphaResource,
-    AsyncAlphaResource,
-    AlphaResourceWithRawResponse,
-    AsyncAlphaResourceWithRawResponse,
-    AlphaResourceWithStreamingResponse,
-    AsyncAlphaResourceWithStreamingResponse,
-)
 from .checkpoints.checkpoints import (
     CheckpointsResource,
     AsyncCheckpointsResource,
@@ -33,10 +25,6 @@ __all__ = ["FineTuningResource", "AsyncFineTuningResource"]
 
 
 class FineTuningResource(SyncAPIResource):
-    @cached_property
-    def alpha(self) -> AlphaResource:
-        return AlphaResource(self._client)
-
     @cached_property
     def checkpoints(self) -> CheckpointsResource:
         return CheckpointsResource(self._client)
@@ -66,10 +54,6 @@ class FineTuningResource(SyncAPIResource):
 
 
 class AsyncFineTuningResource(AsyncAPIResource):
-    @cached_property
-    def alpha(self) -> AsyncAlphaResource:
-        return AsyncAlphaResource(self._client)
-
     @cached_property
     def checkpoints(self) -> AsyncCheckpointsResource:
         return AsyncCheckpointsResource(self._client)
@@ -103,10 +87,6 @@ class FineTuningResourceWithRawResponse:
         self._fine_tuning = fine_tuning
 
     @cached_property
-    def alpha(self) -> AlphaResourceWithRawResponse:
-        return AlphaResourceWithRawResponse(self._fine_tuning.alpha)
-
-    @cached_property
     def checkpoints(self) -> CheckpointsResourceWithRawResponse:
         return CheckpointsResourceWithRawResponse(self._fine_tuning.checkpoints)
 
@@ -118,10 +98,6 @@ class FineTuningResourceWithRawResponse:
 class AsyncFineTuningResourceWithRawResponse:
     def __init__(self, fine_tuning: AsyncFineTuningResource) -> None:
         self._fine_tuning = fine_tuning
-
-    @cached_property
-    def alpha(self) -> AsyncAlphaResourceWithRawResponse:
-        return AsyncAlphaResourceWithRawResponse(self._fine_tuning.alpha)
 
     @cached_property
     def checkpoints(self) -> AsyncCheckpointsResourceWithRawResponse:
@@ -137,10 +113,6 @@ class FineTuningResourceWithStreamingResponse:
         self._fine_tuning = fine_tuning
 
     @cached_property
-    def alpha(self) -> AlphaResourceWithStreamingResponse:
-        return AlphaResourceWithStreamingResponse(self._fine_tuning.alpha)
-
-    @cached_property
     def checkpoints(self) -> CheckpointsResourceWithStreamingResponse:
         return CheckpointsResourceWithStreamingResponse(self._fine_tuning.checkpoints)
 
@@ -152,10 +124,6 @@ class FineTuningResourceWithStreamingResponse:
 class AsyncFineTuningResourceWithStreamingResponse:
     def __init__(self, fine_tuning: AsyncFineTuningResource) -> None:
         self._fine_tuning = fine_tuning
-
-    @cached_property
-    def alpha(self) -> AsyncAlphaResourceWithStreamingResponse:
-        return AsyncAlphaResourceWithStreamingResponse(self._fine_tuning.alpha)
 
     @cached_property
     def checkpoints(self) -> AsyncCheckpointsResourceWithStreamingResponse:

@@ -1,28 +1,23 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Dict, List, Union, Optional
-from typing_extensions import Literal, Annotated, TypeAlias
+from typing_extensions import Literal, TypeAlias
 
-from .._utils import PropertyInfo
 from .._models import BaseModel
-from .eval_grader_python import EvalGraderPython
-from .eval_grader_score_model import EvalGraderScoreModel
-from .shared.grader_label_model import GraderLabelModel
-from .shared.grader_string_check import GraderStringCheck
-from .eval_grader_text_similarity import EvalGraderTextSimilarity
-from .eval_logs_data_source_config import EvalLogsDataSourceConfig
+from .eval_python_grader import EvalPythonGrader
+from .eval_label_model_grader import EvalLabelModelGrader
+from .eval_score_model_grader import EvalScoreModelGrader
+from .eval_string_check_grader import EvalStringCheckGrader
+from .eval_text_similarity_grader import EvalTextSimilarityGrader
 from .eval_custom_data_source_config import EvalCustomDataSourceConfig
 from .eval_stored_completions_data_source_config import EvalStoredCompletionsDataSourceConfig
 
 __all__ = ["EvalCreateResponse", "DataSourceConfig", "TestingCriterion"]
 
-DataSourceConfig: TypeAlias = Annotated[
-    Union[EvalCustomDataSourceConfig, EvalLogsDataSourceConfig, EvalStoredCompletionsDataSourceConfig],
-    PropertyInfo(discriminator="type"),
-]
+DataSourceConfig: TypeAlias = Union[EvalCustomDataSourceConfig, EvalStoredCompletionsDataSourceConfig]
 
 TestingCriterion: TypeAlias = Union[
-    GraderLabelModel, GraderStringCheck, EvalGraderTextSimilarity, EvalGraderPython, EvalGraderScoreModel
+    EvalLabelModelGrader, EvalStringCheckGrader, EvalTextSimilarityGrader, EvalPythonGrader, EvalScoreModelGrader
 ]
 
 

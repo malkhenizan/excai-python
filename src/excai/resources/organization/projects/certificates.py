@@ -158,10 +158,10 @@ class CertificatesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CertificateDeactivateResponse:
-        """Deactivate certificates at the project level.
+        """
+        Deactivate certificates at the project level.
 
-        You can atomically and
-        idempotently deactivate up to 10 certificates at a time.
+        You can atomically and idempotently deactivate up to 10 certificates at a time.
 
         Args:
           extra_headers: Send extra headers
@@ -315,10 +315,10 @@ class AsyncCertificatesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CertificateDeactivateResponse:
-        """Deactivate certificates at the project level.
+        """
+        Deactivate certificates at the project level.
 
-        You can atomically and
-        idempotently deactivate up to 10 certificates at a time.
+        You can atomically and idempotently deactivate up to 10 certificates at a time.
 
         Args:
           extra_headers: Send extra headers

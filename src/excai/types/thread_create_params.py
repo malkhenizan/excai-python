@@ -15,7 +15,7 @@ __all__ = [
     "ThreadCreateParams",
     "Message",
     "MessageContentArrayOfContentPart",
-    "MessageContentArrayOfContentPartText",
+    "MessageContentArrayOfContentPartMessageRequestContentTextObject",
     "MessageAttachment",
     "MessageAttachmentTool",
     "ToolResources",
@@ -23,18 +23,15 @@ __all__ = [
     "ToolResourcesFileSearch",
     "ToolResourcesFileSearchVectorStore",
     "ToolResourcesFileSearchVectorStoreChunkingStrategy",
-    "ToolResourcesFileSearchVectorStoreChunkingStrategyAuto",
-    "ToolResourcesFileSearchVectorStoreChunkingStrategyStatic",
-    "ToolResourcesFileSearchVectorStoreChunkingStrategyStaticStatic",
+    "ToolResourcesFileSearchVectorStoreChunkingStrategyAutoChunkingStrategy",
+    "ToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategy",
+    "ToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategyStatic",
 ]
 
 
 class ThreadCreateParams(TypedDict, total=False):
     messages: Iterable[Message]
-    """
-    A list of [messages](https://platform.excai.com/docs/api-reference/messages) to
-    start the thread with.
-    """
+    """A list of [messages](/docs/api-reference/messages) to start the thread with."""
 
     metadata: Optional[Dict[str, str]]
     """Set of 16 key-value pairs that can be attached to an object.
@@ -55,7 +52,7 @@ class ThreadCreateParams(TypedDict, total=False):
     """
 
 
-class MessageContentArrayOfContentPartText(TypedDict, total=False):
+class MessageContentArrayOfContentPartMessageRequestContentTextObject(TypedDict, total=False):
     text: Required[str]
     """Text content to be sent to the model"""
 
@@ -64,7 +61,9 @@ class MessageContentArrayOfContentPartText(TypedDict, total=False):
 
 
 MessageContentArrayOfContentPart: TypeAlias = Union[
-    MessageContentImageFileObjectParam, MessageContentImageURLObjectParam, MessageContentArrayOfContentPartText
+    MessageContentImageFileObjectParam,
+    MessageContentImageURLObjectParam,
+    MessageContentArrayOfContentPartMessageRequestContentTextObject,
 ]
 
 MessageAttachmentTool: TypeAlias = Union[AssistantToolsCode, AssistantToolsFileSearchTypeOnlyParam]
@@ -108,18 +107,18 @@ class Message(TypedDict, total=False):
 class ToolResourcesCodeInterpreter(TypedDict, total=False):
     file_ids: SequenceNotStr[str]
     """
-    A list of [file](https://platform.excai.com/docs/api-reference/files) IDs made
-    available to the `code_interpreter` tool. There can be a maximum of 20 files
-    associated with the tool.
+    A list of [file](/docs/api-reference/files) IDs made available to the
+    `code_interpreter` tool. There can be a maximum of 20 files associated with the
+    tool.
     """
 
 
-class ToolResourcesFileSearchVectorStoreChunkingStrategyAuto(TypedDict, total=False):
+class ToolResourcesFileSearchVectorStoreChunkingStrategyAutoChunkingStrategy(TypedDict, total=False):
     type: Required[Literal["auto"]]
     """Always `auto`."""
 
 
-class ToolResourcesFileSearchVectorStoreChunkingStrategyStaticStatic(TypedDict, total=False):
+class ToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategyStatic(TypedDict, total=False):
     chunk_overlap_tokens: Required[int]
     """The number of tokens that overlap between chunks. The default value is `400`.
 
@@ -134,15 +133,16 @@ class ToolResourcesFileSearchVectorStoreChunkingStrategyStaticStatic(TypedDict, 
     """
 
 
-class ToolResourcesFileSearchVectorStoreChunkingStrategyStatic(TypedDict, total=False):
-    static: Required[ToolResourcesFileSearchVectorStoreChunkingStrategyStaticStatic]
+class ToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategy(TypedDict, total=False):
+    static: Required[ToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategyStatic]
 
     type: Required[Literal["static"]]
     """Always `static`."""
 
 
 ToolResourcesFileSearchVectorStoreChunkingStrategy: TypeAlias = Union[
-    ToolResourcesFileSearchVectorStoreChunkingStrategyAuto, ToolResourcesFileSearchVectorStoreChunkingStrategyStatic
+    ToolResourcesFileSearchVectorStoreChunkingStrategyAutoChunkingStrategy,
+    ToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategy,
 ]
 
 
@@ -154,9 +154,9 @@ class ToolResourcesFileSearchVectorStore(TypedDict, total=False):
     """
 
     file_ids: SequenceNotStr[str]
-    """
-    A list of [file](https://platform.excai.com/docs/api-reference/files) IDs to add
-    to the vector store. There can be a maximum of 10000 files in a vector store.
+    """A list of [file](/docs/api-reference/files) IDs to add to the vector store.
+
+    There can be a maximum of 10000 files in a vector store.
     """
 
     metadata: Optional[Dict[str, str]]
@@ -173,16 +173,13 @@ class ToolResourcesFileSearchVectorStore(TypedDict, total=False):
 class ToolResourcesFileSearch(TypedDict, total=False):
     vector_store_ids: SequenceNotStr[str]
     """
-    The
-    [vector store](https://platform.excai.com/docs/api-reference/vector-stores/object)
-    attached to this thread. There can be a maximum of 1 vector store attached to
-    the thread.
+    The [vector store](/docs/api-reference/vector-stores/object) attached to this
+    thread. There can be a maximum of 1 vector store attached to the thread.
     """
 
     vector_stores: Iterable[ToolResourcesFileSearchVectorStore]
     """
-    A helper to create a
-    [vector store](https://platform.excai.com/docs/api-reference/vector-stores/object)
+    A helper to create a [vector store](/docs/api-reference/vector-stores/object)
     with file_ids and attach it to this thread. There can be a maximum of 1 vector
     store attached to the thread.
     """

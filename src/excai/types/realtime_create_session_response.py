@@ -1,154 +1,51 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List, Union, Optional
-from typing_extensions import Literal, Annotated, TypeAlias
+from typing_extensions import Literal
 
-from .._utils import PropertyInfo
 from .._models import BaseModel
-from .audio_transcription import AudioTranscription
-from .realtime_function_tool import RealtimeFunctionTool
 
-__all__ = [
-    "RealtimeCreateSessionResponse",
-    "Audio",
-    "AudioInput",
-    "AudioInputFormat",
-    "AudioInputFormatAudioPcm",
-    "AudioInputFormatAudioPcmu",
-    "AudioInputFormatAudioPcma",
-    "AudioInputNoiseReduction",
-    "AudioInputTurnDetection",
-    "AudioOutput",
-    "AudioOutputFormat",
-    "AudioOutputFormatAudioPcm",
-    "AudioOutputFormatAudioPcmu",
-    "AudioOutputFormatAudioPcma",
-    "Tracing",
-    "TracingTracingConfiguration",
-    "TurnDetection",
-]
+__all__ = ["RealtimeCreateSessionResponse", "ClientSecret", "InputAudioTranscription", "Tool", "TurnDetection"]
 
 
-class AudioInputFormatAudioPcm(BaseModel):
-    rate: Optional[Literal[24000]] = None
-    """The sample rate of the audio. Always `24000`."""
+class ClientSecret(BaseModel):
+    expires_at: int
+    """Timestamp for when the token expires.
 
-    type: Optional[Literal["audio/pcm"]] = None
-    """The audio format. Always `audio/pcm`."""
+    Currently, all tokens expire after one minute.
+    """
 
-
-class AudioInputFormatAudioPcmu(BaseModel):
-    type: Optional[Literal["audio/pcmu"]] = None
-    """The audio format. Always `audio/pcmu`."""
-
-
-class AudioInputFormatAudioPcma(BaseModel):
-    type: Optional[Literal["audio/pcma"]] = None
-    """The audio format. Always `audio/pcma`."""
-
-
-AudioInputFormat: TypeAlias = Annotated[
-    Union[AudioInputFormatAudioPcm, AudioInputFormatAudioPcmu, AudioInputFormatAudioPcma],
-    PropertyInfo(discriminator="type"),
-]
-
-
-class AudioInputNoiseReduction(BaseModel):
-    type: Optional[Literal["near_field", "far_field"]] = None
-    """Type of noise reduction.
-
-    `near_field` is for close-talking microphones such as headphones, `far_field` is
-    for far-field microphones such as laptop or conference room microphones.
+    value: str
+    """
+    Ephemeral key usable in client environments to authenticate connections to the
+    Realtime API. Use this in client-side environments rather than a standard API
+    token, which should only be used server-side.
     """
 
 
-class AudioInputTurnDetection(BaseModel):
-    prefix_padding_ms: Optional[int] = None
-
-    silence_duration_ms: Optional[int] = None
-
-    threshold: Optional[float] = None
-
-    type: Optional[str] = None
-    """Type of turn detection, only `server_vad` is currently supported."""
-
-
-class AudioInput(BaseModel):
-    format: Optional[AudioInputFormat] = None
-    """The PCM audio format. Only a 24kHz sample rate is supported."""
-
-    noise_reduction: Optional[AudioInputNoiseReduction] = None
-    """Configuration for input audio noise reduction."""
-
-    transcription: Optional[AudioTranscription] = None
-    """Configuration for input audio transcription."""
-
-    turn_detection: Optional[AudioInputTurnDetection] = None
-    """Configuration for turn detection."""
-
-
-class AudioOutputFormatAudioPcm(BaseModel):
-    rate: Optional[Literal[24000]] = None
-    """The sample rate of the audio. Always `24000`."""
-
-    type: Optional[Literal["audio/pcm"]] = None
-    """The audio format. Always `audio/pcm`."""
-
-
-class AudioOutputFormatAudioPcmu(BaseModel):
-    type: Optional[Literal["audio/pcmu"]] = None
-    """The audio format. Always `audio/pcmu`."""
-
-
-class AudioOutputFormatAudioPcma(BaseModel):
-    type: Optional[Literal["audio/pcma"]] = None
-    """The audio format. Always `audio/pcma`."""
-
-
-AudioOutputFormat: TypeAlias = Annotated[
-    Union[AudioOutputFormatAudioPcm, AudioOutputFormatAudioPcmu, AudioOutputFormatAudioPcma],
-    PropertyInfo(discriminator="type"),
-]
-
-
-class AudioOutput(BaseModel):
-    format: Optional[AudioOutputFormat] = None
-    """The PCM audio format. Only a 24kHz sample rate is supported."""
-
-    speed: Optional[float] = None
-
-    voice: Union[
-        str, Literal["alloy", "ash", "ballad", "coral", "echo", "sage", "shimmer", "verse", "marin", "cedar"], None
-    ] = None
-
-
-class Audio(BaseModel):
-    input: Optional[AudioInput] = None
-
-    output: Optional[AudioOutput] = None
-
-
-class TracingTracingConfiguration(BaseModel):
-    group_id: Optional[str] = None
+class InputAudioTranscription(BaseModel):
+    model: Optional[str] = None
     """
-    The group id to attach to this trace to enable filtering and grouping in the
-    traces dashboard.
-    """
-
-    metadata: Optional[object] = None
-    """
-    The arbitrary metadata to attach to this trace to enable filtering in the traces
-    dashboard.
-    """
-
-    workflow_name: Optional[str] = None
-    """The name of the workflow to attach to this trace.
-
-    This is used to name the trace in the traces dashboard.
+    The model to use for transcription, `whisper-1` is the only currently supported
+    model.
     """
 
 
-Tracing: TypeAlias = Union[Literal["auto"], TracingTracingConfiguration]
+class Tool(BaseModel):
+    description: Optional[str] = None
+    """
+    The description of the function, including guidance on when and how to call it,
+    and guidance about what to tell the user when calling (if anything).
+    """
+
+    name: Optional[str] = None
+    """The name of the function."""
+
+    parameters: Optional[object] = None
+    """Parameters of the function in JSON Schema."""
+
+    type: Optional[Literal["function"]] = None
+    """The type of the tool, i.e. `function`."""
 
 
 class TurnDetection(BaseModel):
@@ -177,20 +74,19 @@ class TurnDetection(BaseModel):
 
 
 class RealtimeCreateSessionResponse(BaseModel):
-    id: Optional[str] = None
-    """Unique identifier for the session that looks like `sess_1234567890abcdef`."""
+    client_secret: ClientSecret
+    """Ephemeral key returned by the API."""
 
-    audio: Optional[Audio] = None
-    """Configuration for input and output audio for the session."""
+    input_audio_format: Optional[str] = None
+    """The format of input audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`."""
 
-    expires_at: Optional[int] = None
-    """Expiration timestamp for the session, in seconds since epoch."""
-
-    include: Optional[List[Literal["item.input_audio_transcription.logprobs"]]] = None
-    """Additional fields to include in server outputs.
-
-    - `item.input_audio_transcription.logprobs`: Include logprobs for input audio
-      transcription.
+    input_audio_transcription: Optional[InputAudioTranscription] = None
+    """
+    Configuration for input audio transcription, defaults to off and can be set to
+    `null` to turn off once on. Input audio transcription is not native to the
+    model, since the model consumes audio directly. Transcription runs
+    asynchronously through Whisper and should be treated as rough guidance rather
+    than the representation understood by the model.
     """
 
     instructions: Optional[str] = None
@@ -209,24 +105,24 @@ class RealtimeCreateSessionResponse(BaseModel):
     session.
     """
 
-    max_output_tokens: Union[int, Literal["inf"], None] = None
+    max_response_output_tokens: Union[int, Literal["inf"], None] = None
     """
     Maximum number of output tokens for a single assistant response, inclusive of
     tool calls. Provide an integer between 1 and 4096 to limit output tokens, or
     `inf` for the maximum available tokens for a given model. Defaults to `inf`.
     """
 
-    model: Optional[str] = None
-    """The Realtime model used for this session."""
-
-    object: Optional[str] = None
-    """The object type. Always `realtime.session`."""
-
-    output_modalities: Optional[List[Literal["text", "audio"]]] = None
+    modalities: Optional[List[Literal["text", "audio"]]] = None
     """The set of modalities the model can respond with.
 
     To disable audio, set this to ["text"].
     """
+
+    output_audio_format: Optional[str] = None
+    """The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`."""
+
+    temperature: Optional[float] = None
+    """Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8."""
 
     tool_choice: Optional[str] = None
     """How the model chooses tools.
@@ -234,18 +130,8 @@ class RealtimeCreateSessionResponse(BaseModel):
     Options are `auto`, `none`, `required`, or specify a function.
     """
 
-    tools: Optional[List[RealtimeFunctionTool]] = None
+    tools: Optional[List[Tool]] = None
     """Tools (functions) available to the model."""
-
-    tracing: Optional[Tracing] = None
-    """Configuration options for tracing.
-
-    Set to null to disable tracing. Once tracing is enabled for a session, the
-    configuration cannot be modified.
-
-    `auto` will create a trace for the session with default values for the workflow
-    name, group id, and metadata.
-    """
 
     turn_detection: Optional[TurnDetection] = None
     """Configuration for turn detection.
@@ -253,4 +139,16 @@ class RealtimeCreateSessionResponse(BaseModel):
     Can be set to `null` to turn off. Server VAD means that the model will detect
     the start and end of speech based on audio volume and respond at the end of user
     speech.
+    """
+
+    voice: Union[
+        str,
+        Literal["alloy", "ash", "ballad", "coral", "echo", "fable", "onyx", "nova", "sage", "shimmer", "verse"],
+        None,
+    ] = None
+    """The voice the model uses to respond.
+
+    Voice cannot be changed during the session once the model has responded with
+    audio at least once. Current voice options are `alloy`, `ash`, `ballad`,
+    `coral`, `echo` `sage`, `shimmer` and `verse`.
     """
