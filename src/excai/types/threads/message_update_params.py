@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Dict, Optional
+from typing import Optional
 from typing_extensions import Required, TypedDict
+
+from ..chat.metadata_param import MetadataParam
 
 __all__ = ["MessageUpdateParams"]
 
@@ -11,7 +13,7 @@ __all__ = ["MessageUpdateParams"]
 class MessageUpdateParams(TypedDict, total=False):
     thread_id: Required[str]
 
-    metadata: Optional[Dict[str, str]]
+    metadata: Optional[MetadataParam]
     """Set of 16 key-value pairs that can be attached to an object.
 
     This can be useful for storing additional information about the object in a

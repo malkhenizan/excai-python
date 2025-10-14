@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Iterable, Optional
+from typing import Union, Iterable, Optional
 from typing_extensions import Literal
 
 import httpx
 
-from ..types import assistant_list_params, assistant_create_params, assistant_update_params
+from ..types import ReasoningEffort, assistant_list_params, assistant_create_params, assistant_update_params
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -19,11 +19,14 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.assistant_object import AssistantObject
+from ..types.reasoning_effort import ReasoningEffort
+from ..types.chat.metadata_param import MetadataParam
+from ..types.assistant_tool_param import AssistantToolParam
 from ..types.assistant_list_response import AssistantListResponse
-from ..types.assistant_create_response import AssistantCreateResponse
 from ..types.assistant_delete_response import AssistantDeleteResponse
-from ..types.assistant_update_response import AssistantUpdateResponse
-from ..types.assistant_retrieve_response import AssistantRetrieveResponse
+from ..types.assistant_supported_models import AssistantSupportedModels
+from ..types.threads.api_response_format_option_param import APIResponseFormatOptionParam
 
 __all__ = ["AssistantsResource", "AsyncAssistantsResource"]
 
@@ -35,7 +38,7 @@ class AssistantsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AssistantsResourceWithRawResponse(self)
 
@@ -44,69 +47,23 @@ class AssistantsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AssistantsResourceWithStreamingResponse(self)
 
     def create(
         self,
         *,
-        model: Union[
-            str,
-            Literal[
-                "gpt-5",
-                "gpt-5-mini",
-                "gpt-5-nano",
-                "gpt-5-2025-08-07",
-                "gpt-5-mini-2025-08-07",
-                "gpt-5-nano-2025-08-07",
-                "gpt-4.1",
-                "gpt-4.1-mini",
-                "gpt-4.1-nano",
-                "gpt-4.1-2025-04-14",
-                "gpt-4.1-mini-2025-04-14",
-                "gpt-4.1-nano-2025-04-14",
-                "o3-mini",
-                "o3-mini-2025-01-31",
-                "o1",
-                "o1-2024-12-17",
-                "gpt-4o",
-                "gpt-4o-2024-11-20",
-                "gpt-4o-2024-08-06",
-                "gpt-4o-2024-05-13",
-                "gpt-4o-mini",
-                "gpt-4o-mini-2024-07-18",
-                "gpt-4.5-preview",
-                "gpt-4.5-preview-2025-02-27",
-                "gpt-4-turbo",
-                "gpt-4-turbo-2024-04-09",
-                "gpt-4-0125-preview",
-                "gpt-4-turbo-preview",
-                "gpt-4-1106-preview",
-                "gpt-4-vision-preview",
-                "gpt-4",
-                "gpt-4-0314",
-                "gpt-4-0613",
-                "gpt-4-32k",
-                "gpt-4-32k-0314",
-                "gpt-4-32k-0613",
-                "gpt-3.5-turbo",
-                "gpt-3.5-turbo-16k",
-                "gpt-3.5-turbo-0613",
-                "gpt-3.5-turbo-1106",
-                "gpt-3.5-turbo-0125",
-                "gpt-3.5-turbo-16k-0613",
-            ],
-        ],
+        model: Union[str, AssistantSupportedModels],
         description: Optional[str] | Omit = omit,
         instructions: Optional[str] | Omit = omit,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         name: Optional[str] | Omit = omit,
-        reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]] | Omit = omit,
-        response_format: Optional[assistant_create_params.ResponseFormat] | Omit = omit,
+        reasoning_effort: Optional[ReasoningEffort] | Omit = omit,
+        response_format: Optional[APIResponseFormatOptionParam] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         tool_resources: Optional[assistant_create_params.ToolResources] | Omit = omit,
-        tools: Iterable[assistant_create_params.Tool] | Omit = omit,
+        tools: Iterable[AssistantToolParam] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -114,7 +71,7 @@ class AssistantsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AssistantCreateResponse:
+    ) -> AssistantObject:
         """
         Create an assistant with a model and instructions.
 
@@ -216,7 +173,7 @@ class AssistantsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AssistantCreateResponse,
+            cast_to=AssistantObject,
         )
 
     def retrieve(
@@ -229,7 +186,7 @@ class AssistantsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AssistantRetrieveResponse:
+    ) -> AssistantObject:
         """
         Retrieves an assistant.
 
@@ -249,7 +206,7 @@ class AssistantsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AssistantRetrieveResponse,
+            cast_to=AssistantObject,
         )
 
     def update(
@@ -258,61 +215,14 @@ class AssistantsResource(SyncAPIResource):
         *,
         description: Optional[str] | Omit = omit,
         instructions: Optional[str] | Omit = omit,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
-        model: Union[
-            str,
-            Literal[
-                "gpt-5",
-                "gpt-5-mini",
-                "gpt-5-nano",
-                "gpt-5-2025-08-07",
-                "gpt-5-mini-2025-08-07",
-                "gpt-5-nano-2025-08-07",
-                "gpt-4.1",
-                "gpt-4.1-mini",
-                "gpt-4.1-nano",
-                "gpt-4.1-2025-04-14",
-                "gpt-4.1-mini-2025-04-14",
-                "gpt-4.1-nano-2025-04-14",
-                "o3-mini",
-                "o3-mini-2025-01-31",
-                "o1",
-                "o1-2024-12-17",
-                "gpt-4o",
-                "gpt-4o-2024-11-20",
-                "gpt-4o-2024-08-06",
-                "gpt-4o-2024-05-13",
-                "gpt-4o-mini",
-                "gpt-4o-mini-2024-07-18",
-                "gpt-4.5-preview",
-                "gpt-4.5-preview-2025-02-27",
-                "gpt-4-turbo",
-                "gpt-4-turbo-2024-04-09",
-                "gpt-4-0125-preview",
-                "gpt-4-turbo-preview",
-                "gpt-4-1106-preview",
-                "gpt-4-vision-preview",
-                "gpt-4",
-                "gpt-4-0314",
-                "gpt-4-0613",
-                "gpt-4-32k",
-                "gpt-4-32k-0314",
-                "gpt-4-32k-0613",
-                "gpt-3.5-turbo",
-                "gpt-3.5-turbo-16k",
-                "gpt-3.5-turbo-0613",
-                "gpt-3.5-turbo-1106",
-                "gpt-3.5-turbo-0125",
-                "gpt-3.5-turbo-16k-0613",
-            ],
-        ]
-        | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
+        model: Union[str, AssistantSupportedModels] | Omit = omit,
         name: Optional[str] | Omit = omit,
-        reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]] | Omit = omit,
-        response_format: Optional[assistant_update_params.ResponseFormat] | Omit = omit,
+        reasoning_effort: Optional[ReasoningEffort] | Omit = omit,
+        response_format: Optional[APIResponseFormatOptionParam] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         tool_resources: Optional[assistant_update_params.ToolResources] | Omit = omit,
-        tools: Iterable[assistant_update_params.Tool] | Omit = omit,
+        tools: Iterable[AssistantToolParam] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -320,7 +230,7 @@ class AssistantsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AssistantUpdateResponse:
+    ) -> AssistantObject:
         """Modifies an assistant.
 
         Args:
@@ -425,7 +335,7 @@ class AssistantsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AssistantUpdateResponse,
+            cast_to=AssistantObject,
         )
 
     def list(
@@ -532,7 +442,7 @@ class AsyncAssistantsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncAssistantsResourceWithRawResponse(self)
 
@@ -541,69 +451,23 @@ class AsyncAssistantsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncAssistantsResourceWithStreamingResponse(self)
 
     async def create(
         self,
         *,
-        model: Union[
-            str,
-            Literal[
-                "gpt-5",
-                "gpt-5-mini",
-                "gpt-5-nano",
-                "gpt-5-2025-08-07",
-                "gpt-5-mini-2025-08-07",
-                "gpt-5-nano-2025-08-07",
-                "gpt-4.1",
-                "gpt-4.1-mini",
-                "gpt-4.1-nano",
-                "gpt-4.1-2025-04-14",
-                "gpt-4.1-mini-2025-04-14",
-                "gpt-4.1-nano-2025-04-14",
-                "o3-mini",
-                "o3-mini-2025-01-31",
-                "o1",
-                "o1-2024-12-17",
-                "gpt-4o",
-                "gpt-4o-2024-11-20",
-                "gpt-4o-2024-08-06",
-                "gpt-4o-2024-05-13",
-                "gpt-4o-mini",
-                "gpt-4o-mini-2024-07-18",
-                "gpt-4.5-preview",
-                "gpt-4.5-preview-2025-02-27",
-                "gpt-4-turbo",
-                "gpt-4-turbo-2024-04-09",
-                "gpt-4-0125-preview",
-                "gpt-4-turbo-preview",
-                "gpt-4-1106-preview",
-                "gpt-4-vision-preview",
-                "gpt-4",
-                "gpt-4-0314",
-                "gpt-4-0613",
-                "gpt-4-32k",
-                "gpt-4-32k-0314",
-                "gpt-4-32k-0613",
-                "gpt-3.5-turbo",
-                "gpt-3.5-turbo-16k",
-                "gpt-3.5-turbo-0613",
-                "gpt-3.5-turbo-1106",
-                "gpt-3.5-turbo-0125",
-                "gpt-3.5-turbo-16k-0613",
-            ],
-        ],
+        model: Union[str, AssistantSupportedModels],
         description: Optional[str] | Omit = omit,
         instructions: Optional[str] | Omit = omit,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         name: Optional[str] | Omit = omit,
-        reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]] | Omit = omit,
-        response_format: Optional[assistant_create_params.ResponseFormat] | Omit = omit,
+        reasoning_effort: Optional[ReasoningEffort] | Omit = omit,
+        response_format: Optional[APIResponseFormatOptionParam] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         tool_resources: Optional[assistant_create_params.ToolResources] | Omit = omit,
-        tools: Iterable[assistant_create_params.Tool] | Omit = omit,
+        tools: Iterable[AssistantToolParam] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -611,7 +475,7 @@ class AsyncAssistantsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AssistantCreateResponse:
+    ) -> AssistantObject:
         """
         Create an assistant with a model and instructions.
 
@@ -713,7 +577,7 @@ class AsyncAssistantsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AssistantCreateResponse,
+            cast_to=AssistantObject,
         )
 
     async def retrieve(
@@ -726,7 +590,7 @@ class AsyncAssistantsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AssistantRetrieveResponse:
+    ) -> AssistantObject:
         """
         Retrieves an assistant.
 
@@ -746,7 +610,7 @@ class AsyncAssistantsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AssistantRetrieveResponse,
+            cast_to=AssistantObject,
         )
 
     async def update(
@@ -755,61 +619,14 @@ class AsyncAssistantsResource(AsyncAPIResource):
         *,
         description: Optional[str] | Omit = omit,
         instructions: Optional[str] | Omit = omit,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
-        model: Union[
-            str,
-            Literal[
-                "gpt-5",
-                "gpt-5-mini",
-                "gpt-5-nano",
-                "gpt-5-2025-08-07",
-                "gpt-5-mini-2025-08-07",
-                "gpt-5-nano-2025-08-07",
-                "gpt-4.1",
-                "gpt-4.1-mini",
-                "gpt-4.1-nano",
-                "gpt-4.1-2025-04-14",
-                "gpt-4.1-mini-2025-04-14",
-                "gpt-4.1-nano-2025-04-14",
-                "o3-mini",
-                "o3-mini-2025-01-31",
-                "o1",
-                "o1-2024-12-17",
-                "gpt-4o",
-                "gpt-4o-2024-11-20",
-                "gpt-4o-2024-08-06",
-                "gpt-4o-2024-05-13",
-                "gpt-4o-mini",
-                "gpt-4o-mini-2024-07-18",
-                "gpt-4.5-preview",
-                "gpt-4.5-preview-2025-02-27",
-                "gpt-4-turbo",
-                "gpt-4-turbo-2024-04-09",
-                "gpt-4-0125-preview",
-                "gpt-4-turbo-preview",
-                "gpt-4-1106-preview",
-                "gpt-4-vision-preview",
-                "gpt-4",
-                "gpt-4-0314",
-                "gpt-4-0613",
-                "gpt-4-32k",
-                "gpt-4-32k-0314",
-                "gpt-4-32k-0613",
-                "gpt-3.5-turbo",
-                "gpt-3.5-turbo-16k",
-                "gpt-3.5-turbo-0613",
-                "gpt-3.5-turbo-1106",
-                "gpt-3.5-turbo-0125",
-                "gpt-3.5-turbo-16k-0613",
-            ],
-        ]
-        | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
+        model: Union[str, AssistantSupportedModels] | Omit = omit,
         name: Optional[str] | Omit = omit,
-        reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]] | Omit = omit,
-        response_format: Optional[assistant_update_params.ResponseFormat] | Omit = omit,
+        reasoning_effort: Optional[ReasoningEffort] | Omit = omit,
+        response_format: Optional[APIResponseFormatOptionParam] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         tool_resources: Optional[assistant_update_params.ToolResources] | Omit = omit,
-        tools: Iterable[assistant_update_params.Tool] | Omit = omit,
+        tools: Iterable[AssistantToolParam] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -817,7 +634,7 @@ class AsyncAssistantsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AssistantUpdateResponse:
+    ) -> AssistantObject:
         """Modifies an assistant.
 
         Args:
@@ -922,7 +739,7 @@ class AsyncAssistantsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AssistantUpdateResponse,
+            cast_to=AssistantObject,
         )
 
     async def list(

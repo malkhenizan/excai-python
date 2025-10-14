@@ -12,7 +12,6 @@ from . import _exceptions
 from ._qs import Querystring
 from ._types import (
     Omit,
-    Headers,
     Timeout,
     NotGiven,
     Transport,
@@ -27,9 +26,9 @@ from .resources import (
     files,
     images,
     models,
+    videos,
     batches,
     uploads,
-    realtime,
     responses,
     assistants,
     embeddings,
@@ -37,7 +36,7 @@ from .resources import (
     moderations,
 )
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import APIStatusError
+from ._exceptions import ExcaiError, APIStatusError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -45,20 +44,26 @@ from ._base_client import (
 )
 from .resources.chat import chat
 from .resources.evals import evals
+from .resources.chatkit import chatkit
 from .resources.threads import threads
+from .resources.realtime import realtime
+from .resources.containers import containers
 from .resources.fine_tuning import fine_tuning
 from .resources.organization import organization
+from .resources.conversations import conversations
 from .resources.vector_stores import vector_stores
 
-__all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "ExCai", "AsyncExCai", "Client", "AsyncClient"]
+__all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Excai", "AsyncExcai", "Client", "AsyncClient"]
 
 
-class ExCai(SyncAPIClient):
+class Excai(SyncAPIClient):
     assistants: assistants.AssistantsResource
     audio: audio.AudioResource
     batches: batches.BatchesResource
     chat: chat.ChatResource
     completions: completions.CompletionsResource
+    containers: containers.ContainersResource
+    conversations: conversations.ConversationsResource
     embeddings: embeddings.EmbeddingsResource
     evals: evals.EvalsResource
     files: files.FilesResource
@@ -72,11 +77,13 @@ class ExCai(SyncAPIClient):
     threads: threads.ThreadsResource
     uploads: uploads.UploadsResource
     vector_stores: vector_stores.VectorStoresResource
-    with_raw_response: ExCaiWithRawResponse
-    with_streaming_response: ExCaiWithStreamedResponse
+    videos: videos.VideosResource
+    chatkit: chatkit.ChatkitResource
+    with_raw_response: ExcaiWithRawResponse
+    with_streaming_response: ExcaiWithStreamedResponse
 
     # client options
-    api_key: str | None
+    api_key: str
 
     def __init__(
         self,
@@ -101,18 +108,22 @@ class ExCai(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous ExCai client instance.
+        """Construct a new synchronous Excai client instance.
 
         This automatically infers the `api_key` argument from the `EXCAI_API_KEY` environment variable if it is not provided.
         """
         if api_key is None:
             api_key = os.environ.get("EXCAI_API_KEY")
+        if api_key is None:
+            raise ExcaiError(
+                "The api_key client option must be set either by passing api_key to the client or by setting the EXCAI_API_KEY environment variable"
+            )
         self.api_key = api_key
 
         if base_url is None:
-            base_url = os.environ.get("EX_CAI_BASE_URL")
+            base_url = os.environ.get("EXCAI_BASE_URL")
         if base_url is None:
-            base_url = f"https://api-main.excai.ai/api/v1/"
+            base_url = f"https://api-main.excai.ai/api/v1"
 
         super().__init__(
             version=__version__,
@@ -130,6 +141,8 @@ class ExCai(SyncAPIClient):
         self.batches = batches.BatchesResource(self)
         self.chat = chat.ChatResource(self)
         self.completions = completions.CompletionsResource(self)
+        self.containers = containers.ContainersResource(self)
+        self.conversations = conversations.ConversationsResource(self)
         self.embeddings = embeddings.EmbeddingsResource(self)
         self.evals = evals.EvalsResource(self)
         self.files = files.FilesResource(self)
@@ -143,8 +156,10 @@ class ExCai(SyncAPIClient):
         self.threads = threads.ThreadsResource(self)
         self.uploads = uploads.UploadsResource(self)
         self.vector_stores = vector_stores.VectorStoresResource(self)
-        self.with_raw_response = ExCaiWithRawResponse(self)
-        self.with_streaming_response = ExCaiWithStreamedResponse(self)
+        self.videos = videos.VideosResource(self)
+        self.chatkit = chatkit.ChatkitResource(self)
+        self.with_raw_response = ExcaiWithRawResponse(self)
+        self.with_streaming_response = ExcaiWithStreamedResponse(self)
 
     @property
     @override
@@ -155,8 +170,6 @@ class ExCai(SyncAPIClient):
     @override
     def auth_headers(self) -> dict[str, str]:
         api_key = self.api_key
-        if api_key is None:
-            return {}
         return {"Authorization": f"Bearer {api_key}"}
 
     @property
@@ -167,17 +180,6 @@ class ExCai(SyncAPIClient):
             "X-Stainless-Async": "false",
             **self._custom_headers,
         }
-
-    @override
-    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
-        if self.api_key and headers.get("Authorization"):
-            return
-        if isinstance(custom_headers.get("Authorization"), Omit):
-            return
-
-        raise TypeError(
-            '"Could not resolve authentication method. Expected the api_key to be set. Or for the `Authorization` headers to be explicitly omitted"'
-        )
 
     def copy(
         self,
@@ -264,12 +266,14 @@ class ExCai(SyncAPIClient):
         return APIStatusError(err_msg, response=response, body=body)
 
 
-class AsyncExCai(AsyncAPIClient):
+class AsyncExcai(AsyncAPIClient):
     assistants: assistants.AsyncAssistantsResource
     audio: audio.AsyncAudioResource
     batches: batches.AsyncBatchesResource
     chat: chat.AsyncChatResource
     completions: completions.AsyncCompletionsResource
+    containers: containers.AsyncContainersResource
+    conversations: conversations.AsyncConversationsResource
     embeddings: embeddings.AsyncEmbeddingsResource
     evals: evals.AsyncEvalsResource
     files: files.AsyncFilesResource
@@ -283,11 +287,13 @@ class AsyncExCai(AsyncAPIClient):
     threads: threads.AsyncThreadsResource
     uploads: uploads.AsyncUploadsResource
     vector_stores: vector_stores.AsyncVectorStoresResource
-    with_raw_response: AsyncExCaiWithRawResponse
-    with_streaming_response: AsyncExCaiWithStreamedResponse
+    videos: videos.AsyncVideosResource
+    chatkit: chatkit.AsyncChatkitResource
+    with_raw_response: AsyncExcaiWithRawResponse
+    with_streaming_response: AsyncExcaiWithStreamedResponse
 
     # client options
-    api_key: str | None
+    api_key: str
 
     def __init__(
         self,
@@ -312,18 +318,22 @@ class AsyncExCai(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async AsyncExCai client instance.
+        """Construct a new async AsyncExcai client instance.
 
         This automatically infers the `api_key` argument from the `EXCAI_API_KEY` environment variable if it is not provided.
         """
         if api_key is None:
             api_key = os.environ.get("EXCAI_API_KEY")
+        if api_key is None:
+            raise ExcaiError(
+                "The api_key client option must be set either by passing api_key to the client or by setting the EXCAI_API_KEY environment variable"
+            )
         self.api_key = api_key
 
         if base_url is None:
-            base_url = os.environ.get("EX_CAI_BASE_URL")
+            base_url = os.environ.get("EXCAI_BASE_URL")
         if base_url is None:
-            base_url = f"https://api-main.excai.ai/api/v1/"
+            base_url = f"https://api-main.excai.ai/api/v1"
 
         super().__init__(
             version=__version__,
@@ -341,6 +351,8 @@ class AsyncExCai(AsyncAPIClient):
         self.batches = batches.AsyncBatchesResource(self)
         self.chat = chat.AsyncChatResource(self)
         self.completions = completions.AsyncCompletionsResource(self)
+        self.containers = containers.AsyncContainersResource(self)
+        self.conversations = conversations.AsyncConversationsResource(self)
         self.embeddings = embeddings.AsyncEmbeddingsResource(self)
         self.evals = evals.AsyncEvalsResource(self)
         self.files = files.AsyncFilesResource(self)
@@ -354,8 +366,10 @@ class AsyncExCai(AsyncAPIClient):
         self.threads = threads.AsyncThreadsResource(self)
         self.uploads = uploads.AsyncUploadsResource(self)
         self.vector_stores = vector_stores.AsyncVectorStoresResource(self)
-        self.with_raw_response = AsyncExCaiWithRawResponse(self)
-        self.with_streaming_response = AsyncExCaiWithStreamedResponse(self)
+        self.videos = videos.AsyncVideosResource(self)
+        self.chatkit = chatkit.AsyncChatkitResource(self)
+        self.with_raw_response = AsyncExcaiWithRawResponse(self)
+        self.with_streaming_response = AsyncExcaiWithStreamedResponse(self)
 
     @property
     @override
@@ -366,8 +380,6 @@ class AsyncExCai(AsyncAPIClient):
     @override
     def auth_headers(self) -> dict[str, str]:
         api_key = self.api_key
-        if api_key is None:
-            return {}
         return {"Authorization": f"Bearer {api_key}"}
 
     @property
@@ -378,17 +390,6 @@ class AsyncExCai(AsyncAPIClient):
             "X-Stainless-Async": f"async:{get_async_library()}",
             **self._custom_headers,
         }
-
-    @override
-    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
-        if self.api_key and headers.get("Authorization"):
-            return
-        if isinstance(custom_headers.get("Authorization"), Omit):
-            return
-
-        raise TypeError(
-            '"Could not resolve authentication method. Expected the api_key to be set. Or for the `Authorization` headers to be explicitly omitted"'
-        )
 
     def copy(
         self,
@@ -475,13 +476,15 @@ class AsyncExCai(AsyncAPIClient):
         return APIStatusError(err_msg, response=response, body=body)
 
 
-class ExCaiWithRawResponse:
-    def __init__(self, client: ExCai) -> None:
+class ExcaiWithRawResponse:
+    def __init__(self, client: Excai) -> None:
         self.assistants = assistants.AssistantsResourceWithRawResponse(client.assistants)
         self.audio = audio.AudioResourceWithRawResponse(client.audio)
         self.batches = batches.BatchesResourceWithRawResponse(client.batches)
         self.chat = chat.ChatResourceWithRawResponse(client.chat)
         self.completions = completions.CompletionsResourceWithRawResponse(client.completions)
+        self.containers = containers.ContainersResourceWithRawResponse(client.containers)
+        self.conversations = conversations.ConversationsResourceWithRawResponse(client.conversations)
         self.embeddings = embeddings.EmbeddingsResourceWithRawResponse(client.embeddings)
         self.evals = evals.EvalsResourceWithRawResponse(client.evals)
         self.files = files.FilesResourceWithRawResponse(client.files)
@@ -495,15 +498,19 @@ class ExCaiWithRawResponse:
         self.threads = threads.ThreadsResourceWithRawResponse(client.threads)
         self.uploads = uploads.UploadsResourceWithRawResponse(client.uploads)
         self.vector_stores = vector_stores.VectorStoresResourceWithRawResponse(client.vector_stores)
+        self.videos = videos.VideosResourceWithRawResponse(client.videos)
+        self.chatkit = chatkit.ChatkitResourceWithRawResponse(client.chatkit)
 
 
-class AsyncExCaiWithRawResponse:
-    def __init__(self, client: AsyncExCai) -> None:
+class AsyncExcaiWithRawResponse:
+    def __init__(self, client: AsyncExcai) -> None:
         self.assistants = assistants.AsyncAssistantsResourceWithRawResponse(client.assistants)
         self.audio = audio.AsyncAudioResourceWithRawResponse(client.audio)
         self.batches = batches.AsyncBatchesResourceWithRawResponse(client.batches)
         self.chat = chat.AsyncChatResourceWithRawResponse(client.chat)
         self.completions = completions.AsyncCompletionsResourceWithRawResponse(client.completions)
+        self.containers = containers.AsyncContainersResourceWithRawResponse(client.containers)
+        self.conversations = conversations.AsyncConversationsResourceWithRawResponse(client.conversations)
         self.embeddings = embeddings.AsyncEmbeddingsResourceWithRawResponse(client.embeddings)
         self.evals = evals.AsyncEvalsResourceWithRawResponse(client.evals)
         self.files = files.AsyncFilesResourceWithRawResponse(client.files)
@@ -517,15 +524,19 @@ class AsyncExCaiWithRawResponse:
         self.threads = threads.AsyncThreadsResourceWithRawResponse(client.threads)
         self.uploads = uploads.AsyncUploadsResourceWithRawResponse(client.uploads)
         self.vector_stores = vector_stores.AsyncVectorStoresResourceWithRawResponse(client.vector_stores)
+        self.videos = videos.AsyncVideosResourceWithRawResponse(client.videos)
+        self.chatkit = chatkit.AsyncChatkitResourceWithRawResponse(client.chatkit)
 
 
-class ExCaiWithStreamedResponse:
-    def __init__(self, client: ExCai) -> None:
+class ExcaiWithStreamedResponse:
+    def __init__(self, client: Excai) -> None:
         self.assistants = assistants.AssistantsResourceWithStreamingResponse(client.assistants)
         self.audio = audio.AudioResourceWithStreamingResponse(client.audio)
         self.batches = batches.BatchesResourceWithStreamingResponse(client.batches)
         self.chat = chat.ChatResourceWithStreamingResponse(client.chat)
         self.completions = completions.CompletionsResourceWithStreamingResponse(client.completions)
+        self.containers = containers.ContainersResourceWithStreamingResponse(client.containers)
+        self.conversations = conversations.ConversationsResourceWithStreamingResponse(client.conversations)
         self.embeddings = embeddings.EmbeddingsResourceWithStreamingResponse(client.embeddings)
         self.evals = evals.EvalsResourceWithStreamingResponse(client.evals)
         self.files = files.FilesResourceWithStreamingResponse(client.files)
@@ -539,15 +550,19 @@ class ExCaiWithStreamedResponse:
         self.threads = threads.ThreadsResourceWithStreamingResponse(client.threads)
         self.uploads = uploads.UploadsResourceWithStreamingResponse(client.uploads)
         self.vector_stores = vector_stores.VectorStoresResourceWithStreamingResponse(client.vector_stores)
+        self.videos = videos.VideosResourceWithStreamingResponse(client.videos)
+        self.chatkit = chatkit.ChatkitResourceWithStreamingResponse(client.chatkit)
 
 
-class AsyncExCaiWithStreamedResponse:
-    def __init__(self, client: AsyncExCai) -> None:
+class AsyncExcaiWithStreamedResponse:
+    def __init__(self, client: AsyncExcai) -> None:
         self.assistants = assistants.AsyncAssistantsResourceWithStreamingResponse(client.assistants)
         self.audio = audio.AsyncAudioResourceWithStreamingResponse(client.audio)
         self.batches = batches.AsyncBatchesResourceWithStreamingResponse(client.batches)
         self.chat = chat.AsyncChatResourceWithStreamingResponse(client.chat)
         self.completions = completions.AsyncCompletionsResourceWithStreamingResponse(client.completions)
+        self.containers = containers.AsyncContainersResourceWithStreamingResponse(client.containers)
+        self.conversations = conversations.AsyncConversationsResourceWithStreamingResponse(client.conversations)
         self.embeddings = embeddings.AsyncEmbeddingsResourceWithStreamingResponse(client.embeddings)
         self.evals = evals.AsyncEvalsResourceWithStreamingResponse(client.evals)
         self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
@@ -561,8 +576,10 @@ class AsyncExCaiWithStreamedResponse:
         self.threads = threads.AsyncThreadsResourceWithStreamingResponse(client.threads)
         self.uploads = uploads.AsyncUploadsResourceWithStreamingResponse(client.uploads)
         self.vector_stores = vector_stores.AsyncVectorStoresResourceWithStreamingResponse(client.vector_stores)
+        self.videos = videos.AsyncVideosResourceWithStreamingResponse(client.videos)
+        self.chatkit = chatkit.AsyncChatkitResourceWithStreamingResponse(client.chatkit)
 
 
-Client = ExCai
+Client = Excai
 
-AsyncClient = AsyncExCai
+AsyncClient = AsyncExcai

@@ -7,12 +7,10 @@ from typing import Any, cast
 
 import pytest
 
-from excai import ExCai, AsyncExCai
+from excai import Excai, AsyncExcai
 from excai.types import (
-    UploadCancelResponse,
-    UploadCreateResponse,
+    Upload,
     UploadAddPartResponse,
-    UploadCompleteResponse,
 )
 from tests.utils import assert_matches_type
 
@@ -24,18 +22,18 @@ class TestUploads:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create(self, client: ExCai) -> None:
+    def test_method_create(self, client: Excai) -> None:
         upload = client.uploads.create(
             bytes=0,
             filename="filename",
             mime_type="mime_type",
             purpose="assistants",
         )
-        assert_matches_type(UploadCreateResponse, upload, path=["response"])
+        assert_matches_type(Upload, upload, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_with_all_params(self, client: ExCai) -> None:
+    def test_method_create_with_all_params(self, client: Excai) -> None:
         upload = client.uploads.create(
             bytes=0,
             filename="filename",
@@ -46,11 +44,11 @@ class TestUploads:
                 "seconds": 3600,
             },
         )
-        assert_matches_type(UploadCreateResponse, upload, path=["response"])
+        assert_matches_type(Upload, upload, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_create(self, client: ExCai) -> None:
+    def test_raw_response_create(self, client: Excai) -> None:
         response = client.uploads.with_raw_response.create(
             bytes=0,
             filename="filename",
@@ -61,11 +59,11 @@ class TestUploads:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         upload = response.parse()
-        assert_matches_type(UploadCreateResponse, upload, path=["response"])
+        assert_matches_type(Upload, upload, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_create(self, client: ExCai) -> None:
+    def test_streaming_response_create(self, client: Excai) -> None:
         with client.uploads.with_streaming_response.create(
             bytes=0,
             filename="filename",
@@ -76,13 +74,13 @@ class TestUploads:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             upload = response.parse()
-            assert_matches_type(UploadCreateResponse, upload, path=["response"])
+            assert_matches_type(Upload, upload, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_add_part(self, client: ExCai) -> None:
+    def test_method_add_part(self, client: Excai) -> None:
         upload = client.uploads.add_part(
             upload_id="upload_abc123",
             data=b"raw file contents",
@@ -91,7 +89,7 @@ class TestUploads:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_add_part(self, client: ExCai) -> None:
+    def test_raw_response_add_part(self, client: Excai) -> None:
         response = client.uploads.with_raw_response.add_part(
             upload_id="upload_abc123",
             data=b"raw file contents",
@@ -104,7 +102,7 @@ class TestUploads:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_add_part(self, client: ExCai) -> None:
+    def test_streaming_response_add_part(self, client: Excai) -> None:
         with client.uploads.with_streaming_response.add_part(
             upload_id="upload_abc123",
             data=b"raw file contents",
@@ -119,7 +117,7 @@ class TestUploads:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_add_part(self, client: ExCai) -> None:
+    def test_path_params_add_part(self, client: Excai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `upload_id` but received ''"):
             client.uploads.with_raw_response.add_part(
                 upload_id="",
@@ -128,15 +126,15 @@ class TestUploads:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_cancel(self, client: ExCai) -> None:
+    def test_method_cancel(self, client: Excai) -> None:
         upload = client.uploads.cancel(
             "upload_abc123",
         )
-        assert_matches_type(UploadCancelResponse, upload, path=["response"])
+        assert_matches_type(Upload, upload, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_cancel(self, client: ExCai) -> None:
+    def test_raw_response_cancel(self, client: Excai) -> None:
         response = client.uploads.with_raw_response.cancel(
             "upload_abc123",
         )
@@ -144,11 +142,11 @@ class TestUploads:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         upload = response.parse()
-        assert_matches_type(UploadCancelResponse, upload, path=["response"])
+        assert_matches_type(Upload, upload, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_cancel(self, client: ExCai) -> None:
+    def test_streaming_response_cancel(self, client: Excai) -> None:
         with client.uploads.with_streaming_response.cancel(
             "upload_abc123",
         ) as response:
@@ -156,13 +154,13 @@ class TestUploads:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             upload = response.parse()
-            assert_matches_type(UploadCancelResponse, upload, path=["response"])
+            assert_matches_type(Upload, upload, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_cancel(self, client: ExCai) -> None:
+    def test_path_params_cancel(self, client: Excai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `upload_id` but received ''"):
             client.uploads.with_raw_response.cancel(
                 "",
@@ -170,26 +168,26 @@ class TestUploads:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_complete(self, client: ExCai) -> None:
+    def test_method_complete(self, client: Excai) -> None:
         upload = client.uploads.complete(
             upload_id="upload_abc123",
             part_ids=["string"],
         )
-        assert_matches_type(UploadCompleteResponse, upload, path=["response"])
+        assert_matches_type(Upload, upload, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_complete_with_all_params(self, client: ExCai) -> None:
+    def test_method_complete_with_all_params(self, client: Excai) -> None:
         upload = client.uploads.complete(
             upload_id="upload_abc123",
             part_ids=["string"],
             md5="md5",
         )
-        assert_matches_type(UploadCompleteResponse, upload, path=["response"])
+        assert_matches_type(Upload, upload, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_complete(self, client: ExCai) -> None:
+    def test_raw_response_complete(self, client: Excai) -> None:
         response = client.uploads.with_raw_response.complete(
             upload_id="upload_abc123",
             part_ids=["string"],
@@ -198,11 +196,11 @@ class TestUploads:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         upload = response.parse()
-        assert_matches_type(UploadCompleteResponse, upload, path=["response"])
+        assert_matches_type(Upload, upload, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_complete(self, client: ExCai) -> None:
+    def test_streaming_response_complete(self, client: Excai) -> None:
         with client.uploads.with_streaming_response.complete(
             upload_id="upload_abc123",
             part_ids=["string"],
@@ -211,13 +209,13 @@ class TestUploads:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             upload = response.parse()
-            assert_matches_type(UploadCompleteResponse, upload, path=["response"])
+            assert_matches_type(Upload, upload, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_complete(self, client: ExCai) -> None:
+    def test_path_params_complete(self, client: Excai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `upload_id` but received ''"):
             client.uploads.with_raw_response.complete(
                 upload_id="",
@@ -232,18 +230,18 @@ class TestAsyncUploads:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create(self, async_client: AsyncExCai) -> None:
+    async def test_method_create(self, async_client: AsyncExcai) -> None:
         upload = await async_client.uploads.create(
             bytes=0,
             filename="filename",
             mime_type="mime_type",
             purpose="assistants",
         )
-        assert_matches_type(UploadCreateResponse, upload, path=["response"])
+        assert_matches_type(Upload, upload, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_with_all_params(self, async_client: AsyncExCai) -> None:
+    async def test_method_create_with_all_params(self, async_client: AsyncExcai) -> None:
         upload = await async_client.uploads.create(
             bytes=0,
             filename="filename",
@@ -254,11 +252,11 @@ class TestAsyncUploads:
                 "seconds": 3600,
             },
         )
-        assert_matches_type(UploadCreateResponse, upload, path=["response"])
+        assert_matches_type(Upload, upload, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_create(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_create(self, async_client: AsyncExcai) -> None:
         response = await async_client.uploads.with_raw_response.create(
             bytes=0,
             filename="filename",
@@ -269,11 +267,11 @@ class TestAsyncUploads:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         upload = await response.parse()
-        assert_matches_type(UploadCreateResponse, upload, path=["response"])
+        assert_matches_type(Upload, upload, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_create(self, async_client: AsyncExcai) -> None:
         async with async_client.uploads.with_streaming_response.create(
             bytes=0,
             filename="filename",
@@ -284,13 +282,13 @@ class TestAsyncUploads:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             upload = await response.parse()
-            assert_matches_type(UploadCreateResponse, upload, path=["response"])
+            assert_matches_type(Upload, upload, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_add_part(self, async_client: AsyncExCai) -> None:
+    async def test_method_add_part(self, async_client: AsyncExcai) -> None:
         upload = await async_client.uploads.add_part(
             upload_id="upload_abc123",
             data=b"raw file contents",
@@ -299,7 +297,7 @@ class TestAsyncUploads:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_add_part(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_add_part(self, async_client: AsyncExcai) -> None:
         response = await async_client.uploads.with_raw_response.add_part(
             upload_id="upload_abc123",
             data=b"raw file contents",
@@ -312,7 +310,7 @@ class TestAsyncUploads:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_add_part(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_add_part(self, async_client: AsyncExcai) -> None:
         async with async_client.uploads.with_streaming_response.add_part(
             upload_id="upload_abc123",
             data=b"raw file contents",
@@ -327,7 +325,7 @@ class TestAsyncUploads:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_add_part(self, async_client: AsyncExCai) -> None:
+    async def test_path_params_add_part(self, async_client: AsyncExcai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `upload_id` but received ''"):
             await async_client.uploads.with_raw_response.add_part(
                 upload_id="",
@@ -336,15 +334,15 @@ class TestAsyncUploads:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_cancel(self, async_client: AsyncExCai) -> None:
+    async def test_method_cancel(self, async_client: AsyncExcai) -> None:
         upload = await async_client.uploads.cancel(
             "upload_abc123",
         )
-        assert_matches_type(UploadCancelResponse, upload, path=["response"])
+        assert_matches_type(Upload, upload, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_cancel(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_cancel(self, async_client: AsyncExcai) -> None:
         response = await async_client.uploads.with_raw_response.cancel(
             "upload_abc123",
         )
@@ -352,11 +350,11 @@ class TestAsyncUploads:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         upload = await response.parse()
-        assert_matches_type(UploadCancelResponse, upload, path=["response"])
+        assert_matches_type(Upload, upload, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_cancel(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_cancel(self, async_client: AsyncExcai) -> None:
         async with async_client.uploads.with_streaming_response.cancel(
             "upload_abc123",
         ) as response:
@@ -364,13 +362,13 @@ class TestAsyncUploads:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             upload = await response.parse()
-            assert_matches_type(UploadCancelResponse, upload, path=["response"])
+            assert_matches_type(Upload, upload, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_cancel(self, async_client: AsyncExCai) -> None:
+    async def test_path_params_cancel(self, async_client: AsyncExcai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `upload_id` but received ''"):
             await async_client.uploads.with_raw_response.cancel(
                 "",
@@ -378,26 +376,26 @@ class TestAsyncUploads:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_complete(self, async_client: AsyncExCai) -> None:
+    async def test_method_complete(self, async_client: AsyncExcai) -> None:
         upload = await async_client.uploads.complete(
             upload_id="upload_abc123",
             part_ids=["string"],
         )
-        assert_matches_type(UploadCompleteResponse, upload, path=["response"])
+        assert_matches_type(Upload, upload, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_complete_with_all_params(self, async_client: AsyncExCai) -> None:
+    async def test_method_complete_with_all_params(self, async_client: AsyncExcai) -> None:
         upload = await async_client.uploads.complete(
             upload_id="upload_abc123",
             part_ids=["string"],
             md5="md5",
         )
-        assert_matches_type(UploadCompleteResponse, upload, path=["response"])
+        assert_matches_type(Upload, upload, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_complete(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_complete(self, async_client: AsyncExcai) -> None:
         response = await async_client.uploads.with_raw_response.complete(
             upload_id="upload_abc123",
             part_ids=["string"],
@@ -406,11 +404,11 @@ class TestAsyncUploads:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         upload = await response.parse()
-        assert_matches_type(UploadCompleteResponse, upload, path=["response"])
+        assert_matches_type(Upload, upload, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_complete(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_complete(self, async_client: AsyncExcai) -> None:
         async with async_client.uploads.with_streaming_response.complete(
             upload_id="upload_abc123",
             part_ids=["string"],
@@ -419,13 +417,13 @@ class TestAsyncUploads:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             upload = await response.parse()
-            assert_matches_type(UploadCompleteResponse, upload, path=["response"])
+            assert_matches_type(Upload, upload, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_complete(self, async_client: AsyncExCai) -> None:
+    async def test_path_params_complete(self, async_client: AsyncExcai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `upload_id` but received ''"):
             await async_client.uploads.with_raw_response.complete(
                 upload_id="",

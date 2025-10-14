@@ -2,19 +2,19 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Optional
-from typing_extensions import TypeAlias, TypedDict
+from typing import Optional
+from typing_extensions import TypedDict
 
 from .._types import SequenceNotStr
+from .chat.metadata_param import MetadataParam
+from .chunking_strategy_request_param import ChunkingStrategyRequestParam
 from .vector_store_expiration_after_param import VectorStoreExpirationAfterParam
-from .auto_chunking_strategy_request_param import AutoChunkingStrategyRequestParam
-from .static_chunking_strategy_request_param import StaticChunkingStrategyRequestParam
 
-__all__ = ["VectorStoreCreateParams", "ChunkingStrategy"]
+__all__ = ["VectorStoreCreateParams"]
 
 
 class VectorStoreCreateParams(TypedDict, total=False):
-    chunking_strategy: ChunkingStrategy
+    chunking_strategy: ChunkingStrategyRequestParam
     """The chunking strategy used to chunk the file(s).
 
     If not set, will use the `auto` strategy. Only applicable if `file_ids` is
@@ -31,7 +31,7 @@ class VectorStoreCreateParams(TypedDict, total=False):
     files.
     """
 
-    metadata: Optional[Dict[str, str]]
+    metadata: Optional[MetadataParam]
     """Set of 16 key-value pairs that can be attached to an object.
 
     This can be useful for storing additional information about the object in a
@@ -43,6 +43,3 @@ class VectorStoreCreateParams(TypedDict, total=False):
 
     name: str
     """The name of the vector store."""
-
-
-ChunkingStrategy: TypeAlias = Union[AutoChunkingStrategyRequestParam, StaticChunkingStrategyRequestParam]

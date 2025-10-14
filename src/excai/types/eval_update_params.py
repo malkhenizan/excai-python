@@ -2,14 +2,16 @@
 
 from __future__ import annotations
 
-from typing import Dict, Optional
+from typing import Optional
 from typing_extensions import TypedDict
+
+from .chat.metadata_param import MetadataParam
 
 __all__ = ["EvalUpdateParams"]
 
 
 class EvalUpdateParams(TypedDict, total=False):
-    metadata: Optional[Dict[str, str]]
+    metadata: Optional[MetadataParam]
     """Set of 16 key-value pairs that can be attached to an object.
 
     This can be useful for storing additional information about the object in a

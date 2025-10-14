@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Optional
+from typing import Optional
 from typing_extensions import Literal
 
 import httpx
 
+from ...types import ChunkingStrategyRequestParam
 from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
@@ -19,12 +20,12 @@ from ..._response import (
 )
 from ..._base_client import make_request_options
 from ...types.vector_stores import file_list_params, file_create_params, file_update_params
-from ...types.vector_stores.file_list_response import FileListResponse
-from ...types.vector_stores.file_create_response import FileCreateResponse
+from ...types.chunking_strategy_request_param import ChunkingStrategyRequestParam
 from ...types.vector_stores.file_delete_response import FileDeleteResponse
-from ...types.vector_stores.file_update_response import FileUpdateResponse
-from ...types.vector_stores.file_retrieve_response import FileRetrieveResponse
+from ...types.vector_stores.vector_store_file_object import VectorStoreFileObject
 from ...types.vector_stores.file_retrieve_content_response import FileRetrieveContentResponse
+from ...types.vector_stores.list_vector_store_files_response import ListVectorStoreFilesResponse
+from ...types.vector_stores.vector_store_file_attributes_param import VectorStoreFileAttributesParam
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -36,7 +37,7 @@ class FilesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return FilesResourceWithRawResponse(self)
 
@@ -45,7 +46,7 @@ class FilesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return FilesResourceWithStreamingResponse(self)
 
@@ -54,15 +55,15 @@ class FilesResource(SyncAPIResource):
         vector_store_id: str,
         *,
         file_id: str,
-        attributes: Optional[Dict[str, Union[str, float, bool]]] | Omit = omit,
-        chunking_strategy: file_create_params.ChunkingStrategy | Omit = omit,
+        attributes: Optional[VectorStoreFileAttributesParam] | Omit = omit,
+        chunking_strategy: ChunkingStrategyRequestParam | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileCreateResponse:
+    ) -> VectorStoreFileObject:
         """
         Create a vector store file by attaching a
         [File](https://main.excai.ai/docs/api-reference/files) to a
@@ -104,7 +105,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileCreateResponse,
+            cast_to=VectorStoreFileObject,
         )
 
     def retrieve(
@@ -118,7 +119,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileRetrieveResponse:
+    ) -> VectorStoreFileObject:
         """
         Retrieves a vector store file.
 
@@ -140,7 +141,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileRetrieveResponse,
+            cast_to=VectorStoreFileObject,
         )
 
     def update(
@@ -148,14 +149,14 @@ class FilesResource(SyncAPIResource):
         file_id: str,
         *,
         vector_store_id: str,
-        attributes: Optional[Dict[str, Union[str, float, bool]]],
+        attributes: Optional[VectorStoreFileAttributesParam],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileUpdateResponse:
+    ) -> VectorStoreFileObject:
         """
         Update attributes on a vector store file.
 
@@ -184,7 +185,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileUpdateResponse,
+            cast_to=VectorStoreFileObject,
         )
 
     def list(
@@ -202,7 +203,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileListResponse:
+    ) -> ListVectorStoreFilesResponse:
         """
         Returns a list of vector store files.
 
@@ -253,7 +254,7 @@ class FilesResource(SyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            cast_to=FileListResponse,
+            cast_to=ListVectorStoreFilesResponse,
         )
 
     def delete(
@@ -339,7 +340,7 @@ class AsyncFilesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncFilesResourceWithRawResponse(self)
 
@@ -348,7 +349,7 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncFilesResourceWithStreamingResponse(self)
 
@@ -357,15 +358,15 @@ class AsyncFilesResource(AsyncAPIResource):
         vector_store_id: str,
         *,
         file_id: str,
-        attributes: Optional[Dict[str, Union[str, float, bool]]] | Omit = omit,
-        chunking_strategy: file_create_params.ChunkingStrategy | Omit = omit,
+        attributes: Optional[VectorStoreFileAttributesParam] | Omit = omit,
+        chunking_strategy: ChunkingStrategyRequestParam | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileCreateResponse:
+    ) -> VectorStoreFileObject:
         """
         Create a vector store file by attaching a
         [File](https://main.excai.ai/docs/api-reference/files) to a
@@ -407,7 +408,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileCreateResponse,
+            cast_to=VectorStoreFileObject,
         )
 
     async def retrieve(
@@ -421,7 +422,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileRetrieveResponse:
+    ) -> VectorStoreFileObject:
         """
         Retrieves a vector store file.
 
@@ -443,7 +444,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileRetrieveResponse,
+            cast_to=VectorStoreFileObject,
         )
 
     async def update(
@@ -451,14 +452,14 @@ class AsyncFilesResource(AsyncAPIResource):
         file_id: str,
         *,
         vector_store_id: str,
-        attributes: Optional[Dict[str, Union[str, float, bool]]],
+        attributes: Optional[VectorStoreFileAttributesParam],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileUpdateResponse:
+    ) -> VectorStoreFileObject:
         """
         Update attributes on a vector store file.
 
@@ -487,7 +488,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileUpdateResponse,
+            cast_to=VectorStoreFileObject,
         )
 
     async def list(
@@ -505,7 +506,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileListResponse:
+    ) -> ListVectorStoreFilesResponse:
         """
         Returns a list of vector store files.
 
@@ -556,7 +557,7 @@ class AsyncFilesResource(AsyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            cast_to=FileListResponse,
+            cast_to=ListVectorStoreFilesResponse,
         )
 
     async def delete(

@@ -1,60 +1,30 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List, Union, Optional
-from typing_extensions import Literal, Annotated, TypeAlias
+from typing_extensions import Literal, TypeAlias
 
-from .._utils import PropertyInfo
 from .._models import BaseModel
+from .voice_ids_shared import VoiceIDsShared
 from .audio_transcription import AudioTranscription
+from .noise_reduction_type import NoiseReductionType
+from .realtime_function_tool import RealtimeFunctionTool
+from .realtime.realtime_audio_formats import RealtimeAudioFormats
 
 __all__ = [
     "RealtimeCreateSessionResponse",
     "Audio",
     "AudioInput",
-    "AudioInputFormat",
-    "AudioInputFormatAudioPcm",
-    "AudioInputFormatAudioPcmu",
-    "AudioInputFormatAudioPcma",
     "AudioInputNoiseReduction",
     "AudioInputTurnDetection",
     "AudioOutput",
-    "AudioOutputFormat",
-    "AudioOutputFormatAudioPcm",
-    "AudioOutputFormatAudioPcmu",
-    "AudioOutputFormatAudioPcma",
-    "Tool",
     "Tracing",
     "TracingTracingConfiguration",
     "TurnDetection",
 ]
 
 
-class AudioInputFormatAudioPcm(BaseModel):
-    rate: Optional[Literal[24000]] = None
-    """The sample rate of the audio. Always `24000`."""
-
-    type: Optional[Literal["audio/pcm"]] = None
-    """The audio format. Always `audio/pcm`."""
-
-
-class AudioInputFormatAudioPcmu(BaseModel):
-    type: Optional[Literal["audio/pcmu"]] = None
-    """The audio format. Always `audio/pcmu`."""
-
-
-class AudioInputFormatAudioPcma(BaseModel):
-    type: Optional[Literal["audio/pcma"]] = None
-    """The audio format. Always `audio/pcma`."""
-
-
-AudioInputFormat: TypeAlias = Annotated[
-    Union[AudioInputFormatAudioPcm, AudioInputFormatAudioPcmu, AudioInputFormatAudioPcma],
-    PropertyInfo(discriminator="type"),
-]
-
-
 class AudioInputNoiseReduction(BaseModel):
-    type: Optional[Literal["near_field", "far_field"]] = None
+    type: Optional[NoiseReductionType] = None
     """Type of noise reduction.
 
     `near_field` is for close-talking microphones such as headphones, `far_field` is
@@ -74,7 +44,7 @@ class AudioInputTurnDetection(BaseModel):
 
 
 class AudioInput(BaseModel):
-    format: Optional[AudioInputFormat] = None
+    format: Optional[RealtimeAudioFormats] = None
     """The PCM audio format. Only a 24kHz sample rate is supported."""
 
     noise_reduction: Optional[AudioInputNoiseReduction] = None
@@ -87,62 +57,19 @@ class AudioInput(BaseModel):
     """Configuration for turn detection."""
 
 
-class AudioOutputFormatAudioPcm(BaseModel):
-    rate: Optional[Literal[24000]] = None
-    """The sample rate of the audio. Always `24000`."""
-
-    type: Optional[Literal["audio/pcm"]] = None
-    """The audio format. Always `audio/pcm`."""
-
-
-class AudioOutputFormatAudioPcmu(BaseModel):
-    type: Optional[Literal["audio/pcmu"]] = None
-    """The audio format. Always `audio/pcmu`."""
-
-
-class AudioOutputFormatAudioPcma(BaseModel):
-    type: Optional[Literal["audio/pcma"]] = None
-    """The audio format. Always `audio/pcma`."""
-
-
-AudioOutputFormat: TypeAlias = Annotated[
-    Union[AudioOutputFormatAudioPcm, AudioOutputFormatAudioPcmu, AudioOutputFormatAudioPcma],
-    PropertyInfo(discriminator="type"),
-]
-
-
 class AudioOutput(BaseModel):
-    format: Optional[AudioOutputFormat] = None
+    format: Optional[RealtimeAudioFormats] = None
     """The PCM audio format. Only a 24kHz sample rate is supported."""
 
     speed: Optional[float] = None
 
-    voice: Union[
-        str, Literal["alloy", "ash", "ballad", "coral", "echo", "sage", "shimmer", "verse", "marin", "cedar"], None
-    ] = None
+    voice: Optional[VoiceIDsShared] = None
 
 
 class Audio(BaseModel):
     input: Optional[AudioInput] = None
 
     output: Optional[AudioOutput] = None
-
-
-class Tool(BaseModel):
-    description: Optional[str] = None
-    """
-    The description of the function, including guidance on when and how to call it,
-    and guidance about what to tell the user when calling (if anything).
-    """
-
-    name: Optional[str] = None
-    """The name of the function."""
-
-    parameters: Optional[object] = None
-    """Parameters of the function in JSON Schema."""
-
-    type: Optional[Literal["function"]] = None
-    """The type of the tool, i.e. `function`."""
 
 
 class TracingTracingConfiguration(BaseModel):
@@ -251,7 +178,7 @@ class RealtimeCreateSessionResponse(BaseModel):
     Options are `auto`, `none`, `required`, or specify a function.
     """
 
-    tools: Optional[List[Tool]] = None
+    tools: Optional[List[RealtimeFunctionTool]] = None
     """Tools (functions) available to the model."""
 
     tracing: Optional[Tracing] = None

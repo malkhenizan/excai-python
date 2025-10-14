@@ -15,9 +15,9 @@ from ...._response import (
     async_to_streamed_response_wrapper,
 )
 from ...._base_client import make_request_options
-from ....types.organization.projects import rate_limit_update_params, rate_limit_retrieve_params
-from ....types.organization.projects.rate_limit_update_response import RateLimitUpdateResponse
-from ....types.organization.projects.rate_limit_retrieve_response import RateLimitRetrieveResponse
+from ....types.organization.projects import rate_limit_list_params, rate_limit_update_params
+from ....types.organization.projects.project_rate_limit import ProjectRateLimit
+from ....types.organization.projects.rate_limit_list_response import RateLimitListResponse
 
 __all__ = ["RateLimitsResource", "AsyncRateLimitsResource"]
 
@@ -29,7 +29,7 @@ class RateLimitsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return RateLimitsResourceWithRawResponse(self)
 
@@ -38,68 +38,9 @@ class RateLimitsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return RateLimitsResourceWithStreamingResponse(self)
-
-    def retrieve(
-        self,
-        project_id: str,
-        *,
-        after: str | Omit = omit,
-        before: str | Omit = omit,
-        limit: int | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> RateLimitRetrieveResponse:
-        """
-        Returns the rate limits per model for a project.
-
-        Args:
-          after: A cursor for use in pagination. `after` is an object ID that defines your place
-              in the list. For instance, if you make a list request and receive 100 objects,
-              ending with obj_foo, your subsequent call can include after=obj_foo in order to
-              fetch the next page of the list.
-
-          before: A cursor for use in pagination. `before` is an object ID that defines your place
-              in the list. For instance, if you make a list request and receive 100 objects,
-              beginning with obj_foo, your subsequent call can include before=obj_foo in order
-              to fetch the previous page of the list.
-
-          limit: A limit on the number of objects to be returned. The default is 100.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not project_id:
-            raise ValueError(f"Expected a non-empty value for `project_id` but received {project_id!r}")
-        return self._get(
-            f"/organization/projects/{project_id}/rate_limits",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "after": after,
-                        "before": before,
-                        "limit": limit,
-                    },
-                    rate_limit_retrieve_params.RateLimitRetrieveParams,
-                ),
-            ),
-            cast_to=RateLimitRetrieveResponse,
-        )
 
     def update(
         self,
@@ -118,7 +59,7 @@ class RateLimitsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> RateLimitUpdateResponse:
+    ) -> ProjectRateLimit:
         """
         Updates a project rate limit.
 
@@ -163,31 +104,10 @@ class RateLimitsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=RateLimitUpdateResponse,
+            cast_to=ProjectRateLimit,
         )
 
-
-class AsyncRateLimitsResource(AsyncAPIResource):
-    @cached_property
-    def with_raw_response(self) -> AsyncRateLimitsResourceWithRawResponse:
-        """
-        This property can be used as a prefix for any HTTP method call to return
-        the raw response object instead of the parsed content.
-
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
-        """
-        return AsyncRateLimitsResourceWithRawResponse(self)
-
-    @cached_property
-    def with_streaming_response(self) -> AsyncRateLimitsResourceWithStreamingResponse:
-        """
-        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
-
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
-        """
-        return AsyncRateLimitsResourceWithStreamingResponse(self)
-
-    async def retrieve(
+    def list(
         self,
         project_id: str,
         *,
@@ -200,7 +120,7 @@ class AsyncRateLimitsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> RateLimitRetrieveResponse:
+    ) -> RateLimitListResponse:
         """
         Returns the rate limits per model for a project.
 
@@ -227,24 +147,45 @@ class AsyncRateLimitsResource(AsyncAPIResource):
         """
         if not project_id:
             raise ValueError(f"Expected a non-empty value for `project_id` but received {project_id!r}")
-        return await self._get(
+        return self._get(
             f"/organization/projects/{project_id}/rate_limits",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "after": after,
                         "before": before,
                         "limit": limit,
                     },
-                    rate_limit_retrieve_params.RateLimitRetrieveParams,
+                    rate_limit_list_params.RateLimitListParams,
                 ),
             ),
-            cast_to=RateLimitRetrieveResponse,
+            cast_to=RateLimitListResponse,
         )
+
+
+class AsyncRateLimitsResource(AsyncAPIResource):
+    @cached_property
+    def with_raw_response(self) -> AsyncRateLimitsResourceWithRawResponse:
+        """
+        This property can be used as a prefix for any HTTP method call to return
+        the raw response object instead of the parsed content.
+
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
+        """
+        return AsyncRateLimitsResourceWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncRateLimitsResourceWithStreamingResponse:
+        """
+        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
+
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
+        """
+        return AsyncRateLimitsResourceWithStreamingResponse(self)
 
     async def update(
         self,
@@ -263,7 +204,7 @@ class AsyncRateLimitsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> RateLimitUpdateResponse:
+    ) -> ProjectRateLimit:
         """
         Updates a project rate limit.
 
@@ -308,7 +249,66 @@ class AsyncRateLimitsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=RateLimitUpdateResponse,
+            cast_to=ProjectRateLimit,
+        )
+
+    async def list(
+        self,
+        project_id: str,
+        *,
+        after: str | Omit = omit,
+        before: str | Omit = omit,
+        limit: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> RateLimitListResponse:
+        """
+        Returns the rate limits per model for a project.
+
+        Args:
+          after: A cursor for use in pagination. `after` is an object ID that defines your place
+              in the list. For instance, if you make a list request and receive 100 objects,
+              ending with obj_foo, your subsequent call can include after=obj_foo in order to
+              fetch the next page of the list.
+
+          before: A cursor for use in pagination. `before` is an object ID that defines your place
+              in the list. For instance, if you make a list request and receive 100 objects,
+              beginning with obj_foo, your subsequent call can include before=obj_foo in order
+              to fetch the previous page of the list.
+
+          limit: A limit on the number of objects to be returned. The default is 100.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not project_id:
+            raise ValueError(f"Expected a non-empty value for `project_id` but received {project_id!r}")
+        return await self._get(
+            f"/organization/projects/{project_id}/rate_limits",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "after": after,
+                        "before": before,
+                        "limit": limit,
+                    },
+                    rate_limit_list_params.RateLimitListParams,
+                ),
+            ),
+            cast_to=RateLimitListResponse,
         )
 
 
@@ -316,11 +316,11 @@ class RateLimitsResourceWithRawResponse:
     def __init__(self, rate_limits: RateLimitsResource) -> None:
         self._rate_limits = rate_limits
 
-        self.retrieve = to_raw_response_wrapper(
-            rate_limits.retrieve,
-        )
         self.update = to_raw_response_wrapper(
             rate_limits.update,
+        )
+        self.list = to_raw_response_wrapper(
+            rate_limits.list,
         )
 
 
@@ -328,11 +328,11 @@ class AsyncRateLimitsResourceWithRawResponse:
     def __init__(self, rate_limits: AsyncRateLimitsResource) -> None:
         self._rate_limits = rate_limits
 
-        self.retrieve = async_to_raw_response_wrapper(
-            rate_limits.retrieve,
-        )
         self.update = async_to_raw_response_wrapper(
             rate_limits.update,
+        )
+        self.list = async_to_raw_response_wrapper(
+            rate_limits.list,
         )
 
 
@@ -340,11 +340,11 @@ class RateLimitsResourceWithStreamingResponse:
     def __init__(self, rate_limits: RateLimitsResource) -> None:
         self._rate_limits = rate_limits
 
-        self.retrieve = to_streamed_response_wrapper(
-            rate_limits.retrieve,
-        )
         self.update = to_streamed_response_wrapper(
             rate_limits.update,
+        )
+        self.list = to_streamed_response_wrapper(
+            rate_limits.list,
         )
 
 
@@ -352,9 +352,9 @@ class AsyncRateLimitsResourceWithStreamingResponse:
     def __init__(self, rate_limits: AsyncRateLimitsResource) -> None:
         self._rate_limits = rate_limits
 
-        self.retrieve = async_to_streamed_response_wrapper(
-            rate_limits.retrieve,
-        )
         self.update = async_to_streamed_response_wrapper(
             rate_limits.update,
+        )
+        self.list = async_to_streamed_response_wrapper(
+            rate_limits.list,
         )

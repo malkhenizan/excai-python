@@ -19,10 +19,9 @@ from ..._response import (
 )
 from ..._base_client import make_request_options
 from ...types.organization import invite_list_params, invite_create_params
+from ...types.organization.invite import Invite
 from ...types.organization.invite_list_response import InviteListResponse
-from ...types.organization.invite_create_response import InviteCreateResponse
 from ...types.organization.invite_delete_response import InviteDeleteResponse
-from ...types.organization.invite_retrieve_response import InviteRetrieveResponse
 
 __all__ = ["InvitesResource", "AsyncInvitesResource"]
 
@@ -34,7 +33,7 @@ class InvitesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return InvitesResourceWithRawResponse(self)
 
@@ -43,7 +42,7 @@ class InvitesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return InvitesResourceWithStreamingResponse(self)
 
@@ -59,7 +58,7 @@ class InvitesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> InviteCreateResponse:
+    ) -> Invite:
         """Create an invite for a user to the organization.
 
         The invite must be accepted by
@@ -95,7 +94,7 @@ class InvitesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=InviteCreateResponse,
+            cast_to=Invite,
         )
 
     def retrieve(
@@ -108,7 +107,7 @@ class InvitesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> InviteRetrieveResponse:
+    ) -> Invite:
         """
         Retrieves an invite.
 
@@ -128,7 +127,7 @@ class InvitesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=InviteRetrieveResponse,
+            cast_to=Invite,
         )
 
     def list(
@@ -223,7 +222,7 @@ class AsyncInvitesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncInvitesResourceWithRawResponse(self)
 
@@ -232,7 +231,7 @@ class AsyncInvitesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncInvitesResourceWithStreamingResponse(self)
 
@@ -248,7 +247,7 @@ class AsyncInvitesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> InviteCreateResponse:
+    ) -> Invite:
         """Create an invite for a user to the organization.
 
         The invite must be accepted by
@@ -284,7 +283,7 @@ class AsyncInvitesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=InviteCreateResponse,
+            cast_to=Invite,
         )
 
     async def retrieve(
@@ -297,7 +296,7 @@ class AsyncInvitesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> InviteRetrieveResponse:
+    ) -> Invite:
         """
         Retrieves an invite.
 
@@ -317,7 +316,7 @@ class AsyncInvitesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=InviteRetrieveResponse,
+            cast_to=Invite,
         )
 
     async def list(

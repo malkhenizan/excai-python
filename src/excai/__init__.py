@@ -5,14 +5,14 @@ import typing as _t
 from . import types
 from ._types import NOT_GIVEN, Omit, NoneType, NotGiven, Transport, ProxiesTypes, omit, not_given
 from ._utils import file_from_path
-from ._client import ExCai, Client, Stream, Timeout, Transport, AsyncExCai, AsyncClient, AsyncStream, RequestOptions
+from ._client import Excai, Client, Stream, Timeout, Transport, AsyncExcai, AsyncClient, AsyncStream, RequestOptions
 from ._models import BaseModel
 from ._version import __title__, __version__
 from ._response import APIResponse as APIResponse, AsyncAPIResponse as AsyncAPIResponse
 from ._constants import DEFAULT_TIMEOUT, DEFAULT_MAX_RETRIES, DEFAULT_CONNECTION_LIMITS
 from ._exceptions import (
     APIError,
-    ExCaiError,
+    ExcaiError,
     ConflictError,
     NotFoundError,
     APIStatusError,
@@ -41,7 +41,7 @@ __all__ = [
     "not_given",
     "Omit",
     "omit",
-    "ExCaiError",
+    "ExcaiError",
     "APIError",
     "APIStatusError",
     "APITimeoutError",
@@ -61,8 +61,8 @@ __all__ = [
     "AsyncClient",
     "Stream",
     "AsyncStream",
-    "ExCai",
-    "AsyncExCai",
+    "Excai",
+    "AsyncExcai",
     "file_from_path",
     "BaseModel",
     "DEFAULT_TIMEOUT",

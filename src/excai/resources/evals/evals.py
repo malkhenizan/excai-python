@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Iterable, Optional
+from typing import Iterable, Optional
 from typing_extensions import Literal
 
 import httpx
@@ -26,12 +26,11 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from ...types.eval import Eval
 from ..._base_client import make_request_options
 from ...types.eval_list_response import EvalListResponse
-from ...types.eval_create_response import EvalCreateResponse
+from ...types.chat.metadata_param import MetadataParam
 from ...types.eval_delete_response import EvalDeleteResponse
-from ...types.eval_update_response import EvalUpdateResponse
-from ...types.eval_retrieve_response import EvalRetrieveResponse
 
 __all__ = ["EvalsResource", "AsyncEvalsResource"]
 
@@ -47,7 +46,7 @@ class EvalsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return EvalsResourceWithRawResponse(self)
 
@@ -56,7 +55,7 @@ class EvalsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return EvalsResourceWithStreamingResponse(self)
 
@@ -65,7 +64,7 @@ class EvalsResource(SyncAPIResource):
         *,
         data_source_config: eval_create_params.DataSourceConfig,
         testing_criteria: Iterable[eval_create_params.TestingCriterion],
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         name: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -73,7 +72,7 @@ class EvalsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> EvalCreateResponse:
+    ) -> Eval:
         """
         Create the structure of an evaluation that can be used to test a model's
         performance. An evaluation is a set of testing criteria and the config for a
@@ -122,7 +121,7 @@ class EvalsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=EvalCreateResponse,
+            cast_to=Eval,
         )
 
     def retrieve(
@@ -135,7 +134,7 @@ class EvalsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> EvalRetrieveResponse:
+    ) -> Eval:
         """
         Get an evaluation by ID.
 
@@ -155,14 +154,14 @@ class EvalsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=EvalRetrieveResponse,
+            cast_to=Eval,
         )
 
     def update(
         self,
         eval_id: str,
         *,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         name: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -170,7 +169,7 @@ class EvalsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> EvalUpdateResponse:
+    ) -> Eval:
         """
         Update certain properties of an evaluation.
 
@@ -206,7 +205,7 @@ class EvalsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=EvalUpdateResponse,
+            cast_to=Eval,
         )
 
     def list(
@@ -310,7 +309,7 @@ class AsyncEvalsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncEvalsResourceWithRawResponse(self)
 
@@ -319,7 +318,7 @@ class AsyncEvalsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncEvalsResourceWithStreamingResponse(self)
 
@@ -328,7 +327,7 @@ class AsyncEvalsResource(AsyncAPIResource):
         *,
         data_source_config: eval_create_params.DataSourceConfig,
         testing_criteria: Iterable[eval_create_params.TestingCriterion],
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         name: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -336,7 +335,7 @@ class AsyncEvalsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> EvalCreateResponse:
+    ) -> Eval:
         """
         Create the structure of an evaluation that can be used to test a model's
         performance. An evaluation is a set of testing criteria and the config for a
@@ -385,7 +384,7 @@ class AsyncEvalsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=EvalCreateResponse,
+            cast_to=Eval,
         )
 
     async def retrieve(
@@ -398,7 +397,7 @@ class AsyncEvalsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> EvalRetrieveResponse:
+    ) -> Eval:
         """
         Get an evaluation by ID.
 
@@ -418,14 +417,14 @@ class AsyncEvalsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=EvalRetrieveResponse,
+            cast_to=Eval,
         )
 
     async def update(
         self,
         eval_id: str,
         *,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         name: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -433,7 +432,7 @@ class AsyncEvalsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> EvalUpdateResponse:
+    ) -> Eval:
         """
         Update certain properties of an evaluation.
 
@@ -469,7 +468,7 @@ class AsyncEvalsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=EvalUpdateResponse,
+            cast_to=Eval,
         )
 
     async def list(

@@ -28,14 +28,7 @@ from ...types.organization import (
     usage_audio_transcriptions_params,
     usage_code_interpreter_sessions_params,
 )
-from ...types.organization.usage_images_response import UsageImagesResponse
-from ...types.organization.usage_embeddings_response import UsageEmbeddingsResponse
-from ...types.organization.usage_completions_response import UsageCompletionsResponse
-from ...types.organization.usage_moderations_response import UsageModerationsResponse
-from ...types.organization.usage_vector_stores_response import UsageVectorStoresResponse
-from ...types.organization.usage_audio_speeches_response import UsageAudioSpeechesResponse
-from ...types.organization.usage_audio_transcriptions_response import UsageAudioTranscriptionsResponse
-from ...types.organization.usage_code_interpreter_sessions_response import UsageCodeInterpreterSessionsResponse
+from ...types.usage_response import UsageResponse
 
 __all__ = ["UsageResource", "AsyncUsageResource"]
 
@@ -47,7 +40,7 @@ class UsageResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return UsageResourceWithRawResponse(self)
 
@@ -56,7 +49,7 @@ class UsageResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return UsageResourceWithStreamingResponse(self)
 
@@ -79,7 +72,7 @@ class UsageResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UsageAudioSpeechesResponse:
+    ) -> UsageResponse:
         """
         Get audio speeches usage details for the organization.
 
@@ -142,7 +135,7 @@ class UsageResource(SyncAPIResource):
                     usage_audio_speeches_params.UsageAudioSpeechesParams,
                 ),
             ),
-            cast_to=UsageAudioSpeechesResponse,
+            cast_to=UsageResponse,
         )
 
     def audio_transcriptions(
@@ -164,7 +157,7 @@ class UsageResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UsageAudioTranscriptionsResponse:
+    ) -> UsageResponse:
         """
         Get audio transcriptions usage details for the organization.
 
@@ -227,7 +220,7 @@ class UsageResource(SyncAPIResource):
                     usage_audio_transcriptions_params.UsageAudioTranscriptionsParams,
                 ),
             ),
-            cast_to=UsageAudioTranscriptionsResponse,
+            cast_to=UsageResponse,
         )
 
     def code_interpreter_sessions(
@@ -246,7 +239,7 @@ class UsageResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UsageCodeInterpreterSessionsResponse:
+    ) -> UsageResponse:
         """
         Get code interpreter sessions usage details for the organization.
 
@@ -300,7 +293,7 @@ class UsageResource(SyncAPIResource):
                     usage_code_interpreter_sessions_params.UsageCodeInterpreterSessionsParams,
                 ),
             ),
-            cast_to=UsageCodeInterpreterSessionsResponse,
+            cast_to=UsageResponse,
         )
 
     def completions(
@@ -323,7 +316,7 @@ class UsageResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UsageCompletionsResponse:
+    ) -> UsageResponse:
         """
         Get completions usage details for the organization.
 
@@ -391,7 +384,7 @@ class UsageResource(SyncAPIResource):
                     usage_completions_params.UsageCompletionsParams,
                 ),
             ),
-            cast_to=UsageCompletionsResponse,
+            cast_to=UsageResponse,
         )
 
     def embeddings(
@@ -413,7 +406,7 @@ class UsageResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UsageEmbeddingsResponse:
+    ) -> UsageResponse:
         """
         Get embeddings usage details for the organization.
 
@@ -476,7 +469,7 @@ class UsageResource(SyncAPIResource):
                     usage_embeddings_params.UsageEmbeddingsParams,
                 ),
             ),
-            cast_to=UsageEmbeddingsResponse,
+            cast_to=UsageResponse,
         )
 
     def images(
@@ -500,7 +493,7 @@ class UsageResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UsageImagesResponse:
+    ) -> UsageResponse:
         """
         Get images usage details for the organization.
 
@@ -572,7 +565,7 @@ class UsageResource(SyncAPIResource):
                     usage_images_params.UsageImagesParams,
                 ),
             ),
-            cast_to=UsageImagesResponse,
+            cast_to=UsageResponse,
         )
 
     def moderations(
@@ -594,7 +587,7 @@ class UsageResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UsageModerationsResponse:
+    ) -> UsageResponse:
         """
         Get moderations usage details for the organization.
 
@@ -657,7 +650,7 @@ class UsageResource(SyncAPIResource):
                     usage_moderations_params.UsageModerationsParams,
                 ),
             ),
-            cast_to=UsageModerationsResponse,
+            cast_to=UsageResponse,
         )
 
     def vector_stores(
@@ -676,7 +669,7 @@ class UsageResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UsageVectorStoresResponse:
+    ) -> UsageResponse:
         """
         Get vector stores usage details for the organization.
 
@@ -730,7 +723,7 @@ class UsageResource(SyncAPIResource):
                     usage_vector_stores_params.UsageVectorStoresParams,
                 ),
             ),
-            cast_to=UsageVectorStoresResponse,
+            cast_to=UsageResponse,
         )
 
 
@@ -741,7 +734,7 @@ class AsyncUsageResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncUsageResourceWithRawResponse(self)
 
@@ -750,7 +743,7 @@ class AsyncUsageResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncUsageResourceWithStreamingResponse(self)
 
@@ -773,7 +766,7 @@ class AsyncUsageResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UsageAudioSpeechesResponse:
+    ) -> UsageResponse:
         """
         Get audio speeches usage details for the organization.
 
@@ -836,7 +829,7 @@ class AsyncUsageResource(AsyncAPIResource):
                     usage_audio_speeches_params.UsageAudioSpeechesParams,
                 ),
             ),
-            cast_to=UsageAudioSpeechesResponse,
+            cast_to=UsageResponse,
         )
 
     async def audio_transcriptions(
@@ -858,7 +851,7 @@ class AsyncUsageResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UsageAudioTranscriptionsResponse:
+    ) -> UsageResponse:
         """
         Get audio transcriptions usage details for the organization.
 
@@ -921,7 +914,7 @@ class AsyncUsageResource(AsyncAPIResource):
                     usage_audio_transcriptions_params.UsageAudioTranscriptionsParams,
                 ),
             ),
-            cast_to=UsageAudioTranscriptionsResponse,
+            cast_to=UsageResponse,
         )
 
     async def code_interpreter_sessions(
@@ -940,7 +933,7 @@ class AsyncUsageResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UsageCodeInterpreterSessionsResponse:
+    ) -> UsageResponse:
         """
         Get code interpreter sessions usage details for the organization.
 
@@ -994,7 +987,7 @@ class AsyncUsageResource(AsyncAPIResource):
                     usage_code_interpreter_sessions_params.UsageCodeInterpreterSessionsParams,
                 ),
             ),
-            cast_to=UsageCodeInterpreterSessionsResponse,
+            cast_to=UsageResponse,
         )
 
     async def completions(
@@ -1017,7 +1010,7 @@ class AsyncUsageResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UsageCompletionsResponse:
+    ) -> UsageResponse:
         """
         Get completions usage details for the organization.
 
@@ -1085,7 +1078,7 @@ class AsyncUsageResource(AsyncAPIResource):
                     usage_completions_params.UsageCompletionsParams,
                 ),
             ),
-            cast_to=UsageCompletionsResponse,
+            cast_to=UsageResponse,
         )
 
     async def embeddings(
@@ -1107,7 +1100,7 @@ class AsyncUsageResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UsageEmbeddingsResponse:
+    ) -> UsageResponse:
         """
         Get embeddings usage details for the organization.
 
@@ -1170,7 +1163,7 @@ class AsyncUsageResource(AsyncAPIResource):
                     usage_embeddings_params.UsageEmbeddingsParams,
                 ),
             ),
-            cast_to=UsageEmbeddingsResponse,
+            cast_to=UsageResponse,
         )
 
     async def images(
@@ -1194,7 +1187,7 @@ class AsyncUsageResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UsageImagesResponse:
+    ) -> UsageResponse:
         """
         Get images usage details for the organization.
 
@@ -1266,7 +1259,7 @@ class AsyncUsageResource(AsyncAPIResource):
                     usage_images_params.UsageImagesParams,
                 ),
             ),
-            cast_to=UsageImagesResponse,
+            cast_to=UsageResponse,
         )
 
     async def moderations(
@@ -1288,7 +1281,7 @@ class AsyncUsageResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UsageModerationsResponse:
+    ) -> UsageResponse:
         """
         Get moderations usage details for the organization.
 
@@ -1351,7 +1344,7 @@ class AsyncUsageResource(AsyncAPIResource):
                     usage_moderations_params.UsageModerationsParams,
                 ),
             ),
-            cast_to=UsageModerationsResponse,
+            cast_to=UsageResponse,
         )
 
     async def vector_stores(
@@ -1370,7 +1363,7 @@ class AsyncUsageResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UsageVectorStoresResponse:
+    ) -> UsageResponse:
         """
         Get vector stores usage details for the organization.
 
@@ -1424,7 +1417,7 @@ class AsyncUsageResource(AsyncAPIResource):
                     usage_vector_stores_params.UsageVectorStoresParams,
                 ),
             ),
-            cast_to=UsageVectorStoresResponse,
+            cast_to=UsageResponse,
         )
 
 

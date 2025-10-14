@@ -7,11 +7,9 @@ from typing import Any, cast
 
 import pytest
 
-from excai import ExCai, AsyncExCai
+from excai import Excai, AsyncExcai
 from excai.types import (
-    ImageCreateEditResponse,
-    ImageCreateVariationResponse,
-    ImageCreateGenerationResponse,
+    ImagesResponse,
 )
 from tests.utils import assert_matches_type
 
@@ -23,16 +21,71 @@ class TestImages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_edit(self, client: ExCai) -> None:
+    def test_method_create(self, client: Excai) -> None:
+        image = client.images.create(
+            prompt="A cute baby sea otter",
+        )
+        assert_matches_type(ImagesResponse, image, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_create_with_all_params(self, client: Excai) -> None:
+        image = client.images.create(
+            prompt="A cute baby sea otter",
+            background="transparent",
+            model="string",
+            moderation="low",
+            n=1,
+            output_compression=100,
+            output_format="png",
+            partial_images=1,
+            quality="medium",
+            response_format="url",
+            size="1024x1024",
+            stream=False,
+            style="vivid",
+            user="user-1234",
+        )
+        assert_matches_type(ImagesResponse, image, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_create(self, client: Excai) -> None:
+        response = client.images.with_raw_response.create(
+            prompt="A cute baby sea otter",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        image = response.parse()
+        assert_matches_type(ImagesResponse, image, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_create(self, client: Excai) -> None:
+        with client.images.with_streaming_response.create(
+            prompt="A cute baby sea otter",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            image = response.parse()
+            assert_matches_type(ImagesResponse, image, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_create_edit(self, client: Excai) -> None:
         image = client.images.create_edit(
             image=b"raw file contents",
             prompt="A cute baby sea otter wearing a beret",
         )
-        assert_matches_type(ImageCreateEditResponse, image, path=["response"])
+        assert_matches_type(ImagesResponse, image, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_edit_with_all_params(self, client: ExCai) -> None:
+    def test_method_create_edit_with_all_params(self, client: Excai) -> None:
         image = client.images.create_edit(
             image=b"raw file contents",
             prompt="A cute baby sea otter wearing a beret",
@@ -50,11 +103,11 @@ class TestImages:
             stream=False,
             user="user-1234",
         )
-        assert_matches_type(ImageCreateEditResponse, image, path=["response"])
+        assert_matches_type(ImagesResponse, image, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_create_edit(self, client: ExCai) -> None:
+    def test_raw_response_create_edit(self, client: Excai) -> None:
         response = client.images.with_raw_response.create_edit(
             image=b"raw file contents",
             prompt="A cute baby sea otter wearing a beret",
@@ -63,11 +116,11 @@ class TestImages:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         image = response.parse()
-        assert_matches_type(ImageCreateEditResponse, image, path=["response"])
+        assert_matches_type(ImagesResponse, image, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_create_edit(self, client: ExCai) -> None:
+    def test_streaming_response_create_edit(self, client: Excai) -> None:
         with client.images.with_streaming_response.create_edit(
             image=b"raw file contents",
             prompt="A cute baby sea otter wearing a beret",
@@ -76,76 +129,21 @@ class TestImages:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             image = response.parse()
-            assert_matches_type(ImageCreateEditResponse, image, path=["response"])
+            assert_matches_type(ImagesResponse, image, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_generation(self, client: ExCai) -> None:
-        image = client.images.create_generation(
-            prompt="A cute baby sea otter",
-        )
-        assert_matches_type(ImageCreateGenerationResponse, image, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_create_generation_with_all_params(self, client: ExCai) -> None:
-        image = client.images.create_generation(
-            prompt="A cute baby sea otter",
-            background="transparent",
-            model="string",
-            moderation="low",
-            n=1,
-            output_compression=100,
-            output_format="png",
-            partial_images=1,
-            quality="medium",
-            response_format="url",
-            size="1024x1024",
-            stream=False,
-            style="vivid",
-            user="user-1234",
-        )
-        assert_matches_type(ImageCreateGenerationResponse, image, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_create_generation(self, client: ExCai) -> None:
-        response = client.images.with_raw_response.create_generation(
-            prompt="A cute baby sea otter",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        image = response.parse()
-        assert_matches_type(ImageCreateGenerationResponse, image, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_create_generation(self, client: ExCai) -> None:
-        with client.images.with_streaming_response.create_generation(
-            prompt="A cute baby sea otter",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            image = response.parse()
-            assert_matches_type(ImageCreateGenerationResponse, image, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_create_variation(self, client: ExCai) -> None:
+    def test_method_create_variation(self, client: Excai) -> None:
         image = client.images.create_variation(
             image=b"raw file contents",
         )
-        assert_matches_type(ImageCreateVariationResponse, image, path=["response"])
+        assert_matches_type(ImagesResponse, image, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_variation_with_all_params(self, client: ExCai) -> None:
+    def test_method_create_variation_with_all_params(self, client: Excai) -> None:
         image = client.images.create_variation(
             image=b"raw file contents",
             model="string",
@@ -154,11 +152,11 @@ class TestImages:
             size="1024x1024",
             user="user-1234",
         )
-        assert_matches_type(ImageCreateVariationResponse, image, path=["response"])
+        assert_matches_type(ImagesResponse, image, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_create_variation(self, client: ExCai) -> None:
+    def test_raw_response_create_variation(self, client: Excai) -> None:
         response = client.images.with_raw_response.create_variation(
             image=b"raw file contents",
         )
@@ -166,11 +164,11 @@ class TestImages:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         image = response.parse()
-        assert_matches_type(ImageCreateVariationResponse, image, path=["response"])
+        assert_matches_type(ImagesResponse, image, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_create_variation(self, client: ExCai) -> None:
+    def test_streaming_response_create_variation(self, client: Excai) -> None:
         with client.images.with_streaming_response.create_variation(
             image=b"raw file contents",
         ) as response:
@@ -178,7 +176,7 @@ class TestImages:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             image = response.parse()
-            assert_matches_type(ImageCreateVariationResponse, image, path=["response"])
+            assert_matches_type(ImagesResponse, image, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -190,16 +188,71 @@ class TestAsyncImages:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_edit(self, async_client: AsyncExCai) -> None:
+    async def test_method_create(self, async_client: AsyncExcai) -> None:
+        image = await async_client.images.create(
+            prompt="A cute baby sea otter",
+        )
+        assert_matches_type(ImagesResponse, image, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_create_with_all_params(self, async_client: AsyncExcai) -> None:
+        image = await async_client.images.create(
+            prompt="A cute baby sea otter",
+            background="transparent",
+            model="string",
+            moderation="low",
+            n=1,
+            output_compression=100,
+            output_format="png",
+            partial_images=1,
+            quality="medium",
+            response_format="url",
+            size="1024x1024",
+            stream=False,
+            style="vivid",
+            user="user-1234",
+        )
+        assert_matches_type(ImagesResponse, image, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_create(self, async_client: AsyncExcai) -> None:
+        response = await async_client.images.with_raw_response.create(
+            prompt="A cute baby sea otter",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        image = await response.parse()
+        assert_matches_type(ImagesResponse, image, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_create(self, async_client: AsyncExcai) -> None:
+        async with async_client.images.with_streaming_response.create(
+            prompt="A cute baby sea otter",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            image = await response.parse()
+            assert_matches_type(ImagesResponse, image, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_create_edit(self, async_client: AsyncExcai) -> None:
         image = await async_client.images.create_edit(
             image=b"raw file contents",
             prompt="A cute baby sea otter wearing a beret",
         )
-        assert_matches_type(ImageCreateEditResponse, image, path=["response"])
+        assert_matches_type(ImagesResponse, image, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_edit_with_all_params(self, async_client: AsyncExCai) -> None:
+    async def test_method_create_edit_with_all_params(self, async_client: AsyncExcai) -> None:
         image = await async_client.images.create_edit(
             image=b"raw file contents",
             prompt="A cute baby sea otter wearing a beret",
@@ -217,11 +270,11 @@ class TestAsyncImages:
             stream=False,
             user="user-1234",
         )
-        assert_matches_type(ImageCreateEditResponse, image, path=["response"])
+        assert_matches_type(ImagesResponse, image, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_create_edit(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_create_edit(self, async_client: AsyncExcai) -> None:
         response = await async_client.images.with_raw_response.create_edit(
             image=b"raw file contents",
             prompt="A cute baby sea otter wearing a beret",
@@ -230,11 +283,11 @@ class TestAsyncImages:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         image = await response.parse()
-        assert_matches_type(ImageCreateEditResponse, image, path=["response"])
+        assert_matches_type(ImagesResponse, image, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_create_edit(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_create_edit(self, async_client: AsyncExcai) -> None:
         async with async_client.images.with_streaming_response.create_edit(
             image=b"raw file contents",
             prompt="A cute baby sea otter wearing a beret",
@@ -243,76 +296,21 @@ class TestAsyncImages:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             image = await response.parse()
-            assert_matches_type(ImageCreateEditResponse, image, path=["response"])
+            assert_matches_type(ImagesResponse, image, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_generation(self, async_client: AsyncExCai) -> None:
-        image = await async_client.images.create_generation(
-            prompt="A cute baby sea otter",
-        )
-        assert_matches_type(ImageCreateGenerationResponse, image, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_create_generation_with_all_params(self, async_client: AsyncExCai) -> None:
-        image = await async_client.images.create_generation(
-            prompt="A cute baby sea otter",
-            background="transparent",
-            model="string",
-            moderation="low",
-            n=1,
-            output_compression=100,
-            output_format="png",
-            partial_images=1,
-            quality="medium",
-            response_format="url",
-            size="1024x1024",
-            stream=False,
-            style="vivid",
-            user="user-1234",
-        )
-        assert_matches_type(ImageCreateGenerationResponse, image, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_create_generation(self, async_client: AsyncExCai) -> None:
-        response = await async_client.images.with_raw_response.create_generation(
-            prompt="A cute baby sea otter",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        image = await response.parse()
-        assert_matches_type(ImageCreateGenerationResponse, image, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_create_generation(self, async_client: AsyncExCai) -> None:
-        async with async_client.images.with_streaming_response.create_generation(
-            prompt="A cute baby sea otter",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            image = await response.parse()
-            assert_matches_type(ImageCreateGenerationResponse, image, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_create_variation(self, async_client: AsyncExCai) -> None:
+    async def test_method_create_variation(self, async_client: AsyncExcai) -> None:
         image = await async_client.images.create_variation(
             image=b"raw file contents",
         )
-        assert_matches_type(ImageCreateVariationResponse, image, path=["response"])
+        assert_matches_type(ImagesResponse, image, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_variation_with_all_params(self, async_client: AsyncExCai) -> None:
+    async def test_method_create_variation_with_all_params(self, async_client: AsyncExcai) -> None:
         image = await async_client.images.create_variation(
             image=b"raw file contents",
             model="string",
@@ -321,11 +319,11 @@ class TestAsyncImages:
             size="1024x1024",
             user="user-1234",
         )
-        assert_matches_type(ImageCreateVariationResponse, image, path=["response"])
+        assert_matches_type(ImagesResponse, image, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_create_variation(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_create_variation(self, async_client: AsyncExcai) -> None:
         response = await async_client.images.with_raw_response.create_variation(
             image=b"raw file contents",
         )
@@ -333,11 +331,11 @@ class TestAsyncImages:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         image = await response.parse()
-        assert_matches_type(ImageCreateVariationResponse, image, path=["response"])
+        assert_matches_type(ImagesResponse, image, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_create_variation(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_create_variation(self, async_client: AsyncExcai) -> None:
         async with async_client.images.with_streaming_response.create_variation(
             image=b"raw file contents",
         ) as response:
@@ -345,6 +343,6 @@ class TestAsyncImages:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             image = await response.parse()
-            assert_matches_type(ImageCreateVariationResponse, image, path=["response"])
+            assert_matches_type(ImagesResponse, image, path=["response"])
 
         assert cast(Any, response.is_closed) is True

@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Optional
+from typing import Optional
 from typing_extensions import Required, TypedDict
+
+from .vector_store_file_attributes_param import VectorStoreFileAttributesParam
 
 __all__ = ["FileUpdateParams"]
 
@@ -11,7 +13,7 @@ __all__ = ["FileUpdateParams"]
 class FileUpdateParams(TypedDict, total=False):
     vector_store_id: Required[str]
 
-    attributes: Required[Optional[Dict[str, Union[str, float, bool]]]]
+    attributes: Required[Optional[VectorStoreFileAttributesParam]]
     """Set of 16 key-value pairs that can be attached to an object.
 
     This can be useful for storing additional information about the object in a

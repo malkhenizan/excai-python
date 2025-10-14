@@ -7,9 +7,9 @@ from typing import Any, cast
 
 import pytest
 
-from excai import ExCai, AsyncExCai
+from excai import Excai, AsyncExcai
 from tests.utils import assert_matches_type
-from excai.types.evals.runs import OutputItemListResponse, OutputItemRetrieveResponse
+from excai.types.evals.runs import EvalRunOutputItem, OutputItemListResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -19,17 +19,17 @@ class TestOutputItems:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve(self, client: ExCai) -> None:
+    def test_method_retrieve(self, client: Excai) -> None:
         output_item = client.evals.runs.output_items.retrieve(
             output_item_id="output_item_id",
             eval_id="eval_id",
             run_id="run_id",
         )
-        assert_matches_type(OutputItemRetrieveResponse, output_item, path=["response"])
+        assert_matches_type(EvalRunOutputItem, output_item, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_retrieve(self, client: ExCai) -> None:
+    def test_raw_response_retrieve(self, client: Excai) -> None:
         response = client.evals.runs.output_items.with_raw_response.retrieve(
             output_item_id="output_item_id",
             eval_id="eval_id",
@@ -39,11 +39,11 @@ class TestOutputItems:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         output_item = response.parse()
-        assert_matches_type(OutputItemRetrieveResponse, output_item, path=["response"])
+        assert_matches_type(EvalRunOutputItem, output_item, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve(self, client: ExCai) -> None:
+    def test_streaming_response_retrieve(self, client: Excai) -> None:
         with client.evals.runs.output_items.with_streaming_response.retrieve(
             output_item_id="output_item_id",
             eval_id="eval_id",
@@ -53,13 +53,13 @@ class TestOutputItems:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             output_item = response.parse()
-            assert_matches_type(OutputItemRetrieveResponse, output_item, path=["response"])
+            assert_matches_type(EvalRunOutputItem, output_item, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_retrieve(self, client: ExCai) -> None:
+    def test_path_params_retrieve(self, client: Excai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `eval_id` but received ''"):
             client.evals.runs.output_items.with_raw_response.retrieve(
                 output_item_id="output_item_id",
@@ -83,7 +83,7 @@ class TestOutputItems:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_list(self, client: ExCai) -> None:
+    def test_method_list(self, client: Excai) -> None:
         output_item = client.evals.runs.output_items.list(
             run_id="run_id",
             eval_id="eval_id",
@@ -92,7 +92,7 @@ class TestOutputItems:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_list_with_all_params(self, client: ExCai) -> None:
+    def test_method_list_with_all_params(self, client: Excai) -> None:
         output_item = client.evals.runs.output_items.list(
             run_id="run_id",
             eval_id="eval_id",
@@ -105,7 +105,7 @@ class TestOutputItems:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_list(self, client: ExCai) -> None:
+    def test_raw_response_list(self, client: Excai) -> None:
         response = client.evals.runs.output_items.with_raw_response.list(
             run_id="run_id",
             eval_id="eval_id",
@@ -118,7 +118,7 @@ class TestOutputItems:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_list(self, client: ExCai) -> None:
+    def test_streaming_response_list(self, client: Excai) -> None:
         with client.evals.runs.output_items.with_streaming_response.list(
             run_id="run_id",
             eval_id="eval_id",
@@ -133,7 +133,7 @@ class TestOutputItems:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_list(self, client: ExCai) -> None:
+    def test_path_params_list(self, client: Excai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `eval_id` but received ''"):
             client.evals.runs.output_items.with_raw_response.list(
                 run_id="run_id",
@@ -154,17 +154,17 @@ class TestAsyncOutputItems:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncExCai) -> None:
+    async def test_method_retrieve(self, async_client: AsyncExcai) -> None:
         output_item = await async_client.evals.runs.output_items.retrieve(
             output_item_id="output_item_id",
             eval_id="eval_id",
             run_id="run_id",
         )
-        assert_matches_type(OutputItemRetrieveResponse, output_item, path=["response"])
+        assert_matches_type(EvalRunOutputItem, output_item, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_retrieve(self, async_client: AsyncExcai) -> None:
         response = await async_client.evals.runs.output_items.with_raw_response.retrieve(
             output_item_id="output_item_id",
             eval_id="eval_id",
@@ -174,11 +174,11 @@ class TestAsyncOutputItems:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         output_item = await response.parse()
-        assert_matches_type(OutputItemRetrieveResponse, output_item, path=["response"])
+        assert_matches_type(EvalRunOutputItem, output_item, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_retrieve(self, async_client: AsyncExcai) -> None:
         async with async_client.evals.runs.output_items.with_streaming_response.retrieve(
             output_item_id="output_item_id",
             eval_id="eval_id",
@@ -188,13 +188,13 @@ class TestAsyncOutputItems:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             output_item = await response.parse()
-            assert_matches_type(OutputItemRetrieveResponse, output_item, path=["response"])
+            assert_matches_type(EvalRunOutputItem, output_item, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncExCai) -> None:
+    async def test_path_params_retrieve(self, async_client: AsyncExcai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `eval_id` but received ''"):
             await async_client.evals.runs.output_items.with_raw_response.retrieve(
                 output_item_id="output_item_id",
@@ -218,7 +218,7 @@ class TestAsyncOutputItems:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_list(self, async_client: AsyncExCai) -> None:
+    async def test_method_list(self, async_client: AsyncExcai) -> None:
         output_item = await async_client.evals.runs.output_items.list(
             run_id="run_id",
             eval_id="eval_id",
@@ -227,7 +227,7 @@ class TestAsyncOutputItems:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_list_with_all_params(self, async_client: AsyncExCai) -> None:
+    async def test_method_list_with_all_params(self, async_client: AsyncExcai) -> None:
         output_item = await async_client.evals.runs.output_items.list(
             run_id="run_id",
             eval_id="eval_id",
@@ -240,7 +240,7 @@ class TestAsyncOutputItems:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_list(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_list(self, async_client: AsyncExcai) -> None:
         response = await async_client.evals.runs.output_items.with_raw_response.list(
             run_id="run_id",
             eval_id="eval_id",
@@ -253,7 +253,7 @@ class TestAsyncOutputItems:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_list(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_list(self, async_client: AsyncExcai) -> None:
         async with async_client.evals.runs.output_items.with_streaming_response.list(
             run_id="run_id",
             eval_id="eval_id",
@@ -268,7 +268,7 @@ class TestAsyncOutputItems:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_list(self, async_client: AsyncExCai) -> None:
+    async def test_path_params_list(self, async_client: AsyncExcai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `eval_id` but received ''"):
             await async_client.evals.runs.output_items.with_raw_response.list(
                 run_id="run_id",

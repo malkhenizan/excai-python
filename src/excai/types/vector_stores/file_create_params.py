@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Optional
-from typing_extensions import Required, TypeAlias, TypedDict
+from typing import Optional
+from typing_extensions import Required, TypedDict
 
-from ..auto_chunking_strategy_request_param import AutoChunkingStrategyRequestParam
-from ..static_chunking_strategy_request_param import StaticChunkingStrategyRequestParam
+from ..chunking_strategy_request_param import ChunkingStrategyRequestParam
+from .vector_store_file_attributes_param import VectorStoreFileAttributesParam
 
-__all__ = ["FileCreateParams", "ChunkingStrategy"]
+__all__ = ["FileCreateParams"]
 
 
 class FileCreateParams(TypedDict, total=False):
@@ -18,7 +18,7 @@ class FileCreateParams(TypedDict, total=False):
     store should use. Useful for tools like `file_search` that can access files.
     """
 
-    attributes: Optional[Dict[str, Union[str, float, bool]]]
+    attributes: Optional[VectorStoreFileAttributesParam]
     """Set of 16 key-value pairs that can be attached to an object.
 
     This can be useful for storing additional information about the object in a
@@ -27,12 +27,9 @@ class FileCreateParams(TypedDict, total=False):
     maximum length of 512 characters, booleans, or numbers.
     """
 
-    chunking_strategy: ChunkingStrategy
+    chunking_strategy: ChunkingStrategyRequestParam
     """The chunking strategy used to chunk the file(s).
 
     If not set, will use the `auto` strategy. Only applicable if `file_ids` is
     non-empty.
     """
-
-
-ChunkingStrategy: TypeAlias = Union[AutoChunkingStrategyRequestParam, StaticChunkingStrategyRequestParam]

@@ -19,7 +19,9 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.stop_configuration_param import StopConfigurationParam
 from ..types.completion_create_response import CompletionCreateResponse
+from ..types.chat_completion_stream_options_param import ChatCompletionStreamOptionsParam
 
 __all__ = ["CompletionsResource", "AsyncCompletionsResource"]
 
@@ -31,7 +33,7 @@ class CompletionsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return CompletionsResourceWithRawResponse(self)
 
@@ -40,7 +42,7 @@ class CompletionsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return CompletionsResourceWithStreamingResponse(self)
 
@@ -58,9 +60,9 @@ class CompletionsResource(SyncAPIResource):
         n: Optional[int] | Omit = omit,
         presence_penalty: Optional[float] | Omit = omit,
         seed: Optional[int] | Omit = omit,
-        stop: Union[Optional[str], SequenceNotStr[str], None] | Omit = omit,
+        stop: Optional[StopConfigurationParam] | Omit = omit,
         stream: Optional[bool] | Omit = omit,
-        stream_options: Optional[completion_create_params.StreamOptions] | Omit = omit,
+        stream_options: Optional[ChatCompletionStreamOptionsParam] | Omit = omit,
         suffix: Optional[str] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
@@ -234,7 +236,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncCompletionsResourceWithRawResponse(self)
 
@@ -243,7 +245,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncCompletionsResourceWithStreamingResponse(self)
 
@@ -261,9 +263,9 @@ class AsyncCompletionsResource(AsyncAPIResource):
         n: Optional[int] | Omit = omit,
         presence_penalty: Optional[float] | Omit = omit,
         seed: Optional[int] | Omit = omit,
-        stop: Union[Optional[str], SequenceNotStr[str], None] | Omit = omit,
+        stop: Optional[StopConfigurationParam] | Omit = omit,
         stream: Optional[bool] | Omit = omit,
-        stream_options: Optional[completion_create_params.StreamOptions] | Omit = omit,
+        stream_options: Optional[ChatCompletionStreamOptionsParam] | Omit = omit,
         suffix: Optional[str] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         top_p: Optional[float] | Omit = omit,

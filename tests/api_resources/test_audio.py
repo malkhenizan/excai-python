@@ -9,10 +9,10 @@ import httpx
 import pytest
 from respx import MockRouter
 
-from excai import ExCai, AsyncExCai
+from excai import Excai, AsyncExcai
 from excai.types import (
-    AudioTranslateAudioResponse,
-    AudioTranscribeAudioResponse,
+    AudioCreateTranslationResponse,
+    AudioCreateTranscriptionResponse,
 )
 from tests.utils import assert_matches_type
 from excai._response import (
@@ -30,9 +30,9 @@ class TestAudio:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    def test_method_generate_audio(self, client: ExCai, respx_mock: MockRouter) -> None:
+    def test_method_create_speech(self, client: Excai, respx_mock: MockRouter) -> None:
         respx_mock.post("/audio/speech").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        audio = client.audio.generate_audio(
+        audio = client.audio.create_speech(
             input="input",
             model="string",
             voice="ash",
@@ -44,9 +44,9 @@ class TestAudio:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    def test_method_generate_audio_with_all_params(self, client: ExCai, respx_mock: MockRouter) -> None:
+    def test_method_create_speech_with_all_params(self, client: Excai, respx_mock: MockRouter) -> None:
         respx_mock.post("/audio/speech").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        audio = client.audio.generate_audio(
+        audio = client.audio.create_speech(
             input="input",
             model="string",
             voice="ash",
@@ -62,10 +62,10 @@ class TestAudio:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    def test_raw_response_generate_audio(self, client: ExCai, respx_mock: MockRouter) -> None:
+    def test_raw_response_create_speech(self, client: Excai, respx_mock: MockRouter) -> None:
         respx_mock.post("/audio/speech").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
-        audio = client.audio.with_raw_response.generate_audio(
+        audio = client.audio.with_raw_response.create_speech(
             input="input",
             model="string",
             voice="ash",
@@ -78,9 +78,9 @@ class TestAudio:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    def test_streaming_response_generate_audio(self, client: ExCai, respx_mock: MockRouter) -> None:
+    def test_streaming_response_create_speech(self, client: Excai, respx_mock: MockRouter) -> None:
         respx_mock.post("/audio/speech").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        with client.audio.with_streaming_response.generate_audio(
+        with client.audio.with_streaming_response.create_speech(
             input="input",
             model="string",
             voice="ash",
@@ -96,17 +96,17 @@ class TestAudio:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_transcribe_audio(self, client: ExCai) -> None:
-        audio = client.audio.transcribe_audio(
+    def test_method_create_transcription(self, client: Excai) -> None:
+        audio = client.audio.create_transcription(
             file=b"raw file contents",
             model="gpt-4o-transcribe",
         )
-        assert_matches_type(AudioTranscribeAudioResponse, audio, path=["response"])
+        assert_matches_type(AudioCreateTranscriptionResponse, audio, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_transcribe_audio_with_all_params(self, client: ExCai) -> None:
-        audio = client.audio.transcribe_audio(
+    def test_method_create_transcription_with_all_params(self, client: Excai) -> None:
+        audio = client.audio.create_transcription(
             file=b"raw file contents",
             model="gpt-4o-transcribe",
             chunking_strategy="auto",
@@ -118,12 +118,12 @@ class TestAudio:
             temperature=0,
             timestamp_granularities=["word"],
         )
-        assert_matches_type(AudioTranscribeAudioResponse, audio, path=["response"])
+        assert_matches_type(AudioCreateTranscriptionResponse, audio, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_transcribe_audio(self, client: ExCai) -> None:
-        response = client.audio.with_raw_response.transcribe_audio(
+    def test_raw_response_create_transcription(self, client: Excai) -> None:
+        response = client.audio.with_raw_response.create_transcription(
             file=b"raw file contents",
             model="gpt-4o-transcribe",
         )
@@ -131,12 +131,12 @@ class TestAudio:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         audio = response.parse()
-        assert_matches_type(AudioTranscribeAudioResponse, audio, path=["response"])
+        assert_matches_type(AudioCreateTranscriptionResponse, audio, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_transcribe_audio(self, client: ExCai) -> None:
-        with client.audio.with_streaming_response.transcribe_audio(
+    def test_streaming_response_create_transcription(self, client: Excai) -> None:
+        with client.audio.with_streaming_response.create_transcription(
             file=b"raw file contents",
             model="gpt-4o-transcribe",
         ) as response:
@@ -144,35 +144,35 @@ class TestAudio:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             audio = response.parse()
-            assert_matches_type(AudioTranscribeAudioResponse, audio, path=["response"])
+            assert_matches_type(AudioCreateTranscriptionResponse, audio, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_translate_audio(self, client: ExCai) -> None:
-        audio = client.audio.translate_audio(
+    def test_method_create_translation(self, client: Excai) -> None:
+        audio = client.audio.create_translation(
             file=b"raw file contents",
             model="whisper-1",
         )
-        assert_matches_type(AudioTranslateAudioResponse, audio, path=["response"])
+        assert_matches_type(AudioCreateTranslationResponse, audio, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_translate_audio_with_all_params(self, client: ExCai) -> None:
-        audio = client.audio.translate_audio(
+    def test_method_create_translation_with_all_params(self, client: Excai) -> None:
+        audio = client.audio.create_translation(
             file=b"raw file contents",
             model="whisper-1",
             prompt="prompt",
             response_format="json",
             temperature=0,
         )
-        assert_matches_type(AudioTranslateAudioResponse, audio, path=["response"])
+        assert_matches_type(AudioCreateTranslationResponse, audio, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_translate_audio(self, client: ExCai) -> None:
-        response = client.audio.with_raw_response.translate_audio(
+    def test_raw_response_create_translation(self, client: Excai) -> None:
+        response = client.audio.with_raw_response.create_translation(
             file=b"raw file contents",
             model="whisper-1",
         )
@@ -180,12 +180,12 @@ class TestAudio:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         audio = response.parse()
-        assert_matches_type(AudioTranslateAudioResponse, audio, path=["response"])
+        assert_matches_type(AudioCreateTranslationResponse, audio, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_translate_audio(self, client: ExCai) -> None:
-        with client.audio.with_streaming_response.translate_audio(
+    def test_streaming_response_create_translation(self, client: Excai) -> None:
+        with client.audio.with_streaming_response.create_translation(
             file=b"raw file contents",
             model="whisper-1",
         ) as response:
@@ -193,7 +193,7 @@ class TestAudio:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             audio = response.parse()
-            assert_matches_type(AudioTranslateAudioResponse, audio, path=["response"])
+            assert_matches_type(AudioCreateTranslationResponse, audio, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -205,9 +205,9 @@ class TestAsyncAudio:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    async def test_method_generate_audio(self, async_client: AsyncExCai, respx_mock: MockRouter) -> None:
+    async def test_method_create_speech(self, async_client: AsyncExcai, respx_mock: MockRouter) -> None:
         respx_mock.post("/audio/speech").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        audio = await async_client.audio.generate_audio(
+        audio = await async_client.audio.create_speech(
             input="input",
             model="string",
             voice="ash",
@@ -219,11 +219,9 @@ class TestAsyncAudio:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    async def test_method_generate_audio_with_all_params(
-        self, async_client: AsyncExCai, respx_mock: MockRouter
-    ) -> None:
+    async def test_method_create_speech_with_all_params(self, async_client: AsyncExcai, respx_mock: MockRouter) -> None:
         respx_mock.post("/audio/speech").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        audio = await async_client.audio.generate_audio(
+        audio = await async_client.audio.create_speech(
             input="input",
             model="string",
             voice="ash",
@@ -239,10 +237,10 @@ class TestAsyncAudio:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    async def test_raw_response_generate_audio(self, async_client: AsyncExCai, respx_mock: MockRouter) -> None:
+    async def test_raw_response_create_speech(self, async_client: AsyncExcai, respx_mock: MockRouter) -> None:
         respx_mock.post("/audio/speech").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
-        audio = await async_client.audio.with_raw_response.generate_audio(
+        audio = await async_client.audio.with_raw_response.create_speech(
             input="input",
             model="string",
             voice="ash",
@@ -255,9 +253,9 @@ class TestAsyncAudio:
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
-    async def test_streaming_response_generate_audio(self, async_client: AsyncExCai, respx_mock: MockRouter) -> None:
+    async def test_streaming_response_create_speech(self, async_client: AsyncExcai, respx_mock: MockRouter) -> None:
         respx_mock.post("/audio/speech").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        async with async_client.audio.with_streaming_response.generate_audio(
+        async with async_client.audio.with_streaming_response.create_speech(
             input="input",
             model="string",
             voice="ash",
@@ -273,17 +271,17 @@ class TestAsyncAudio:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_transcribe_audio(self, async_client: AsyncExCai) -> None:
-        audio = await async_client.audio.transcribe_audio(
+    async def test_method_create_transcription(self, async_client: AsyncExcai) -> None:
+        audio = await async_client.audio.create_transcription(
             file=b"raw file contents",
             model="gpt-4o-transcribe",
         )
-        assert_matches_type(AudioTranscribeAudioResponse, audio, path=["response"])
+        assert_matches_type(AudioCreateTranscriptionResponse, audio, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_transcribe_audio_with_all_params(self, async_client: AsyncExCai) -> None:
-        audio = await async_client.audio.transcribe_audio(
+    async def test_method_create_transcription_with_all_params(self, async_client: AsyncExcai) -> None:
+        audio = await async_client.audio.create_transcription(
             file=b"raw file contents",
             model="gpt-4o-transcribe",
             chunking_strategy="auto",
@@ -295,12 +293,12 @@ class TestAsyncAudio:
             temperature=0,
             timestamp_granularities=["word"],
         )
-        assert_matches_type(AudioTranscribeAudioResponse, audio, path=["response"])
+        assert_matches_type(AudioCreateTranscriptionResponse, audio, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_transcribe_audio(self, async_client: AsyncExCai) -> None:
-        response = await async_client.audio.with_raw_response.transcribe_audio(
+    async def test_raw_response_create_transcription(self, async_client: AsyncExcai) -> None:
+        response = await async_client.audio.with_raw_response.create_transcription(
             file=b"raw file contents",
             model="gpt-4o-transcribe",
         )
@@ -308,12 +306,12 @@ class TestAsyncAudio:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         audio = await response.parse()
-        assert_matches_type(AudioTranscribeAudioResponse, audio, path=["response"])
+        assert_matches_type(AudioCreateTranscriptionResponse, audio, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_transcribe_audio(self, async_client: AsyncExCai) -> None:
-        async with async_client.audio.with_streaming_response.transcribe_audio(
+    async def test_streaming_response_create_transcription(self, async_client: AsyncExcai) -> None:
+        async with async_client.audio.with_streaming_response.create_transcription(
             file=b"raw file contents",
             model="gpt-4o-transcribe",
         ) as response:
@@ -321,35 +319,35 @@ class TestAsyncAudio:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             audio = await response.parse()
-            assert_matches_type(AudioTranscribeAudioResponse, audio, path=["response"])
+            assert_matches_type(AudioCreateTranscriptionResponse, audio, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_translate_audio(self, async_client: AsyncExCai) -> None:
-        audio = await async_client.audio.translate_audio(
+    async def test_method_create_translation(self, async_client: AsyncExcai) -> None:
+        audio = await async_client.audio.create_translation(
             file=b"raw file contents",
             model="whisper-1",
         )
-        assert_matches_type(AudioTranslateAudioResponse, audio, path=["response"])
+        assert_matches_type(AudioCreateTranslationResponse, audio, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_translate_audio_with_all_params(self, async_client: AsyncExCai) -> None:
-        audio = await async_client.audio.translate_audio(
+    async def test_method_create_translation_with_all_params(self, async_client: AsyncExcai) -> None:
+        audio = await async_client.audio.create_translation(
             file=b"raw file contents",
             model="whisper-1",
             prompt="prompt",
             response_format="json",
             temperature=0,
         )
-        assert_matches_type(AudioTranslateAudioResponse, audio, path=["response"])
+        assert_matches_type(AudioCreateTranslationResponse, audio, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_translate_audio(self, async_client: AsyncExCai) -> None:
-        response = await async_client.audio.with_raw_response.translate_audio(
+    async def test_raw_response_create_translation(self, async_client: AsyncExcai) -> None:
+        response = await async_client.audio.with_raw_response.create_translation(
             file=b"raw file contents",
             model="whisper-1",
         )
@@ -357,12 +355,12 @@ class TestAsyncAudio:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         audio = await response.parse()
-        assert_matches_type(AudioTranslateAudioResponse, audio, path=["response"])
+        assert_matches_type(AudioCreateTranslationResponse, audio, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_translate_audio(self, async_client: AsyncExCai) -> None:
-        async with async_client.audio.with_streaming_response.translate_audio(
+    async def test_streaming_response_create_translation(self, async_client: AsyncExcai) -> None:
+        async with async_client.audio.with_streaming_response.create_translation(
             file=b"raw file contents",
             model="whisper-1",
         ) as response:
@@ -370,6 +368,6 @@ class TestAsyncAudio:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             audio = await response.parse()
-            assert_matches_type(AudioTranslateAudioResponse, audio, path=["response"])
+            assert_matches_type(AudioCreateTranslationResponse, audio, path=["response"])
 
         assert cast(Any, response.is_closed) is True

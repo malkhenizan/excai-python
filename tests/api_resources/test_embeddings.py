@@ -7,7 +7,7 @@ from typing import Any, cast
 
 import pytest
 
-from excai import ExCai, AsyncExCai
+from excai import Excai, AsyncExcai
 from excai.types import EmbeddingCreateResponse
 from tests.utils import assert_matches_type
 
@@ -19,7 +19,7 @@ class TestEmbeddings:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create(self, client: ExCai) -> None:
+    def test_method_create(self, client: Excai) -> None:
         embedding = client.embeddings.create(
             input="The quick brown fox jumped over the lazy dog",
             model="text-embedding-3-small",
@@ -28,7 +28,7 @@ class TestEmbeddings:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_with_all_params(self, client: ExCai) -> None:
+    def test_method_create_with_all_params(self, client: Excai) -> None:
         embedding = client.embeddings.create(
             input="The quick brown fox jumped over the lazy dog",
             model="text-embedding-3-small",
@@ -40,7 +40,7 @@ class TestEmbeddings:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_create(self, client: ExCai) -> None:
+    def test_raw_response_create(self, client: Excai) -> None:
         response = client.embeddings.with_raw_response.create(
             input="The quick brown fox jumped over the lazy dog",
             model="text-embedding-3-small",
@@ -53,7 +53,7 @@ class TestEmbeddings:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_create(self, client: ExCai) -> None:
+    def test_streaming_response_create(self, client: Excai) -> None:
         with client.embeddings.with_streaming_response.create(
             input="The quick brown fox jumped over the lazy dog",
             model="text-embedding-3-small",
@@ -74,7 +74,7 @@ class TestAsyncEmbeddings:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create(self, async_client: AsyncExCai) -> None:
+    async def test_method_create(self, async_client: AsyncExcai) -> None:
         embedding = await async_client.embeddings.create(
             input="The quick brown fox jumped over the lazy dog",
             model="text-embedding-3-small",
@@ -83,7 +83,7 @@ class TestAsyncEmbeddings:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_with_all_params(self, async_client: AsyncExCai) -> None:
+    async def test_method_create_with_all_params(self, async_client: AsyncExcai) -> None:
         embedding = await async_client.embeddings.create(
             input="The quick brown fox jumped over the lazy dog",
             model="text-embedding-3-small",
@@ -95,7 +95,7 @@ class TestAsyncEmbeddings:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_create(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_create(self, async_client: AsyncExcai) -> None:
         response = await async_client.embeddings.with_raw_response.create(
             input="The quick brown fox jumped over the lazy dog",
             model="text-embedding-3-small",
@@ -108,7 +108,7 @@ class TestAsyncEmbeddings:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_create(self, async_client: AsyncExcai) -> None:
         async with async_client.embeddings.with_streaming_response.create(
             input="The quick brown fox jumped over the lazy dog",
             model="text-embedding-3-small",

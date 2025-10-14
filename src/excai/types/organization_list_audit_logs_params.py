@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 from typing import List
-from typing_extensions import Literal, TypedDict
+from typing_extensions import TypedDict
 
 from .._types import SequenceNotStr
+from .audit_log_event_type import AuditLogEventType
 
 __all__ = ["OrganizationListAuditLogsParams", "EffectiveAt"]
 
@@ -41,58 +42,7 @@ class OrganizationListAuditLogsParams(TypedDict, total=False):
     effective_at: EffectiveAt
     """Return only events whose `effective_at` (Unix seconds) is in this range."""
 
-    event_types: List[
-        Literal[
-            "api_key.created",
-            "api_key.updated",
-            "api_key.deleted",
-            "certificate.created",
-            "certificate.updated",
-            "certificate.deleted",
-            "certificates.activated",
-            "certificates.deactivated",
-            "checkpoint.permission.created",
-            "checkpoint.permission.deleted",
-            "external_key.registered",
-            "external_key.removed",
-            "group.created",
-            "group.updated",
-            "group.deleted",
-            "invite.sent",
-            "invite.accepted",
-            "invite.deleted",
-            "ip_allowlist.created",
-            "ip_allowlist.updated",
-            "ip_allowlist.deleted",
-            "ip_allowlist.config.activated",
-            "ip_allowlist.config.deactivated",
-            "login.succeeded",
-            "login.failed",
-            "logout.succeeded",
-            "logout.failed",
-            "organization.updated",
-            "project.created",
-            "project.updated",
-            "project.archived",
-            "project.deleted",
-            "rate_limit.updated",
-            "rate_limit.deleted",
-            "resource.deleted",
-            "role.created",
-            "role.updated",
-            "role.deleted",
-            "role.assignment.created",
-            "role.assignment.deleted",
-            "scim.enabled",
-            "scim.disabled",
-            "service_account.created",
-            "service_account.updated",
-            "service_account.deleted",
-            "user.added",
-            "user.updated",
-            "user.deleted",
-        ]
-    ]
+    event_types: List[AuditLogEventType]
     """Return only events with a `type` in one of these values.
 
     For example, `project.created`. For all options, see the documentation for the

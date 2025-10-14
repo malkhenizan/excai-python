@@ -3,13 +3,13 @@
 from typing import List
 
 from .._models import BaseModel
-from .shared.ex_cai_file import ExCaiFile
+from .excai_file import ExcaiFile
 
 __all__ = ["FileListResponse"]
 
 
 class FileListResponse(BaseModel):
-    data: List[ExCaiFile]
+    data: List[ExcaiFile]
 
     first_id: str
 

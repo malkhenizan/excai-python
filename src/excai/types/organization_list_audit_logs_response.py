@@ -6,6 +6,8 @@ from typing_extensions import Literal
 from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
+from .audit_log_actor_user import AuditLogActorUser
+from .audit_log_event_type import AuditLogEventType
 
 __all__ = [
     "OrganizationListAuditLogsResponse",
@@ -13,9 +15,7 @@ __all__ = [
     "DataActor",
     "DataActorAPIKey",
     "DataActorAPIKeyServiceAccount",
-    "DataActorAPIKeyUser",
     "DataActorSession",
-    "DataActorSessionUser",
     "DataAPIKeyCreated",
     "DataAPIKeyCreatedData",
     "DataAPIKeyDeleted",
@@ -89,14 +89,6 @@ class DataActorAPIKeyServiceAccount(BaseModel):
     """The service account id."""
 
 
-class DataActorAPIKeyUser(BaseModel):
-    id: Optional[str] = None
-    """The user id."""
-
-    email: Optional[str] = None
-    """The user email."""
-
-
 class DataActorAPIKey(BaseModel):
     id: Optional[str] = None
     """The tracking id of the API key."""
@@ -107,23 +99,15 @@ class DataActorAPIKey(BaseModel):
     type: Optional[Literal["user", "service_account"]] = None
     """The type of API key. Can be either `user` or `service_account`."""
 
-    user: Optional[DataActorAPIKeyUser] = None
+    user: Optional[AuditLogActorUser] = None
     """The user who performed the audit logged action."""
-
-
-class DataActorSessionUser(BaseModel):
-    id: Optional[str] = None
-    """The user id."""
-
-    email: Optional[str] = None
-    """The user email."""
 
 
 class DataActorSession(BaseModel):
     ip_address: Optional[str] = None
     """The IP address from which the action was performed."""
 
-    user: Optional[DataActorSessionUser] = None
+    user: Optional[AuditLogActorUser] = None
     """The user who performed the audit logged action."""
 
 
@@ -676,56 +660,7 @@ class Data(BaseModel):
     effective_at: int
     """The Unix timestamp (in seconds) of the event."""
 
-    type: Literal[
-        "api_key.created",
-        "api_key.updated",
-        "api_key.deleted",
-        "certificate.created",
-        "certificate.updated",
-        "certificate.deleted",
-        "certificates.activated",
-        "certificates.deactivated",
-        "checkpoint.permission.created",
-        "checkpoint.permission.deleted",
-        "external_key.registered",
-        "external_key.removed",
-        "group.created",
-        "group.updated",
-        "group.deleted",
-        "invite.sent",
-        "invite.accepted",
-        "invite.deleted",
-        "ip_allowlist.created",
-        "ip_allowlist.updated",
-        "ip_allowlist.deleted",
-        "ip_allowlist.config.activated",
-        "ip_allowlist.config.deactivated",
-        "login.succeeded",
-        "login.failed",
-        "logout.succeeded",
-        "logout.failed",
-        "organization.updated",
-        "project.created",
-        "project.updated",
-        "project.archived",
-        "project.deleted",
-        "rate_limit.updated",
-        "rate_limit.deleted",
-        "resource.deleted",
-        "role.created",
-        "role.updated",
-        "role.deleted",
-        "role.assignment.created",
-        "role.assignment.deleted",
-        "scim.enabled",
-        "scim.disabled",
-        "service_account.created",
-        "service_account.updated",
-        "service_account.deleted",
-        "user.added",
-        "user.updated",
-        "user.deleted",
-    ]
+    type: AuditLogEventType
     """The event type."""
 
     api_key_created: Optional[DataAPIKeyCreated] = FieldInfo(alias="api_key.created", default=None)

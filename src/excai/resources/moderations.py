@@ -7,7 +7,7 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..types import moderation_classify_params
+from ..types import moderation_create_params
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -19,7 +19,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.moderation_classify_response import ModerationClassifyResponse
+from ..types.moderation_create_response import ModerationCreateResponse
 
 __all__ = ["ModerationsResource", "AsyncModerationsResource"]
 
@@ -31,7 +31,7 @@ class ModerationsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return ModerationsResourceWithRawResponse(self)
 
@@ -40,14 +40,14 @@ class ModerationsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return ModerationsResourceWithStreamingResponse(self)
 
-    def classify(
+    def create(
         self,
         *,
-        input: Union[str, SequenceNotStr[str], Iterable[moderation_classify_params.InputModerationMultiModalArray]],
+        input: Union[str, SequenceNotStr[str], Iterable[moderation_create_params.InputModerationMultiModalArray]],
         model: Union[
             str,
             Literal[
@@ -64,7 +64,7 @@ class ModerationsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ModerationClassifyResponse:
+    ) -> ModerationCreateResponse:
         """Classifies if text and/or image inputs are potentially harmful.
 
         Learn more in
@@ -93,12 +93,12 @@ class ModerationsResource(SyncAPIResource):
                     "input": input,
                     "model": model,
                 },
-                moderation_classify_params.ModerationClassifyParams,
+                moderation_create_params.ModerationCreateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ModerationClassifyResponse,
+            cast_to=ModerationCreateResponse,
         )
 
 
@@ -109,7 +109,7 @@ class AsyncModerationsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncModerationsResourceWithRawResponse(self)
 
@@ -118,14 +118,14 @@ class AsyncModerationsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncModerationsResourceWithStreamingResponse(self)
 
-    async def classify(
+    async def create(
         self,
         *,
-        input: Union[str, SequenceNotStr[str], Iterable[moderation_classify_params.InputModerationMultiModalArray]],
+        input: Union[str, SequenceNotStr[str], Iterable[moderation_create_params.InputModerationMultiModalArray]],
         model: Union[
             str,
             Literal[
@@ -142,7 +142,7 @@ class AsyncModerationsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ModerationClassifyResponse:
+    ) -> ModerationCreateResponse:
         """Classifies if text and/or image inputs are potentially harmful.
 
         Learn more in
@@ -171,12 +171,12 @@ class AsyncModerationsResource(AsyncAPIResource):
                     "input": input,
                     "model": model,
                 },
-                moderation_classify_params.ModerationClassifyParams,
+                moderation_create_params.ModerationCreateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ModerationClassifyResponse,
+            cast_to=ModerationCreateResponse,
         )
 
 
@@ -184,8 +184,8 @@ class ModerationsResourceWithRawResponse:
     def __init__(self, moderations: ModerationsResource) -> None:
         self._moderations = moderations
 
-        self.classify = to_raw_response_wrapper(
-            moderations.classify,
+        self.create = to_raw_response_wrapper(
+            moderations.create,
         )
 
 
@@ -193,8 +193,8 @@ class AsyncModerationsResourceWithRawResponse:
     def __init__(self, moderations: AsyncModerationsResource) -> None:
         self._moderations = moderations
 
-        self.classify = async_to_raw_response_wrapper(
-            moderations.classify,
+        self.create = async_to_raw_response_wrapper(
+            moderations.create,
         )
 
 
@@ -202,8 +202,8 @@ class ModerationsResourceWithStreamingResponse:
     def __init__(self, moderations: ModerationsResource) -> None:
         self._moderations = moderations
 
-        self.classify = to_streamed_response_wrapper(
-            moderations.classify,
+        self.create = to_streamed_response_wrapper(
+            moderations.create,
         )
 
 
@@ -211,6 +211,6 @@ class AsyncModerationsResourceWithStreamingResponse:
     def __init__(self, moderations: AsyncModerationsResource) -> None:
         self._moderations = moderations
 
-        self.classify = async_to_streamed_response_wrapper(
-            moderations.classify,
+        self.create = async_to_streamed_response_wrapper(
+            moderations.create,
         )

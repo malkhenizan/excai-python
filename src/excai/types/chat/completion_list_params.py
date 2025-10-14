@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Dict, Optional
+from typing import Optional
 from typing_extensions import Literal, TypedDict
+
+from .metadata_param import MetadataParam
 
 __all__ = ["CompletionListParams"]
 
@@ -15,7 +17,7 @@ class CompletionListParams(TypedDict, total=False):
     limit: int
     """Number of Chat Completions to retrieve."""
 
-    metadata: Optional[Dict[str, str]]
+    metadata: Optional[MetadataParam]
     """Set of 16 key-value pairs that can be attached to an object.
 
     This can be useful for storing additional information about the object in a

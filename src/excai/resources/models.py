@@ -13,10 +13,10 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from ..types.model import Model
 from .._base_client import make_request_options
 from ..types.model_list_response import ModelListResponse
 from ..types.model_delete_response import ModelDeleteResponse
-from ..types.model_retrieve_response import ModelRetrieveResponse
 
 __all__ = ["ModelsResource", "AsyncModelsResource"]
 
@@ -28,7 +28,7 @@ class ModelsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return ModelsResourceWithRawResponse(self)
 
@@ -37,7 +37,7 @@ class ModelsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return ModelsResourceWithStreamingResponse(self)
 
@@ -51,7 +51,7 @@ class ModelsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ModelRetrieveResponse:
+    ) -> Model:
         """
         Retrieves a model instance, providing basic information about the model such as
         the owner and permissioning.
@@ -72,7 +72,7 @@ class ModelsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ModelRetrieveResponse,
+            cast_to=Model,
         )
 
     def list(
@@ -140,7 +140,7 @@ class AsyncModelsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncModelsResourceWithRawResponse(self)
 
@@ -149,7 +149,7 @@ class AsyncModelsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncModelsResourceWithStreamingResponse(self)
 
@@ -163,7 +163,7 @@ class AsyncModelsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ModelRetrieveResponse:
+    ) -> Model:
         """
         Retrieves a model instance, providing basic information about the model such as
         the owner and permissioning.
@@ -184,7 +184,7 @@ class AsyncModelsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ModelRetrieveResponse,
+            cast_to=Model,
         )
 
     async def list(

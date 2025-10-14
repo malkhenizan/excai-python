@@ -1,9 +1,10 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, List, Union, Optional
+from typing import List, Optional
 from typing_extensions import Literal
 
 from .._models import BaseModel
+from .vector_stores.vector_store_file_attributes import VectorStoreFileAttributes
 
 __all__ = ["VectorStoreSearchResponse", "Data", "DataContent"]
 
@@ -17,7 +18,7 @@ class DataContent(BaseModel):
 
 
 class Data(BaseModel):
-    attributes: Optional[Dict[str, Union[str, float, bool]]] = None
+    attributes: Optional[VectorStoreFileAttributes] = None
     """Set of 16 key-value pairs that can be attached to an object.
 
     This can be useful for storing additional information about the object in a

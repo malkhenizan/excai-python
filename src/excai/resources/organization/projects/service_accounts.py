@@ -16,7 +16,7 @@ from ...._response import (
 )
 from ...._base_client import make_request_options
 from ....types.organization.projects import service_account_list_params, service_account_create_params
-from ....types.organization.project_service_account import ProjectServiceAccount
+from ....types.organization.projects.project_service_account import ProjectServiceAccount
 from ....types.organization.projects.service_account_list_response import ServiceAccountListResponse
 from ....types.organization.projects.service_account_create_response import ServiceAccountCreateResponse
 from ....types.organization.projects.service_account_delete_response import ServiceAccountDeleteResponse
@@ -31,7 +31,7 @@ class ServiceAccountsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return ServiceAccountsResourceWithRawResponse(self)
 
@@ -40,7 +40,7 @@ class ServiceAccountsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return ServiceAccountsResourceWithStreamingResponse(self)
 
@@ -216,7 +216,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncServiceAccountsResourceWithRawResponse(self)
 
@@ -225,7 +225,7 @@ class AsyncServiceAccountsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncServiceAccountsResourceWithStreamingResponse(self)
 

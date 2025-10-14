@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Optional
+from typing import Optional
 from typing_extensions import Literal
 
 import httpx
@@ -27,11 +27,10 @@ from .output_items import (
 )
 from ....types.evals import run_list_params, run_create_params
 from ...._base_client import make_request_options
+from ....types.evals.eval_run import EvalRun
+from ....types.chat.metadata_param import MetadataParam
 from ....types.evals.run_list_response import RunListResponse
-from ....types.evals.run_cancel_response import RunCancelResponse
-from ....types.evals.run_create_response import RunCreateResponse
 from ....types.evals.run_delete_response import RunDeleteResponse
-from ....types.evals.run_retrieve_response import RunRetrieveResponse
 
 __all__ = ["RunsResource", "AsyncRunsResource"]
 
@@ -47,7 +46,7 @@ class RunsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return RunsResourceWithRawResponse(self)
 
@@ -56,7 +55,7 @@ class RunsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return RunsResourceWithStreamingResponse(self)
 
@@ -65,7 +64,7 @@ class RunsResource(SyncAPIResource):
         eval_id: str,
         *,
         data_source: run_create_params.DataSource,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         name: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -73,7 +72,7 @@ class RunsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> RunCreateResponse:
+    ) -> EvalRun:
         """
         Kicks off a new run for a given evaluation, specifying the data source, and what
         model configuration to use to test. The datasource will be validated against the
@@ -114,7 +113,7 @@ class RunsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=RunCreateResponse,
+            cast_to=EvalRun,
         )
 
     def retrieve(
@@ -128,7 +127,7 @@ class RunsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> RunRetrieveResponse:
+    ) -> EvalRun:
         """
         Get an evaluation run by ID.
 
@@ -150,7 +149,7 @@ class RunsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=RunRetrieveResponse,
+            cast_to=EvalRun,
         )
 
     def list(
@@ -259,7 +258,7 @@ class RunsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> RunCancelResponse:
+    ) -> EvalRun:
         """
         Cancel an ongoing evaluation run.
 
@@ -281,7 +280,7 @@ class RunsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=RunCancelResponse,
+            cast_to=EvalRun,
         )
 
 
@@ -296,7 +295,7 @@ class AsyncRunsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncRunsResourceWithRawResponse(self)
 
@@ -305,7 +304,7 @@ class AsyncRunsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncRunsResourceWithStreamingResponse(self)
 
@@ -314,7 +313,7 @@ class AsyncRunsResource(AsyncAPIResource):
         eval_id: str,
         *,
         data_source: run_create_params.DataSource,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         name: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -322,7 +321,7 @@ class AsyncRunsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> RunCreateResponse:
+    ) -> EvalRun:
         """
         Kicks off a new run for a given evaluation, specifying the data source, and what
         model configuration to use to test. The datasource will be validated against the
@@ -363,7 +362,7 @@ class AsyncRunsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=RunCreateResponse,
+            cast_to=EvalRun,
         )
 
     async def retrieve(
@@ -377,7 +376,7 @@ class AsyncRunsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> RunRetrieveResponse:
+    ) -> EvalRun:
         """
         Get an evaluation run by ID.
 
@@ -399,7 +398,7 @@ class AsyncRunsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=RunRetrieveResponse,
+            cast_to=EvalRun,
         )
 
     async def list(
@@ -508,7 +507,7 @@ class AsyncRunsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> RunCancelResponse:
+    ) -> EvalRun:
         """
         Cancel an ongoing evaluation run.
 
@@ -530,7 +529,7 @@ class AsyncRunsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=RunCancelResponse,
+            cast_to=EvalRun,
         )
 
 
