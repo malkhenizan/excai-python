@@ -20,9 +20,8 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.file_list_response import FileListResponse
+from ..types.shared.ex_cai_file import ExCaiFile
 from ..types.file_delete_response import FileDeleteResponse
-from ..types.file_upload_response import FileUploadResponse
-from ..types.file_retrieve_response import FileRetrieveResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -57,7 +56,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileRetrieveResponse:
+    ) -> ExCaiFile:
         """
         Returns information about a specific file.
 
@@ -77,7 +76,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileRetrieveResponse,
+            cast_to=ExCaiFile,
         )
 
     def list(
@@ -152,7 +151,7 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileDeleteResponse:
         """
-        Delete a file.
+        Delete a file and remove it from all vector stores.
 
         Args:
           extra_headers: Send extra headers
@@ -211,31 +210,36 @@ class FilesResource(SyncAPIResource):
         *,
         file: FileTypes,
         purpose: Literal["assistants", "batch", "fine-tune", "vision", "user_data", "evals"],
+        expires_after: file_upload_params.ExpiresAfter | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileUploadResponse:
+    ) -> ExCaiFile:
         """Upload a file that can be used across various endpoints.
 
         Individual files can be
         up to 512 MB, and the size of all files uploaded by one organization can be up
-        to 100 GB.
+        to 1 TB.
 
         The Assistants API supports files up to 2 million tokens and of specific file
-        types. See the [Assistants Tools guide](/docs/assistants/tools) for details.
+        types. See the
+        [Assistants Tools guide](https://main.excai.ai/docs/assistants/tools) for
+        details.
 
         The Fine-tuning API only supports `.jsonl` files. The input also has certain
         required formats for fine-tuning
-        [chat](/docs/api-reference/fine-tuning/chat-input) or
-        [completions](/docs/api-reference/fine-tuning/completions-input) models.
+        [chat](https://main.excai.ai/docs/api-reference/fine-tuning/chat-input) or
+        [completions](https://main.excai.ai/docs/api-reference/fine-tuning/completions-input)
+        models.
 
         The Batch API only supports `.jsonl` files up to 200 MB in size. The input also
-        has a specific required [format](/docs/api-reference/batch/request-input).
+        has a specific required
+        [format](https://main.excai.ai/docs/api-reference/batch/request-input).
 
-        Please [contact us](https://help.openai.com/) if you need to increase these
+        Please [contact us](https://help.excai.com/) if you need to increase these
         storage limits.
 
         Args:
@@ -245,6 +249,9 @@ class FilesResource(SyncAPIResource):
               Assistants API - `batch`: Used in the Batch API - `fine-tune`: Used for
               fine-tuning - `vision`: Images used for vision fine-tuning - `user_data`:
               Flexible file type for any purpose - `evals`: Used for eval data sets
+
+          expires_after: The expiration policy for a file. By default, files with `purpose=batch` expire
+              after 30 days and all other files are persisted until they are manually deleted.
 
           extra_headers: Send extra headers
 
@@ -258,6 +265,7 @@ class FilesResource(SyncAPIResource):
             {
                 "file": file,
                 "purpose": purpose,
+                "expires_after": expires_after,
             }
         )
         files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
@@ -272,7 +280,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileUploadResponse,
+            cast_to=ExCaiFile,
         )
 
 
@@ -306,7 +314,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileRetrieveResponse:
+    ) -> ExCaiFile:
         """
         Returns information about a specific file.
 
@@ -326,7 +334,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileRetrieveResponse,
+            cast_to=ExCaiFile,
         )
 
     async def list(
@@ -401,7 +409,7 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileDeleteResponse:
         """
-        Delete a file.
+        Delete a file and remove it from all vector stores.
 
         Args:
           extra_headers: Send extra headers
@@ -460,31 +468,36 @@ class AsyncFilesResource(AsyncAPIResource):
         *,
         file: FileTypes,
         purpose: Literal["assistants", "batch", "fine-tune", "vision", "user_data", "evals"],
+        expires_after: file_upload_params.ExpiresAfter | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileUploadResponse:
+    ) -> ExCaiFile:
         """Upload a file that can be used across various endpoints.
 
         Individual files can be
         up to 512 MB, and the size of all files uploaded by one organization can be up
-        to 100 GB.
+        to 1 TB.
 
         The Assistants API supports files up to 2 million tokens and of specific file
-        types. See the [Assistants Tools guide](/docs/assistants/tools) for details.
+        types. See the
+        [Assistants Tools guide](https://main.excai.ai/docs/assistants/tools) for
+        details.
 
         The Fine-tuning API only supports `.jsonl` files. The input also has certain
         required formats for fine-tuning
-        [chat](/docs/api-reference/fine-tuning/chat-input) or
-        [completions](/docs/api-reference/fine-tuning/completions-input) models.
+        [chat](https://main.excai.ai/docs/api-reference/fine-tuning/chat-input) or
+        [completions](https://main.excai.ai/docs/api-reference/fine-tuning/completions-input)
+        models.
 
         The Batch API only supports `.jsonl` files up to 200 MB in size. The input also
-        has a specific required [format](/docs/api-reference/batch/request-input).
+        has a specific required
+        [format](https://main.excai.ai/docs/api-reference/batch/request-input).
 
-        Please [contact us](https://help.openai.com/) if you need to increase these
+        Please [contact us](https://help.excai.com/) if you need to increase these
         storage limits.
 
         Args:
@@ -494,6 +507,9 @@ class AsyncFilesResource(AsyncAPIResource):
               Assistants API - `batch`: Used in the Batch API - `fine-tune`: Used for
               fine-tuning - `vision`: Images used for vision fine-tuning - `user_data`:
               Flexible file type for any purpose - `evals`: Used for eval data sets
+
+          expires_after: The expiration policy for a file. By default, files with `purpose=batch` expire
+              after 30 days and all other files are persisted until they are manually deleted.
 
           extra_headers: Send extra headers
 
@@ -507,6 +523,7 @@ class AsyncFilesResource(AsyncAPIResource):
             {
                 "file": file,
                 "purpose": purpose,
+                "expires_after": expires_after,
             }
         )
         files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
@@ -521,7 +538,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileUploadResponse,
+            cast_to=ExCaiFile,
         )
 
 

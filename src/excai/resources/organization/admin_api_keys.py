@@ -59,7 +59,7 @@ class AdminAPIKeysResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AdminAPIKeyCreateResponse:
         """
-        Create a new admin-level API key for the organization.
+        Create an organization admin API key
 
         Args:
           extra_headers: Send extra headers
@@ -91,7 +91,7 @@ class AdminAPIKeysResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AdminAPIKeyRetrieveResponse:
         """
-        Get details for a specific organization API key by its ID.
+        Retrieve a single organization API key
 
         Args:
           key_id: The ID of the API key.
@@ -128,7 +128,7 @@ class AdminAPIKeysResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AdminAPIKeyListResponse:
         """
-        Retrieve a paginated list of organization admin API keys.
+        List organization API keys
 
         Args:
           after: Return keys with IDs that come after this ID in the pagination order.
@@ -176,7 +176,7 @@ class AdminAPIKeysResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AdminAPIKeyDeleteResponse:
         """
-        Delete the specified admin API key.
+        Delete an organization admin API key
 
         Args:
           key_id: The ID of the API key to be deleted.
@@ -232,7 +232,7 @@ class AsyncAdminAPIKeysResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AdminAPIKeyCreateResponse:
         """
-        Create a new admin-level API key for the organization.
+        Create an organization admin API key
 
         Args:
           extra_headers: Send extra headers
@@ -264,7 +264,7 @@ class AsyncAdminAPIKeysResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AdminAPIKeyRetrieveResponse:
         """
-        Get details for a specific organization API key by its ID.
+        Retrieve a single organization API key
 
         Args:
           key_id: The ID of the API key.
@@ -301,7 +301,7 @@ class AsyncAdminAPIKeysResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AdminAPIKeyListResponse:
         """
-        Retrieve a paginated list of organization admin API keys.
+        List organization API keys
 
         Args:
           after: Return keys with IDs that come after this ID in the pagination order.
@@ -349,7 +349,7 @@ class AsyncAdminAPIKeysResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AdminAPIKeyDeleteResponse:
         """
-        Delete the specified admin API key.
+        Delete an organization admin API key
 
         Args:
           key_id: The ID of the API key to be deleted.

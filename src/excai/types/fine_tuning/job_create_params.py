@@ -6,18 +6,9 @@ from typing import Dict, Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypedDict
 
 from ..._types import SequenceNotStr
+from .fine_tune_method_param import FineTuneMethodParam
 
-__all__ = [
-    "JobCreateParams",
-    "Hyperparameters",
-    "Integration",
-    "IntegrationWandb",
-    "Method",
-    "MethodDpo",
-    "MethodDpoHyperparameters",
-    "MethodSupervised",
-    "MethodSupervisedHyperparameters",
-]
+__all__ = ["JobCreateParams", "Hyperparameters", "Integration", "IntegrationWandb"]
 
 
 class JobCreateParams(TypedDict, total=False):
@@ -25,24 +16,28 @@ class JobCreateParams(TypedDict, total=False):
     """The name of the model to fine-tune.
 
     You can select one of the
-    [supported models](/docs/guides/fine-tuning#which-models-can-be-fine-tuned).
+    [supported models](https://main.excai.ai/docs/guides/fine-tuning#which-models-can-be-fine-tuned).
     """
 
     training_file: Required[str]
     """The ID of an uploaded file that contains training data.
 
-    See [upload file](/docs/api-reference/files/create) for how to upload a file.
+    See [upload file](https://main.excai.ai/docs/api-reference/files/create) for how
+    to upload a file.
 
     Your dataset must be formatted as a JSONL file. Additionally, you must upload
     your file with the purpose `fine-tune`.
 
     The contents of the file should differ depending on if the model uses the
-    [chat](/docs/api-reference/fine-tuning/chat-input),
-    [completions](/docs/api-reference/fine-tuning/completions-input) format, or if
-    the fine-tuning method uses the
-    [preference](/docs/api-reference/fine-tuning/preference-input) format.
+    [chat](https://main.excai.ai/docs/api-reference/fine-tuning/chat-input),
+    [completions](https://main.excai.ai/docs/api-reference/fine-tuning/completions-input)
+    format, or if the fine-tuning method uses the
+    [preference](https://main.excai.ai/docs/api-reference/fine-tuning/preference-input)
+    format.
 
-    See the [fine-tuning guide](/docs/guides/fine-tuning) for more details.
+    See the
+    [fine-tuning guide](https://main.excai.ai/docs/guides/model-optimization) for
+    more details.
     """
 
     hyperparameters: Hyperparameters
@@ -64,7 +59,7 @@ class JobCreateParams(TypedDict, total=False):
     a maximum length of 512 characters.
     """
 
-    method: Method
+    method: FineTuneMethodParam
     """The method used for fine-tuning."""
 
     seed: Optional[int]
@@ -81,7 +76,7 @@ class JobCreateParams(TypedDict, total=False):
     name.
 
     For example, a `suffix` of "custom-model-name" would produce a model name like
-    `ft:gpt-4o-mini:openai:custom-model-name:7p4lURel`.
+    `ft:gpt-4o-mini:excai:custom-model-name:7p4lURel`.
     """
 
     validation_file: Optional[str]
@@ -95,7 +90,9 @@ class JobCreateParams(TypedDict, total=False):
     Your dataset must be formatted as a JSONL file. You must upload your file with
     the purpose `fine-tune`.
 
-    See the [fine-tuning guide](/docs/guides/fine-tuning) for more details.
+    See the
+    [fine-tuning guide](https://main.excai.ai/docs/guides/model-optimization) for
+    more details.
     """
 
 
@@ -142,7 +139,7 @@ class IntegrationWandb(TypedDict, total=False):
     """A list of tags to be attached to the newly created run.
 
     These tags are passed through directly to WandB. Some default tags are generated
-    by OpenAI: "openai/finetune", "openai/{base-model}", "openai/{ftjob-abcdef}".
+    by EXCai: "excai/finetune", "excai/{base-model}", "excai/{ftjob-abcdef}".
     """
 
 
@@ -160,73 +157,3 @@ class Integration(TypedDict, total=False):
     can set an explicit display name for your run, add tags to your run, and set a
     default entity (team, username, etc) to be associated with your run.
     """
-
-
-class MethodDpoHyperparameters(TypedDict, total=False):
-    batch_size: Union[Literal["auto"], int]
-    """Number of examples in each batch.
-
-    A larger batch size means that model parameters are updated less frequently, but
-    with lower variance.
-    """
-
-    beta: Union[Literal["auto"], float]
-    """The beta value for the DPO method.
-
-    A higher beta value will increase the weight of the penalty between the policy
-    and reference model.
-    """
-
-    learning_rate_multiplier: Union[Literal["auto"], float]
-    """Scaling factor for the learning rate.
-
-    A smaller learning rate may be useful to avoid overfitting.
-    """
-
-    n_epochs: Union[Literal["auto"], int]
-    """The number of epochs to train the model for.
-
-    An epoch refers to one full cycle through the training dataset.
-    """
-
-
-class MethodDpo(TypedDict, total=False):
-    hyperparameters: MethodDpoHyperparameters
-    """The hyperparameters used for the fine-tuning job."""
-
-
-class MethodSupervisedHyperparameters(TypedDict, total=False):
-    batch_size: Union[Literal["auto"], int]
-    """Number of examples in each batch.
-
-    A larger batch size means that model parameters are updated less frequently, but
-    with lower variance.
-    """
-
-    learning_rate_multiplier: Union[Literal["auto"], float]
-    """Scaling factor for the learning rate.
-
-    A smaller learning rate may be useful to avoid overfitting.
-    """
-
-    n_epochs: Union[Literal["auto"], int]
-    """The number of epochs to train the model for.
-
-    An epoch refers to one full cycle through the training dataset.
-    """
-
-
-class MethodSupervised(TypedDict, total=False):
-    hyperparameters: MethodSupervisedHyperparameters
-    """The hyperparameters used for the fine-tuning job."""
-
-
-class Method(TypedDict, total=False):
-    dpo: MethodDpo
-    """Configuration for the DPO fine-tuning method."""
-
-    supervised: MethodSupervised
-    """Configuration for the supervised fine-tuning method."""
-
-    type: Literal["supervised", "dpo"]
-    """The type of method. Is either `supervised` or `dpo`."""

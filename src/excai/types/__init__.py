@@ -2,31 +2,127 @@
 
 from __future__ import annotations
 
+from .drag import Drag as Drag
+from .move import Move as Move
+from .type import Type as Type
+from .wait import Wait as Wait
+from .click import Click as Click
+from .image import Image as Image
+from .scroll import Scroll as Scroll
+from .shared import (
+    McpTool as McpTool,
+    EvalItem as EvalItem,
+    ExCaiFile as ExCaiFile,
+    CustomTool as CustomTool,
+    InputAudio as InputAudio,
+    FunctionTool as FunctionTool,
+    ImageGenTool as ImageGenTool,
+    McpToolFilter as McpToolFilter,
+    WebSearchTool as WebSearchTool,
+    CompoundFilter as CompoundFilter,
+    FileSearchTool as FileSearchTool,
+    FunctionObject as FunctionObject,
+    LocalShellTool as LocalShellTool,
+    RankingOptions as RankingOptions,
+    CompletionUsage as CompletionUsage,
+    ComparisonFilter as ComparisonFilter,
+    GraderLabelModel as GraderLabelModel,
+    InputFileContent as InputFileContent,
+    InputTextContent as InputTextContent,
+    GraderStringCheck as GraderStringCheck,
+    InputImageContent as InputImageContent,
+    AssistantToolsCode as AssistantToolsCode,
+    ResponseFormatText as ResponseFormatText,
+    ApproximateLocation as ApproximateLocation,
+    CodeInterpreterTool as CodeInterpreterTool,
+    WebSearchPreviewTool as WebSearchPreviewTool,
+    AssistantToolsFunction as AssistantToolsFunction,
+    ComputerUsePreviewTool as ComputerUsePreviewTool,
+    CodeInterpreterToolAuto as CodeInterpreterToolAuto,
+    AssistantToolsFileSearch as AssistantToolsFileSearch,
+    FileSearchRankingOptions as FileSearchRankingOptions,
+    ResponseFormatJsonObject as ResponseFormatJsonObject,
+    ResponseFormatJsonSchema as ResponseFormatJsonSchema,
+    TextResponseFormatJsonSchema as TextResponseFormatJsonSchema,
+)
+from .log_prob import LogProb as LogProb
+from .file_path import FilePath as FilePath
+from .key_press import KeyPress as KeyPress
+from .reasoning import Reasoning as Reasoning
+from .coordinate import Coordinate as Coordinate
+from .drag_param import DragParam as DragParam
+from .move_param import MoveParam as MoveParam
+from .screenshot import Screenshot as Screenshot
+from .type_param import TypeParam as TypeParam
+from .wait_param import WaitParam as WaitParam
+from .batch_error import BatchError as BatchError
+from .certificate import Certificate as Certificate
+from .click_param import ClickParam as ClickParam
+from .costs_result import CostsResult as CostsResult
+from .double_click import DoubleClick as DoubleClick
+from .scroll_param import ScrollParam as ScrollParam
+from .top_log_prob import TopLogProb as TopLogProb
+from .mcp_tool_call import McpToolCall as McpToolCall
+from .log_prob_param import LogProbParam as LogProbParam
+from .mcp_list_tools import McpListTools as McpListTools
+from .output_message import OutputMessage as OutputMessage
+from .file_path_param import FilePathParam as FilePathParam
+from .image_gen_usage import ImageGenUsage as ImageGenUsage
+from .key_press_param import KeyPressParam as KeyPressParam
+from .reasoning_param import ReasoningParam as ReasoningParam
+from .refusal_content import RefusalContent as RefusalContent
+from .tool_choice_mcp import ToolChoiceMcp as ToolChoiceMcp
+from .coordinate_param import CoordinateParam as CoordinateParam
 from .eval_list_params import EvalListParams as EvalListParams
 from .file_list_params import FileListParams as FileListParams
+from .screenshot_param import ScreenshotParam as ScreenshotParam
 from .batch_list_params import BatchListParams as BatchListParams
+from .tool_choice_types import ToolChoiceTypes as ToolChoiceTypes
+from .url_citation_body import URLCitationBody as URLCitationBody
+from .usage_time_bucket import UsageTimeBucket as UsageTimeBucket
+from .computer_tool_call import ComputerToolCall as ComputerToolCall
+from .double_click_param import DoubleClickParam as DoubleClickParam
 from .eval_create_params import EvalCreateParams as EvalCreateParams
+from .eval_grader_python import EvalGraderPython as EvalGraderPython
 from .eval_list_response import EvalListResponse as EvalListResponse
 from .eval_update_params import EvalUpdateParams as EvalUpdateParams
+from .file_citation_body import FileCitationBody as FileCitationBody
 from .file_list_response import FileListResponse as FileListResponse
 from .file_upload_params import FileUploadParams as FileUploadParams
+from .tool_choice_custom import ToolChoiceCustom as ToolChoiceCustom
+from .top_log_prob_param import TopLogProbParam as TopLogProbParam
+from .audio_transcription import AudioTranscription as AudioTranscription
 from .batch_create_params import BatchCreateParams as BatchCreateParams
 from .batch_list_response import BatchListResponse as BatchListResponse
+from .image_gen_tool_call import ImageGenToolCall as ImageGenToolCall
+from .mcp_list_tools_tool import McpListToolsTool as McpListToolsTool
+from .mcp_tool_call_param import McpToolCallParam as McpToolCallParam
 from .model_list_response import ModelListResponse as ModelListResponse
+from .output_text_content import OutputTextContent as OutputTextContent
+from .tool_choice_allowed import ToolChoiceAllowed as ToolChoiceAllowed
+from .usage_images_result import UsageImagesResult as UsageImagesResult
+from .batch_request_counts import BatchRequestCounts as BatchRequestCounts
 from .eval_create_response import EvalCreateResponse as EvalCreateResponse
 from .eval_delete_response import EvalDeleteResponse as EvalDeleteResponse
 from .eval_update_response import EvalUpdateResponse as EvalUpdateResponse
 from .file_delete_response import FileDeleteResponse as FileDeleteResponse
-from .file_upload_response import FileUploadResponse as FileUploadResponse
+from .mcp_approval_request import McpApprovalRequest as McpApprovalRequest
+from .mcp_list_tools_param import McpListToolsParam as McpListToolsParam
+from .output_message_param import OutputMessageParam as OutputMessageParam
 from .thread_create_params import ThreadCreateParams as ThreadCreateParams
 from .thread_update_params import ThreadUpdateParams as ThreadUpdateParams
+from .tool_choice_function import ToolChoiceFunction as ToolChoiceFunction
 from .upload_create_params import UploadCreateParams as UploadCreateParams
+from .web_search_tool_call import WebSearchToolCall as WebSearchToolCall
 from .assistant_list_params import AssistantListParams as AssistantListParams
 from .batch_cancel_response import BatchCancelResponse as BatchCancelResponse
 from .batch_create_response import BatchCreateResponse as BatchCreateResponse
+from .file_search_tool_call import FileSearchToolCall as FileSearchToolCall
+from .local_shell_tool_call import LocalShellToolCall as LocalShellToolCall
 from .model_delete_response import ModelDeleteResponse as ModelDeleteResponse
+from .refusal_content_param import RefusalContentParam as RefusalContentParam
+from .tool_choice_mcp_param import ToolChoiceMcpParam as ToolChoiceMcpParam
 from .eval_retrieve_response import EvalRetrieveResponse as EvalRetrieveResponse
-from .file_retrieve_response import FileRetrieveResponse as FileRetrieveResponse
 from .response_create_params import ResponseCreateParams as ResponseCreateParams
 from .thread_create_response import ThreadCreateResponse as ThreadCreateResponse
 from .thread_delete_response import ThreadDeleteResponse as ThreadDeleteResponse
@@ -35,58 +131,129 @@ from .upload_add_part_params import UploadAddPartParams as UploadAddPartParams
 from .upload_cancel_response import UploadCancelResponse as UploadCancelResponse
 from .upload_complete_params import UploadCompleteParams as UploadCompleteParams
 from .upload_create_response import UploadCreateResponse as UploadCreateResponse
+from .web_search_action_find import WebSearchActionFind as WebSearchActionFind
 from .assistant_create_params import AssistantCreateParams as AssistantCreateParams
 from .assistant_list_response import AssistantListResponse as AssistantListResponse
 from .assistant_update_params import AssistantUpdateParams as AssistantUpdateParams
 from .batch_retrieve_response import BatchRetrieveResponse as BatchRetrieveResponse
 from .embedding_create_params import EmbeddingCreateParams as EmbeddingCreateParams
+from .eval_grader_score_model import EvalGraderScoreModel as EvalGraderScoreModel
+from .local_shell_exec_action import LocalShellExecAction as LocalShellExecAction
 from .model_retrieve_response import ModelRetrieveResponse as ModelRetrieveResponse
+from .tool_choice_types_param import ToolChoiceTypesParam as ToolChoiceTypesParam
+from .url_citation_body_param import URLCitationBodyParam as URLCitationBodyParam
+from .usage_embeddings_result import UsageEmbeddingsResult as UsageEmbeddingsResult
 from .completion_create_params import CompletionCreateParams as CompletionCreateParams
+from .computer_tool_call_param import ComputerToolCallParam as ComputerToolCallParam
+from .eval_grader_python_param import EvalGraderPythonParam as EvalGraderPythonParam
+from .file_citation_body_param import FileCitationBodyParam as FileCitationBodyParam
 from .image_create_edit_params import ImageCreateEditParams as ImageCreateEditParams
 from .response_create_response import ResponseCreateResponse as ResponseCreateResponse
 from .response_retrieve_params import ResponseRetrieveParams as ResponseRetrieveParams
+from .static_chunking_strategy import StaticChunkingStrategy as StaticChunkingStrategy
 from .thread_retrieve_response import ThreadRetrieveResponse as ThreadRetrieveResponse
+from .tool_choice_custom_param import ToolChoiceCustomParam as ToolChoiceCustomParam
 from .upload_add_part_response import UploadAddPartResponse as UploadAddPartResponse
 from .upload_complete_response import UploadCompleteResponse as UploadCompleteResponse
+from .usage_completions_result import UsageCompletionsResult as UsageCompletionsResult
+from .usage_moderations_result import UsageModerationsResult as UsageModerationsResult
 from .vector_store_list_params import VectorStoreListParams as VectorStoreListParams
+from .web_search_action_search import WebSearchActionSearch as WebSearchActionSearch
 from .assistant_create_response import AssistantCreateResponse as AssistantCreateResponse
 from .assistant_delete_response import AssistantDeleteResponse as AssistantDeleteResponse
 from .assistant_update_response import AssistantUpdateResponse as AssistantUpdateResponse
+from .audio_transcription_param import AudioTranscriptionParam as AudioTranscriptionParam
 from .embedding_create_response import EmbeddingCreateResponse as EmbeddingCreateResponse
+from .image_gen_tool_call_param import ImageGenToolCallParam as ImageGenToolCallParam
+from .mcp_list_tools_tool_param import McpListToolsToolParam as McpListToolsToolParam
+from .output_text_content_param import OutputTextContentParam as OutputTextContentParam
+from .tool_choice_allowed_param import ToolChoiceAllowedParam as ToolChoiceAllowedParam
+from .code_interpreter_tool_call import CodeInterpreterToolCall as CodeInterpreterToolCall
 from .completion_create_response import CompletionCreateResponse as CompletionCreateResponse
 from .image_create_edit_response import ImageCreateEditResponse as ImageCreateEditResponse
+from .mcp_approval_request_param import McpApprovalRequestParam as McpApprovalRequestParam
 from .moderation_classify_params import ModerationClassifyParams as ModerationClassifyParams
 from .response_retrieve_response import ResponseRetrieveResponse as ResponseRetrieveResponse
+from .tool_choice_function_param import ToolChoiceFunctionParam as ToolChoiceFunctionParam
+from .usage_vector_stores_result import UsageVectorStoresResult as UsageVectorStoresResult
 from .vector_store_create_params import VectorStoreCreateParams as VectorStoreCreateParams
 from .vector_store_list_response import VectorStoreListResponse as VectorStoreListResponse
 from .vector_store_search_params import VectorStoreSearchParams as VectorStoreSearchParams
 from .vector_store_update_params import VectorStoreUpdateParams as VectorStoreUpdateParams
+from .web_search_tool_call_param import WebSearchToolCallParam as WebSearchToolCallParam
 from .assistant_retrieve_response import AssistantRetrieveResponse as AssistantRetrieveResponse
 from .audio_generate_audio_params import AudioGenerateAudioParams as AudioGenerateAudioParams
+from .eval_grader_text_similarity import EvalGraderTextSimilarity as EvalGraderTextSimilarity
+from .file_search_tool_call_param import FileSearchToolCallParam as FileSearchToolCallParam
+from .local_shell_tool_call_param import LocalShellToolCallParam as LocalShellToolCallParam
+from .usage_audio_speeches_result import UsageAudioSpeechesResult as UsageAudioSpeechesResult
+from .web_search_action_open_page import WebSearchActionOpenPage as WebSearchActionOpenPage
 from .audio_translate_audio_params import AudioTranslateAudioParams as AudioTranslateAudioParams
+from .code_interpreter_output_logs import CodeInterpreterOutputLogs as CodeInterpreterOutputLogs
+from .container_file_citation_body import ContainerFileCitationBody as ContainerFileCitationBody
+from .eval_logs_data_source_config import EvalLogsDataSourceConfig as EvalLogsDataSourceConfig
 from .moderation_classify_response import ModerationClassifyResponse as ModerationClassifyResponse
 from .vector_store_create_response import VectorStoreCreateResponse as VectorStoreCreateResponse
 from .vector_store_delete_response import VectorStoreDeleteResponse as VectorStoreDeleteResponse
 from .vector_store_search_response import VectorStoreSearchResponse as VectorStoreSearchResponse
 from .vector_store_update_response import VectorStoreUpdateResponse as VectorStoreUpdateResponse
+from .web_search_action_find_param import WebSearchActionFindParam as WebSearchActionFindParam
 from .audio_transcribe_audio_params import AudioTranscribeAudioParams as AudioTranscribeAudioParams
+from .code_interpreter_output_image import CodeInterpreterOutputImage as CodeInterpreterOutputImage
+from .eval_grader_score_model_param import EvalGraderScoreModelParam as EvalGraderScoreModelParam
 from .image_create_variation_params import ImageCreateVariationParams as ImageCreateVariationParams
+from .image_gen_input_usage_details import ImageGenInputUsageDetails as ImageGenInputUsageDetails
+from .local_shell_exec_action_param import LocalShellExecActionParam as LocalShellExecActionParam
 from .organization_get_costs_params import OrganizationGetCostsParams as OrganizationGetCostsParams
+from .vector_store_expiration_after import VectorStoreExpirationAfter as VectorStoreExpirationAfter
 from .audio_translate_audio_response import AudioTranslateAudioResponse as AudioTranslateAudioResponse
+from .eval_custom_data_source_config import EvalCustomDataSourceConfig as EvalCustomDataSourceConfig
 from .file_retrieve_content_response import FileRetrieveContentResponse as FileRetrieveContentResponse
 from .image_create_generation_params import ImageCreateGenerationParams as ImageCreateGenerationParams
 from .realtime_create_session_params import RealtimeCreateSessionParams as RealtimeCreateSessionParams
+from .static_chunking_strategy_param import StaticChunkingStrategyParam as StaticChunkingStrategyParam
 from .vector_store_retrieve_response import VectorStoreRetrieveResponse as VectorStoreRetrieveResponse
+from .web_search_action_search_param import WebSearchActionSearchParam as WebSearchActionSearchParam
 from .audio_transcribe_audio_response import AudioTranscribeAudioResponse as AudioTranscribeAudioResponse
+from .computer_tool_call_safety_check import ComputerToolCallSafetyCheck as ComputerToolCallSafetyCheck
 from .image_create_variation_response import ImageCreateVariationResponse as ImageCreateVariationResponse
 from .organization_get_costs_response import OrganizationGetCostsResponse as OrganizationGetCostsResponse
+from .code_interpreter_tool_call_param import CodeInterpreterToolCallParam as CodeInterpreterToolCallParam
 from .image_create_generation_response import ImageCreateGenerationResponse as ImageCreateGenerationResponse
 from .realtime_create_session_response import RealtimeCreateSessionResponse as RealtimeCreateSessionResponse
 from .response_list_input_items_params import ResponseListInputItemsParams as ResponseListInputItemsParams
+from .eval_grader_text_similarity_param import EvalGraderTextSimilarityParam as EvalGraderTextSimilarityParam
+from .usage_audio_transcriptions_result import UsageAudioTranscriptionsResult as UsageAudioTranscriptionsResult
+from .web_search_action_open_page_param import WebSearchActionOpenPageParam as WebSearchActionOpenPageParam
+from .code_interpreter_output_logs_param import CodeInterpreterOutputLogsParam as CodeInterpreterOutputLogsParam
+from .container_file_citation_body_param import ContainerFileCitationBodyParam as ContainerFileCitationBodyParam
 from .response_list_input_items_response import ResponseListInputItemsResponse as ResponseListInputItemsResponse
+from .code_interpreter_output_image_param import CodeInterpreterOutputImageParam as CodeInterpreterOutputImageParam
 from .organization_list_audit_logs_params import OrganizationListAuditLogsParams as OrganizationListAuditLogsParams
+from .vector_store_expiration_after_param import VectorStoreExpirationAfterParam as VectorStoreExpirationAfterParam
+from .auto_chunking_strategy_request_param import AutoChunkingStrategyRequestParam as AutoChunkingStrategyRequestParam
+from .assistant_tools_file_search_type_only import AssistantToolsFileSearchTypeOnly as AssistantToolsFileSearchTypeOnly
+from .computer_tool_call_safety_check_param import ComputerToolCallSafetyCheckParam as ComputerToolCallSafetyCheckParam
 from .organization_list_audit_logs_response import (
     OrganizationListAuditLogsResponse as OrganizationListAuditLogsResponse,
+)
+from .other_chunking_strategy_response_param import (
+    OtherChunkingStrategyResponseParam as OtherChunkingStrategyResponseParam,
+)
+from .static_chunking_strategy_request_param import (
+    StaticChunkingStrategyRequestParam as StaticChunkingStrategyRequestParam,
+)
+from .usage_code_interpreter_sessions_result import (
+    UsageCodeInterpreterSessionsResult as UsageCodeInterpreterSessionsResult,
+)
+from .static_chunking_strategy_response_param import (
+    StaticChunkingStrategyResponseParam as StaticChunkingStrategyResponseParam,
+)
+from .eval_stored_completions_data_source_config import (
+    EvalStoredCompletionsDataSourceConfig as EvalStoredCompletionsDataSourceConfig,
+)
+from .assistant_tools_file_search_type_only_param import (
+    AssistantToolsFileSearchTypeOnlyParam as AssistantToolsFileSearchTypeOnlyParam,
 )
 from .realtime_create_transcription_session_params import (
     RealtimeCreateTranscriptionSessionParams as RealtimeCreateTranscriptionSessionParams,

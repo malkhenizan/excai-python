@@ -3,27 +3,23 @@
 from __future__ import annotations
 
 from typing import Dict, Union, Iterable, Optional
-from typing_extensions import Literal, Required, TypeAlias, TypedDict
+from typing_extensions import Literal, TypeAlias, TypedDict
 
 from .._types import SequenceNotStr
+from .shared_params.assistant_tools_code import AssistantToolsCode
+from .shared_params.response_format_text import ResponseFormatText
+from .shared_params.assistant_tools_function import AssistantToolsFunction
+from .shared_params.assistant_tools_file_search import AssistantToolsFileSearch
+from .shared_params.response_format_json_object import ResponseFormatJsonObject
+from .shared_params.response_format_json_schema import ResponseFormatJsonSchema
 
 __all__ = [
     "AssistantUpdateParams",
     "ResponseFormat",
-    "ResponseFormatResponseFormatText",
-    "ResponseFormatResponseFormatJsonObject",
-    "ResponseFormatResponseFormatJsonSchema",
-    "ResponseFormatResponseFormatJsonSchemaJsonSchema",
     "ToolResources",
     "ToolResourcesCodeInterpreter",
     "ToolResourcesFileSearch",
     "Tool",
-    "ToolAssistantToolsCode",
-    "ToolAssistantToolsFileSearch",
-    "ToolAssistantToolsFileSearchFileSearch",
-    "ToolAssistantToolsFileSearchFileSearchRankingOptions",
-    "ToolAssistantToolsFunction",
-    "ToolAssistantToolsFunctionFunction",
 ]
 
 
@@ -50,6 +46,12 @@ class AssistantUpdateParams(TypedDict, total=False):
     model: Union[
         str,
         Literal[
+            "gpt-5",
+            "gpt-5-mini",
+            "gpt-5-nano",
+            "gpt-5-2025-08-07",
+            "gpt-5-mini-2025-08-07",
+            "gpt-5-nano-2025-08-07",
             "gpt-4.1",
             "gpt-4.1-mini",
             "gpt-4.1-nano",
@@ -90,33 +92,38 @@ class AssistantUpdateParams(TypedDict, total=False):
     ]
     """ID of the model to use.
 
-    You can use the [List models](/docs/api-reference/models/list) API to see all of
-    your available models, or see our [Model overview](/docs/models) for
-    descriptions of them.
+    You can use the
+    [List models](https://main.excai.ai/docs/api-reference/models/list) API to see
+    all of your available models, or see our
+    [Model overview](https://main.excai.ai/docs/models) for descriptions of them.
     """
 
     name: Optional[str]
     """The name of the assistant. The maximum length is 256 characters."""
 
-    reasoning_effort: Optional[Literal["low", "medium", "high"]]
-    """**o-series models only**
-
+    reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]]
+    """
     Constrains effort on reasoning for
-    [reasoning models](https://platform.openai.com/docs/guides/reasoning). Currently
-    supported values are `low`, `medium`, and `high`. Reducing reasoning effort can
-    result in faster responses and fewer tokens used on reasoning in a response.
+    [reasoning models](https://main.excai.ai/docs/guides/reasoning). Currently
+    supported values are `minimal`, `low`, `medium`, and `high`. Reducing reasoning
+    effort can result in faster responses and fewer tokens used on reasoning in a
+    response.
+
+    Note: The `gpt-5-pro` model defaults to (and only supports) `high` reasoning
+    effort.
     """
 
     response_format: Optional[ResponseFormat]
     """Specifies the format that the model must output.
 
-    Compatible with [GPT-4o](/docs/models#gpt-4o),
-    [GPT-4 Turbo](/docs/models#gpt-4-turbo-and-gpt-4), and all GPT-3.5 Turbo models
-    since `gpt-3.5-turbo-1106`.
+    Compatible with [GPT-4o](https://main.excai.ai/docs/models#gpt-4o),
+    [GPT-4 Turbo](https://main.excai.ai/docs/models#gpt-4-turbo-and-gpt-4), and all
+    GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
 
     Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured
     Outputs which ensures the model will match your supplied JSON schema. Learn more
-    in the [Structured Outputs guide](/docs/guides/structured-outputs).
+    in the
+    [Structured Outputs guide](https://main.excai.ai/docs/guides/structured-outputs).
 
     Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the
     message the model generates is valid JSON.
@@ -162,77 +169,27 @@ class AssistantUpdateParams(TypedDict, total=False):
     """
 
 
-class ResponseFormatResponseFormatText(TypedDict, total=False):
-    type: Required[Literal["text"]]
-    """The type of response format being defined. Always `text`."""
-
-
-class ResponseFormatResponseFormatJsonObject(TypedDict, total=False):
-    type: Required[Literal["json_object"]]
-    """The type of response format being defined. Always `json_object`."""
-
-
-class ResponseFormatResponseFormatJsonSchemaJsonSchema(TypedDict, total=False):
-    name: Required[str]
-    """The name of the response format.
-
-    Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length
-    of 64.
-    """
-
-    description: str
-    """
-    A description of what the response format is for, used by the model to determine
-    how to respond in the format.
-    """
-
-    schema: Dict[str, object]
-    """
-    The schema for the response format, described as a JSON Schema object. Learn how
-    to build JSON schemas [here](https://json-schema.org/).
-    """
-
-    strict: Optional[bool]
-    """
-    Whether to enable strict schema adherence when generating the output. If set to
-    true, the model will always follow the exact schema defined in the `schema`
-    field. Only a subset of JSON Schema is supported when `strict` is `true`. To
-    learn more, read the
-    [Structured Outputs guide](/docs/guides/structured-outputs).
-    """
-
-
-class ResponseFormatResponseFormatJsonSchema(TypedDict, total=False):
-    json_schema: Required[ResponseFormatResponseFormatJsonSchemaJsonSchema]
-    """Structured Outputs configuration options, including a JSON Schema."""
-
-    type: Required[Literal["json_schema"]]
-    """The type of response format being defined. Always `json_schema`."""
-
-
 ResponseFormat: TypeAlias = Union[
-    Literal["auto"],
-    ResponseFormatResponseFormatText,
-    ResponseFormatResponseFormatJsonObject,
-    ResponseFormatResponseFormatJsonSchema,
+    Literal["auto"], ResponseFormatText, ResponseFormatJsonObject, ResponseFormatJsonSchema
 ]
 
 
 class ToolResourcesCodeInterpreter(TypedDict, total=False):
     file_ids: SequenceNotStr[str]
     """
-    Overrides the list of [file](/docs/api-reference/files) IDs made available to
-    the `code_interpreter` tool. There can be a maximum of 20 files associated with
-    the tool.
+    Overrides the list of [file](https://main.excai.ai/docs/api-reference/files) IDs
+    made available to the `code_interpreter` tool. There can be a maximum of 20
+    files associated with the tool.
     """
 
 
 class ToolResourcesFileSearch(TypedDict, total=False):
     vector_store_ids: SequenceNotStr[str]
     """
-    Overrides the [vector store](/docs/api-reference/vector-stores/object) attached
-    to this assistant. There can be a maximum of 1 vector store attached to the
-    assistant.
+    Overrides the
+    [vector store](https://main.excai.ai/docs/api-reference/vector-stores/object)
+    attached to this assistant. There can be a maximum of 1 vector store attached to
+    the assistant.
     """
 
 
@@ -242,97 +199,4 @@ class ToolResources(TypedDict, total=False):
     file_search: ToolResourcesFileSearch
 
 
-class ToolAssistantToolsCode(TypedDict, total=False):
-    type: Required[Literal["code_interpreter"]]
-    """The type of tool being defined: `code_interpreter`"""
-
-
-class ToolAssistantToolsFileSearchFileSearchRankingOptions(TypedDict, total=False):
-    score_threshold: Required[float]
-    """The score threshold for the file search.
-
-    All values must be a floating point number between 0 and 1.
-    """
-
-    ranker: Literal["auto", "default_2024_08_21"]
-    """The ranker to use for the file search.
-
-    If not specified will use the `auto` ranker.
-    """
-
-
-class ToolAssistantToolsFileSearchFileSearch(TypedDict, total=False):
-    max_num_results: int
-    """The maximum number of results the file search tool should output.
-
-    The default is 20 for `gpt-4*` models and 5 for `gpt-3.5-turbo`. This number
-    should be between 1 and 50 inclusive.
-
-    Note that the file search tool may output fewer than `max_num_results` results.
-    See the
-    [file search tool documentation](/docs/assistants/tools/file-search#customizing-file-search-settings)
-    for more information.
-    """
-
-    ranking_options: ToolAssistantToolsFileSearchFileSearchRankingOptions
-    """The ranking options for the file search.
-
-    If not specified, the file search tool will use the `auto` ranker and a
-    score_threshold of 0.
-
-    See the
-    [file search tool documentation](/docs/assistants/tools/file-search#customizing-file-search-settings)
-    for more information.
-    """
-
-
-class ToolAssistantToolsFileSearch(TypedDict, total=False):
-    type: Required[Literal["file_search"]]
-    """The type of tool being defined: `file_search`"""
-
-    file_search: ToolAssistantToolsFileSearchFileSearch
-    """Overrides for the file search tool."""
-
-
-class ToolAssistantToolsFunctionFunction(TypedDict, total=False):
-    name: Required[str]
-    """The name of the function to be called.
-
-    Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length
-    of 64.
-    """
-
-    description: str
-    """
-    A description of what the function does, used by the model to choose when and
-    how to call the function.
-    """
-
-    parameters: Dict[str, object]
-    """The parameters the functions accepts, described as a JSON Schema object.
-
-    See the [guide](/docs/guides/function-calling) for examples, and the
-    [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
-    documentation about the format.
-
-    Omitting `parameters` defines a function with an empty parameter list.
-    """
-
-    strict: Optional[bool]
-    """Whether to enable strict schema adherence when generating the function call.
-
-    If set to true, the model will follow the exact schema defined in the
-    `parameters` field. Only a subset of JSON Schema is supported when `strict` is
-    `true`. Learn more about Structured Outputs in the
-    [function calling guide](docs/guides/function-calling).
-    """
-
-
-class ToolAssistantToolsFunction(TypedDict, total=False):
-    function: Required[ToolAssistantToolsFunctionFunction]
-
-    type: Required[Literal["function"]]
-    """The type of tool being defined: `function`"""
-
-
-Tool: TypeAlias = Union[ToolAssistantToolsCode, ToolAssistantToolsFileSearch, ToolAssistantToolsFunction]
+Tool: TypeAlias = Union[AssistantToolsCode, AssistantToolsFileSearch, AssistantToolsFunction]

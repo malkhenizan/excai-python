@@ -30,7 +30,7 @@ class TestModerations:
     def test_method_classify_with_all_params(self, client: ExCai) -> None:
         moderation = client.moderations.classify(
             input="I want to kill them.",
-            model="omni-moderation-2024-09-26",
+            model="string",
         )
         assert_matches_type(ModerationClassifyResponse, moderation, path=["response"])
 
@@ -79,7 +79,7 @@ class TestAsyncModerations:
     async def test_method_classify_with_all_params(self, async_client: AsyncExCai) -> None:
         moderation = await async_client.moderations.classify(
             input="I want to kill them.",
-            model="omni-moderation-2024-09-26",
+            model="string",
         )
         assert_matches_type(ModerationClassifyResponse, moderation, path=["response"])
 

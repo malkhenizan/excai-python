@@ -59,11 +59,12 @@ class AudioResource(SyncAPIResource):
         input: str,
         model: Union[str, Literal["tts-1", "tts-1-hd", "gpt-4o-mini-tts"]],
         voice: Union[
-            str, Literal["alloy", "ash", "ballad", "coral", "echo", "fable", "onyx", "nova", "sage", "shimmer", "verse"]
+            str, Literal["alloy", "ash", "ballad", "coral", "echo", "sage", "shimmer", "verse", "marin", "cedar"]
         ],
         instructions: str | Omit = omit,
         response_format: Literal["mp3", "opus", "aac", "flac", "wav", "pcm"] | Omit = omit,
         speed: float | Omit = omit,
+        stream_format: Literal["sse", "audio"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -77,13 +78,14 @@ class AudioResource(SyncAPIResource):
         Args:
           input: The text to generate audio for. The maximum length is 4096 characters.
 
-          model: One of the available [TTS models](/docs/models#tts): `tts-1`, `tts-1-hd` or
-              `gpt-4o-mini-tts`.
+          model:
+              One of the available [TTS models](https://main.excai.ai/docs/models#tts):
+              `tts-1`, `tts-1-hd` or `gpt-4o-mini-tts`.
 
           voice: The voice to use when generating the audio. Supported voices are `alloy`, `ash`,
               `ballad`, `coral`, `echo`, `fable`, `onyx`, `nova`, `sage`, `shimmer`, and
               `verse`. Previews of the voices are available in the
-              [Text to speech guide](/docs/guides/text-to-speech#voice-options).
+              [Text to speech guide](https://main.excai.ai/docs/guides/text-to-speech#voice-options).
 
           instructions: Control the voice of your generated audio with additional instructions. Does not
               work with `tts-1` or `tts-1-hd`.
@@ -93,6 +95,9 @@ class AudioResource(SyncAPIResource):
 
           speed: The speed of the generated audio. Select a value from `0.25` to `4.0`. `1.0` is
               the default.
+
+          stream_format: The format to stream the audio in. Supported formats are `sse` and `audio`.
+              `sse` is not supported for `tts-1` or `tts-1-hd`.
 
           extra_headers: Send extra headers
 
@@ -113,6 +118,7 @@ class AudioResource(SyncAPIResource):
                     "instructions": instructions,
                     "response_format": response_format,
                     "speed": speed,
+                    "stream_format": stream_format,
                 },
                 audio_generate_audio_params.AudioGenerateAudioParams,
             ),
@@ -127,6 +133,7 @@ class AudioResource(SyncAPIResource):
         *,
         file: FileTypes,
         model: Union[str, Literal["whisper-1", "gpt-4o-transcribe", "gpt-4o-mini-transcribe"]],
+        chunking_strategy: Optional[audio_transcribe_audio_params.ChunkingStrategy] | Omit = omit,
         include: List[Literal["logprobs"]] | Omit = omit,
         language: str | Omit = omit,
         prompt: str | Omit = omit,
@@ -153,6 +160,11 @@ class AudioResource(SyncAPIResource):
               `gpt-4o-mini-transcribe`, and `whisper-1` (which is powered by our open source
               Whisper V2 model).
 
+          chunking_strategy: Controls how the audio is cut into chunks. When set to `"auto"`, the server
+              first normalizes loudness and then uses voice activity detection (VAD) to choose
+              boundaries. `server_vad` object can be provided to tweak VAD detection
+              parameters manually. If unset, the audio is transcribed as a single block.
+
           include: Additional information to include in the transcription response. `logprobs` will
               return the log probabilities of the tokens in the response to understand the
               model's confidence in the transcription. `logprobs` only works with
@@ -164,8 +176,9 @@ class AudioResource(SyncAPIResource):
               format will improve accuracy and latency.
 
           prompt: An optional text to guide the model's style or continue a previous audio
-              segment. The [prompt](/docs/guides/speech-to-text#prompting) should match the
-              audio language.
+              segment. The
+              [prompt](https://main.excai.ai/docs/guides/speech-to-text#prompting) should
+              match the audio language.
 
           response_format: The format of the output, in one of these options: `json`, `text`, `srt`,
               `verbose_json`, or `vtt`. For `gpt-4o-transcribe` and `gpt-4o-mini-transcribe`,
@@ -175,7 +188,7 @@ class AudioResource(SyncAPIResource):
               generated using
               [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#Event_stream_format).
               See the
-              [Streaming section of the Speech-to-Text guide](/docs/guides/speech-to-text?lang=curl#streaming-transcriptions)
+              [Streaming section of the Speech-to-Text guide](https://main.excai.ai/docs/guides/speech-to-text?lang=curl#streaming-transcriptions)
               for more information.
 
               Note: Streaming is not supported for the `whisper-1` model and will be ignored.
@@ -204,6 +217,7 @@ class AudioResource(SyncAPIResource):
             {
                 "file": file,
                 "model": model,
+                "chunking_strategy": chunking_strategy,
                 "include": include,
                 "language": language,
                 "prompt": prompt,
@@ -259,8 +273,9 @@ class AudioResource(SyncAPIResource):
               Whisper V2 model) is currently available.
 
           prompt: An optional text to guide the model's style or continue a previous audio
-              segment. The [prompt](/docs/guides/speech-to-text#prompting) should be in
-              English.
+              segment. The
+              [prompt](https://main.excai.ai/docs/guides/speech-to-text#prompting) should be
+              in English.
 
           response_format: The format of the output, in one of these options: `json`, `text`, `srt`,
               `verbose_json`, or `vtt`.
@@ -335,11 +350,12 @@ class AsyncAudioResource(AsyncAPIResource):
         input: str,
         model: Union[str, Literal["tts-1", "tts-1-hd", "gpt-4o-mini-tts"]],
         voice: Union[
-            str, Literal["alloy", "ash", "ballad", "coral", "echo", "fable", "onyx", "nova", "sage", "shimmer", "verse"]
+            str, Literal["alloy", "ash", "ballad", "coral", "echo", "sage", "shimmer", "verse", "marin", "cedar"]
         ],
         instructions: str | Omit = omit,
         response_format: Literal["mp3", "opus", "aac", "flac", "wav", "pcm"] | Omit = omit,
         speed: float | Omit = omit,
+        stream_format: Literal["sse", "audio"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -353,13 +369,14 @@ class AsyncAudioResource(AsyncAPIResource):
         Args:
           input: The text to generate audio for. The maximum length is 4096 characters.
 
-          model: One of the available [TTS models](/docs/models#tts): `tts-1`, `tts-1-hd` or
-              `gpt-4o-mini-tts`.
+          model:
+              One of the available [TTS models](https://main.excai.ai/docs/models#tts):
+              `tts-1`, `tts-1-hd` or `gpt-4o-mini-tts`.
 
           voice: The voice to use when generating the audio. Supported voices are `alloy`, `ash`,
               `ballad`, `coral`, `echo`, `fable`, `onyx`, `nova`, `sage`, `shimmer`, and
               `verse`. Previews of the voices are available in the
-              [Text to speech guide](/docs/guides/text-to-speech#voice-options).
+              [Text to speech guide](https://main.excai.ai/docs/guides/text-to-speech#voice-options).
 
           instructions: Control the voice of your generated audio with additional instructions. Does not
               work with `tts-1` or `tts-1-hd`.
@@ -369,6 +386,9 @@ class AsyncAudioResource(AsyncAPIResource):
 
           speed: The speed of the generated audio. Select a value from `0.25` to `4.0`. `1.0` is
               the default.
+
+          stream_format: The format to stream the audio in. Supported formats are `sse` and `audio`.
+              `sse` is not supported for `tts-1` or `tts-1-hd`.
 
           extra_headers: Send extra headers
 
@@ -389,6 +409,7 @@ class AsyncAudioResource(AsyncAPIResource):
                     "instructions": instructions,
                     "response_format": response_format,
                     "speed": speed,
+                    "stream_format": stream_format,
                 },
                 audio_generate_audio_params.AudioGenerateAudioParams,
             ),
@@ -403,6 +424,7 @@ class AsyncAudioResource(AsyncAPIResource):
         *,
         file: FileTypes,
         model: Union[str, Literal["whisper-1", "gpt-4o-transcribe", "gpt-4o-mini-transcribe"]],
+        chunking_strategy: Optional[audio_transcribe_audio_params.ChunkingStrategy] | Omit = omit,
         include: List[Literal["logprobs"]] | Omit = omit,
         language: str | Omit = omit,
         prompt: str | Omit = omit,
@@ -429,6 +451,11 @@ class AsyncAudioResource(AsyncAPIResource):
               `gpt-4o-mini-transcribe`, and `whisper-1` (which is powered by our open source
               Whisper V2 model).
 
+          chunking_strategy: Controls how the audio is cut into chunks. When set to `"auto"`, the server
+              first normalizes loudness and then uses voice activity detection (VAD) to choose
+              boundaries. `server_vad` object can be provided to tweak VAD detection
+              parameters manually. If unset, the audio is transcribed as a single block.
+
           include: Additional information to include in the transcription response. `logprobs` will
               return the log probabilities of the tokens in the response to understand the
               model's confidence in the transcription. `logprobs` only works with
@@ -440,8 +467,9 @@ class AsyncAudioResource(AsyncAPIResource):
               format will improve accuracy and latency.
 
           prompt: An optional text to guide the model's style or continue a previous audio
-              segment. The [prompt](/docs/guides/speech-to-text#prompting) should match the
-              audio language.
+              segment. The
+              [prompt](https://main.excai.ai/docs/guides/speech-to-text#prompting) should
+              match the audio language.
 
           response_format: The format of the output, in one of these options: `json`, `text`, `srt`,
               `verbose_json`, or `vtt`. For `gpt-4o-transcribe` and `gpt-4o-mini-transcribe`,
@@ -451,7 +479,7 @@ class AsyncAudioResource(AsyncAPIResource):
               generated using
               [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#Event_stream_format).
               See the
-              [Streaming section of the Speech-to-Text guide](/docs/guides/speech-to-text?lang=curl#streaming-transcriptions)
+              [Streaming section of the Speech-to-Text guide](https://main.excai.ai/docs/guides/speech-to-text?lang=curl#streaming-transcriptions)
               for more information.
 
               Note: Streaming is not supported for the `whisper-1` model and will be ignored.
@@ -480,6 +508,7 @@ class AsyncAudioResource(AsyncAPIResource):
             {
                 "file": file,
                 "model": model,
+                "chunking_strategy": chunking_strategy,
                 "include": include,
                 "language": language,
                 "prompt": prompt,
@@ -535,8 +564,9 @@ class AsyncAudioResource(AsyncAPIResource):
               Whisper V2 model) is currently available.
 
           prompt: An optional text to guide the model's style or continue a previous audio
-              segment. The [prompt](/docs/guides/speech-to-text#prompting) should be in
-              English.
+              segment. The
+              [prompt](https://main.excai.ai/docs/guides/speech-to-text#prompting) should be
+              in English.
 
           response_format: The format of the output, in one of these options: `json`, `text`, `srt`,
               `verbose_json`, or `vtt`.

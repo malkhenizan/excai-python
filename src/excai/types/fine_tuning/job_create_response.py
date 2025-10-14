@@ -4,19 +4,10 @@ from typing import Dict, List, Union, Optional
 from typing_extensions import Literal
 
 from ..._models import BaseModel
+from .fine_tune_method import FineTuneMethod
+from .fine_tuning_integration import FineTuningIntegration
 
-__all__ = [
-    "JobCreateResponse",
-    "Error",
-    "Hyperparameters",
-    "Integration",
-    "IntegrationWandb",
-    "Method",
-    "MethodDpo",
-    "MethodDpoHyperparameters",
-    "MethodSupervised",
-    "MethodSupervisedHyperparameters",
-]
+__all__ = ["JobCreateResponse", "Error", "Hyperparameters"]
 
 
 class Error(BaseModel):
@@ -52,115 +43,6 @@ class Hyperparameters(BaseModel):
 
     An epoch refers to one full cycle through the training dataset.
     """
-
-
-class IntegrationWandb(BaseModel):
-    project: str
-    """The name of the project that the new run will be created under."""
-
-    entity: Optional[str] = None
-    """The entity to use for the run.
-
-    This allows you to set the team or username of the WandB user that you would
-    like associated with the run. If not set, the default entity for the registered
-    WandB API key is used.
-    """
-
-    name: Optional[str] = None
-    """A display name to set for the run.
-
-    If not set, we will use the Job ID as the name.
-    """
-
-    tags: Optional[List[str]] = None
-    """A list of tags to be attached to the newly created run.
-
-    These tags are passed through directly to WandB. Some default tags are generated
-    by OpenAI: "openai/finetune", "openai/{base-model}", "openai/{ftjob-abcdef}".
-    """
-
-
-class Integration(BaseModel):
-    type: Literal["wandb"]
-    """The type of the integration being enabled for the fine-tuning job"""
-
-    wandb: IntegrationWandb
-    """The settings for your integration with Weights and Biases.
-
-    This payload specifies the project that metrics will be sent to. Optionally, you
-    can set an explicit display name for your run, add tags to your run, and set a
-    default entity (team, username, etc) to be associated with your run.
-    """
-
-
-class MethodDpoHyperparameters(BaseModel):
-    batch_size: Union[Literal["auto"], int, None] = None
-    """Number of examples in each batch.
-
-    A larger batch size means that model parameters are updated less frequently, but
-    with lower variance.
-    """
-
-    beta: Union[Literal["auto"], float, None] = None
-    """The beta value for the DPO method.
-
-    A higher beta value will increase the weight of the penalty between the policy
-    and reference model.
-    """
-
-    learning_rate_multiplier: Union[Literal["auto"], float, None] = None
-    """Scaling factor for the learning rate.
-
-    A smaller learning rate may be useful to avoid overfitting.
-    """
-
-    n_epochs: Union[Literal["auto"], int, None] = None
-    """The number of epochs to train the model for.
-
-    An epoch refers to one full cycle through the training dataset.
-    """
-
-
-class MethodDpo(BaseModel):
-    hyperparameters: Optional[MethodDpoHyperparameters] = None
-    """The hyperparameters used for the fine-tuning job."""
-
-
-class MethodSupervisedHyperparameters(BaseModel):
-    batch_size: Union[Literal["auto"], int, None] = None
-    """Number of examples in each batch.
-
-    A larger batch size means that model parameters are updated less frequently, but
-    with lower variance.
-    """
-
-    learning_rate_multiplier: Union[Literal["auto"], float, None] = None
-    """Scaling factor for the learning rate.
-
-    A smaller learning rate may be useful to avoid overfitting.
-    """
-
-    n_epochs: Union[Literal["auto"], int, None] = None
-    """The number of epochs to train the model for.
-
-    An epoch refers to one full cycle through the training dataset.
-    """
-
-
-class MethodSupervised(BaseModel):
-    hyperparameters: Optional[MethodSupervisedHyperparameters] = None
-    """The hyperparameters used for the fine-tuning job."""
-
-
-class Method(BaseModel):
-    dpo: Optional[MethodDpo] = None
-    """Configuration for the DPO fine-tuning method."""
-
-    supervised: Optional[MethodSupervised] = None
-    """Configuration for the supervised fine-tuning method."""
-
-    type: Optional[Literal["supervised", "dpo"]] = None
-    """The type of method. Is either `supervised` or `dpo`."""
 
 
 class JobCreateResponse(BaseModel):
@@ -207,7 +89,7 @@ class JobCreateResponse(BaseModel):
     """The compiled results file ID(s) for the fine-tuning job.
 
     You can retrieve the results with the
-    [Files API](/docs/api-reference/files/retrieve-contents).
+    [Files API](https://main.excai.ai/docs/api-reference/files/retrieve-contents).
     """
 
     seed: int
@@ -229,14 +111,14 @@ class JobCreateResponse(BaseModel):
     """The file ID used for training.
 
     You can retrieve the training data with the
-    [Files API](/docs/api-reference/files/retrieve-contents).
+    [Files API](https://main.excai.ai/docs/api-reference/files/retrieve-contents).
     """
 
     validation_file: Optional[str] = None
     """The file ID used for validation.
 
     You can retrieve the validation results with the
-    [Files API](/docs/api-reference/files/retrieve-contents).
+    [Files API](https://main.excai.ai/docs/api-reference/files/retrieve-contents).
     """
 
     estimated_finish: Optional[int] = None
@@ -245,7 +127,7 @@ class JobCreateResponse(BaseModel):
     finish. The value will be null if the fine-tuning job is not running.
     """
 
-    integrations: Optional[List[Integration]] = None
+    integrations: Optional[List[FineTuningIntegration]] = None
     """A list of integrations to enable for this fine-tuning job."""
 
     metadata: Optional[Dict[str, str]] = None
@@ -258,5 +140,5 @@ class JobCreateResponse(BaseModel):
     a maximum length of 512 characters.
     """
 
-    method: Optional[Method] = None
+    method: Optional[FineTuneMethod] = None
     """The method used for fine-tuning."""

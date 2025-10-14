@@ -1,47 +1,27 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Dict, List, Union, Optional
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal, Annotated, TypeAlias
 
+from ..._utils import PropertyInfo
 from ..._models import BaseModel
+from .message_content_text_object import MessageContentTextObject
+from ..shared.assistant_tools_code import AssistantToolsCode
+from .message_content_refusal_object import MessageContentRefusalObject
+from .message_content_image_url_object import MessageContentImageURLObject
+from .message_content_image_file_object import MessageContentImageFileObject
+from ..assistant_tools_file_search_type_only import AssistantToolsFileSearchTypeOnly
 
 __all__ = [
     "MessageListResponse",
     "Data",
     "DataAttachment",
     "DataAttachmentTool",
-    "DataAttachmentToolAssistantToolsCode",
-    "DataAttachmentToolAssistantToolsFileSearchTypeOnly",
     "DataContent",
-    "DataContentMessageContentImageFileObject",
-    "DataContentMessageContentImageFileObjectImageFile",
-    "DataContentMessageContentImageURLObject",
-    "DataContentMessageContentImageURLObjectImageURL",
-    "DataContentMessageContentTextObject",
-    "DataContentMessageContentTextObjectText",
-    "DataContentMessageContentTextObjectTextAnnotation",
-    "DataContentMessageContentTextObjectTextAnnotationMessageContentTextAnnotationsFileCitationObject",
-    "DataContentMessageContentTextObjectTextAnnotationMessageContentTextAnnotationsFileCitationObjectFileCitation",
-    "DataContentMessageContentTextObjectTextAnnotationMessageContentTextAnnotationsFilePathObject",
-    "DataContentMessageContentTextObjectTextAnnotationMessageContentTextAnnotationsFilePathObjectFilePath",
-    "DataContentMessageContentRefusalObject",
     "DataIncompleteDetails",
 ]
 
-
-class DataAttachmentToolAssistantToolsCode(BaseModel):
-    type: Literal["code_interpreter"]
-    """The type of tool being defined: `code_interpreter`"""
-
-
-class DataAttachmentToolAssistantToolsFileSearchTypeOnly(BaseModel):
-    type: Literal["file_search"]
-    """The type of tool being defined: `file_search`"""
-
-
-DataAttachmentTool: TypeAlias = Union[
-    DataAttachmentToolAssistantToolsCode, DataAttachmentToolAssistantToolsFileSearchTypeOnly
-]
+DataAttachmentTool: TypeAlias = Union[AssistantToolsCode, AssistantToolsFileSearchTypeOnly]
 
 
 class DataAttachment(BaseModel):
@@ -52,124 +32,14 @@ class DataAttachment(BaseModel):
     """The tools to add this file to."""
 
 
-class DataContentMessageContentImageFileObjectImageFile(BaseModel):
-    file_id: str
-    """The [File](/docs/api-reference/files) ID of the image in the message content.
-
-    Set `purpose="vision"` when uploading the File if you need to later display the
-    file content.
-    """
-
-    detail: Optional[Literal["auto", "low", "high"]] = None
-    """Specifies the detail level of the image if specified by the user.
-
-    `low` uses fewer tokens, you can opt in to high resolution using `high`.
-    """
-
-
-class DataContentMessageContentImageFileObject(BaseModel):
-    image_file: DataContentMessageContentImageFileObjectImageFile
-
-    type: Literal["image_file"]
-    """Always `image_file`."""
-
-
-class DataContentMessageContentImageURLObjectImageURL(BaseModel):
-    url: str
-    """
-    The external URL of the image, must be a supported image types: jpeg, jpg, png,
-    gif, webp.
-    """
-
-    detail: Optional[Literal["auto", "low", "high"]] = None
-    """Specifies the detail level of the image.
-
-    `low` uses fewer tokens, you can opt in to high resolution using `high`. Default
-    value is `auto`
-    """
-
-
-class DataContentMessageContentImageURLObject(BaseModel):
-    image_url: DataContentMessageContentImageURLObjectImageURL
-
-    type: Literal["image_url"]
-    """The type of the content part."""
-
-
-class DataContentMessageContentTextObjectTextAnnotationMessageContentTextAnnotationsFileCitationObjectFileCitation(
-    BaseModel
-):
-    file_id: str
-    """The ID of the specific File the citation is from."""
-
-
-class DataContentMessageContentTextObjectTextAnnotationMessageContentTextAnnotationsFileCitationObject(BaseModel):
-    end_index: int
-
-    file_citation: (
-        DataContentMessageContentTextObjectTextAnnotationMessageContentTextAnnotationsFileCitationObjectFileCitation
-    )
-
-    start_index: int
-
-    text: str
-    """The text in the message content that needs to be replaced."""
-
-    type: Literal["file_citation"]
-    """Always `file_citation`."""
-
-
-class DataContentMessageContentTextObjectTextAnnotationMessageContentTextAnnotationsFilePathObjectFilePath(BaseModel):
-    file_id: str
-    """The ID of the file that was generated."""
-
-
-class DataContentMessageContentTextObjectTextAnnotationMessageContentTextAnnotationsFilePathObject(BaseModel):
-    end_index: int
-
-    file_path: DataContentMessageContentTextObjectTextAnnotationMessageContentTextAnnotationsFilePathObjectFilePath
-
-    start_index: int
-
-    text: str
-    """The text in the message content that needs to be replaced."""
-
-    type: Literal["file_path"]
-    """Always `file_path`."""
-
-
-DataContentMessageContentTextObjectTextAnnotation: TypeAlias = Union[
-    DataContentMessageContentTextObjectTextAnnotationMessageContentTextAnnotationsFileCitationObject,
-    DataContentMessageContentTextObjectTextAnnotationMessageContentTextAnnotationsFilePathObject,
-]
-
-
-class DataContentMessageContentTextObjectText(BaseModel):
-    annotations: List[DataContentMessageContentTextObjectTextAnnotation]
-
-    value: str
-    """The data that makes up the text."""
-
-
-class DataContentMessageContentTextObject(BaseModel):
-    text: DataContentMessageContentTextObjectText
-
-    type: Literal["text"]
-    """Always `text`."""
-
-
-class DataContentMessageContentRefusalObject(BaseModel):
-    refusal: str
-
-    type: Literal["refusal"]
-    """Always `refusal`."""
-
-
-DataContent: TypeAlias = Union[
-    DataContentMessageContentImageFileObject,
-    DataContentMessageContentImageURLObject,
-    DataContentMessageContentTextObject,
-    DataContentMessageContentRefusalObject,
+DataContent: TypeAlias = Annotated[
+    Union[
+        MessageContentImageFileObject,
+        MessageContentImageURLObject,
+        MessageContentTextObject,
+        MessageContentRefusalObject,
+    ],
+    PropertyInfo(discriminator="type"),
 ]
 
 
@@ -184,8 +54,9 @@ class Data(BaseModel):
 
     assistant_id: Optional[str] = None
     """
-    If applicable, the ID of the [assistant](/docs/api-reference/assistants) that
-    authored this message.
+    If applicable, the ID of the
+    [assistant](https://main.excai.ai/docs/api-reference/assistants) that authored
+    this message.
     """
 
     attachments: Optional[List[DataAttachment]] = None
@@ -224,9 +95,9 @@ class Data(BaseModel):
 
     run_id: Optional[str] = None
     """
-    The ID of the [run](/docs/api-reference/runs) associated with the creation of
-    this message. Value is `null` when messages are created manually using the
-    create message or create thread endpoints.
+    The ID of the [run](https://main.excai.ai/docs/api-reference/runs) associated
+    with the creation of this message. Value is `null` when messages are created
+    manually using the create message or create thread endpoints.
     """
 
     status: Literal["in_progress", "incomplete", "completed"]
@@ -236,7 +107,10 @@ class Data(BaseModel):
     """
 
     thread_id: str
-    """The [thread](/docs/api-reference/threads) ID that this message belongs to."""
+    """
+    The [thread](https://main.excai.ai/docs/api-reference/threads) ID that this
+    message belongs to.
+    """
 
 
 class MessageListResponse(BaseModel):

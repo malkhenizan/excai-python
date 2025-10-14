@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing_extensions import Literal
+
 import httpx
 
 from .users import (
@@ -109,6 +111,7 @@ class ProjectsResource(SyncAPIResource):
         self,
         *,
         name: str,
+        geography: Literal["US", "EU", "JP", "IN", "KR", "CA", "AU", "SG"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -124,6 +127,11 @@ class ProjectsResource(SyncAPIResource):
         Args:
           name: The friendly name of the project, this name appears in reports.
 
+          geography: Create the project with the specified data residency region. Your organization
+              must have access to Data residency functionality in order to use. See
+              [data residency controls](https://main.excai.ai/docs/guides/your-data#data-residency-controls)
+              to review the functionality and limitations of setting this field.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -134,7 +142,13 @@ class ProjectsResource(SyncAPIResource):
         """
         return self._post(
             "/organization/projects",
-            body=maybe_transform({"name": name}, project_create_params.ProjectCreateParams),
+            body=maybe_transform(
+                {
+                    "name": name,
+                    "geography": geography,
+                },
+                project_create_params.ProjectCreateParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -347,6 +361,7 @@ class AsyncProjectsResource(AsyncAPIResource):
         self,
         *,
         name: str,
+        geography: Literal["US", "EU", "JP", "IN", "KR", "CA", "AU", "SG"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -362,6 +377,11 @@ class AsyncProjectsResource(AsyncAPIResource):
         Args:
           name: The friendly name of the project, this name appears in reports.
 
+          geography: Create the project with the specified data residency region. Your organization
+              must have access to Data residency functionality in order to use. See
+              [data residency controls](https://main.excai.ai/docs/guides/your-data#data-residency-controls)
+              to review the functionality and limitations of setting this field.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -372,7 +392,13 @@ class AsyncProjectsResource(AsyncAPIResource):
         """
         return await self._post(
             "/organization/projects",
-            body=await async_maybe_transform({"name": name}, project_create_params.ProjectCreateParams),
+            body=await async_maybe_transform(
+                {
+                    "name": name,
+                    "geography": geography,
+                },
+                project_create_params.ProjectCreateParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

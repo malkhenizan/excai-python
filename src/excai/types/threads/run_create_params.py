@@ -6,56 +6,48 @@ from typing import Dict, Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 from ..._types import SequenceNotStr
+from .truncation_object_param import TruncationObjectParam
+from .assistants_named_tool_choice_param import AssistantsNamedToolChoiceParam
+from ..shared_params.assistant_tools_code import AssistantToolsCode
+from ..shared_params.response_format_text import ResponseFormatText
+from .message_content_image_url_object_param import MessageContentImageURLObjectParam
+from ..shared_params.assistant_tools_function import AssistantToolsFunction
+from .message_content_image_file_object_param import MessageContentImageFileObjectParam
+from ..shared_params.assistant_tools_file_search import AssistantToolsFileSearch
+from ..shared_params.response_format_json_object import ResponseFormatJsonObject
+from ..shared_params.response_format_json_schema import ResponseFormatJsonSchema
+from ..assistant_tools_file_search_type_only_param import AssistantToolsFileSearchTypeOnlyParam
 
 __all__ = [
     "RunCreateParams",
     "ResponseFormat",
-    "ResponseFormatResponseFormatText",
-    "ResponseFormatResponseFormatJsonObject",
-    "ResponseFormatResponseFormatJsonSchema",
-    "ResponseFormatResponseFormatJsonSchemaJsonSchema",
     "Thread",
     "ThreadMessage",
     "ThreadMessageContentArrayOfContentPart",
-    "ThreadMessageContentArrayOfContentPartMessageContentImageFileObject",
-    "ThreadMessageContentArrayOfContentPartMessageContentImageFileObjectImageFile",
-    "ThreadMessageContentArrayOfContentPartMessageContentImageURLObject",
-    "ThreadMessageContentArrayOfContentPartMessageContentImageURLObjectImageURL",
-    "ThreadMessageContentArrayOfContentPartMessageRequestContentTextObject",
+    "ThreadMessageContentArrayOfContentPartText",
     "ThreadMessageAttachment",
     "ThreadMessageAttachmentTool",
-    "ThreadMessageAttachmentToolAssistantToolsCode",
-    "ThreadMessageAttachmentToolAssistantToolsFileSearchTypeOnly",
     "ThreadToolResources",
     "ThreadToolResourcesCodeInterpreter",
     "ThreadToolResourcesFileSearch",
     "ThreadToolResourcesFileSearchVectorStore",
     "ThreadToolResourcesFileSearchVectorStoreChunkingStrategy",
-    "ThreadToolResourcesFileSearchVectorStoreChunkingStrategyAutoChunkingStrategy",
-    "ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategy",
-    "ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategyStatic",
+    "ThreadToolResourcesFileSearchVectorStoreChunkingStrategyAuto",
+    "ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStatic",
+    "ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticStatic",
     "ToolChoice",
-    "ToolChoiceAssistantsNamedToolChoice",
-    "ToolChoiceAssistantsNamedToolChoiceFunction",
     "ToolResources",
     "ToolResourcesCodeInterpreter",
     "ToolResourcesFileSearch",
     "Tool",
-    "ToolAssistantToolsCode",
-    "ToolAssistantToolsFileSearch",
-    "ToolAssistantToolsFileSearchFileSearch",
-    "ToolAssistantToolsFileSearchFileSearchRankingOptions",
-    "ToolAssistantToolsFunction",
-    "ToolAssistantToolsFunctionFunction",
-    "TruncationStrategy",
 ]
 
 
 class RunCreateParams(TypedDict, total=False):
     assistant_id: Required[str]
     """
-    The ID of the [assistant](/docs/api-reference/assistants) to use to execute this
-    run.
+    The ID of the [assistant](https://main.excai.ai/docs/api-reference/assistants)
+    to use to execute this run.
     """
 
     instructions: Optional[str]
@@ -95,6 +87,12 @@ class RunCreateParams(TypedDict, total=False):
     model: Union[
         str,
         Literal[
+            "gpt-5",
+            "gpt-5-mini",
+            "gpt-5-nano",
+            "gpt-5-2025-08-07",
+            "gpt-5-mini-2025-08-07",
+            "gpt-5-nano-2025-08-07",
             "gpt-4.1",
             "gpt-4.1-mini",
             "gpt-4.1-nano",
@@ -130,30 +128,31 @@ class RunCreateParams(TypedDict, total=False):
         ],
         None,
     ]
-    """The ID of the [Model](/docs/api-reference/models) to be used to execute this
-    run.
-
-    If a value is provided here, it will override the model associated with the
-    assistant. If not, the model associated with the assistant will be used.
+    """
+    The ID of the [Model](https://main.excai.ai/docs/api-reference/models) to be
+    used to execute this run. If a value is provided here, it will override the
+    model associated with the assistant. If not, the model associated with the
+    assistant will be used.
     """
 
     parallel_tool_calls: bool
     """
     Whether to enable
-    [parallel function calling](/docs/guides/function-calling#configuring-parallel-function-calling)
+    [parallel function calling](https://main.excai.ai/docs/guides/function-calling#configuring-parallel-function-calling)
     during tool use.
     """
 
     response_format: Optional[ResponseFormat]
     """Specifies the format that the model must output.
 
-    Compatible with [GPT-4o](/docs/models#gpt-4o),
-    [GPT-4 Turbo](/docs/models#gpt-4-turbo-and-gpt-4), and all GPT-3.5 Turbo models
-    since `gpt-3.5-turbo-1106`.
+    Compatible with [GPT-4o](https://main.excai.ai/docs/models#gpt-4o),
+    [GPT-4 Turbo](https://main.excai.ai/docs/models#gpt-4-turbo-and-gpt-4), and all
+    GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
 
     Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured
     Outputs which ensures the model will match your supplied JSON schema. Learn more
-    in the [Structured Outputs guide](/docs/guides/structured-outputs).
+    in the
+    [Structured Outputs guide](https://main.excai.ai/docs/guides/structured-outputs).
 
     Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the
     message the model generates is valid JSON.
@@ -222,114 +221,19 @@ class RunCreateParams(TypedDict, total=False):
     We generally recommend altering this or temperature but not both.
     """
 
-    truncation_strategy: Optional[TruncationStrategy]
+    truncation_strategy: Optional[TruncationObjectParam]
     """Controls for how a thread will be truncated prior to the run.
 
-    Use this to control the intial context window of the run.
+    Use this to control the initial context window of the run.
     """
-
-
-class ResponseFormatResponseFormatText(TypedDict, total=False):
-    type: Required[Literal["text"]]
-    """The type of response format being defined. Always `text`."""
-
-
-class ResponseFormatResponseFormatJsonObject(TypedDict, total=False):
-    type: Required[Literal["json_object"]]
-    """The type of response format being defined. Always `json_object`."""
-
-
-class ResponseFormatResponseFormatJsonSchemaJsonSchema(TypedDict, total=False):
-    name: Required[str]
-    """The name of the response format.
-
-    Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length
-    of 64.
-    """
-
-    description: str
-    """
-    A description of what the response format is for, used by the model to determine
-    how to respond in the format.
-    """
-
-    schema: Dict[str, object]
-    """
-    The schema for the response format, described as a JSON Schema object. Learn how
-    to build JSON schemas [here](https://json-schema.org/).
-    """
-
-    strict: Optional[bool]
-    """
-    Whether to enable strict schema adherence when generating the output. If set to
-    true, the model will always follow the exact schema defined in the `schema`
-    field. Only a subset of JSON Schema is supported when `strict` is `true`. To
-    learn more, read the
-    [Structured Outputs guide](/docs/guides/structured-outputs).
-    """
-
-
-class ResponseFormatResponseFormatJsonSchema(TypedDict, total=False):
-    json_schema: Required[ResponseFormatResponseFormatJsonSchemaJsonSchema]
-    """Structured Outputs configuration options, including a JSON Schema."""
-
-    type: Required[Literal["json_schema"]]
-    """The type of response format being defined. Always `json_schema`."""
 
 
 ResponseFormat: TypeAlias = Union[
-    Literal["auto"],
-    ResponseFormatResponseFormatText,
-    ResponseFormatResponseFormatJsonObject,
-    ResponseFormatResponseFormatJsonSchema,
+    Literal["auto"], ResponseFormatText, ResponseFormatJsonObject, ResponseFormatJsonSchema
 ]
 
 
-class ThreadMessageContentArrayOfContentPartMessageContentImageFileObjectImageFile(TypedDict, total=False):
-    file_id: Required[str]
-    """The [File](/docs/api-reference/files) ID of the image in the message content.
-
-    Set `purpose="vision"` when uploading the File if you need to later display the
-    file content.
-    """
-
-    detail: Literal["auto", "low", "high"]
-    """Specifies the detail level of the image if specified by the user.
-
-    `low` uses fewer tokens, you can opt in to high resolution using `high`.
-    """
-
-
-class ThreadMessageContentArrayOfContentPartMessageContentImageFileObject(TypedDict, total=False):
-    image_file: Required[ThreadMessageContentArrayOfContentPartMessageContentImageFileObjectImageFile]
-
-    type: Required[Literal["image_file"]]
-    """Always `image_file`."""
-
-
-class ThreadMessageContentArrayOfContentPartMessageContentImageURLObjectImageURL(TypedDict, total=False):
-    url: Required[str]
-    """
-    The external URL of the image, must be a supported image types: jpeg, jpg, png,
-    gif, webp.
-    """
-
-    detail: Literal["auto", "low", "high"]
-    """Specifies the detail level of the image.
-
-    `low` uses fewer tokens, you can opt in to high resolution using `high`. Default
-    value is `auto`
-    """
-
-
-class ThreadMessageContentArrayOfContentPartMessageContentImageURLObject(TypedDict, total=False):
-    image_url: Required[ThreadMessageContentArrayOfContentPartMessageContentImageURLObjectImageURL]
-
-    type: Required[Literal["image_url"]]
-    """The type of the content part."""
-
-
-class ThreadMessageContentArrayOfContentPartMessageRequestContentTextObject(TypedDict, total=False):
+class ThreadMessageContentArrayOfContentPartText(TypedDict, total=False):
     text: Required[str]
     """Text content to be sent to the model"""
 
@@ -338,25 +242,10 @@ class ThreadMessageContentArrayOfContentPartMessageRequestContentTextObject(Type
 
 
 ThreadMessageContentArrayOfContentPart: TypeAlias = Union[
-    ThreadMessageContentArrayOfContentPartMessageContentImageFileObject,
-    ThreadMessageContentArrayOfContentPartMessageContentImageURLObject,
-    ThreadMessageContentArrayOfContentPartMessageRequestContentTextObject,
+    MessageContentImageFileObjectParam, MessageContentImageURLObjectParam, ThreadMessageContentArrayOfContentPartText
 ]
 
-
-class ThreadMessageAttachmentToolAssistantToolsCode(TypedDict, total=False):
-    type: Required[Literal["code_interpreter"]]
-    """The type of tool being defined: `code_interpreter`"""
-
-
-class ThreadMessageAttachmentToolAssistantToolsFileSearchTypeOnly(TypedDict, total=False):
-    type: Required[Literal["file_search"]]
-    """The type of tool being defined: `file_search`"""
-
-
-ThreadMessageAttachmentTool: TypeAlias = Union[
-    ThreadMessageAttachmentToolAssistantToolsCode, ThreadMessageAttachmentToolAssistantToolsFileSearchTypeOnly
-]
+ThreadMessageAttachmentTool: TypeAlias = Union[AssistantToolsCode, AssistantToolsFileSearchTypeOnlyParam]
 
 
 class ThreadMessageAttachment(TypedDict, total=False):
@@ -397,18 +286,18 @@ class ThreadMessage(TypedDict, total=False):
 class ThreadToolResourcesCodeInterpreter(TypedDict, total=False):
     file_ids: SequenceNotStr[str]
     """
-    A list of [file](/docs/api-reference/files) IDs made available to the
-    `code_interpreter` tool. There can be a maximum of 20 files associated with the
-    tool.
+    A list of [file](https://main.excai.ai/docs/api-reference/files) IDs made
+    available to the `code_interpreter` tool. There can be a maximum of 20 files
+    associated with the tool.
     """
 
 
-class ThreadToolResourcesFileSearchVectorStoreChunkingStrategyAutoChunkingStrategy(TypedDict, total=False):
+class ThreadToolResourcesFileSearchVectorStoreChunkingStrategyAuto(TypedDict, total=False):
     type: Required[Literal["auto"]]
     """Always `auto`."""
 
 
-class ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategyStatic(TypedDict, total=False):
+class ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticStatic(TypedDict, total=False):
     chunk_overlap_tokens: Required[int]
     """The number of tokens that overlap between chunks. The default value is `400`.
 
@@ -423,16 +312,16 @@ class ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStra
     """
 
 
-class ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategy(TypedDict, total=False):
-    static: Required[ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategyStatic]
+class ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStatic(TypedDict, total=False):
+    static: Required[ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticStatic]
 
     type: Required[Literal["static"]]
     """Always `static`."""
 
 
 ThreadToolResourcesFileSearchVectorStoreChunkingStrategy: TypeAlias = Union[
-    ThreadToolResourcesFileSearchVectorStoreChunkingStrategyAutoChunkingStrategy,
-    ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategy,
+    ThreadToolResourcesFileSearchVectorStoreChunkingStrategyAuto,
+    ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStatic,
 ]
 
 
@@ -444,9 +333,9 @@ class ThreadToolResourcesFileSearchVectorStore(TypedDict, total=False):
     """
 
     file_ids: SequenceNotStr[str]
-    """A list of [file](/docs/api-reference/files) IDs to add to the vector store.
-
-    There can be a maximum of 10000 files in a vector store.
+    """
+    A list of [file](https://main.excai.ai/docs/api-reference/files) IDs to add to
+    the vector store. There can be a maximum of 10000 files in a vector store.
     """
 
     metadata: Optional[Dict[str, str]]
@@ -463,13 +352,16 @@ class ThreadToolResourcesFileSearchVectorStore(TypedDict, total=False):
 class ThreadToolResourcesFileSearch(TypedDict, total=False):
     vector_store_ids: SequenceNotStr[str]
     """
-    The [vector store](/docs/api-reference/vector-stores/object) attached to this
-    thread. There can be a maximum of 1 vector store attached to the thread.
+    The
+    [vector store](https://main.excai.ai/docs/api-reference/vector-stores/object)
+    attached to this thread. There can be a maximum of 1 vector store attached to
+    the thread.
     """
 
     vector_stores: Iterable[ThreadToolResourcesFileSearchVectorStore]
     """
-    A helper to create a [vector store](/docs/api-reference/vector-stores/object)
+    A helper to create a
+    [vector store](https://main.excai.ai/docs/api-reference/vector-stores/object)
     with file_ids and attach it to this thread. There can be a maximum of 1 vector
     store attached to the thread.
     """
@@ -483,7 +375,10 @@ class ThreadToolResources(TypedDict, total=False):
 
 class Thread(TypedDict, total=False):
     messages: Iterable[ThreadMessage]
-    """A list of [messages](/docs/api-reference/messages) to start the thread with."""
+    """
+    A list of [messages](https://main.excai.ai/docs/api-reference/messages) to start
+    the thread with.
+    """
 
     metadata: Optional[Dict[str, str]]
     """Set of 16 key-value pairs that can be attached to an object.
@@ -504,36 +399,25 @@ class Thread(TypedDict, total=False):
     """
 
 
-class ToolChoiceAssistantsNamedToolChoiceFunction(TypedDict, total=False):
-    name: Required[str]
-    """The name of the function to call."""
-
-
-class ToolChoiceAssistantsNamedToolChoice(TypedDict, total=False):
-    type: Required[Literal["function", "code_interpreter", "file_search"]]
-    """The type of the tool. If type is `function`, the function name must be set"""
-
-    function: ToolChoiceAssistantsNamedToolChoiceFunction
-
-
-ToolChoice: TypeAlias = Union[Literal["none", "auto", "required"], ToolChoiceAssistantsNamedToolChoice]
+ToolChoice: TypeAlias = Union[Literal["none", "auto", "required"], AssistantsNamedToolChoiceParam]
 
 
 class ToolResourcesCodeInterpreter(TypedDict, total=False):
     file_ids: SequenceNotStr[str]
     """
-    A list of [file](/docs/api-reference/files) IDs made available to the
-    `code_interpreter` tool. There can be a maximum of 20 files associated with the
-    tool.
+    A list of [file](https://main.excai.ai/docs/api-reference/files) IDs made
+    available to the `code_interpreter` tool. There can be a maximum of 20 files
+    associated with the tool.
     """
 
 
 class ToolResourcesFileSearch(TypedDict, total=False):
     vector_store_ids: SequenceNotStr[str]
     """
-    The ID of the [vector store](/docs/api-reference/vector-stores/object) attached
-    to this assistant. There can be a maximum of 1 vector store attached to the
-    assistant.
+    The ID of the
+    [vector store](https://main.excai.ai/docs/api-reference/vector-stores/object)
+    attached to this assistant. There can be a maximum of 1 vector store attached to
+    the assistant.
     """
 
 
@@ -543,114 +427,4 @@ class ToolResources(TypedDict, total=False):
     file_search: ToolResourcesFileSearch
 
 
-class ToolAssistantToolsCode(TypedDict, total=False):
-    type: Required[Literal["code_interpreter"]]
-    """The type of tool being defined: `code_interpreter`"""
-
-
-class ToolAssistantToolsFileSearchFileSearchRankingOptions(TypedDict, total=False):
-    score_threshold: Required[float]
-    """The score threshold for the file search.
-
-    All values must be a floating point number between 0 and 1.
-    """
-
-    ranker: Literal["auto", "default_2024_08_21"]
-    """The ranker to use for the file search.
-
-    If not specified will use the `auto` ranker.
-    """
-
-
-class ToolAssistantToolsFileSearchFileSearch(TypedDict, total=False):
-    max_num_results: int
-    """The maximum number of results the file search tool should output.
-
-    The default is 20 for `gpt-4*` models and 5 for `gpt-3.5-turbo`. This number
-    should be between 1 and 50 inclusive.
-
-    Note that the file search tool may output fewer than `max_num_results` results.
-    See the
-    [file search tool documentation](/docs/assistants/tools/file-search#customizing-file-search-settings)
-    for more information.
-    """
-
-    ranking_options: ToolAssistantToolsFileSearchFileSearchRankingOptions
-    """The ranking options for the file search.
-
-    If not specified, the file search tool will use the `auto` ranker and a
-    score_threshold of 0.
-
-    See the
-    [file search tool documentation](/docs/assistants/tools/file-search#customizing-file-search-settings)
-    for more information.
-    """
-
-
-class ToolAssistantToolsFileSearch(TypedDict, total=False):
-    type: Required[Literal["file_search"]]
-    """The type of tool being defined: `file_search`"""
-
-    file_search: ToolAssistantToolsFileSearchFileSearch
-    """Overrides for the file search tool."""
-
-
-class ToolAssistantToolsFunctionFunction(TypedDict, total=False):
-    name: Required[str]
-    """The name of the function to be called.
-
-    Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length
-    of 64.
-    """
-
-    description: str
-    """
-    A description of what the function does, used by the model to choose when and
-    how to call the function.
-    """
-
-    parameters: Dict[str, object]
-    """The parameters the functions accepts, described as a JSON Schema object.
-
-    See the [guide](/docs/guides/function-calling) for examples, and the
-    [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
-    documentation about the format.
-
-    Omitting `parameters` defines a function with an empty parameter list.
-    """
-
-    strict: Optional[bool]
-    """Whether to enable strict schema adherence when generating the function call.
-
-    If set to true, the model will follow the exact schema defined in the
-    `parameters` field. Only a subset of JSON Schema is supported when `strict` is
-    `true`. Learn more about Structured Outputs in the
-    [function calling guide](docs/guides/function-calling).
-    """
-
-
-class ToolAssistantToolsFunction(TypedDict, total=False):
-    function: Required[ToolAssistantToolsFunctionFunction]
-
-    type: Required[Literal["function"]]
-    """The type of tool being defined: `function`"""
-
-
-Tool: TypeAlias = Union[ToolAssistantToolsCode, ToolAssistantToolsFileSearch, ToolAssistantToolsFunction]
-
-
-class TruncationStrategy(TypedDict, total=False):
-    type: Required[Literal["auto", "last_messages"]]
-    """The truncation strategy to use for the thread.
-
-    The default is `auto`. If set to `last_messages`, the thread will be truncated
-    to the n most recent messages in the thread. When set to `auto`, messages in the
-    middle of the thread will be dropped to fit the context length of the model,
-    `max_prompt_tokens`.
-    """
-
-    last_messages: Optional[int]
-    """
-    The number of most recent messages from the thread when constructing the context
-    for the run.
-    """
+Tool: TypeAlias = Union[AssistantToolsCode, AssistantToolsFileSearch, AssistantToolsFunction]

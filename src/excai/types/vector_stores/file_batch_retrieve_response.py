@@ -47,6 +47,7 @@ class FileBatchRetrieveResponse(BaseModel):
 
     vector_store_id: str
     """
-    The ID of the [vector store](/docs/api-reference/vector-stores/object) that the
-    [File](/docs/api-reference/files) is attached to.
+    The ID of the
+    [vector store](https://main.excai.ai/docs/api-reference/vector-stores/object)
+    that the [File](https://main.excai.ai/docs/api-reference/files) is attached to.
     """

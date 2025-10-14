@@ -1,0 +1,18 @@
+# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+from __future__ import annotations
+
+from typing_extensions import Literal, Required, TypedDict
+
+__all__ = ["TypeParam"]
+
+
+class TypeParam(TypedDict, total=False):
+    text: Required[str]
+    """The text to type."""
+
+    type: Required[Literal["type"]]
+    """Specifies the event type.
+
+    For a type action, this property is always set to `type`.
+    """

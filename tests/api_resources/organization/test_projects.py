@@ -33,6 +33,15 @@ class TestProjects:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
+    def test_method_create_with_all_params(self, client: ExCai) -> None:
+        project = client.organization.projects.create(
+            name="name",
+            geography="US",
+        )
+        assert_matches_type(ProjectCreateResponse, project, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
     def test_raw_response_create(self, client: ExCai) -> None:
         response = client.organization.projects.with_raw_response.create(
             name="name",
@@ -236,6 +245,15 @@ class TestAsyncProjects:
     async def test_method_create(self, async_client: AsyncExCai) -> None:
         project = await async_client.organization.projects.create(
             name="name",
+        )
+        assert_matches_type(ProjectCreateResponse, project, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_create_with_all_params(self, async_client: AsyncExCai) -> None:
+        project = await async_client.organization.projects.create(
+            name="name",
+            geography="US",
         )
         assert_matches_type(ProjectCreateResponse, project, path=["response"])
 

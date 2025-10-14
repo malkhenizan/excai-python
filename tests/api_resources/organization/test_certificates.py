@@ -8,14 +8,12 @@ from typing import Any, cast
 import pytest
 
 from excai import ExCai, AsyncExCai
+from excai.types import Certificate
 from tests.utils import assert_matches_type
 from excai.types.organization import (
     CertificateListResponse,
     CertificateDeleteResponse,
-    CertificateUpdateResponse,
-    CertificateUploadResponse,
     CertificateActivateResponse,
-    CertificateRetrieveResponse,
     CertificateDeactivateResponse,
 )
 
@@ -31,7 +29,7 @@ class TestCertificates:
         certificate = client.organization.certificates.retrieve(
             certificate_id="certificate_id",
         )
-        assert_matches_type(CertificateRetrieveResponse, certificate, path=["response"])
+        assert_matches_type(Certificate, certificate, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -40,7 +38,7 @@ class TestCertificates:
             certificate_id="certificate_id",
             include=["content"],
         )
-        assert_matches_type(CertificateRetrieveResponse, certificate, path=["response"])
+        assert_matches_type(Certificate, certificate, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -52,7 +50,7 @@ class TestCertificates:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         certificate = response.parse()
-        assert_matches_type(CertificateRetrieveResponse, certificate, path=["response"])
+        assert_matches_type(Certificate, certificate, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -64,7 +62,7 @@ class TestCertificates:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             certificate = response.parse()
-            assert_matches_type(CertificateRetrieveResponse, certificate, path=["response"])
+            assert_matches_type(Certificate, certificate, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -83,7 +81,7 @@ class TestCertificates:
             certificate_id="certificate_id",
             name="name",
         )
-        assert_matches_type(CertificateUpdateResponse, certificate, path=["response"])
+        assert_matches_type(Certificate, certificate, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -96,7 +94,7 @@ class TestCertificates:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         certificate = response.parse()
-        assert_matches_type(CertificateUpdateResponse, certificate, path=["response"])
+        assert_matches_type(Certificate, certificate, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -109,7 +107,7 @@ class TestCertificates:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             certificate = response.parse()
-            assert_matches_type(CertificateUpdateResponse, certificate, path=["response"])
+            assert_matches_type(Certificate, certificate, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -276,7 +274,7 @@ class TestCertificates:
         certificate = client.organization.certificates.upload(
             content="content",
         )
-        assert_matches_type(CertificateUploadResponse, certificate, path=["response"])
+        assert_matches_type(Certificate, certificate, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -285,7 +283,7 @@ class TestCertificates:
             content="content",
             name="name",
         )
-        assert_matches_type(CertificateUploadResponse, certificate, path=["response"])
+        assert_matches_type(Certificate, certificate, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -297,7 +295,7 @@ class TestCertificates:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         certificate = response.parse()
-        assert_matches_type(CertificateUploadResponse, certificate, path=["response"])
+        assert_matches_type(Certificate, certificate, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -309,7 +307,7 @@ class TestCertificates:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             certificate = response.parse()
-            assert_matches_type(CertificateUploadResponse, certificate, path=["response"])
+            assert_matches_type(Certificate, certificate, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -325,7 +323,7 @@ class TestAsyncCertificates:
         certificate = await async_client.organization.certificates.retrieve(
             certificate_id="certificate_id",
         )
-        assert_matches_type(CertificateRetrieveResponse, certificate, path=["response"])
+        assert_matches_type(Certificate, certificate, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -334,7 +332,7 @@ class TestAsyncCertificates:
             certificate_id="certificate_id",
             include=["content"],
         )
-        assert_matches_type(CertificateRetrieveResponse, certificate, path=["response"])
+        assert_matches_type(Certificate, certificate, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -346,7 +344,7 @@ class TestAsyncCertificates:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         certificate = await response.parse()
-        assert_matches_type(CertificateRetrieveResponse, certificate, path=["response"])
+        assert_matches_type(Certificate, certificate, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -358,7 +356,7 @@ class TestAsyncCertificates:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             certificate = await response.parse()
-            assert_matches_type(CertificateRetrieveResponse, certificate, path=["response"])
+            assert_matches_type(Certificate, certificate, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -377,7 +375,7 @@ class TestAsyncCertificates:
             certificate_id="certificate_id",
             name="name",
         )
-        assert_matches_type(CertificateUpdateResponse, certificate, path=["response"])
+        assert_matches_type(Certificate, certificate, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -390,7 +388,7 @@ class TestAsyncCertificates:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         certificate = await response.parse()
-        assert_matches_type(CertificateUpdateResponse, certificate, path=["response"])
+        assert_matches_type(Certificate, certificate, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -403,7 +401,7 @@ class TestAsyncCertificates:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             certificate = await response.parse()
-            assert_matches_type(CertificateUpdateResponse, certificate, path=["response"])
+            assert_matches_type(Certificate, certificate, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -570,7 +568,7 @@ class TestAsyncCertificates:
         certificate = await async_client.organization.certificates.upload(
             content="content",
         )
-        assert_matches_type(CertificateUploadResponse, certificate, path=["response"])
+        assert_matches_type(Certificate, certificate, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -579,7 +577,7 @@ class TestAsyncCertificates:
             content="content",
             name="name",
         )
-        assert_matches_type(CertificateUploadResponse, certificate, path=["response"])
+        assert_matches_type(Certificate, certificate, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -591,7 +589,7 @@ class TestAsyncCertificates:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         certificate = await response.parse()
-        assert_matches_type(CertificateUploadResponse, certificate, path=["response"])
+        assert_matches_type(Certificate, certificate, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -603,6 +601,6 @@ class TestAsyncCertificates:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             certificate = await response.parse()
-            assert_matches_type(CertificateUploadResponse, certificate, path=["response"])
+            assert_matches_type(Certificate, certificate, path=["response"])
 
         assert cast(Any, response.is_closed) is True

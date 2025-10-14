@@ -43,7 +43,10 @@ class TestCompletions:
             seed=0,
             stop="\n",
             stream=True,
-            stream_options={"include_usage": True},
+            stream_options={
+                "include_obfuscation": True,
+                "include_usage": True,
+            },
             suffix="test.",
             temperature=1,
             top_p=1,
@@ -111,7 +114,10 @@ class TestAsyncCompletions:
             seed=0,
             stop="\n",
             stream=True,
-            stream_options={"include_usage": True},
+            stream_options={
+                "include_obfuscation": True,
+                "include_usage": True,
+            },
             suffix="test.",
             temperature=1,
             top_p=1,
