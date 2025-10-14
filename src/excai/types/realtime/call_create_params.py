@@ -5,7 +5,14 @@ from __future__ import annotations
 from typing import Dict, List, Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
-from ..._types import SequenceNotStr
+from ..shared_params.mcp_tool import McpTool
+from ..audio_transcription_param import AudioTranscriptionParam
+from ..realtime_function_tool_param import RealtimeFunctionToolParam
+from ..shared_params.tool_choice_mcp import ToolChoiceMcp
+from ..shared_params.input_file_content import InputFileContent
+from ..shared_params.input_text_content import InputTextContent
+from ..shared_params.input_image_content import InputImageContent
+from ..shared_params.tool_choice_function import ToolChoiceFunction
 
 __all__ = [
     "CallCreateParams",
@@ -17,7 +24,6 @@ __all__ = [
     "SessionAudioInputFormatAudioPcmu",
     "SessionAudioInputFormatAudioPcma",
     "SessionAudioInputNoiseReduction",
-    "SessionAudioInputTranscription",
     "SessionAudioInputTurnDetection",
     "SessionAudioInputTurnDetectionServerVad",
     "SessionAudioInputTurnDetectionSemanticVad",
@@ -28,21 +34,8 @@ __all__ = [
     "SessionAudioOutputFormatAudioPcma",
     "SessionPrompt",
     "SessionPromptVariables",
-    "SessionPromptVariablesInputTextContent",
-    "SessionPromptVariablesInputImageContent",
-    "SessionPromptVariablesInputFileContent",
     "SessionToolChoice",
-    "SessionToolChoiceToolChoiceFunction",
-    "SessionToolChoiceToolChoiceMcp",
     "SessionTool",
-    "SessionToolFunction",
-    "SessionToolMcp",
-    "SessionToolMcpAllowedTools",
-    "SessionToolMcpAllowedToolsMcpToolFilter",
-    "SessionToolMcpRequireApproval",
-    "SessionToolMcpRequireApprovalMcpToolApprovalFilter",
-    "SessionToolMcpRequireApprovalMcpToolApprovalFilterAlways",
-    "SessionToolMcpRequireApprovalMcpToolApprovalFilterNever",
     "SessionTracing",
     "SessionTracingTracingConfiguration",
     "SessionTruncation",
@@ -87,32 +80,6 @@ class SessionAudioInputNoiseReduction(TypedDict, total=False):
 
     `near_field` is for close-talking microphones such as headphones, `far_field` is
     for far-field microphones such as laptop or conference room microphones.
-    """
-
-
-class SessionAudioInputTranscription(TypedDict, total=False):
-    language: str
-    """The language of the input audio.
-
-    Supplying the input language in
-    [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`)
-    format will improve accuracy and latency.
-    """
-
-    model: Literal["whisper-1", "gpt-4o-transcribe-latest", "gpt-4o-mini-transcribe", "gpt-4o-transcribe"]
-    """The model to use for transcription.
-
-    Current options are `whisper-1`, `gpt-4o-transcribe-latest`,
-    `gpt-4o-mini-transcribe`, and `gpt-4o-transcribe`.
-    """
-
-    prompt: str
-    """
-    An optional text to guide the model's style or continue a previous audio
-    segment. For `whisper-1`, the
-    [prompt is a list of keywords](https://platform.excai.com/docs/guides/speech-to-text#prompting).
-    For `gpt-4o-transcribe` models, the prompt is a free text string, for example
-    "expect words related to technology".
     """
 
 
@@ -218,7 +185,7 @@ class SessionAudioInput(TypedDict, total=False):
     model performance by improving perception of the input audio.
     """
 
-    transcription: SessionAudioInputTranscription
+    transcription: AudioTranscriptionParam
     """
     Configuration for input audio transcription, defaults to off and can be set to
     `null` to turn off once on. Input audio transcription is not native to the
@@ -302,57 +269,7 @@ class SessionAudio(TypedDict, total=False):
     output: SessionAudioOutput
 
 
-class SessionPromptVariablesInputTextContent(TypedDict, total=False):
-    text: Required[str]
-    """The text input to the model."""
-
-    type: Required[Literal["input_text"]]
-    """The type of the input item. Always `input_text`."""
-
-
-class SessionPromptVariablesInputImageContent(TypedDict, total=False):
-    detail: Required[Literal["low", "high", "auto"]]
-    """The detail level of the image to be sent to the model.
-
-    One of `high`, `low`, or `auto`. Defaults to `auto`.
-    """
-
-    type: Required[Literal["input_image"]]
-    """The type of the input item. Always `input_image`."""
-
-    file_id: Optional[str]
-    """The ID of the file to be sent to the model."""
-
-    image_url: Optional[str]
-    """The URL of the image to be sent to the model.
-
-    A fully qualified URL or base64 encoded image in a data URL.
-    """
-
-
-class SessionPromptVariablesInputFileContent(TypedDict, total=False):
-    type: Required[Literal["input_file"]]
-    """The type of the input item. Always `input_file`."""
-
-    file_data: str
-    """The content of the file to be sent to the model."""
-
-    file_id: Optional[str]
-    """The ID of the file to be sent to the model."""
-
-    file_url: str
-    """The URL of the file to be sent to the model."""
-
-    filename: str
-    """The name of the file to be sent to the model."""
-
-
-SessionPromptVariables: TypeAlias = Union[
-    str,
-    SessionPromptVariablesInputTextContent,
-    SessionPromptVariablesInputImageContent,
-    SessionPromptVariablesInputFileContent,
-]
+SessionPromptVariables: TypeAlias = Union[str, InputTextContent, InputImageContent, InputFileContent]
 
 
 class SessionPrompt(TypedDict, total=False):
@@ -370,167 +287,9 @@ class SessionPrompt(TypedDict, total=False):
     """Optional version of the prompt template."""
 
 
-class SessionToolChoiceToolChoiceFunction(TypedDict, total=False):
-    name: Required[str]
-    """The name of the function to call."""
+SessionToolChoice: TypeAlias = Union[Literal["none", "auto", "required"], ToolChoiceFunction, ToolChoiceMcp]
 
-    type: Required[Literal["function"]]
-    """For function calling, the type is always `function`."""
-
-
-class SessionToolChoiceToolChoiceMcp(TypedDict, total=False):
-    server_label: Required[str]
-    """The label of the MCP server to use."""
-
-    type: Required[Literal["mcp"]]
-    """For MCP tools, the type is always `mcp`."""
-
-    name: Optional[str]
-    """The name of the tool to call on the server."""
-
-
-SessionToolChoice: TypeAlias = Union[
-    Literal["none", "auto", "required"], SessionToolChoiceToolChoiceFunction, SessionToolChoiceToolChoiceMcp
-]
-
-
-class SessionToolFunction(TypedDict, total=False):
-    description: str
-    """
-    The description of the function, including guidance on when and how to call it,
-    and guidance about what to tell the user when calling (if anything).
-    """
-
-    name: str
-    """The name of the function."""
-
-    parameters: object
-    """Parameters of the function in JSON Schema."""
-
-    type: Literal["function"]
-    """The type of the tool, i.e. `function`."""
-
-
-class SessionToolMcpAllowedToolsMcpToolFilter(TypedDict, total=False):
-    read_only: bool
-    """Indicates whether or not a tool modifies data or is read-only.
-
-    If an MCP server is
-    [annotated with `readOnlyHint`](https://modelcontextprotocol.io/specification/2025-06-18/schema#toolannotations-readonlyhint),
-    it will match this filter.
-    """
-
-    tool_names: SequenceNotStr[str]
-    """List of allowed tool names."""
-
-
-SessionToolMcpAllowedTools: TypeAlias = Union[SequenceNotStr[str], SessionToolMcpAllowedToolsMcpToolFilter]
-
-
-class SessionToolMcpRequireApprovalMcpToolApprovalFilterAlways(TypedDict, total=False):
-    read_only: bool
-    """Indicates whether or not a tool modifies data or is read-only.
-
-    If an MCP server is
-    [annotated with `readOnlyHint`](https://modelcontextprotocol.io/specification/2025-06-18/schema#toolannotations-readonlyhint),
-    it will match this filter.
-    """
-
-    tool_names: SequenceNotStr[str]
-    """List of allowed tool names."""
-
-
-class SessionToolMcpRequireApprovalMcpToolApprovalFilterNever(TypedDict, total=False):
-    read_only: bool
-    """Indicates whether or not a tool modifies data or is read-only.
-
-    If an MCP server is
-    [annotated with `readOnlyHint`](https://modelcontextprotocol.io/specification/2025-06-18/schema#toolannotations-readonlyhint),
-    it will match this filter.
-    """
-
-    tool_names: SequenceNotStr[str]
-    """List of allowed tool names."""
-
-
-class SessionToolMcpRequireApprovalMcpToolApprovalFilter(TypedDict, total=False):
-    always: SessionToolMcpRequireApprovalMcpToolApprovalFilterAlways
-    """A filter object to specify which tools are allowed."""
-
-    never: SessionToolMcpRequireApprovalMcpToolApprovalFilterNever
-    """A filter object to specify which tools are allowed."""
-
-
-SessionToolMcpRequireApproval: TypeAlias = Union[
-    SessionToolMcpRequireApprovalMcpToolApprovalFilter, Literal["always", "never"]
-]
-
-
-class SessionToolMcp(TypedDict, total=False):
-    server_label: Required[str]
-    """A label for this MCP server, used to identify it in tool calls."""
-
-    type: Required[Literal["mcp"]]
-    """The type of the MCP tool. Always `mcp`."""
-
-    allowed_tools: Optional[SessionToolMcpAllowedTools]
-    """List of allowed tool names or a filter object."""
-
-    authorization: str
-    """
-    An OAuth access token that can be used with a remote MCP server, either with a
-    custom MCP server URL or a service connector. Your application must handle the
-    OAuth authorization flow and provide the token here.
-    """
-
-    connector_id: Literal[
-        "connector_dropbox",
-        "connector_gmail",
-        "connector_googlecalendar",
-        "connector_googledrive",
-        "connector_microsoftteams",
-        "connector_outlookcalendar",
-        "connector_outlookemail",
-        "connector_sharepoint",
-    ]
-    """Identifier for service connectors, like those available in ChatGPT.
-
-    One of `server_url` or `connector_id` must be provided. Learn more about service
-    connectors
-    [here](https://platform.excai.com/docs/guides/tools-remote-mcp#connectors).
-
-    Currently supported `connector_id` values are:
-
-    - Dropbox: `connector_dropbox`
-    - Gmail: `connector_gmail`
-    - Google Calendar: `connector_googlecalendar`
-    - Google Drive: `connector_googledrive`
-    - Microsoft Teams: `connector_microsoftteams`
-    - Outlook Calendar: `connector_outlookcalendar`
-    - Outlook Email: `connector_outlookemail`
-    - SharePoint: `connector_sharepoint`
-    """
-
-    headers: Optional[Dict[str, str]]
-    """Optional HTTP headers to send to the MCP server.
-
-    Use for authentication or other purposes.
-    """
-
-    require_approval: Optional[SessionToolMcpRequireApproval]
-    """Specify which of the MCP server's tools require approval."""
-
-    server_description: str
-    """Optional description of the MCP server, used to provide more context."""
-
-    server_url: str
-    """The URL for the MCP server.
-
-    One of `server_url` or `connector_id` must be provided.
-    """
-
-
-SessionTool: TypeAlias = Union[SessionToolFunction, SessionToolMcp]
+SessionTool: TypeAlias = Union[RealtimeFunctionToolParam, McpTool]
 
 
 class SessionTracingTracingConfiguration(TypedDict, total=False):

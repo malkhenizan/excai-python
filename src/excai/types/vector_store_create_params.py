@@ -3,18 +3,14 @@
 from __future__ import annotations
 
 from typing import Dict, Union, Optional
-from typing_extensions import Literal, Required, TypeAlias, TypedDict
+from typing_extensions import TypeAlias, TypedDict
 
 from .._types import SequenceNotStr
+from .vector_store_expiration_after_param import VectorStoreExpirationAfterParam
+from .auto_chunking_strategy_request_param import AutoChunkingStrategyRequestParam
+from .static_chunking_strategy_request_param import StaticChunkingStrategyRequestParam
 
-__all__ = [
-    "VectorStoreCreateParams",
-    "ChunkingStrategy",
-    "ChunkingStrategyAuto",
-    "ChunkingStrategyStatic",
-    "ChunkingStrategyStaticStatic",
-    "ExpiresAfter",
-]
+__all__ = ["VectorStoreCreateParams", "ChunkingStrategy"]
 
 
 class VectorStoreCreateParams(TypedDict, total=False):
@@ -25,7 +21,7 @@ class VectorStoreCreateParams(TypedDict, total=False):
     non-empty.
     """
 
-    expires_after: ExpiresAfter
+    expires_after: VectorStoreExpirationAfterParam
     """The expiration policy for a vector store."""
 
     file_ids: SequenceNotStr[str]
@@ -49,42 +45,4 @@ class VectorStoreCreateParams(TypedDict, total=False):
     """The name of the vector store."""
 
 
-class ChunkingStrategyAuto(TypedDict, total=False):
-    type: Required[Literal["auto"]]
-    """Always `auto`."""
-
-
-class ChunkingStrategyStaticStatic(TypedDict, total=False):
-    chunk_overlap_tokens: Required[int]
-    """The number of tokens that overlap between chunks. The default value is `400`.
-
-    Note that the overlap must not exceed half of `max_chunk_size_tokens`.
-    """
-
-    max_chunk_size_tokens: Required[int]
-    """The maximum number of tokens in each chunk.
-
-    The default value is `800`. The minimum value is `100` and the maximum value is
-    `4096`.
-    """
-
-
-class ChunkingStrategyStatic(TypedDict, total=False):
-    static: Required[ChunkingStrategyStaticStatic]
-
-    type: Required[Literal["static"]]
-    """Always `static`."""
-
-
-ChunkingStrategy: TypeAlias = Union[ChunkingStrategyAuto, ChunkingStrategyStatic]
-
-
-class ExpiresAfter(TypedDict, total=False):
-    anchor: Required[Literal["last_active_at"]]
-    """Anchor timestamp after which the expiration policy applies.
-
-    Supported anchors: `last_active_at`.
-    """
-
-    days: Required[int]
-    """The number of days after the anchor time that the vector store will expire."""
+ChunkingStrategy: TypeAlias = Union[AutoChunkingStrategyRequestParam, StaticChunkingStrategyRequestParam]

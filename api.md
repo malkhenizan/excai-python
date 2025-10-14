@@ -1,3 +1,91 @@
+# Shared Types
+
+```python
+from excai.types import (
+    ApproximateLocation,
+    AssistantToolsCode,
+    AssistantToolsFileSearch,
+    AssistantToolsFunction,
+    Click,
+    CodeInterpreterOutputImage,
+    CodeInterpreterOutputLogs,
+    CodeInterpreterTool,
+    CodeInterpreterToolAuto,
+    CodeInterpreterToolCall,
+    ComparisonFilter,
+    CompletionUsage,
+    CompoundFilter,
+    ComputerScreenshotImage,
+    ComputerToolCall,
+    ComputerToolCallOutputResource,
+    ComputerToolCallSafetyCheck,
+    ComputerUsePreviewTool,
+    ContainerFileCitationBody,
+    Coordinate,
+    CustomTool,
+    CustomToolCall,
+    DoubleClick,
+    Drag,
+    EvalItem,
+    ExCaiFile,
+    FileCitationBody,
+    FilePath,
+    FileSearchRankingOptions,
+    FileSearchTool,
+    FileSearchToolCall,
+    FunctionObject,
+    FunctionTool,
+    FunctionToolCallOutputResource,
+    FunctionToolCallResource,
+    GraderLabelModel,
+    GraderStringCheck,
+    ImageGenTool,
+    ImageGenToolCall,
+    InputAudio,
+    InputFileContent,
+    InputImageContent,
+    InputTextContent,
+    KeyPress,
+    LocalShellExecAction,
+    LocalShellTool,
+    LocalShellToolCall,
+    LocalShellToolCallOutput,
+    LogProb,
+    McpApprovalRequest,
+    McpApprovalResponseResource,
+    McpListTools,
+    McpListToolsTool,
+    McpTool,
+    McpToolCall,
+    McpToolFilter,
+    Move,
+    OutputTextContent,
+    RankingOptions,
+    ReasoningItem,
+    ReasoningTextContent,
+    RefusalContent,
+    ResponseFormatJsonObject,
+    ResponseFormatJsonSchema,
+    ResponseFormatText,
+    Screenshot,
+    Scroll,
+    Summary,
+    TextResponseFormatJsonSchema,
+    ToolChoiceFunction,
+    ToolChoiceMcp,
+    TopLogProb,
+    Type,
+    URLCitationBody,
+    Wait,
+    WebSearchActionFind,
+    WebSearchActionOpenPage,
+    WebSearchActionSearch,
+    WebSearchPreviewTool,
+    WebSearchTool,
+    WebSearchToolCall,
+)
+```
+
 # Assistants
 
 Types:
@@ -40,6 +128,8 @@ Types:
 
 ```python
 from excai.types import (
+    BatchError,
+    BatchRequestCounts,
     BatchCreateResponse,
     BatchRetrieveResponse,
     BatchListResponse,
@@ -62,6 +152,10 @@ Types:
 
 ```python
 from excai.types.chat import (
+    ChatCompletionMessageCustomToolCall,
+    ChatCompletionMessageToolCall,
+    ChatCompletionResponseMessage,
+    ChatCompletionTokenLogprob,
     CompletionCreateResponse,
     CompletionRetrieveResponse,
     CompletionUpdateResponse,
@@ -149,6 +243,11 @@ Types:
 
 ```python
 from excai.types.conversations import (
+    ComputerScreenshotContent,
+    CustomToolCallOutput,
+    Message,
+    SummaryTextContent,
+    TextContent,
     ItemCreateResponse,
     ItemRetrieveResponse,
     ItemListResponse,
@@ -181,6 +280,12 @@ Types:
 
 ```python
 from excai.types import (
+    EvalCustomDataSourceConfig,
+    EvalGraderPython,
+    EvalGraderScoreModel,
+    EvalGraderTextSimilarity,
+    EvalLogsDataSourceConfig,
+    EvalStoredCompletionsDataSourceConfig,
     EvalCreateResponse,
     EvalRetrieveResponse,
     EvalUpdateResponse,
@@ -203,6 +308,16 @@ Types:
 
 ```python
 from excai.types.evals import (
+    ChatCompletionTool,
+    CreateEvalCompletionsRunDataSource,
+    CreateEvalJSONLRunDataSource,
+    CreateEvalResponsesRunDataSource,
+    EasyInputMessage,
+    EvalAPIError,
+    EvalJSONLFileContentSource,
+    EvalJSONLFileIDSource,
+    EvalResponsesSource,
+    EvalStoredCompletionsSource,
     RunCreateResponse,
     RunRetrieveResponse,
     RunListResponse,
@@ -237,24 +352,24 @@ Methods:
 Types:
 
 ```python
-from excai.types import (
-    FileRetrieveResponse,
-    FileListResponse,
-    FileDeleteResponse,
-    FileRetrieveContentResponse,
-    FileUploadResponse,
-)
+from excai.types import FileListResponse, FileDeleteResponse, FileRetrieveContentResponse
 ```
 
 Methods:
 
-- <code title="get /files/{file_id}">client.files.<a href="./src/excai/resources/files.py">retrieve</a>(file_id) -> <a href="./src/excai/types/file_retrieve_response.py">FileRetrieveResponse</a></code>
+- <code title="get /files/{file_id}">client.files.<a href="./src/excai/resources/files.py">retrieve</a>(file_id) -> <a href="./src/excai/types/shared/ex_cai_file.py">ExCaiFile</a></code>
 - <code title="get /files">client.files.<a href="./src/excai/resources/files.py">list</a>(\*\*<a href="src/excai/types/file_list_params.py">params</a>) -> <a href="./src/excai/types/file_list_response.py">FileListResponse</a></code>
 - <code title="delete /files/{file_id}">client.files.<a href="./src/excai/resources/files.py">delete</a>(file_id) -> <a href="./src/excai/types/file_delete_response.py">FileDeleteResponse</a></code>
 - <code title="get /files/{file_id}/content">client.files.<a href="./src/excai/resources/files.py">retrieve_content</a>(file_id) -> str</code>
-- <code title="post /files">client.files.<a href="./src/excai/resources/files.py">upload</a>(\*\*<a href="src/excai/types/file_upload_params.py">params</a>) -> <a href="./src/excai/types/file_upload_response.py">FileUploadResponse</a></code>
+- <code title="post /files">client.files.<a href="./src/excai/resources/files.py">upload</a>(\*\*<a href="src/excai/types/file_upload_params.py">params</a>) -> <a href="./src/excai/types/shared/ex_cai_file.py">ExCaiFile</a></code>
 
 # FineTuning
+
+Types:
+
+```python
+from excai.types import GraderMulti, GraderPython, GraderScoreModel, GraderTextSimilarity
+```
 
 ## Alpha
 
@@ -297,6 +412,14 @@ Types:
 
 ```python
 from excai.types.fine_tuning import (
+    FineTuneDpoHyperparameters,
+    FineTuneDpoMethod,
+    FineTuneMethod,
+    FineTuneReinforcementHyperparameters,
+    FineTuneReinforcementMethod,
+    FineTuneSupervisedHyperparameters,
+    FineTuneSupervisedMethod,
+    FineTuningIntegration,
     JobCreateResponse,
     JobRetrieveResponse,
     JobListResponse,
@@ -345,6 +468,9 @@ Types:
 
 ```python
 from excai.types import (
+    Image,
+    ImageGenInputUsageDetails,
+    ImageGenUsage,
     ImageCreateEditResponse,
     ImageCreateImageResponse,
     ImageCreateVariationResponse,
@@ -388,7 +514,21 @@ Methods:
 Types:
 
 ```python
-from excai.types import OrganizationGetCostsResponse, OrganizationListAuditLogsResponse
+from excai.types import (
+    Certificate,
+    CostsResult,
+    UsageAudioSpeechesResult,
+    UsageAudioTranscriptionsResult,
+    UsageCodeInterpreterSessionsResult,
+    UsageCompletionsResult,
+    UsageEmbeddingsResult,
+    UsageImagesResult,
+    UsageModerationsResult,
+    UsageTimeBucket,
+    UsageVectorStoresResult,
+    OrganizationGetCostsResponse,
+    OrganizationListAuditLogsResponse,
+)
 ```
 
 Methods:
@@ -422,25 +562,22 @@ Types:
 
 ```python
 from excai.types.organization import (
-    CertificateRetrieveResponse,
-    CertificateUpdateResponse,
     CertificateListResponse,
     CertificateDeleteResponse,
     CertificateActivateResponse,
     CertificateDeactivateResponse,
-    CertificateUploadResponse,
 )
 ```
 
 Methods:
 
-- <code title="get /organization/certificates/{certificate_id}">client.organization.certificates.<a href="./src/excai/resources/organization/certificates.py">retrieve</a>(certificate_id, \*\*<a href="src/excai/types/organization/certificate_retrieve_params.py">params</a>) -> <a href="./src/excai/types/organization/certificate_retrieve_response.py">CertificateRetrieveResponse</a></code>
-- <code title="post /organization/certificates/{certificate_id}">client.organization.certificates.<a href="./src/excai/resources/organization/certificates.py">update</a>(certificate_id, \*\*<a href="src/excai/types/organization/certificate_update_params.py">params</a>) -> <a href="./src/excai/types/organization/certificate_update_response.py">CertificateUpdateResponse</a></code>
+- <code title="get /organization/certificates/{certificate_id}">client.organization.certificates.<a href="./src/excai/resources/organization/certificates.py">retrieve</a>(certificate_id, \*\*<a href="src/excai/types/organization/certificate_retrieve_params.py">params</a>) -> <a href="./src/excai/types/certificate.py">Certificate</a></code>
+- <code title="post /organization/certificates/{certificate_id}">client.organization.certificates.<a href="./src/excai/resources/organization/certificates.py">update</a>(certificate_id, \*\*<a href="src/excai/types/organization/certificate_update_params.py">params</a>) -> <a href="./src/excai/types/certificate.py">Certificate</a></code>
 - <code title="get /organization/certificates">client.organization.certificates.<a href="./src/excai/resources/organization/certificates.py">list</a>(\*\*<a href="src/excai/types/organization/certificate_list_params.py">params</a>) -> <a href="./src/excai/types/organization/certificate_list_response.py">CertificateListResponse</a></code>
 - <code title="delete /organization/certificates/{certificate_id}">client.organization.certificates.<a href="./src/excai/resources/organization/certificates.py">delete</a>(certificate_id) -> <a href="./src/excai/types/organization/certificate_delete_response.py">CertificateDeleteResponse</a></code>
 - <code title="post /organization/certificates/activate">client.organization.certificates.<a href="./src/excai/resources/organization/certificates.py">activate</a>(\*\*<a href="src/excai/types/organization/certificate_activate_params.py">params</a>) -> <a href="./src/excai/types/organization/certificate_activate_response.py">CertificateActivateResponse</a></code>
 - <code title="post /organization/certificates/deactivate">client.organization.certificates.<a href="./src/excai/resources/organization/certificates.py">deactivate</a>(\*\*<a href="src/excai/types/organization/certificate_deactivate_params.py">params</a>) -> <a href="./src/excai/types/organization/certificate_deactivate_response.py">CertificateDeactivateResponse</a></code>
-- <code title="post /organization/certificates">client.organization.certificates.<a href="./src/excai/resources/organization/certificates.py">upload</a>(\*\*<a href="src/excai/types/organization/certificate_upload_params.py">params</a>) -> <a href="./src/excai/types/organization/certificate_upload_response.py">CertificateUploadResponse</a></code>
+- <code title="post /organization/certificates">client.organization.certificates.<a href="./src/excai/resources/organization/certificates.py">upload</a>(\*\*<a href="src/excai/types/organization/certificate_upload_params.py">params</a>) -> <a href="./src/excai/types/certificate.py">Certificate</a></code>
 
 ## Invites
 
@@ -468,6 +605,8 @@ Types:
 
 ```python
 from excai.types.organization import (
+    ProjectServiceAccount,
+    ProjectUser,
     ProjectCreateResponse,
     ProjectRetrieveResponse,
     ProjectUpdateResponse,
@@ -540,7 +679,6 @@ Types:
 ```python
 from excai.types.organization.projects import (
     ServiceAccountCreateResponse,
-    ServiceAccountRetrieveResponse,
     ServiceAccountListResponse,
     ServiceAccountDeleteResponse,
 )
@@ -549,7 +687,7 @@ from excai.types.organization.projects import (
 Methods:
 
 - <code title="post /organization/projects/{project_id}/service_accounts">client.organization.projects.service_accounts.<a href="./src/excai/resources/organization/projects/service_accounts.py">create</a>(project_id, \*\*<a href="src/excai/types/organization/projects/service_account_create_params.py">params</a>) -> <a href="./src/excai/types/organization/projects/service_account_create_response.py">ServiceAccountCreateResponse</a></code>
-- <code title="get /organization/projects/{project_id}/service_accounts/{service_account_id}">client.organization.projects.service_accounts.<a href="./src/excai/resources/organization/projects/service_accounts.py">retrieve</a>(service_account_id, \*, project_id) -> <a href="./src/excai/types/organization/projects/service_account_retrieve_response.py">ServiceAccountRetrieveResponse</a></code>
+- <code title="get /organization/projects/{project_id}/service_accounts/{service_account_id}">client.organization.projects.service_accounts.<a href="./src/excai/resources/organization/projects/service_accounts.py">retrieve</a>(service_account_id, \*, project_id) -> <a href="./src/excai/types/organization/project_service_account.py">ProjectServiceAccount</a></code>
 - <code title="get /organization/projects/{project_id}/service_accounts">client.organization.projects.service_accounts.<a href="./src/excai/resources/organization/projects/service_accounts.py">list</a>(project_id, \*\*<a href="src/excai/types/organization/projects/service_account_list_params.py">params</a>) -> <a href="./src/excai/types/organization/projects/service_account_list_response.py">ServiceAccountListResponse</a></code>
 - <code title="delete /organization/projects/{project_id}/service_accounts/{service_account_id}">client.organization.projects.service_accounts.<a href="./src/excai/resources/organization/projects/service_accounts.py">delete</a>(service_account_id, \*, project_id) -> <a href="./src/excai/types/organization/projects/service_account_delete_response.py">ServiceAccountDeleteResponse</a></code>
 
@@ -558,20 +696,14 @@ Methods:
 Types:
 
 ```python
-from excai.types.organization.projects import (
-    UserCreateResponse,
-    UserRetrieveResponse,
-    UserUpdateResponse,
-    UserListResponse,
-    UserDeleteResponse,
-)
+from excai.types.organization.projects import UserListResponse, UserDeleteResponse
 ```
 
 Methods:
 
-- <code title="post /organization/projects/{project_id}/users">client.organization.projects.users.<a href="./src/excai/resources/organization/projects/users.py">create</a>(project_id, \*\*<a href="src/excai/types/organization/projects/user_create_params.py">params</a>) -> <a href="./src/excai/types/organization/projects/user_create_response.py">UserCreateResponse</a></code>
-- <code title="get /organization/projects/{project_id}/users/{user_id}">client.organization.projects.users.<a href="./src/excai/resources/organization/projects/users.py">retrieve</a>(user_id, \*, project_id) -> <a href="./src/excai/types/organization/projects/user_retrieve_response.py">UserRetrieveResponse</a></code>
-- <code title="post /organization/projects/{project_id}/users/{user_id}">client.organization.projects.users.<a href="./src/excai/resources/organization/projects/users.py">update</a>(user_id, \*, project_id, \*\*<a href="src/excai/types/organization/projects/user_update_params.py">params</a>) -> <a href="./src/excai/types/organization/projects/user_update_response.py">UserUpdateResponse</a></code>
+- <code title="post /organization/projects/{project_id}/users">client.organization.projects.users.<a href="./src/excai/resources/organization/projects/users.py">create</a>(project_id, \*\*<a href="src/excai/types/organization/projects/user_create_params.py">params</a>) -> <a href="./src/excai/types/organization/project_user.py">ProjectUser</a></code>
+- <code title="get /organization/projects/{project_id}/users/{user_id}">client.organization.projects.users.<a href="./src/excai/resources/organization/projects/users.py">retrieve</a>(user_id, \*, project_id) -> <a href="./src/excai/types/organization/project_user.py">ProjectUser</a></code>
+- <code title="post /organization/projects/{project_id}/users/{user_id}">client.organization.projects.users.<a href="./src/excai/resources/organization/projects/users.py">update</a>(user_id, \*, project_id, \*\*<a href="src/excai/types/organization/projects/user_update_params.py">params</a>) -> <a href="./src/excai/types/organization/project_user.py">ProjectUser</a></code>
 - <code title="get /organization/projects/{project_id}/users">client.organization.projects.users.<a href="./src/excai/resources/organization/projects/users.py">list</a>(project_id, \*\*<a href="src/excai/types/organization/projects/user_list_params.py">params</a>) -> <a href="./src/excai/types/organization/projects/user_list_response.py">UserListResponse</a></code>
 - <code title="delete /organization/projects/{project_id}/users/{user_id}">client.organization.projects.users.<a href="./src/excai/resources/organization/projects/users.py">delete</a>(user_id, \*, project_id) -> <a href="./src/excai/types/organization/projects/user_delete_response.py">UserDeleteResponse</a></code>
 
@@ -629,6 +761,8 @@ Types:
 
 ```python
 from excai.types import (
+    AudioTranscription,
+    RealtimeFunctionTool,
     RealtimeCreateClientSecretResponse,
     RealtimeCreateSessionResponse,
     RealtimeCreateTranscriptionSessionResponse,
@@ -657,6 +791,14 @@ Types:
 
 ```python
 from excai.types import (
+    Conversation2,
+    FunctionToolCall,
+    OutputMessage,
+    Reasoning,
+    ResponseUsage,
+    ToolChoiceAllowed,
+    ToolChoiceCustom,
+    ToolChoiceTypes,
     ResponseCreateResponse,
     ResponseRetrieveResponse,
     ResponseCancelResponse,
@@ -678,6 +820,7 @@ Types:
 
 ```python
 from excai.types import (
+    AssistantToolsFileSearchTypeOnly,
     ThreadCreateResponse,
     ThreadRetrieveResponse,
     ThreadUpdateResponse,
@@ -698,6 +841,9 @@ Types:
 
 ```python
 from excai.types.threads import (
+    AssistantsNamedToolChoice,
+    RunToolCallObject,
+    TruncationObject,
     RunCreateResponse,
     RunRetrieveResponse,
     RunUpdateResponse,
@@ -737,6 +883,12 @@ Types:
 
 ```python
 from excai.types.threads import (
+    MessageContentImageFileObject,
+    MessageContentImageURLObject,
+    MessageContentRefusalObject,
+    MessageContentTextAnnotationsFileCitationObject,
+    MessageContentTextAnnotationsFilePathObject,
+    MessageContentTextObject,
     MessageCreateResponse,
     MessageRetrieveResponse,
     MessageUpdateResponse,
@@ -779,6 +931,12 @@ Types:
 
 ```python
 from excai.types import (
+    AutoChunkingStrategyRequestParam,
+    OtherChunkingStrategyResponseParam,
+    StaticChunkingStrategy,
+    StaticChunkingStrategyRequestParam,
+    StaticChunkingStrategyResponseParam,
+    VectorStoreExpirationAfter,
     VectorStoreCreateResponse,
     VectorStoreRetrieveResponse,
     VectorStoreUpdateResponse,
@@ -847,6 +1005,7 @@ Types:
 
 ```python
 from excai.types import (
+    Error2,
     VideoCreateResponse,
     VideoRetrieveResponse,
     VideoListResponse,

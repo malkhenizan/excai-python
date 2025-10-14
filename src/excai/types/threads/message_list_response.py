@@ -5,44 +5,23 @@ from typing_extensions import Literal, Annotated, TypeAlias
 
 from ..._utils import PropertyInfo
 from ..._models import BaseModel
+from .message_content_text_object import MessageContentTextObject
+from ..shared.assistant_tools_code import AssistantToolsCode
+from .message_content_refusal_object import MessageContentRefusalObject
+from .message_content_image_url_object import MessageContentImageURLObject
+from .message_content_image_file_object import MessageContentImageFileObject
+from ..assistant_tools_file_search_type_only import AssistantToolsFileSearchTypeOnly
 
 __all__ = [
     "MessageListResponse",
     "Data",
     "DataAttachment",
     "DataAttachmentTool",
-    "DataAttachmentToolAssistantToolsCode",
-    "DataAttachmentToolAssistantToolsFileSearchTypeOnly",
     "DataContent",
-    "DataContentImageFile",
-    "DataContentImageFileImageFile",
-    "DataContentImageURL",
-    "DataContentImageURLImageURL",
-    "DataContentText",
-    "DataContentTextText",
-    "DataContentTextTextAnnotation",
-    "DataContentTextTextAnnotationFileCitation",
-    "DataContentTextTextAnnotationFileCitationFileCitation",
-    "DataContentTextTextAnnotationFilePath",
-    "DataContentTextTextAnnotationFilePathFilePath",
-    "DataContentRefusal",
     "DataIncompleteDetails",
 ]
 
-
-class DataAttachmentToolAssistantToolsCode(BaseModel):
-    type: Literal["code_interpreter"]
-    """The type of tool being defined: `code_interpreter`"""
-
-
-class DataAttachmentToolAssistantToolsFileSearchTypeOnly(BaseModel):
-    type: Literal["file_search"]
-    """The type of tool being defined: `file_search`"""
-
-
-DataAttachmentTool: TypeAlias = Union[
-    DataAttachmentToolAssistantToolsCode, DataAttachmentToolAssistantToolsFileSearchTypeOnly
-]
+DataAttachmentTool: TypeAlias = Union[AssistantToolsCode, AssistantToolsFileSearchTypeOnly]
 
 
 class DataAttachment(BaseModel):
@@ -53,117 +32,13 @@ class DataAttachment(BaseModel):
     """The tools to add this file to."""
 
 
-class DataContentImageFileImageFile(BaseModel):
-    file_id: str
-    """
-    The [File](https://platform.excai.com/docs/api-reference/files) ID of the image
-    in the message content. Set `purpose="vision"` when uploading the File if you
-    need to later display the file content.
-    """
-
-    detail: Optional[Literal["auto", "low", "high"]] = None
-    """Specifies the detail level of the image if specified by the user.
-
-    `low` uses fewer tokens, you can opt in to high resolution using `high`.
-    """
-
-
-class DataContentImageFile(BaseModel):
-    image_file: DataContentImageFileImageFile
-
-    type: Literal["image_file"]
-    """Always `image_file`."""
-
-
-class DataContentImageURLImageURL(BaseModel):
-    url: str
-    """
-    The external URL of the image, must be a supported image types: jpeg, jpg, png,
-    gif, webp.
-    """
-
-    detail: Optional[Literal["auto", "low", "high"]] = None
-    """Specifies the detail level of the image.
-
-    `low` uses fewer tokens, you can opt in to high resolution using `high`. Default
-    value is `auto`
-    """
-
-
-class DataContentImageURL(BaseModel):
-    image_url: DataContentImageURLImageURL
-
-    type: Literal["image_url"]
-    """The type of the content part."""
-
-
-class DataContentTextTextAnnotationFileCitationFileCitation(BaseModel):
-    file_id: str
-    """The ID of the specific File the citation is from."""
-
-
-class DataContentTextTextAnnotationFileCitation(BaseModel):
-    end_index: int
-
-    file_citation: DataContentTextTextAnnotationFileCitationFileCitation
-
-    start_index: int
-
-    text: str
-    """The text in the message content that needs to be replaced."""
-
-    type: Literal["file_citation"]
-    """Always `file_citation`."""
-
-
-class DataContentTextTextAnnotationFilePathFilePath(BaseModel):
-    file_id: str
-    """The ID of the file that was generated."""
-
-
-class DataContentTextTextAnnotationFilePath(BaseModel):
-    end_index: int
-
-    file_path: DataContentTextTextAnnotationFilePathFilePath
-
-    start_index: int
-
-    text: str
-    """The text in the message content that needs to be replaced."""
-
-    type: Literal["file_path"]
-    """Always `file_path`."""
-
-
-DataContentTextTextAnnotation: TypeAlias = Annotated[
-    Union[DataContentTextTextAnnotationFileCitation, DataContentTextTextAnnotationFilePath],
-    PropertyInfo(discriminator="type"),
-]
-
-
-class DataContentTextText(BaseModel):
-    annotations: List[DataContentTextTextAnnotation]
-
-    value: str
-    """The data that makes up the text."""
-
-
-class DataContentText(BaseModel):
-    text: DataContentTextText
-
-    type: Literal["text"]
-    """Always `text`."""
-
-
-class DataContentRefusal(BaseModel):
-    refusal: str
-
-    type: Literal["refusal"]
-    """Always `refusal`."""
-
-
 DataContent: TypeAlias = Annotated[
-    Union[DataContentImageFile, DataContentImageURL, DataContentText, DataContentRefusal],
+    Union[
+        MessageContentImageFileObject,
+        MessageContentImageURLObject,
+        MessageContentTextObject,
+        MessageContentRefusalObject,
+    ],
     PropertyInfo(discriminator="type"),
 ]
 

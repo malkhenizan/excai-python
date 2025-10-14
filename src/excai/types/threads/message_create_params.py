@@ -5,18 +5,17 @@ from __future__ import annotations
 from typing import Dict, Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
+from ..shared_params.assistant_tools_code import AssistantToolsCode
+from .message_content_image_url_object_param import MessageContentImageURLObjectParam
+from .message_content_image_file_object_param import MessageContentImageFileObjectParam
+from ..assistant_tools_file_search_type_only_param import AssistantToolsFileSearchTypeOnlyParam
+
 __all__ = [
     "MessageCreateParams",
     "ContentArrayOfContentPart",
-    "ContentArrayOfContentPartImageFile",
-    "ContentArrayOfContentPartImageFileImageFile",
-    "ContentArrayOfContentPartImageURL",
-    "ContentArrayOfContentPartImageURLImageURL",
     "ContentArrayOfContentPartText",
     "Attachment",
     "AttachmentTool",
-    "AttachmentToolCodeInterpreter",
-    "AttachmentToolFileSearch",
 ]
 
 
@@ -47,50 +46,6 @@ class MessageCreateParams(TypedDict, total=False):
     """
 
 
-class ContentArrayOfContentPartImageFileImageFile(TypedDict, total=False):
-    file_id: Required[str]
-    """
-    The [File](https://platform.excai.com/docs/api-reference/files) ID of the image
-    in the message content. Set `purpose="vision"` when uploading the File if you
-    need to later display the file content.
-    """
-
-    detail: Literal["auto", "low", "high"]
-    """Specifies the detail level of the image if specified by the user.
-
-    `low` uses fewer tokens, you can opt in to high resolution using `high`.
-    """
-
-
-class ContentArrayOfContentPartImageFile(TypedDict, total=False):
-    image_file: Required[ContentArrayOfContentPartImageFileImageFile]
-
-    type: Required[Literal["image_file"]]
-    """Always `image_file`."""
-
-
-class ContentArrayOfContentPartImageURLImageURL(TypedDict, total=False):
-    url: Required[str]
-    """
-    The external URL of the image, must be a supported image types: jpeg, jpg, png,
-    gif, webp.
-    """
-
-    detail: Literal["auto", "low", "high"]
-    """Specifies the detail level of the image.
-
-    `low` uses fewer tokens, you can opt in to high resolution using `high`. Default
-    value is `auto`
-    """
-
-
-class ContentArrayOfContentPartImageURL(TypedDict, total=False):
-    image_url: Required[ContentArrayOfContentPartImageURLImageURL]
-
-    type: Required[Literal["image_url"]]
-    """The type of the content part."""
-
-
 class ContentArrayOfContentPartText(TypedDict, total=False):
     text: Required[str]
     """Text content to be sent to the model"""
@@ -100,21 +55,10 @@ class ContentArrayOfContentPartText(TypedDict, total=False):
 
 
 ContentArrayOfContentPart: TypeAlias = Union[
-    ContentArrayOfContentPartImageFile, ContentArrayOfContentPartImageURL, ContentArrayOfContentPartText
+    MessageContentImageFileObjectParam, MessageContentImageURLObjectParam, ContentArrayOfContentPartText
 ]
 
-
-class AttachmentToolCodeInterpreter(TypedDict, total=False):
-    type: Required[Literal["code_interpreter"]]
-    """The type of tool being defined: `code_interpreter`"""
-
-
-class AttachmentToolFileSearch(TypedDict, total=False):
-    type: Required[Literal["file_search"]]
-    """The type of tool being defined: `file_search`"""
-
-
-AttachmentTool: TypeAlias = Union[AttachmentToolCodeInterpreter, AttachmentToolFileSearch]
+AttachmentTool: TypeAlias = Union[AssistantToolsCode, AssistantToolsFileSearchTypeOnlyParam]
 
 
 class Attachment(TypedDict, total=False):

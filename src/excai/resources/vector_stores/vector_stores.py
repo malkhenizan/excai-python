@@ -46,6 +46,7 @@ from ...types.vector_store_delete_response import VectorStoreDeleteResponse
 from ...types.vector_store_search_response import VectorStoreSearchResponse
 from ...types.vector_store_update_response import VectorStoreUpdateResponse
 from ...types.vector_store_retrieve_response import VectorStoreRetrieveResponse
+from ...types.vector_store_expiration_after_param import VectorStoreExpirationAfterParam
 
 __all__ = ["VectorStoresResource", "AsyncVectorStoresResource"]
 
@@ -82,7 +83,7 @@ class VectorStoresResource(SyncAPIResource):
         self,
         *,
         chunking_strategy: vector_store_create_params.ChunkingStrategy | Omit = omit,
-        expires_after: vector_store_create_params.ExpiresAfter | Omit = omit,
+        expires_after: VectorStoreExpirationAfterParam | Omit = omit,
         file_ids: SequenceNotStr[str] | Omit = omit,
         metadata: Optional[Dict[str, str]] | Omit = omit,
         name: str | Omit = omit,
@@ -178,7 +179,7 @@ class VectorStoresResource(SyncAPIResource):
         self,
         vector_store_id: str,
         *,
-        expires_after: Optional[vector_store_update_params.ExpiresAfter] | Omit = omit,
+        expires_after: Optional[VectorStoreExpirationAfterParam] | Omit = omit,
         metadata: Optional[Dict[str, str]] | Omit = omit,
         name: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -418,7 +419,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         self,
         *,
         chunking_strategy: vector_store_create_params.ChunkingStrategy | Omit = omit,
-        expires_after: vector_store_create_params.ExpiresAfter | Omit = omit,
+        expires_after: VectorStoreExpirationAfterParam | Omit = omit,
         file_ids: SequenceNotStr[str] | Omit = omit,
         metadata: Optional[Dict[str, str]] | Omit = omit,
         name: str | Omit = omit,
@@ -514,7 +515,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         self,
         vector_store_id: str,
         *,
-        expires_after: Optional[vector_store_update_params.ExpiresAfter] | Omit = omit,
+        expires_after: Optional[VectorStoreExpirationAfterParam] | Omit = omit,
         metadata: Optional[Dict[str, str]] | Omit = omit,
         name: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.

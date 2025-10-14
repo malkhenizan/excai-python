@@ -5,12 +5,9 @@ from __future__ import annotations
 from typing import List
 from typing_extensions import Literal, TypedDict
 
-__all__ = [
-    "RealtimeCreateTranscriptionSessionParams",
-    "InputAudioNoiseReduction",
-    "InputAudioTranscription",
-    "TurnDetection",
-]
+from .audio_transcription_param import AudioTranscriptionParam
+
+__all__ = ["RealtimeCreateTranscriptionSessionParams", "InputAudioNoiseReduction", "TurnDetection"]
 
 
 class RealtimeCreateTranscriptionSessionParams(TypedDict, total=False):
@@ -37,7 +34,7 @@ class RealtimeCreateTranscriptionSessionParams(TypedDict, total=False):
     model performance by improving perception of the input audio.
     """
 
-    input_audio_transcription: InputAudioTranscription
+    input_audio_transcription: AudioTranscriptionParam
     """Configuration for input audio transcription.
 
     The client can optionally set the language and prompt for transcription, these
@@ -59,32 +56,6 @@ class InputAudioNoiseReduction(TypedDict, total=False):
 
     `near_field` is for close-talking microphones such as headphones, `far_field` is
     for far-field microphones such as laptop or conference room microphones.
-    """
-
-
-class InputAudioTranscription(TypedDict, total=False):
-    language: str
-    """The language of the input audio.
-
-    Supplying the input language in
-    [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`)
-    format will improve accuracy and latency.
-    """
-
-    model: Literal["whisper-1", "gpt-4o-transcribe-latest", "gpt-4o-mini-transcribe", "gpt-4o-transcribe"]
-    """The model to use for transcription.
-
-    Current options are `whisper-1`, `gpt-4o-transcribe-latest`,
-    `gpt-4o-mini-transcribe`, and `gpt-4o-transcribe`.
-    """
-
-    prompt: str
-    """
-    An optional text to guide the model's style or continue a previous audio
-    segment. For `whisper-1`, the
-    [prompt is a list of keywords](https://platform.excai.com/docs/guides/speech-to-text#prompting).
-    For `gpt-4o-transcribe` models, the prompt is a free text string, for example
-    "expect words related to technology".
     """
 
 

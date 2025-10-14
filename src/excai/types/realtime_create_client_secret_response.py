@@ -5,6 +5,14 @@ from typing_extensions import Literal, Annotated, TypeAlias
 
 from .._utils import PropertyInfo
 from .._models import BaseModel
+from .shared.mcp_tool import McpTool
+from .audio_transcription import AudioTranscription
+from .realtime_function_tool import RealtimeFunctionTool
+from .shared.tool_choice_mcp import ToolChoiceMcp
+from .shared.input_file_content import InputFileContent
+from .shared.input_text_content import InputTextContent
+from .shared.input_image_content import InputImageContent
+from .shared.tool_choice_function import ToolChoiceFunction
 
 __all__ = [
     "RealtimeCreateClientSecretResponse",
@@ -18,7 +26,6 @@ __all__ = [
     "SessionRealtimeAudioInputFormatAudioPcmu",
     "SessionRealtimeAudioInputFormatAudioPcma",
     "SessionRealtimeAudioInputNoiseReduction",
-    "SessionRealtimeAudioInputTranscription",
     "SessionRealtimeAudioInputTurnDetection",
     "SessionRealtimeAudioInputTurnDetectionServerVad",
     "SessionRealtimeAudioInputTurnDetectionSemanticVad",
@@ -29,21 +36,8 @@ __all__ = [
     "SessionRealtimeAudioOutputFormatAudioPcma",
     "SessionRealtimePrompt",
     "SessionRealtimePromptVariables",
-    "SessionRealtimePromptVariablesInputTextContent",
-    "SessionRealtimePromptVariablesInputImageContent",
-    "SessionRealtimePromptVariablesInputFileContent",
     "SessionRealtimeToolChoice",
-    "SessionRealtimeToolChoiceToolChoiceFunction",
-    "SessionRealtimeToolChoiceToolChoiceMcp",
     "SessionRealtimeTool",
-    "SessionRealtimeToolRealtimeFunctionTool",
-    "SessionRealtimeToolMcpTool",
-    "SessionRealtimeToolMcpToolAllowedTools",
-    "SessionRealtimeToolMcpToolAllowedToolsMcpToolFilter",
-    "SessionRealtimeToolMcpToolRequireApproval",
-    "SessionRealtimeToolMcpToolRequireApprovalMcpToolApprovalFilter",
-    "SessionRealtimeToolMcpToolRequireApprovalMcpToolApprovalFilterAlways",
-    "SessionRealtimeToolMcpToolRequireApprovalMcpToolApprovalFilterNever",
     "SessionRealtimeTracing",
     "SessionRealtimeTracingTracingConfiguration",
     "SessionRealtimeTruncation",
@@ -56,7 +50,6 @@ __all__ = [
     "SessionTranscriptionAudioInputFormatAudioPcmu",
     "SessionTranscriptionAudioInputFormatAudioPcma",
     "SessionTranscriptionAudioInputNoiseReduction",
-    "SessionTranscriptionAudioInputTranscription",
     "SessionTranscriptionAudioInputTurnDetection",
 ]
 
@@ -110,34 +103,6 @@ class SessionRealtimeAudioInputNoiseReduction(BaseModel):
 
     `near_field` is for close-talking microphones such as headphones, `far_field` is
     for far-field microphones such as laptop or conference room microphones.
-    """
-
-
-class SessionRealtimeAudioInputTranscription(BaseModel):
-    language: Optional[str] = None
-    """The language of the input audio.
-
-    Supplying the input language in
-    [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`)
-    format will improve accuracy and latency.
-    """
-
-    model: Optional[Literal["whisper-1", "gpt-4o-transcribe-latest", "gpt-4o-mini-transcribe", "gpt-4o-transcribe"]] = (
-        None
-    )
-    """The model to use for transcription.
-
-    Current options are `whisper-1`, `gpt-4o-transcribe-latest`,
-    `gpt-4o-mini-transcribe`, and `gpt-4o-transcribe`.
-    """
-
-    prompt: Optional[str] = None
-    """
-    An optional text to guide the model's style or continue a previous audio
-    segment. For `whisper-1`, the
-    [prompt is a list of keywords](https://platform.excai.com/docs/guides/speech-to-text#prompting).
-    For `gpt-4o-transcribe` models, the prompt is a free text string, for example
-    "expect words related to technology".
     """
 
 
@@ -244,7 +209,7 @@ class SessionRealtimeAudioInput(BaseModel):
     model performance by improving perception of the input audio.
     """
 
-    transcription: Optional[SessionRealtimeAudioInputTranscription] = None
+    transcription: Optional[AudioTranscription] = None
     """
     Configuration for input audio transcription, defaults to off and can be set to
     `null` to turn off once on. Input audio transcription is not native to the
@@ -335,57 +300,7 @@ class SessionRealtimeAudio(BaseModel):
     output: Optional[SessionRealtimeAudioOutput] = None
 
 
-class SessionRealtimePromptVariablesInputTextContent(BaseModel):
-    text: str
-    """The text input to the model."""
-
-    type: Literal["input_text"]
-    """The type of the input item. Always `input_text`."""
-
-
-class SessionRealtimePromptVariablesInputImageContent(BaseModel):
-    detail: Literal["low", "high", "auto"]
-    """The detail level of the image to be sent to the model.
-
-    One of `high`, `low`, or `auto`. Defaults to `auto`.
-    """
-
-    type: Literal["input_image"]
-    """The type of the input item. Always `input_image`."""
-
-    file_id: Optional[str] = None
-    """The ID of the file to be sent to the model."""
-
-    image_url: Optional[str] = None
-    """The URL of the image to be sent to the model.
-
-    A fully qualified URL or base64 encoded image in a data URL.
-    """
-
-
-class SessionRealtimePromptVariablesInputFileContent(BaseModel):
-    type: Literal["input_file"]
-    """The type of the input item. Always `input_file`."""
-
-    file_data: Optional[str] = None
-    """The content of the file to be sent to the model."""
-
-    file_id: Optional[str] = None
-    """The ID of the file to be sent to the model."""
-
-    file_url: Optional[str] = None
-    """The URL of the file to be sent to the model."""
-
-    filename: Optional[str] = None
-    """The name of the file to be sent to the model."""
-
-
-SessionRealtimePromptVariables: TypeAlias = Union[
-    str,
-    SessionRealtimePromptVariablesInputTextContent,
-    SessionRealtimePromptVariablesInputImageContent,
-    SessionRealtimePromptVariablesInputFileContent,
-]
+SessionRealtimePromptVariables: TypeAlias = Union[str, InputTextContent, InputImageContent, InputFileContent]
 
 
 class SessionRealtimePrompt(BaseModel):
@@ -403,173 +318,9 @@ class SessionRealtimePrompt(BaseModel):
     """Optional version of the prompt template."""
 
 
-class SessionRealtimeToolChoiceToolChoiceFunction(BaseModel):
-    name: str
-    """The name of the function to call."""
+SessionRealtimeToolChoice: TypeAlias = Union[Literal["none", "auto", "required"], ToolChoiceFunction, ToolChoiceMcp]
 
-    type: Literal["function"]
-    """For function calling, the type is always `function`."""
-
-
-class SessionRealtimeToolChoiceToolChoiceMcp(BaseModel):
-    server_label: str
-    """The label of the MCP server to use."""
-
-    type: Literal["mcp"]
-    """For MCP tools, the type is always `mcp`."""
-
-    name: Optional[str] = None
-    """The name of the tool to call on the server."""
-
-
-SessionRealtimeToolChoice: TypeAlias = Union[
-    Literal["none", "auto", "required"],
-    SessionRealtimeToolChoiceToolChoiceFunction,
-    SessionRealtimeToolChoiceToolChoiceMcp,
-]
-
-
-class SessionRealtimeToolRealtimeFunctionTool(BaseModel):
-    description: Optional[str] = None
-    """
-    The description of the function, including guidance on when and how to call it,
-    and guidance about what to tell the user when calling (if anything).
-    """
-
-    name: Optional[str] = None
-    """The name of the function."""
-
-    parameters: Optional[object] = None
-    """Parameters of the function in JSON Schema."""
-
-    type: Optional[Literal["function"]] = None
-    """The type of the tool, i.e. `function`."""
-
-
-class SessionRealtimeToolMcpToolAllowedToolsMcpToolFilter(BaseModel):
-    read_only: Optional[bool] = None
-    """Indicates whether or not a tool modifies data or is read-only.
-
-    If an MCP server is
-    [annotated with `readOnlyHint`](https://modelcontextprotocol.io/specification/2025-06-18/schema#toolannotations-readonlyhint),
-    it will match this filter.
-    """
-
-    tool_names: Optional[List[str]] = None
-    """List of allowed tool names."""
-
-
-SessionRealtimeToolMcpToolAllowedTools: TypeAlias = Union[
-    List[str], SessionRealtimeToolMcpToolAllowedToolsMcpToolFilter, None
-]
-
-
-class SessionRealtimeToolMcpToolRequireApprovalMcpToolApprovalFilterAlways(BaseModel):
-    read_only: Optional[bool] = None
-    """Indicates whether or not a tool modifies data or is read-only.
-
-    If an MCP server is
-    [annotated with `readOnlyHint`](https://modelcontextprotocol.io/specification/2025-06-18/schema#toolannotations-readonlyhint),
-    it will match this filter.
-    """
-
-    tool_names: Optional[List[str]] = None
-    """List of allowed tool names."""
-
-
-class SessionRealtimeToolMcpToolRequireApprovalMcpToolApprovalFilterNever(BaseModel):
-    read_only: Optional[bool] = None
-    """Indicates whether or not a tool modifies data or is read-only.
-
-    If an MCP server is
-    [annotated with `readOnlyHint`](https://modelcontextprotocol.io/specification/2025-06-18/schema#toolannotations-readonlyhint),
-    it will match this filter.
-    """
-
-    tool_names: Optional[List[str]] = None
-    """List of allowed tool names."""
-
-
-class SessionRealtimeToolMcpToolRequireApprovalMcpToolApprovalFilter(BaseModel):
-    always: Optional[SessionRealtimeToolMcpToolRequireApprovalMcpToolApprovalFilterAlways] = None
-    """A filter object to specify which tools are allowed."""
-
-    never: Optional[SessionRealtimeToolMcpToolRequireApprovalMcpToolApprovalFilterNever] = None
-    """A filter object to specify which tools are allowed."""
-
-
-SessionRealtimeToolMcpToolRequireApproval: TypeAlias = Union[
-    SessionRealtimeToolMcpToolRequireApprovalMcpToolApprovalFilter, Literal["always", "never"], None
-]
-
-
-class SessionRealtimeToolMcpTool(BaseModel):
-    server_label: str
-    """A label for this MCP server, used to identify it in tool calls."""
-
-    type: Literal["mcp"]
-    """The type of the MCP tool. Always `mcp`."""
-
-    allowed_tools: Optional[SessionRealtimeToolMcpToolAllowedTools] = None
-    """List of allowed tool names or a filter object."""
-
-    authorization: Optional[str] = None
-    """
-    An OAuth access token that can be used with a remote MCP server, either with a
-    custom MCP server URL or a service connector. Your application must handle the
-    OAuth authorization flow and provide the token here.
-    """
-
-    connector_id: Optional[
-        Literal[
-            "connector_dropbox",
-            "connector_gmail",
-            "connector_googlecalendar",
-            "connector_googledrive",
-            "connector_microsoftteams",
-            "connector_outlookcalendar",
-            "connector_outlookemail",
-            "connector_sharepoint",
-        ]
-    ] = None
-    """Identifier for service connectors, like those available in ChatGPT.
-
-    One of `server_url` or `connector_id` must be provided. Learn more about service
-    connectors
-    [here](https://platform.excai.com/docs/guides/tools-remote-mcp#connectors).
-
-    Currently supported `connector_id` values are:
-
-    - Dropbox: `connector_dropbox`
-    - Gmail: `connector_gmail`
-    - Google Calendar: `connector_googlecalendar`
-    - Google Drive: `connector_googledrive`
-    - Microsoft Teams: `connector_microsoftteams`
-    - Outlook Calendar: `connector_outlookcalendar`
-    - Outlook Email: `connector_outlookemail`
-    - SharePoint: `connector_sharepoint`
-    """
-
-    headers: Optional[Dict[str, str]] = None
-    """Optional HTTP headers to send to the MCP server.
-
-    Use for authentication or other purposes.
-    """
-
-    require_approval: Optional[SessionRealtimeToolMcpToolRequireApproval] = None
-    """Specify which of the MCP server's tools require approval."""
-
-    server_description: Optional[str] = None
-    """Optional description of the MCP server, used to provide more context."""
-
-    server_url: Optional[str] = None
-    """The URL for the MCP server.
-
-    One of `server_url` or `connector_id` must be provided.
-    """
-
-
-SessionRealtimeTool: TypeAlias = Union[SessionRealtimeToolRealtimeFunctionTool, SessionRealtimeToolMcpTool]
+SessionRealtimeTool: TypeAlias = Union[RealtimeFunctionTool, McpTool]
 
 
 class SessionRealtimeTracingTracingConfiguration(BaseModel):
@@ -748,34 +499,6 @@ class SessionTranscriptionAudioInputNoiseReduction(BaseModel):
     """
 
 
-class SessionTranscriptionAudioInputTranscription(BaseModel):
-    language: Optional[str] = None
-    """The language of the input audio.
-
-    Supplying the input language in
-    [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`)
-    format will improve accuracy and latency.
-    """
-
-    model: Optional[Literal["whisper-1", "gpt-4o-transcribe-latest", "gpt-4o-mini-transcribe", "gpt-4o-transcribe"]] = (
-        None
-    )
-    """The model to use for transcription.
-
-    Current options are `whisper-1`, `gpt-4o-transcribe-latest`,
-    `gpt-4o-mini-transcribe`, and `gpt-4o-transcribe`.
-    """
-
-    prompt: Optional[str] = None
-    """
-    An optional text to guide the model's style or continue a previous audio
-    segment. For `whisper-1`, the
-    [prompt is a list of keywords](https://platform.excai.com/docs/guides/speech-to-text#prompting).
-    For `gpt-4o-transcribe` models, the prompt is a free text string, for example
-    "expect words related to technology".
-    """
-
-
 class SessionTranscriptionAudioInputTurnDetection(BaseModel):
     prefix_padding_ms: Optional[int] = None
     """Amount of audio to include before the VAD detected speech (in milliseconds).
@@ -808,7 +531,7 @@ class SessionTranscriptionAudioInput(BaseModel):
     noise_reduction: Optional[SessionTranscriptionAudioInputNoiseReduction] = None
     """Configuration for input audio noise reduction."""
 
-    transcription: Optional[SessionTranscriptionAudioInputTranscription] = None
+    transcription: Optional[AudioTranscription] = None
     """Configuration of the transcription model."""
 
     turn_detection: Optional[SessionTranscriptionAudioInputTurnDetection] = None

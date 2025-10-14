@@ -4,48 +4,17 @@ from typing import Dict, List, Optional
 from typing_extensions import Literal
 
 from .._models import BaseModel
+from .batch_error import BatchError
+from .batch_request_counts import BatchRequestCounts
 
-__all__ = [
-    "BatchRetrieveResponse",
-    "Errors",
-    "ErrorsData",
-    "RequestCounts",
-    "Usage",
-    "UsageInputTokensDetails",
-    "UsageOutputTokensDetails",
-]
-
-
-class ErrorsData(BaseModel):
-    code: Optional[str] = None
-    """An error code identifying the error type."""
-
-    line: Optional[int] = None
-    """The line number of the input file where the error occurred, if applicable."""
-
-    message: Optional[str] = None
-    """A human-readable message providing more details about the error."""
-
-    param: Optional[str] = None
-    """The name of the parameter that caused the error, if applicable."""
+__all__ = ["BatchRetrieveResponse", "Errors", "Usage", "UsageInputTokensDetails", "UsageOutputTokensDetails"]
 
 
 class Errors(BaseModel):
-    data: Optional[List[ErrorsData]] = None
+    data: Optional[List[BatchError]] = None
 
     object: Optional[str] = None
     """The object type, which is always `list`."""
-
-
-class RequestCounts(BaseModel):
-    completed: int
-    """Number of requests that have been completed successfully."""
-
-    failed: int
-    """Number of requests that have failed."""
-
-    total: int
-    """Total number of requests in the batch."""
 
 
 class UsageInputTokensDetails(BaseModel):
@@ -152,7 +121,7 @@ class BatchRetrieveResponse(BaseModel):
     output_file_id: Optional[str] = None
     """The ID of the file containing the outputs of successfully executed requests."""
 
-    request_counts: Optional[RequestCounts] = None
+    request_counts: Optional[BatchRequestCounts] = None
     """The request counts for different statuses within the batch."""
 
     usage: Optional[Usage] = None

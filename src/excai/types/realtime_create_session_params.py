@@ -5,15 +5,16 @@ from __future__ import annotations
 from typing import Dict, List, Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
+from .shared_params.input_file_content import InputFileContent
+from .shared_params.input_text_content import InputTextContent
+from .shared_params.input_image_content import InputImageContent
+
 __all__ = [
     "RealtimeCreateSessionParams",
     "ClientSecret",
     "InputAudioTranscription",
     "Prompt",
     "PromptVariables",
-    "PromptVariablesInputTextContent",
-    "PromptVariablesInputImageContent",
-    "PromptVariablesInputFileContent",
     "Tool",
     "Tracing",
     "TracingTracingConfiguration",
@@ -148,54 +149,7 @@ class InputAudioTranscription(TypedDict, total=False):
     """The model to use for transcription."""
 
 
-class PromptVariablesInputTextContent(TypedDict, total=False):
-    text: Required[str]
-    """The text input to the model."""
-
-    type: Required[Literal["input_text"]]
-    """The type of the input item. Always `input_text`."""
-
-
-class PromptVariablesInputImageContent(TypedDict, total=False):
-    detail: Required[Literal["low", "high", "auto"]]
-    """The detail level of the image to be sent to the model.
-
-    One of `high`, `low`, or `auto`. Defaults to `auto`.
-    """
-
-    type: Required[Literal["input_image"]]
-    """The type of the input item. Always `input_image`."""
-
-    file_id: Optional[str]
-    """The ID of the file to be sent to the model."""
-
-    image_url: Optional[str]
-    """The URL of the image to be sent to the model.
-
-    A fully qualified URL or base64 encoded image in a data URL.
-    """
-
-
-class PromptVariablesInputFileContent(TypedDict, total=False):
-    type: Required[Literal["input_file"]]
-    """The type of the input item. Always `input_file`."""
-
-    file_data: str
-    """The content of the file to be sent to the model."""
-
-    file_id: Optional[str]
-    """The ID of the file to be sent to the model."""
-
-    file_url: str
-    """The URL of the file to be sent to the model."""
-
-    filename: str
-    """The name of the file to be sent to the model."""
-
-
-PromptVariables: TypeAlias = Union[
-    str, PromptVariablesInputTextContent, PromptVariablesInputImageContent, PromptVariablesInputFileContent
-]
+PromptVariables: TypeAlias = Union[str, InputTextContent, InputImageContent, InputFileContent]
 
 
 class Prompt(TypedDict, total=False):

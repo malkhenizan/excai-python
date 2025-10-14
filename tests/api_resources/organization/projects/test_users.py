@@ -9,12 +9,10 @@ import pytest
 
 from excai import ExCai, AsyncExCai
 from tests.utils import assert_matches_type
+from excai.types.organization import ProjectUser
 from excai.types.organization.projects import (
     UserListResponse,
-    UserCreateResponse,
     UserDeleteResponse,
-    UserUpdateResponse,
-    UserRetrieveResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -31,7 +29,7 @@ class TestUsers:
             role="owner",
             user_id="user_id",
         )
-        assert_matches_type(UserCreateResponse, user, path=["response"])
+        assert_matches_type(ProjectUser, user, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -45,7 +43,7 @@ class TestUsers:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         user = response.parse()
-        assert_matches_type(UserCreateResponse, user, path=["response"])
+        assert_matches_type(ProjectUser, user, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -59,7 +57,7 @@ class TestUsers:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             user = response.parse()
-            assert_matches_type(UserCreateResponse, user, path=["response"])
+            assert_matches_type(ProjectUser, user, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -80,7 +78,7 @@ class TestUsers:
             user_id="user_id",
             project_id="project_id",
         )
-        assert_matches_type(UserRetrieveResponse, user, path=["response"])
+        assert_matches_type(ProjectUser, user, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -93,7 +91,7 @@ class TestUsers:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         user = response.parse()
-        assert_matches_type(UserRetrieveResponse, user, path=["response"])
+        assert_matches_type(ProjectUser, user, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -106,7 +104,7 @@ class TestUsers:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             user = response.parse()
-            assert_matches_type(UserRetrieveResponse, user, path=["response"])
+            assert_matches_type(ProjectUser, user, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -133,7 +131,7 @@ class TestUsers:
             project_id="project_id",
             role="owner",
         )
-        assert_matches_type(UserUpdateResponse, user, path=["response"])
+        assert_matches_type(ProjectUser, user, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -147,7 +145,7 @@ class TestUsers:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         user = response.parse()
-        assert_matches_type(UserUpdateResponse, user, path=["response"])
+        assert_matches_type(ProjectUser, user, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -161,7 +159,7 @@ class TestUsers:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             user = response.parse()
-            assert_matches_type(UserUpdateResponse, user, path=["response"])
+            assert_matches_type(ProjectUser, user, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -300,7 +298,7 @@ class TestAsyncUsers:
             role="owner",
             user_id="user_id",
         )
-        assert_matches_type(UserCreateResponse, user, path=["response"])
+        assert_matches_type(ProjectUser, user, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -314,7 +312,7 @@ class TestAsyncUsers:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         user = await response.parse()
-        assert_matches_type(UserCreateResponse, user, path=["response"])
+        assert_matches_type(ProjectUser, user, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -328,7 +326,7 @@ class TestAsyncUsers:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             user = await response.parse()
-            assert_matches_type(UserCreateResponse, user, path=["response"])
+            assert_matches_type(ProjectUser, user, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -349,7 +347,7 @@ class TestAsyncUsers:
             user_id="user_id",
             project_id="project_id",
         )
-        assert_matches_type(UserRetrieveResponse, user, path=["response"])
+        assert_matches_type(ProjectUser, user, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -362,7 +360,7 @@ class TestAsyncUsers:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         user = await response.parse()
-        assert_matches_type(UserRetrieveResponse, user, path=["response"])
+        assert_matches_type(ProjectUser, user, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -375,7 +373,7 @@ class TestAsyncUsers:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             user = await response.parse()
-            assert_matches_type(UserRetrieveResponse, user, path=["response"])
+            assert_matches_type(ProjectUser, user, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -402,7 +400,7 @@ class TestAsyncUsers:
             project_id="project_id",
             role="owner",
         )
-        assert_matches_type(UserUpdateResponse, user, path=["response"])
+        assert_matches_type(ProjectUser, user, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -416,7 +414,7 @@ class TestAsyncUsers:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         user = await response.parse()
-        assert_matches_type(UserUpdateResponse, user, path=["response"])
+        assert_matches_type(ProjectUser, user, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -430,7 +428,7 @@ class TestAsyncUsers:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             user = await response.parse()
-            assert_matches_type(UserUpdateResponse, user, path=["response"])
+            assert_matches_type(ProjectUser, user, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

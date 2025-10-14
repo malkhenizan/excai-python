@@ -4,55 +4,20 @@ from typing import List, Optional
 from typing_extensions import Literal
 
 from ...._models import BaseModel
+from ..project_user import ProjectUser
+from ..project_service_account import ProjectServiceAccount
 
-__all__ = ["APIKeyListResponse", "Data", "DataOwner", "DataOwnerServiceAccount", "DataOwnerUser"]
-
-
-class DataOwnerServiceAccount(BaseModel):
-    id: str
-    """The identifier, which can be referenced in API endpoints"""
-
-    created_at: int
-    """The Unix timestamp (in seconds) of when the service account was created"""
-
-    name: str
-    """The name of the service account"""
-
-    object: Literal["organization.project.service_account"]
-    """The object type, which is always `organization.project.service_account`"""
-
-    role: Literal["owner", "member"]
-    """`owner` or `member`"""
-
-
-class DataOwnerUser(BaseModel):
-    id: str
-    """The identifier, which can be referenced in API endpoints"""
-
-    added_at: int
-    """The Unix timestamp (in seconds) of when the project was added."""
-
-    email: str
-    """The email address of the user"""
-
-    name: str
-    """The name of the user"""
-
-    object: Literal["organization.project.user"]
-    """The object type, which is always `organization.project.user`"""
-
-    role: Literal["owner", "member"]
-    """`owner` or `member`"""
+__all__ = ["APIKeyListResponse", "Data", "DataOwner"]
 
 
 class DataOwner(BaseModel):
-    service_account: Optional[DataOwnerServiceAccount] = None
+    service_account: Optional[ProjectServiceAccount] = None
     """Represents an individual service account in a project."""
 
     type: Optional[Literal["user", "service_account"]] = None
     """`user` or `service_account`"""
 
-    user: Optional[DataOwnerUser] = None
+    user: Optional[ProjectUser] = None
     """Represents an individual user in a project."""
 
 

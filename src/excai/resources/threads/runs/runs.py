@@ -38,6 +38,7 @@ from ....types.threads.run_cancel_response import RunCancelResponse
 from ....types.threads.run_create_response import RunCreateResponse
 from ....types.threads.run_update_response import RunUpdateResponse
 from ....types.threads.run_retrieve_response import RunRetrieveResponse
+from ....types.threads.truncation_object_param import TruncationObjectParam
 from ....types.threads.run_create_with_run_response import RunCreateWithRunResponse
 from ....types.threads.run_submit_tool_outputs_response import RunSubmitToolOutputsResponse
 
@@ -137,7 +138,7 @@ class RunsResource(SyncAPIResource):
         tool_choice: Optional[run_create_params.ToolChoice] | Omit = omit,
         tools: Optional[Iterable[run_create_params.Tool]] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
-        truncation_strategy: Optional[run_create_params.TruncationStrategy] | Omit = omit,
+        truncation_strategy: Optional[TruncationObjectParam] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -545,7 +546,7 @@ class RunsResource(SyncAPIResource):
         tool_resources: Optional[run_create_with_run_params.ToolResources] | Omit = omit,
         tools: Optional[Iterable[run_create_with_run_params.Tool]] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
-        truncation_strategy: Optional[run_create_with_run_params.TruncationStrategy] | Omit = omit,
+        truncation_strategy: Optional[TruncationObjectParam] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -834,7 +835,7 @@ class AsyncRunsResource(AsyncAPIResource):
         tool_choice: Optional[run_create_params.ToolChoice] | Omit = omit,
         tools: Optional[Iterable[run_create_params.Tool]] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
-        truncation_strategy: Optional[run_create_params.TruncationStrategy] | Omit = omit,
+        truncation_strategy: Optional[TruncationObjectParam] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1242,7 +1243,7 @@ class AsyncRunsResource(AsyncAPIResource):
         tool_resources: Optional[run_create_with_run_params.ToolResources] | Omit = omit,
         tools: Optional[Iterable[run_create_with_run_params.Tool]] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
-        truncation_strategy: Optional[run_create_with_run_params.TruncationStrategy] | Omit = omit,
+        truncation_strategy: Optional[TruncationObjectParam] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,

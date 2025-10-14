@@ -19,6 +19,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.reasoning_param import ReasoningParam
 from ..types.response_cancel_response import ResponseCancelResponse
 from ..types.response_create_response import ResponseCreateResponse
 from ..types.response_retrieve_response import ResponseRetrieveResponse
@@ -155,7 +156,7 @@ class ResponsesResource(SyncAPIResource):
         previous_response_id: Optional[str] | Omit = omit,
         prompt: Optional[response_create_params.Prompt] | Omit = omit,
         prompt_cache_key: str | Omit = omit,
-        reasoning: Optional[response_create_params.Reasoning] | Omit = omit,
+        reasoning: Optional[ReasoningParam] | Omit = omit,
         safety_identifier: str | Omit = omit,
         service_tier: Optional[Literal["auto", "default", "flex", "scale", "priority"]] | Omit = omit,
         store: Optional[bool] | Omit = omit,
@@ -763,7 +764,7 @@ class AsyncResponsesResource(AsyncAPIResource):
         previous_response_id: Optional[str] | Omit = omit,
         prompt: Optional[response_create_params.Prompt] | Omit = omit,
         prompt_cache_key: str | Omit = omit,
-        reasoning: Optional[response_create_params.Reasoning] | Omit = omit,
+        reasoning: Optional[ReasoningParam] | Omit = omit,
         safety_identifier: str | Omit = omit,
         service_tier: Optional[Literal["auto", "default", "flex", "scale", "priority"]] | Omit = omit,
         store: Optional[bool] | Omit = omit,

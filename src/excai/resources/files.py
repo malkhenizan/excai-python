@@ -20,9 +20,8 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.file_list_response import FileListResponse
+from ..types.shared.ex_cai_file import ExCaiFile
 from ..types.file_delete_response import FileDeleteResponse
-from ..types.file_upload_response import FileUploadResponse
-from ..types.file_retrieve_response import FileRetrieveResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -57,7 +56,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileRetrieveResponse:
+    ) -> ExCaiFile:
         """
         Returns information about a specific file.
 
@@ -77,7 +76,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileRetrieveResponse,
+            cast_to=ExCaiFile,
         )
 
     def list(
@@ -218,7 +217,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileUploadResponse:
+    ) -> ExCaiFile:
         """Upload a file that can be used across various endpoints.
 
         Individual files can be
@@ -281,7 +280,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileUploadResponse,
+            cast_to=ExCaiFile,
         )
 
 
@@ -315,7 +314,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileRetrieveResponse:
+    ) -> ExCaiFile:
         """
         Returns information about a specific file.
 
@@ -335,7 +334,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileRetrieveResponse,
+            cast_to=ExCaiFile,
         )
 
     async def list(
@@ -476,7 +475,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileUploadResponse:
+    ) -> ExCaiFile:
         """Upload a file that can be used across various endpoints.
 
         Individual files can be
@@ -539,7 +538,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileUploadResponse,
+            cast_to=ExCaiFile,
         )
 
 

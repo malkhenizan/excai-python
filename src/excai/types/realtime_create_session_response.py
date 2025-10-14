@@ -5,6 +5,8 @@ from typing_extensions import Literal, Annotated, TypeAlias
 
 from .._utils import PropertyInfo
 from .._models import BaseModel
+from .audio_transcription import AudioTranscription
+from .realtime_function_tool import RealtimeFunctionTool
 
 __all__ = [
     "RealtimeCreateSessionResponse",
@@ -15,14 +17,12 @@ __all__ = [
     "AudioInputFormatAudioPcmu",
     "AudioInputFormatAudioPcma",
     "AudioInputNoiseReduction",
-    "AudioInputTranscription",
     "AudioInputTurnDetection",
     "AudioOutput",
     "AudioOutputFormat",
     "AudioOutputFormatAudioPcm",
     "AudioOutputFormatAudioPcmu",
     "AudioOutputFormatAudioPcma",
-    "Tool",
     "Tracing",
     "TracingTracingConfiguration",
     "TurnDetection",
@@ -62,34 +62,6 @@ class AudioInputNoiseReduction(BaseModel):
     """
 
 
-class AudioInputTranscription(BaseModel):
-    language: Optional[str] = None
-    """The language of the input audio.
-
-    Supplying the input language in
-    [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`)
-    format will improve accuracy and latency.
-    """
-
-    model: Optional[Literal["whisper-1", "gpt-4o-transcribe-latest", "gpt-4o-mini-transcribe", "gpt-4o-transcribe"]] = (
-        None
-    )
-    """The model to use for transcription.
-
-    Current options are `whisper-1`, `gpt-4o-transcribe-latest`,
-    `gpt-4o-mini-transcribe`, and `gpt-4o-transcribe`.
-    """
-
-    prompt: Optional[str] = None
-    """
-    An optional text to guide the model's style or continue a previous audio
-    segment. For `whisper-1`, the
-    [prompt is a list of keywords](https://platform.excai.com/docs/guides/speech-to-text#prompting).
-    For `gpt-4o-transcribe` models, the prompt is a free text string, for example
-    "expect words related to technology".
-    """
-
-
 class AudioInputTurnDetection(BaseModel):
     prefix_padding_ms: Optional[int] = None
 
@@ -108,7 +80,7 @@ class AudioInput(BaseModel):
     noise_reduction: Optional[AudioInputNoiseReduction] = None
     """Configuration for input audio noise reduction."""
 
-    transcription: Optional[AudioInputTranscription] = None
+    transcription: Optional[AudioTranscription] = None
     """Configuration for input audio transcription."""
 
     turn_detection: Optional[AudioInputTurnDetection] = None
@@ -154,23 +126,6 @@ class Audio(BaseModel):
     input: Optional[AudioInput] = None
 
     output: Optional[AudioOutput] = None
-
-
-class Tool(BaseModel):
-    description: Optional[str] = None
-    """
-    The description of the function, including guidance on when and how to call it,
-    and guidance about what to tell the user when calling (if anything).
-    """
-
-    name: Optional[str] = None
-    """The name of the function."""
-
-    parameters: Optional[object] = None
-    """Parameters of the function in JSON Schema."""
-
-    type: Optional[Literal["function"]] = None
-    """The type of the tool, i.e. `function`."""
 
 
 class TracingTracingConfiguration(BaseModel):
@@ -279,7 +234,7 @@ class RealtimeCreateSessionResponse(BaseModel):
     Options are `auto`, `none`, `required`, or specify a function.
     """
 
-    tools: Optional[List[Tool]] = None
+    tools: Optional[List[RealtimeFunctionTool]] = None
     """Tools (functions) available to the model."""
 
     tracing: Optional[Tracing] = None
