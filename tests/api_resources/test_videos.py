@@ -7,13 +7,13 @@ from typing import Any, cast
 
 import pytest
 
-from excai import Excai, AsyncExcai
-from excai.types import (
+from excai_sdk import ExcaiSDK, AsyncExcaiSDK
+from tests.utils import assert_matches_type
+from excai_sdk.types import (
     VideoResource,
     VideoListResponse,
     VideoDeleteResponse,
 )
-from tests.utils import assert_matches_type
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -23,7 +23,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create(self, client: Excai) -> None:
+    def test_method_create(self, client: ExcaiSDK) -> None:
         video = client.videos.create(
             prompt="x",
         )
@@ -31,7 +31,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_with_all_params(self, client: Excai) -> None:
+    def test_method_create_with_all_params(self, client: ExcaiSDK) -> None:
         video = client.videos.create(
             prompt="x",
             input_reference=b"raw file contents",
@@ -43,7 +43,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_create(self, client: Excai) -> None:
+    def test_raw_response_create(self, client: ExcaiSDK) -> None:
         response = client.videos.with_raw_response.create(
             prompt="x",
         )
@@ -55,7 +55,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_create(self, client: Excai) -> None:
+    def test_streaming_response_create(self, client: ExcaiSDK) -> None:
         with client.videos.with_streaming_response.create(
             prompt="x",
         ) as response:
@@ -69,7 +69,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve(self, client: Excai) -> None:
+    def test_method_retrieve(self, client: ExcaiSDK) -> None:
         video = client.videos.retrieve(
             "video_123",
         )
@@ -77,7 +77,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_retrieve(self, client: Excai) -> None:
+    def test_raw_response_retrieve(self, client: ExcaiSDK) -> None:
         response = client.videos.with_raw_response.retrieve(
             "video_123",
         )
@@ -89,7 +89,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve(self, client: Excai) -> None:
+    def test_streaming_response_retrieve(self, client: ExcaiSDK) -> None:
         with client.videos.with_streaming_response.retrieve(
             "video_123",
         ) as response:
@@ -103,7 +103,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_retrieve(self, client: Excai) -> None:
+    def test_path_params_retrieve(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `video_id` but received ''"):
             client.videos.with_raw_response.retrieve(
                 "",
@@ -111,13 +111,13 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_list(self, client: Excai) -> None:
+    def test_method_list(self, client: ExcaiSDK) -> None:
         video = client.videos.list()
         assert_matches_type(VideoListResponse, video, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_list_with_all_params(self, client: Excai) -> None:
+    def test_method_list_with_all_params(self, client: ExcaiSDK) -> None:
         video = client.videos.list(
             after="after",
             limit=0,
@@ -127,7 +127,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_list(self, client: Excai) -> None:
+    def test_raw_response_list(self, client: ExcaiSDK) -> None:
         response = client.videos.with_raw_response.list()
 
         assert response.is_closed is True
@@ -137,7 +137,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_list(self, client: Excai) -> None:
+    def test_streaming_response_list(self, client: ExcaiSDK) -> None:
         with client.videos.with_streaming_response.list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -149,7 +149,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_delete(self, client: Excai) -> None:
+    def test_method_delete(self, client: ExcaiSDK) -> None:
         video = client.videos.delete(
             "video_123",
         )
@@ -157,7 +157,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_delete(self, client: Excai) -> None:
+    def test_raw_response_delete(self, client: ExcaiSDK) -> None:
         response = client.videos.with_raw_response.delete(
             "video_123",
         )
@@ -169,7 +169,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_delete(self, client: Excai) -> None:
+    def test_streaming_response_delete(self, client: ExcaiSDK) -> None:
         with client.videos.with_streaming_response.delete(
             "video_123",
         ) as response:
@@ -183,7 +183,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_delete(self, client: Excai) -> None:
+    def test_path_params_delete(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `video_id` but received ''"):
             client.videos.with_raw_response.delete(
                 "",
@@ -191,7 +191,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_remix(self, client: Excai) -> None:
+    def test_method_remix(self, client: ExcaiSDK) -> None:
         video = client.videos.remix(
             video_id="video_123",
             prompt="x",
@@ -200,7 +200,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_remix(self, client: Excai) -> None:
+    def test_raw_response_remix(self, client: ExcaiSDK) -> None:
         response = client.videos.with_raw_response.remix(
             video_id="video_123",
             prompt="x",
@@ -213,7 +213,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_remix(self, client: Excai) -> None:
+    def test_streaming_response_remix(self, client: ExcaiSDK) -> None:
         with client.videos.with_streaming_response.remix(
             video_id="video_123",
             prompt="x",
@@ -228,7 +228,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_remix(self, client: Excai) -> None:
+    def test_path_params_remix(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `video_id` but received ''"):
             client.videos.with_raw_response.remix(
                 video_id="",
@@ -237,7 +237,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve_content(self, client: Excai) -> None:
+    def test_method_retrieve_content(self, client: ExcaiSDK) -> None:
         video = client.videos.retrieve_content(
             video_id="video_123",
         )
@@ -245,7 +245,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve_content_with_all_params(self, client: Excai) -> None:
+    def test_method_retrieve_content_with_all_params(self, client: ExcaiSDK) -> None:
         video = client.videos.retrieve_content(
             video_id="video_123",
             variant="video",
@@ -254,7 +254,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_retrieve_content(self, client: Excai) -> None:
+    def test_raw_response_retrieve_content(self, client: ExcaiSDK) -> None:
         response = client.videos.with_raw_response.retrieve_content(
             video_id="video_123",
         )
@@ -266,7 +266,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve_content(self, client: Excai) -> None:
+    def test_streaming_response_retrieve_content(self, client: ExcaiSDK) -> None:
         with client.videos.with_streaming_response.retrieve_content(
             video_id="video_123",
         ) as response:
@@ -280,7 +280,7 @@ class TestVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_retrieve_content(self, client: Excai) -> None:
+    def test_path_params_retrieve_content(self, client: ExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `video_id` but received ''"):
             client.videos.with_raw_response.retrieve_content(
                 video_id="",
@@ -294,7 +294,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create(self, async_client: AsyncExcai) -> None:
+    async def test_method_create(self, async_client: AsyncExcaiSDK) -> None:
         video = await async_client.videos.create(
             prompt="x",
         )
@@ -302,7 +302,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_create_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         video = await async_client.videos.create(
             prompt="x",
             input_reference=b"raw file contents",
@@ -314,7 +314,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_create(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_create(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.videos.with_raw_response.create(
             prompt="x",
         )
@@ -326,7 +326,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_create(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.videos.with_streaming_response.create(
             prompt="x",
         ) as response:
@@ -340,7 +340,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncExcai) -> None:
+    async def test_method_retrieve(self, async_client: AsyncExcaiSDK) -> None:
         video = await async_client.videos.retrieve(
             "video_123",
         )
@@ -348,7 +348,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_retrieve(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.videos.with_raw_response.retrieve(
             "video_123",
         )
@@ -360,7 +360,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_retrieve(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.videos.with_streaming_response.retrieve(
             "video_123",
         ) as response:
@@ -374,7 +374,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_retrieve(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `video_id` but received ''"):
             await async_client.videos.with_raw_response.retrieve(
                 "",
@@ -382,13 +382,13 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_list(self, async_client: AsyncExcai) -> None:
+    async def test_method_list(self, async_client: AsyncExcaiSDK) -> None:
         video = await async_client.videos.list()
         assert_matches_type(VideoListResponse, video, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_list_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_list_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         video = await async_client.videos.list(
             after="after",
             limit=0,
@@ -398,7 +398,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_list(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_list(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.videos.with_raw_response.list()
 
         assert response.is_closed is True
@@ -408,7 +408,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_list(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_list(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.videos.with_streaming_response.list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -420,7 +420,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_delete(self, async_client: AsyncExcai) -> None:
+    async def test_method_delete(self, async_client: AsyncExcaiSDK) -> None:
         video = await async_client.videos.delete(
             "video_123",
         )
@@ -428,7 +428,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_delete(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_delete(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.videos.with_raw_response.delete(
             "video_123",
         )
@@ -440,7 +440,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_delete(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_delete(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.videos.with_streaming_response.delete(
             "video_123",
         ) as response:
@@ -454,7 +454,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_delete(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_delete(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `video_id` but received ''"):
             await async_client.videos.with_raw_response.delete(
                 "",
@@ -462,7 +462,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_remix(self, async_client: AsyncExcai) -> None:
+    async def test_method_remix(self, async_client: AsyncExcaiSDK) -> None:
         video = await async_client.videos.remix(
             video_id="video_123",
             prompt="x",
@@ -471,7 +471,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_remix(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_remix(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.videos.with_raw_response.remix(
             video_id="video_123",
             prompt="x",
@@ -484,7 +484,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_remix(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_remix(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.videos.with_streaming_response.remix(
             video_id="video_123",
             prompt="x",
@@ -499,7 +499,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_remix(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_remix(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `video_id` but received ''"):
             await async_client.videos.with_raw_response.remix(
                 video_id="",
@@ -508,7 +508,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve_content(self, async_client: AsyncExcai) -> None:
+    async def test_method_retrieve_content(self, async_client: AsyncExcaiSDK) -> None:
         video = await async_client.videos.retrieve_content(
             video_id="video_123",
         )
@@ -516,7 +516,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve_content_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_retrieve_content_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         video = await async_client.videos.retrieve_content(
             video_id="video_123",
             variant="video",
@@ -525,7 +525,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve_content(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_retrieve_content(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.videos.with_raw_response.retrieve_content(
             video_id="video_123",
         )
@@ -537,7 +537,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve_content(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_retrieve_content(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.videos.with_streaming_response.retrieve_content(
             video_id="video_123",
         ) as response:
@@ -551,7 +551,7 @@ class TestAsyncVideos:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_retrieve_content(self, async_client: AsyncExcai) -> None:
+    async def test_path_params_retrieve_content(self, async_client: AsyncExcaiSDK) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `video_id` but received ''"):
             await async_client.videos.with_raw_response.retrieve_content(
                 video_id="",

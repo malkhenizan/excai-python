@@ -7,12 +7,12 @@ from typing import Any, cast
 
 import pytest
 
-from excai import Excai, AsyncExcai
-from excai.types import (
+from excai_sdk import ExcaiSDK, AsyncExcaiSDK
+from tests.utils import assert_matches_type
+from excai_sdk.types import (
     UsageResponse,
     OrganizationListAuditLogsResponse,
 )
-from tests.utils import assert_matches_type
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -22,7 +22,7 @@ class TestOrganization:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_get_costs(self, client: Excai) -> None:
+    def test_method_get_costs(self, client: ExcaiSDK) -> None:
         organization = client.organization.get_costs(
             start_time=0,
         )
@@ -30,7 +30,7 @@ class TestOrganization:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_get_costs_with_all_params(self, client: Excai) -> None:
+    def test_method_get_costs_with_all_params(self, client: ExcaiSDK) -> None:
         organization = client.organization.get_costs(
             start_time=0,
             bucket_width="1d",
@@ -44,7 +44,7 @@ class TestOrganization:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_get_costs(self, client: Excai) -> None:
+    def test_raw_response_get_costs(self, client: ExcaiSDK) -> None:
         response = client.organization.with_raw_response.get_costs(
             start_time=0,
         )
@@ -56,7 +56,7 @@ class TestOrganization:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_get_costs(self, client: Excai) -> None:
+    def test_streaming_response_get_costs(self, client: ExcaiSDK) -> None:
         with client.organization.with_streaming_response.get_costs(
             start_time=0,
         ) as response:
@@ -70,13 +70,13 @@ class TestOrganization:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_list_audit_logs(self, client: Excai) -> None:
+    def test_method_list_audit_logs(self, client: ExcaiSDK) -> None:
         organization = client.organization.list_audit_logs()
         assert_matches_type(OrganizationListAuditLogsResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_list_audit_logs_with_all_params(self, client: Excai) -> None:
+    def test_method_list_audit_logs_with_all_params(self, client: ExcaiSDK) -> None:
         organization = client.organization.list_audit_logs(
             actor_emails=["string"],
             actor_ids=["string"],
@@ -97,7 +97,7 @@ class TestOrganization:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_list_audit_logs(self, client: Excai) -> None:
+    def test_raw_response_list_audit_logs(self, client: ExcaiSDK) -> None:
         response = client.organization.with_raw_response.list_audit_logs()
 
         assert response.is_closed is True
@@ -107,7 +107,7 @@ class TestOrganization:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_list_audit_logs(self, client: Excai) -> None:
+    def test_streaming_response_list_audit_logs(self, client: ExcaiSDK) -> None:
         with client.organization.with_streaming_response.list_audit_logs() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -125,7 +125,7 @@ class TestAsyncOrganization:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_get_costs(self, async_client: AsyncExcai) -> None:
+    async def test_method_get_costs(self, async_client: AsyncExcaiSDK) -> None:
         organization = await async_client.organization.get_costs(
             start_time=0,
         )
@@ -133,7 +133,7 @@ class TestAsyncOrganization:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_get_costs_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_get_costs_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         organization = await async_client.organization.get_costs(
             start_time=0,
             bucket_width="1d",
@@ -147,7 +147,7 @@ class TestAsyncOrganization:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_get_costs(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_get_costs(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.organization.with_raw_response.get_costs(
             start_time=0,
         )
@@ -159,7 +159,7 @@ class TestAsyncOrganization:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_get_costs(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_get_costs(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.organization.with_streaming_response.get_costs(
             start_time=0,
         ) as response:
@@ -173,13 +173,13 @@ class TestAsyncOrganization:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_list_audit_logs(self, async_client: AsyncExcai) -> None:
+    async def test_method_list_audit_logs(self, async_client: AsyncExcaiSDK) -> None:
         organization = await async_client.organization.list_audit_logs()
         assert_matches_type(OrganizationListAuditLogsResponse, organization, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_list_audit_logs_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_list_audit_logs_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         organization = await async_client.organization.list_audit_logs(
             actor_emails=["string"],
             actor_ids=["string"],
@@ -200,7 +200,7 @@ class TestAsyncOrganization:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_list_audit_logs(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_list_audit_logs(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.organization.with_raw_response.list_audit_logs()
 
         assert response.is_closed is True
@@ -210,7 +210,7 @@ class TestAsyncOrganization:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_list_audit_logs(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_list_audit_logs(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.organization.with_streaming_response.list_audit_logs() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

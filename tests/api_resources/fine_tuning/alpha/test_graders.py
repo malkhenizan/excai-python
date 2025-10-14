@@ -7,9 +7,9 @@ from typing import Any, cast
 
 import pytest
 
-from excai import Excai, AsyncExcai
+from excai_sdk import ExcaiSDK, AsyncExcaiSDK
 from tests.utils import assert_matches_type
-from excai.types.fine_tuning.alpha import (
+from excai_sdk.types.fine_tuning.alpha import (
     GraderRunResponse,
     GraderValidateResponse,
 )
@@ -22,7 +22,7 @@ class TestGraders:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_run(self, client: Excai) -> None:
+    def test_method_run(self, client: ExcaiSDK) -> None:
         grader = client.fine_tuning.alpha.graders.run(
             grader={
                 "input": "input",
@@ -37,7 +37,7 @@ class TestGraders:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_run_with_all_params(self, client: Excai) -> None:
+    def test_method_run_with_all_params(self, client: ExcaiSDK) -> None:
         grader = client.fine_tuning.alpha.graders.run(
             grader={
                 "input": "input",
@@ -53,7 +53,7 @@ class TestGraders:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_run(self, client: Excai) -> None:
+    def test_raw_response_run(self, client: ExcaiSDK) -> None:
         response = client.fine_tuning.alpha.graders.with_raw_response.run(
             grader={
                 "input": "input",
@@ -72,7 +72,7 @@ class TestGraders:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_run(self, client: Excai) -> None:
+    def test_streaming_response_run(self, client: ExcaiSDK) -> None:
         with client.fine_tuning.alpha.graders.with_streaming_response.run(
             grader={
                 "input": "input",
@@ -93,7 +93,7 @@ class TestGraders:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_validate(self, client: Excai) -> None:
+    def test_method_validate(self, client: ExcaiSDK) -> None:
         grader = client.fine_tuning.alpha.graders.validate(
             grader={
                 "input": "input",
@@ -107,7 +107,7 @@ class TestGraders:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_validate_with_all_params(self, client: Excai) -> None:
+    def test_method_validate_with_all_params(self, client: ExcaiSDK) -> None:
         grader = client.fine_tuning.alpha.graders.validate(
             grader={
                 "input": "input",
@@ -121,7 +121,7 @@ class TestGraders:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_validate(self, client: Excai) -> None:
+    def test_raw_response_validate(self, client: ExcaiSDK) -> None:
         response = client.fine_tuning.alpha.graders.with_raw_response.validate(
             grader={
                 "input": "input",
@@ -139,7 +139,7 @@ class TestGraders:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_validate(self, client: Excai) -> None:
+    def test_streaming_response_validate(self, client: ExcaiSDK) -> None:
         with client.fine_tuning.alpha.graders.with_streaming_response.validate(
             grader={
                 "input": "input",
@@ -165,7 +165,7 @@ class TestAsyncGraders:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_run(self, async_client: AsyncExcai) -> None:
+    async def test_method_run(self, async_client: AsyncExcaiSDK) -> None:
         grader = await async_client.fine_tuning.alpha.graders.run(
             grader={
                 "input": "input",
@@ -180,7 +180,7 @@ class TestAsyncGraders:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_run_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_run_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         grader = await async_client.fine_tuning.alpha.graders.run(
             grader={
                 "input": "input",
@@ -196,7 +196,7 @@ class TestAsyncGraders:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_run(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_run(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.fine_tuning.alpha.graders.with_raw_response.run(
             grader={
                 "input": "input",
@@ -215,7 +215,7 @@ class TestAsyncGraders:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_run(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_run(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.fine_tuning.alpha.graders.with_streaming_response.run(
             grader={
                 "input": "input",
@@ -236,7 +236,7 @@ class TestAsyncGraders:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_validate(self, async_client: AsyncExcai) -> None:
+    async def test_method_validate(self, async_client: AsyncExcaiSDK) -> None:
         grader = await async_client.fine_tuning.alpha.graders.validate(
             grader={
                 "input": "input",
@@ -250,7 +250,7 @@ class TestAsyncGraders:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_validate_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_validate_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         grader = await async_client.fine_tuning.alpha.graders.validate(
             grader={
                 "input": "input",
@@ -264,7 +264,7 @@ class TestAsyncGraders:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_validate(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_validate(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.fine_tuning.alpha.graders.with_raw_response.validate(
             grader={
                 "input": "input",
@@ -282,7 +282,7 @@ class TestAsyncGraders:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_validate(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_validate(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.fine_tuning.alpha.graders.with_streaming_response.validate(
             grader={
                 "input": "input",

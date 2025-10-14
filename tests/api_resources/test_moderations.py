@@ -7,9 +7,9 @@ from typing import Any, cast
 
 import pytest
 
-from excai import Excai, AsyncExcai
-from excai.types import ModerationCreateResponse
+from excai_sdk import ExcaiSDK, AsyncExcaiSDK
 from tests.utils import assert_matches_type
+from excai_sdk.types import ModerationCreateResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -19,7 +19,7 @@ class TestModerations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create(self, client: Excai) -> None:
+    def test_method_create(self, client: ExcaiSDK) -> None:
         moderation = client.moderations.create(
             input="I want to kill them.",
         )
@@ -27,7 +27,7 @@ class TestModerations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_with_all_params(self, client: Excai) -> None:
+    def test_method_create_with_all_params(self, client: ExcaiSDK) -> None:
         moderation = client.moderations.create(
             input="I want to kill them.",
             model="string",
@@ -36,7 +36,7 @@ class TestModerations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_create(self, client: Excai) -> None:
+    def test_raw_response_create(self, client: ExcaiSDK) -> None:
         response = client.moderations.with_raw_response.create(
             input="I want to kill them.",
         )
@@ -48,7 +48,7 @@ class TestModerations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_create(self, client: Excai) -> None:
+    def test_streaming_response_create(self, client: ExcaiSDK) -> None:
         with client.moderations.with_streaming_response.create(
             input="I want to kill them.",
         ) as response:
@@ -68,7 +68,7 @@ class TestAsyncModerations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create(self, async_client: AsyncExcai) -> None:
+    async def test_method_create(self, async_client: AsyncExcaiSDK) -> None:
         moderation = await async_client.moderations.create(
             input="I want to kill them.",
         )
@@ -76,7 +76,7 @@ class TestAsyncModerations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_with_all_params(self, async_client: AsyncExcai) -> None:
+    async def test_method_create_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         moderation = await async_client.moderations.create(
             input="I want to kill them.",
             model="string",
@@ -85,7 +85,7 @@ class TestAsyncModerations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_create(self, async_client: AsyncExcai) -> None:
+    async def test_raw_response_create(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.moderations.with_raw_response.create(
             input="I want to kill them.",
         )
@@ -97,7 +97,7 @@ class TestAsyncModerations:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncExcai) -> None:
+    async def test_streaming_response_create(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.moderations.with_streaming_response.create(
             input="I want to kill them.",
         ) as response:

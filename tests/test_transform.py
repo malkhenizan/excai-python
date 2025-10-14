@@ -8,15 +8,15 @@ from typing_extensions import Required, Annotated, TypedDict
 
 import pytest
 
-from excai._types import Base64FileInput, omit, not_given
-from excai._utils import (
+from excai_sdk._types import Base64FileInput, omit, not_given
+from excai_sdk._utils import (
     PropertyInfo,
     transform as _transform,
     parse_datetime,
     async_transform as _async_transform,
 )
-from excai._compat import PYDANTIC_V1
-from excai._models import BaseModel
+from excai_sdk._compat import PYDANTIC_V1
+from excai_sdk._models import BaseModel
 
 _T = TypeVar("_T")
 
