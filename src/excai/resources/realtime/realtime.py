@@ -31,6 +31,7 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
+from ...types.audio_transcription_param import AudioTranscriptionParam
 from ...types.realtime_create_session_response import RealtimeCreateSessionResponse
 from ...types.realtime_create_client_secret_response import RealtimeCreateClientSecretResponse
 from ...types.realtime_create_transcription_session_response import RealtimeCreateTranscriptionSessionResponse
@@ -252,7 +253,7 @@ class RealtimeResource(SyncAPIResource):
         input_audio_format: Literal["pcm16", "g711_ulaw", "g711_alaw"] | Omit = omit,
         input_audio_noise_reduction: realtime_create_transcription_session_params.InputAudioNoiseReduction
         | Omit = omit,
-        input_audio_transcription: realtime_create_transcription_session_params.InputAudioTranscription | Omit = omit,
+        input_audio_transcription: AudioTranscriptionParam | Omit = omit,
         turn_detection: realtime_create_transcription_session_params.TurnDetection | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -534,7 +535,7 @@ class AsyncRealtimeResource(AsyncAPIResource):
         input_audio_format: Literal["pcm16", "g711_ulaw", "g711_alaw"] | Omit = omit,
         input_audio_noise_reduction: realtime_create_transcription_session_params.InputAudioNoiseReduction
         | Omit = omit,
-        input_audio_transcription: realtime_create_transcription_session_params.InputAudioTranscription | Omit = omit,
+        input_audio_transcription: AudioTranscriptionParam | Omit = omit,
         turn_detection: realtime_create_transcription_session_params.TurnDetection | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.

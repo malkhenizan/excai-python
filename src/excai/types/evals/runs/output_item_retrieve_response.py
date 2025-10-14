@@ -6,16 +6,9 @@ from typing_extensions import Literal
 from pydantic import Field as FieldInfo
 
 from ...._models import BaseModel
+from ..eval_api_error import EvalAPIError
 
-__all__ = [
-    "OutputItemRetrieveResponse",
-    "Result",
-    "Sample",
-    "SampleError",
-    "SampleInput",
-    "SampleOutput",
-    "SampleUsage",
-]
+__all__ = ["OutputItemRetrieveResponse", "Result", "Sample", "SampleInput", "SampleOutput", "SampleUsage"]
 
 
 class Result(BaseModel):
@@ -45,14 +38,6 @@ class Result(BaseModel):
         def __getattr__(self, attr: str) -> object: ...
     else:
         __pydantic_extra__: Dict[str, object]
-
-
-class SampleError(BaseModel):
-    code: str
-    """The error code."""
-
-    message: str
-    """The error message."""
 
 
 class SampleInput(BaseModel):
@@ -86,7 +71,7 @@ class SampleUsage(BaseModel):
 
 
 class Sample(BaseModel):
-    error: SampleError
+    error: EvalAPIError
     """An object representing an error response from the Eval API."""
 
     finish_reason: str

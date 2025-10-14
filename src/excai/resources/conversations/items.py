@@ -52,17 +52,6 @@ class ItemsResource(SyncAPIResource):
         conversation_id: str,
         *,
         items: Iterable[item_create_params.Item],
-        include: List[
-            Literal[
-                "code_interpreter_call.outputs",
-                "computer_call_output.output.image_url",
-                "file_search_call.results",
-                "message.input_image.image_url",
-                "message.output_text.logprobs",
-                "reasoning.encrypted_content",
-            ]
-        ]
-        | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -75,10 +64,6 @@ class ItemsResource(SyncAPIResource):
 
         Args:
           items: The items to add to the conversation. You may add up to 20 items at a time.
-
-          include: Additional fields to include in the response. See the `include` parameter for
-              [listing Conversation items above](https://platform.excai.com/docs/api-reference/conversations/list-items#conversations_list_items-include)
-              for more information.
 
           extra_headers: Send extra headers
 
@@ -94,11 +79,7 @@ class ItemsResource(SyncAPIResource):
             f"/conversations/{conversation_id}/items",
             body=maybe_transform({"items": items}, item_create_params.ItemCreateParams),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform({"include": include}, item_create_params.ItemCreateParams),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ItemCreateResponse,
         )
@@ -282,17 +263,6 @@ class AsyncItemsResource(AsyncAPIResource):
         conversation_id: str,
         *,
         items: Iterable[item_create_params.Item],
-        include: List[
-            Literal[
-                "code_interpreter_call.outputs",
-                "computer_call_output.output.image_url",
-                "file_search_call.results",
-                "message.input_image.image_url",
-                "message.output_text.logprobs",
-                "reasoning.encrypted_content",
-            ]
-        ]
-        | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -305,10 +275,6 @@ class AsyncItemsResource(AsyncAPIResource):
 
         Args:
           items: The items to add to the conversation. You may add up to 20 items at a time.
-
-          include: Additional fields to include in the response. See the `include` parameter for
-              [listing Conversation items above](https://platform.excai.com/docs/api-reference/conversations/list-items#conversations_list_items-include)
-              for more information.
 
           extra_headers: Send extra headers
 
@@ -324,11 +290,7 @@ class AsyncItemsResource(AsyncAPIResource):
             f"/conversations/{conversation_id}/items",
             body=await async_maybe_transform({"items": items}, item_create_params.ItemCreateParams),
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform({"include": include}, item_create_params.ItemCreateParams),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ItemCreateResponse,
         )

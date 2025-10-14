@@ -39,22 +39,6 @@ class TestItems:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_with_all_params(self, client: ExCai) -> None:
-        item = client.conversations.items.create(
-            conversation_id="conv_123",
-            items=[
-                {
-                    "content": "string",
-                    "role": "user",
-                    "type": "message",
-                }
-            ],
-            include=["code_interpreter_call.outputs"],
-        )
-        assert_matches_type(ItemCreateResponse, item, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     def test_raw_response_create(self, client: ExCai) -> None:
         response = client.conversations.items.with_raw_response.create(
             conversation_id="conv_123",
@@ -293,22 +277,6 @@ class TestAsyncItems:
                     "type": "message",
                 }
             ],
-        )
-        assert_matches_type(ItemCreateResponse, item, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_create_with_all_params(self, async_client: AsyncExCai) -> None:
-        item = await async_client.conversations.items.create(
-            conversation_id="conv_123",
-            items=[
-                {
-                    "content": "string",
-                    "role": "user",
-                    "type": "message",
-                }
-            ],
-            include=["code_interpreter_call.outputs"],
         )
         assert_matches_type(ItemCreateResponse, item, path=["response"])
 

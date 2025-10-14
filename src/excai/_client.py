@@ -161,7 +161,7 @@ class ExCai(SyncAPIClient):
     @property
     @override
     def qs(self) -> Querystring:
-        return Querystring(array_format="comma")
+        return Querystring(array_format="brackets")
 
     @property
     @override
@@ -380,7 +380,7 @@ class AsyncExCai(AsyncAPIClient):
     @property
     @override
     def qs(self) -> Querystring:
-        return Querystring(array_format="comma")
+        return Querystring(array_format="brackets")
 
     @property
     @override

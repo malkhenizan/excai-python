@@ -3,15 +3,10 @@
 from typing import List, Optional
 from typing_extensions import Literal
 
+from .error_2 import Error2
 from .._models import BaseModel
 
-__all__ = ["VideoListResponse", "Data", "DataError"]
-
-
-class DataError(BaseModel):
-    code: str
-
-    message: str
+__all__ = ["VideoListResponse", "Data"]
 
 
 class Data(BaseModel):
@@ -24,7 +19,7 @@ class Data(BaseModel):
     created_at: int
     """Unix timestamp (seconds) for when the job was created."""
 
-    error: Optional[DataError] = None
+    error: Optional[Error2] = None
     """Error payload that explains why generation failed, if applicable."""
 
     expires_at: Optional[int] = None
