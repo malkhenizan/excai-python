@@ -272,16 +272,6 @@ export interface UsageAudioSpeechesParams {
    * previous response.
    */
   page?: string;
-
-  /**
-   * Return only usage for these projects.
-   */
-  project_ids?: Array<string>;
-
-  /**
-   * Return only usage for these users.
-   */
-  user_ids?: Array<string>;
 }
 
 export interface UsageAudioTranscriptionsParams {
