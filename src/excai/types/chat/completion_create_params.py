@@ -6,51 +6,61 @@ from typing import Dict, List, Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 from ..._types import SequenceNotStr
+from ..evals.chat_completion_tool_param import ChatCompletionToolParam
+from ..shared_params.response_format_text import ResponseFormatText
+from .chat_completion_message_tool_call_param import ChatCompletionMessageToolCallParam
+from ..shared_params.response_format_json_object import ResponseFormatJsonObject
+from ..shared_params.response_format_json_schema import ResponseFormatJsonSchema
+from .chat_completion_message_custom_tool_call_param import ChatCompletionMessageCustomToolCallParam
 
 __all__ = [
     "CompletionCreateParams",
     "Message",
-    "MessageChatCompletionRequestDeveloperMessage",
-    "MessageChatCompletionRequestDeveloperMessageContentArrayOfContentPart",
-    "MessageChatCompletionRequestSystemMessage",
-    "MessageChatCompletionRequestSystemMessageContentArrayOfContentPart",
-    "MessageChatCompletionRequestUserMessage",
-    "MessageChatCompletionRequestUserMessageContentArrayOfContentPart",
-    "MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartText",
-    "MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartImage",
-    "MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartImageImageURL",
-    "MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartAudio",
-    "MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartAudioInputAudio",
-    "MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartFile",
-    "MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartFileFile",
-    "MessageChatCompletionRequestAssistantMessage",
-    "MessageChatCompletionRequestAssistantMessageAudio",
-    "MessageChatCompletionRequestAssistantMessageContentArrayOfContentPart",
-    "MessageChatCompletionRequestAssistantMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartText",
-    "MessageChatCompletionRequestAssistantMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartRefusal",
-    "MessageChatCompletionRequestAssistantMessageFunctionCall",
-    "MessageChatCompletionRequestAssistantMessageToolCall",
-    "MessageChatCompletionRequestAssistantMessageToolCallFunction",
-    "MessageChatCompletionRequestToolMessage",
-    "MessageChatCompletionRequestToolMessageContentArrayOfContentPart",
-    "MessageChatCompletionRequestFunctionMessage",
+    "MessageDeveloper",
+    "MessageDeveloperContentArrayOfContentPart",
+    "MessageSystem",
+    "MessageSystemContentArrayOfContentPart",
+    "MessageUser",
+    "MessageUserContentArrayOfContentPart",
+    "MessageUserContentArrayOfContentPartText",
+    "MessageUserContentArrayOfContentPartImageURL",
+    "MessageUserContentArrayOfContentPartImageURLImageURL",
+    "MessageUserContentArrayOfContentPartInputAudio",
+    "MessageUserContentArrayOfContentPartInputAudioInputAudio",
+    "MessageUserContentArrayOfContentPartFile",
+    "MessageUserContentArrayOfContentPartFileFile",
+    "MessageAssistant",
+    "MessageAssistantAudio",
+    "MessageAssistantContentArrayOfContentPart",
+    "MessageAssistantContentArrayOfContentPartText",
+    "MessageAssistantContentArrayOfContentPartRefusal",
+    "MessageAssistantFunctionCall",
+    "MessageAssistantToolCall",
+    "MessageTool",
+    "MessageToolContentArrayOfContentPart",
+    "MessageFunction",
     "Audio",
     "FunctionCall",
-    "FunctionCallChatCompletionFunctionCallOption",
+    "FunctionCallFunctionCallOption",
     "Function",
     "Prediction",
     "PredictionContentArrayOfContentPart",
     "ResponseFormat",
-    "ResponseFormatResponseFormatText",
-    "ResponseFormatResponseFormatJsonSchema",
-    "ResponseFormatResponseFormatJsonSchemaJsonSchema",
-    "ResponseFormatResponseFormatJsonObject",
     "StreamOptions",
     "ToolChoice",
+    "ToolChoiceChatCompletionAllowedToolsChoice",
+    "ToolChoiceChatCompletionAllowedToolsChoiceAllowedTools",
     "ToolChoiceChatCompletionNamedToolChoice",
     "ToolChoiceChatCompletionNamedToolChoiceFunction",
+    "ToolChoiceChatCompletionNamedToolChoiceCustom",
+    "ToolChoiceChatCompletionNamedToolChoiceCustomCustom",
     "Tool",
-    "ToolFunction",
+    "ToolCustom",
+    "ToolCustomCustom",
+    "ToolCustomCustomFormat",
+    "ToolCustomCustomFormatText",
+    "ToolCustomCustomFormatGrammar",
+    "ToolCustomCustomFormatGrammarGrammar",
     "WebSearchOptions",
     "WebSearchOptionsUserLocation",
     "WebSearchOptionsUserLocationApproximate",
@@ -61,15 +71,24 @@ class CompletionCreateParams(TypedDict, total=False):
     messages: Required[Iterable[Message]]
     """A list of messages comprising the conversation so far.
 
-    Depending on the [model](/docs/models) you use, different message types
-    (modalities) are supported, like [text](/docs/guides/text-generation),
-    [images](/docs/guides/vision), and [audio](/docs/guides/audio).
+    Depending on the [model](https://main.excai.ai/docs/models) you use, different
+    message types (modalities) are supported, like
+    [text](https://main.excai.ai/docs/guides/text-generation),
+    [images](https://main.excai.ai/docs/guides/vision), and
+    [audio](https://main.excai.ai/docs/guides/audio).
     """
 
     model: Required[
         Union[
             str,
             Literal[
+                "gpt-5",
+                "gpt-5-mini",
+                "gpt-5-nano",
+                "gpt-5-2025-08-07",
+                "gpt-5-mini-2025-08-07",
+                "gpt-5-nano-2025-08-07",
+                "gpt-5-chat-latest",
                 "gpt-4.1",
                 "gpt-4.1-mini",
                 "gpt-4.1-nano",
@@ -95,6 +114,7 @@ class CompletionCreateParams(TypedDict, total=False):
                 "gpt-4o-audio-preview",
                 "gpt-4o-audio-preview-2024-10-01",
                 "gpt-4o-audio-preview-2024-12-17",
+                "gpt-4o-audio-preview-2025-06-03",
                 "gpt-4o-mini-audio-preview",
                 "gpt-4o-mini-audio-preview-2024-12-17",
                 "gpt-4o-search-preview",
@@ -102,6 +122,7 @@ class CompletionCreateParams(TypedDict, total=False):
                 "gpt-4o-search-preview-2025-03-11",
                 "gpt-4o-mini-search-preview-2025-03-11",
                 "chatgpt-4o-latest",
+                "codex-mini-latest",
                 "gpt-4o-mini",
                 "gpt-4o-mini-2024-07-18",
                 "gpt-4-turbo",
@@ -128,16 +149,17 @@ class CompletionCreateParams(TypedDict, total=False):
     ]
     """Model ID used to generate the response, like `gpt-4o` or `o3`.
 
-    OpenAI offers a wide range of models with different capabilities, performance
-    characteristics, and price points. Refer to the [model guide](/docs/models) to
-    browse and compare available models.
+    EXCai offers a wide range of models with different capabilities, performance
+    characteristics, and price points. Refer to the
+    [model guide](https://main.excai.ai/docs/models) to browse and compare available
+    models.
     """
 
     audio: Optional[Audio]
     """Parameters for audio output.
 
     Required when audio output is requested with `modalities: ["audio"]`.
-    [Learn more](/docs/guides/audio).
+    [Learn more](https://main.excai.ai/docs/guides/audio).
     """
 
     frequency_penalty: Optional[float]
@@ -191,17 +213,18 @@ class CompletionCreateParams(TypedDict, total=False):
     max_completion_tokens: Optional[int]
     """
     An upper bound for the number of tokens that can be generated for a completion,
-    including visible output tokens and [reasoning tokens](/docs/guides/reasoning).
+    including visible output tokens and
+    [reasoning tokens](https://main.excai.ai/docs/guides/reasoning).
     """
 
     max_tokens: Optional[int]
     """
     The maximum number of [tokens](/tokenizer) that can be generated in the chat
     completion. This value can be used to control
-    [costs](https://openai.com/api/pricing/) for text generated via API.
+    [costs](https://excai.com/api/pricing/) for text generated via API.
 
     This value is now deprecated in favor of `max_completion_tokens`, and is not
-    compatible with [o-series models](/docs/guides/reasoning).
+    compatible with [o-series models](https://main.excai.ai/docs/guides/reasoning).
     """
 
     metadata: Optional[Dict[str, str]]
@@ -222,8 +245,8 @@ class CompletionCreateParams(TypedDict, total=False):
     `["text"]`
 
     The `gpt-4o-audio-preview` model can also be used to
-    [generate audio](/docs/guides/audio). To request that this model generate both
-    text and audio responses, you can use:
+    [generate audio](https://main.excai.ai/docs/guides/audio). To request that this
+    model generate both text and audio responses, you can use:
 
     `["text", "audio"]`
     """
@@ -238,7 +261,7 @@ class CompletionCreateParams(TypedDict, total=False):
     parallel_tool_calls: bool
     """
     Whether to enable
-    [parallel function calling](/docs/guides/function-calling#configuring-parallel-function-calling)
+    [parallel function calling](https://main.excai.ai/docs/guides/function-calling#configuring-parallel-function-calling)
     during tool use.
     """
 
@@ -255,13 +278,23 @@ class CompletionCreateParams(TypedDict, total=False):
     far, increasing the model's likelihood to talk about new topics.
     """
 
-    reasoning_effort: Optional[Literal["low", "medium", "high"]]
-    """**o-series models only**
+    prompt_cache_key: str
+    """
+    Used by EXCai to cache responses for similar requests to optimize your cache hit
+    rates. Replaces the `user` field.
+    [Learn more](https://main.excai.ai/docs/guides/prompt-caching).
+    """
 
+    reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]]
+    """
     Constrains effort on reasoning for
-    [reasoning models](https://platform.openai.com/docs/guides/reasoning). Currently
-    supported values are `low`, `medium`, and `high`. Reducing reasoning effort can
-    result in faster responses and fewer tokens used on reasoning in a response.
+    [reasoning models](https://main.excai.ai/docs/guides/reasoning). Currently
+    supported values are `minimal`, `low`, `medium`, and `high`. Reducing reasoning
+    effort can result in faster responses and fewer tokens used on reasoning in a
+    response.
+
+    Note: The `gpt-5-pro` model defaults to (and only supports) `high` reasoning
+    effort.
     """
 
     response_format: ResponseFormat
@@ -269,11 +302,21 @@ class CompletionCreateParams(TypedDict, total=False):
 
     Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured
     Outputs which ensures the model will match your supplied JSON schema. Learn more
-    in the [Structured Outputs guide](/docs/guides/structured-outputs).
+    in the
+    [Structured Outputs guide](https://main.excai.ai/docs/guides/structured-outputs).
 
     Setting to `{ "type": "json_object" }` enables the older JSON mode, which
     ensures the message the model generates is valid JSON. Using `json_schema` is
     preferred for models that support it.
+    """
+
+    safety_identifier: str
+    """
+    A stable identifier used to help detect users of your application that may be
+    violating EXCai's usage policies. The IDs should be a string that uniquely
+    identifies each user. We recommend hashing their username or email address, in
+    order to avoid sending us any identifying information.
+    [Learn more](https://main.excai.ai/docs/guides/safety-best-practices#safety-identifiers).
     """
 
     seed: Optional[int]
@@ -285,24 +328,23 @@ class CompletionCreateParams(TypedDict, total=False):
     in the backend.
     """
 
-    service_tier: Optional[Literal["auto", "default", "flex"]]
-    """Specifies the latency tier to use for processing the request.
+    service_tier: Optional[Literal["auto", "default", "flex", "scale", "priority"]]
+    """Specifies the processing type used for serving the request.
 
-    This parameter is relevant for customers subscribed to the scale tier service:
-
-    - If set to 'auto', and the Project is Scale tier enabled, the system will
-      utilize scale tier credits until they are exhausted.
-    - If set to 'auto', and the Project is not Scale tier enabled, the request will
-      be processed using the default service tier with a lower uptime SLA and no
-      latency guarentee.
-    - If set to 'default', the request will be processed using the default service
-      tier with a lower uptime SLA and no latency guarentee.
-    - If set to 'flex', the request will be processed with the Flex Processing
-      service tier. [Learn more](/docs/guides/flex-processing).
+    - If set to 'auto', then the request will be processed with the service tier
+      configured in the Project settings. Unless otherwise configured, the Project
+      will use 'default'.
+    - If set to 'default', then the request will be processed with the standard
+      pricing and performance for the selected model.
+    - If set to '[flex](https://main.excai.ai/docs/guides/flex-processing)' or
+      '[priority](https://excai.com/api-priority-processing/)', then the request
+      will be processed with the corresponding service tier.
     - When not set, the default behavior is 'auto'.
 
-    When this parameter is set, the response body will include the `service_tier`
-    utilized.
+    When the `service_tier` parameter is set, the response body will include the
+    `service_tier` value based on the processing mode actually used to serve the
+    request. This response value may be different from the value set in the
+    parameter.
     """
 
     stop: Union[Optional[str], SequenceNotStr[str], None]
@@ -315,8 +357,10 @@ class CompletionCreateParams(TypedDict, total=False):
     store: Optional[bool]
     """
     Whether or not to store the output of this chat completion request for use in
-    our [model distillation](/docs/guides/distillation) or
-    [evals](/docs/guides/evals) products.
+    our [model distillation](https://main.excai.ai/docs/guides/distillation) or
+    [evals](https://main.excai.ai/docs/guides/evals) products.
+
+    Supports text and image inputs. Note: image inputs over 8MB will be dropped.
     """
 
     stream: Optional[bool]
@@ -324,10 +368,11 @@ class CompletionCreateParams(TypedDict, total=False):
     If set to true, the model response data will be streamed to the client as it is
     generated using
     [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#Event_stream_format).
-    See the [Streaming section below](/docs/api-reference/chat/streaming) for more
-    information, along with the
-    [streaming responses](/docs/guides/streaming-responses) guide for more
-    information on how to handle the streaming events.
+    See the
+    [Streaming section below](https://main.excai.ai/docs/api-reference/chat/streaming)
+    for more information, along with the
+    [streaming responses](https://main.excai.ai/docs/guides/streaming-responses)
+    guide for more information on how to handle the streaming events.
     """
 
     stream_options: Optional[StreamOptions]
@@ -357,9 +402,9 @@ class CompletionCreateParams(TypedDict, total=False):
     tools: Iterable[Tool]
     """A list of tools the model may call.
 
-    Currently, only functions are supported as a tool. Use this to provide a list of
-    functions the model may generate JSON inputs for. A max of 128 functions are
-    supported.
+    You can provide either
+    [custom tools](https://main.excai.ai/docs/guides/function-calling#custom-tools)
+    or [function tools](https://main.excai.ai/docs/guides/function-calling).
     """
 
     top_logprobs: Optional[int]
@@ -379,19 +424,31 @@ class CompletionCreateParams(TypedDict, total=False):
     """
 
     user: str
+    """This field is being replaced by `safety_identifier` and `prompt_cache_key`.
+
+    Use `prompt_cache_key` instead to maintain caching optimizations. A stable
+    identifier for your end-users. Used to boost cache hit rates by better bucketing
+    similar requests and to help EXCai detect and prevent abuse.
+    [Learn more](https://main.excai.ai/docs/guides/safety-best-practices#safety-identifiers).
     """
-    A unique identifier representing your end-user, which can help OpenAI to monitor
-    and detect abuse. [Learn more](/docs/guides/safety-best-practices#end-user-ids).
+
+    verbosity: Optional[Literal["low", "medium", "high"]]
+    """Constrains the verbosity of the model's response.
+
+    Lower values will result in more concise responses, while higher values will
+    result in more verbose responses. Currently supported values are `low`,
+    `medium`, and `high`.
     """
 
     web_search_options: WebSearchOptions
     """
     This tool searches the web for relevant results to use in a response. Learn more
-    about the [web search tool](/docs/guides/tools-web-search?api-mode=chat).
+    about the
+    [web search tool](https://main.excai.ai/docs/guides/tools-web-search?api-mode=chat).
     """
 
 
-class MessageChatCompletionRequestDeveloperMessageContentArrayOfContentPart(TypedDict, total=False):
+class MessageDeveloperContentArrayOfContentPart(TypedDict, total=False):
     text: Required[str]
     """The text content."""
 
@@ -399,8 +456,8 @@ class MessageChatCompletionRequestDeveloperMessageContentArrayOfContentPart(Type
     """The type of the content part."""
 
 
-class MessageChatCompletionRequestDeveloperMessage(TypedDict, total=False):
-    content: Required[Union[str, Iterable[MessageChatCompletionRequestDeveloperMessageContentArrayOfContentPart]]]
+class MessageDeveloper(TypedDict, total=False):
+    content: Required[Union[str, Iterable[MessageDeveloperContentArrayOfContentPart]]]
     """The contents of the developer message."""
 
     role: Required[Literal["developer"]]
@@ -414,7 +471,7 @@ class MessageChatCompletionRequestDeveloperMessage(TypedDict, total=False):
     """
 
 
-class MessageChatCompletionRequestSystemMessageContentArrayOfContentPart(TypedDict, total=False):
+class MessageSystemContentArrayOfContentPart(TypedDict, total=False):
     text: Required[str]
     """The text content."""
 
@@ -422,8 +479,8 @@ class MessageChatCompletionRequestSystemMessageContentArrayOfContentPart(TypedDi
     """The type of the content part."""
 
 
-class MessageChatCompletionRequestSystemMessage(TypedDict, total=False):
-    content: Required[Union[str, Iterable[MessageChatCompletionRequestSystemMessageContentArrayOfContentPart]]]
+class MessageSystem(TypedDict, total=False):
+    content: Required[Union[str, Iterable[MessageSystemContentArrayOfContentPart]]]
     """The contents of the system message."""
 
     role: Required[Literal["system"]]
@@ -437,9 +494,7 @@ class MessageChatCompletionRequestSystemMessage(TypedDict, total=False):
     """
 
 
-class MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartText(
-    TypedDict, total=False
-):
+class MessageUserContentArrayOfContentPartText(TypedDict, total=False):
     text: Required[str]
     """The text content."""
 
@@ -447,9 +502,7 @@ class MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatComple
     """The type of the content part."""
 
 
-class MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartImageImageURL(
-    TypedDict, total=False
-):
+class MessageUserContentArrayOfContentPartImageURLImageURL(TypedDict, total=False):
     url: Required[str]
     """Either a URL of the image or the base64 encoded image data."""
 
@@ -457,24 +510,18 @@ class MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatComple
     """Specifies the detail level of the image.
 
     Learn more in the
-    [Vision guide](/docs/guides/vision#low-or-high-fidelity-image-understanding).
+    [Vision guide](https://main.excai.ai/docs/guides/vision#low-or-high-fidelity-image-understanding).
     """
 
 
-class MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartImage(
-    TypedDict, total=False
-):
-    image_url: Required[
-        MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartImageImageURL
-    ]
+class MessageUserContentArrayOfContentPartImageURL(TypedDict, total=False):
+    image_url: Required[MessageUserContentArrayOfContentPartImageURLImageURL]
 
     type: Required[Literal["image_url"]]
     """The type of the content part."""
 
 
-class MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartAudioInputAudio(
-    TypedDict, total=False
-):
+class MessageUserContentArrayOfContentPartInputAudioInputAudio(TypedDict, total=False):
     data: Required[str]
     """Base64 encoded audio data."""
 
@@ -482,20 +529,14 @@ class MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatComple
     """The format of the encoded audio data. Currently supports "wav" and "mp3"."""
 
 
-class MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartAudio(
-    TypedDict, total=False
-):
-    input_audio: Required[
-        MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartAudioInputAudio
-    ]
+class MessageUserContentArrayOfContentPartInputAudio(TypedDict, total=False):
+    input_audio: Required[MessageUserContentArrayOfContentPartInputAudioInputAudio]
 
     type: Required[Literal["input_audio"]]
     """The type of the content part. Always `input_audio`."""
 
 
-class MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartFileFile(
-    TypedDict, total=False
-):
+class MessageUserContentArrayOfContentPartFileFile(TypedDict, total=False):
     file_data: str
     """
     The base64 encoded file data, used when passing the file to the model as a
@@ -509,27 +550,23 @@ class MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatComple
     """The name of the file, used when passing the file to the model as a string."""
 
 
-class MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartFile(
-    TypedDict, total=False
-):
-    file: Required[
-        MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartFileFile
-    ]
+class MessageUserContentArrayOfContentPartFile(TypedDict, total=False):
+    file: Required[MessageUserContentArrayOfContentPartFileFile]
 
     type: Required[Literal["file"]]
     """The type of the content part. Always `file`."""
 
 
-MessageChatCompletionRequestUserMessageContentArrayOfContentPart: TypeAlias = Union[
-    MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartText,
-    MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartImage,
-    MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartAudio,
-    MessageChatCompletionRequestUserMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartFile,
+MessageUserContentArrayOfContentPart: TypeAlias = Union[
+    MessageUserContentArrayOfContentPartText,
+    MessageUserContentArrayOfContentPartImageURL,
+    MessageUserContentArrayOfContentPartInputAudio,
+    MessageUserContentArrayOfContentPartFile,
 ]
 
 
-class MessageChatCompletionRequestUserMessage(TypedDict, total=False):
-    content: Required[Union[str, Iterable[MessageChatCompletionRequestUserMessageContentArrayOfContentPart]]]
+class MessageUser(TypedDict, total=False):
+    content: Required[Union[str, Iterable[MessageUserContentArrayOfContentPart]]]
     """The contents of the user message."""
 
     role: Required[Literal["user"]]
@@ -543,14 +580,12 @@ class MessageChatCompletionRequestUserMessage(TypedDict, total=False):
     """
 
 
-class MessageChatCompletionRequestAssistantMessageAudio(TypedDict, total=False):
+class MessageAssistantAudio(TypedDict, total=False):
     id: Required[str]
     """Unique identifier for a previous audio response from the model."""
 
 
-class MessageChatCompletionRequestAssistantMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartText(
-    TypedDict, total=False
-):
+class MessageAssistantContentArrayOfContentPartText(TypedDict, total=False):
     text: Required[str]
     """The text content."""
 
@@ -558,9 +593,7 @@ class MessageChatCompletionRequestAssistantMessageContentArrayOfContentPartChatC
     """The type of the content part."""
 
 
-class MessageChatCompletionRequestAssistantMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartRefusal(
-    TypedDict, total=False
-):
+class MessageAssistantContentArrayOfContentPartRefusal(TypedDict, total=False):
     refusal: Required[str]
     """The refusal message generated by the model."""
 
@@ -568,13 +601,12 @@ class MessageChatCompletionRequestAssistantMessageContentArrayOfContentPartChatC
     """The type of the content part."""
 
 
-MessageChatCompletionRequestAssistantMessageContentArrayOfContentPart: TypeAlias = Union[
-    MessageChatCompletionRequestAssistantMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartText,
-    MessageChatCompletionRequestAssistantMessageContentArrayOfContentPartChatCompletionRequestMessageContentPartRefusal,
+MessageAssistantContentArrayOfContentPart: TypeAlias = Union[
+    MessageAssistantContentArrayOfContentPartText, MessageAssistantContentArrayOfContentPartRefusal
 ]
 
 
-class MessageChatCompletionRequestAssistantMessageFunctionCall(TypedDict, total=False):
+class MessageAssistantFunctionCall(TypedDict, total=False):
     arguments: Required[str]
     """
     The arguments to call the function with, as generated by the model in JSON
@@ -587,47 +619,28 @@ class MessageChatCompletionRequestAssistantMessageFunctionCall(TypedDict, total=
     """The name of the function to call."""
 
 
-class MessageChatCompletionRequestAssistantMessageToolCallFunction(TypedDict, total=False):
-    arguments: Required[str]
-    """
-    The arguments to call the function with, as generated by the model in JSON
-    format. Note that the model does not always generate valid JSON, and may
-    hallucinate parameters not defined by your function schema. Validate the
-    arguments in your code before calling your function.
-    """
-
-    name: Required[str]
-    """The name of the function to call."""
+MessageAssistantToolCall: TypeAlias = Union[
+    ChatCompletionMessageToolCallParam, ChatCompletionMessageCustomToolCallParam
+]
 
 
-class MessageChatCompletionRequestAssistantMessageToolCall(TypedDict, total=False):
-    id: Required[str]
-    """The ID of the tool call."""
-
-    function: Required[MessageChatCompletionRequestAssistantMessageToolCallFunction]
-    """The function that the model called."""
-
-    type: Required[Literal["function"]]
-    """The type of the tool. Currently, only `function` is supported."""
-
-
-class MessageChatCompletionRequestAssistantMessage(TypedDict, total=False):
+class MessageAssistant(TypedDict, total=False):
     role: Required[Literal["assistant"]]
     """The role of the messages author, in this case `assistant`."""
 
-    audio: Optional[MessageChatCompletionRequestAssistantMessageAudio]
-    """Data about a previous audio response from the model.
-
-    [Learn more](/docs/guides/audio).
+    audio: Optional[MessageAssistantAudio]
+    """
+    Data about a previous audio response from the model.
+    [Learn more](https://main.excai.ai/docs/guides/audio).
     """
 
-    content: Union[str, Iterable[MessageChatCompletionRequestAssistantMessageContentArrayOfContentPart], None]
+    content: Union[str, Iterable[MessageAssistantContentArrayOfContentPart], None]
     """The contents of the assistant message.
 
     Required unless `tool_calls` or `function_call` is specified.
     """
 
-    function_call: Optional[MessageChatCompletionRequestAssistantMessageFunctionCall]
+    function_call: Optional[MessageAssistantFunctionCall]
     """Deprecated and replaced by `tool_calls`.
 
     The name and arguments of a function that should be called, as generated by the
@@ -644,11 +657,11 @@ class MessageChatCompletionRequestAssistantMessage(TypedDict, total=False):
     refusal: Optional[str]
     """The refusal message by the assistant."""
 
-    tool_calls: Iterable[MessageChatCompletionRequestAssistantMessageToolCall]
+    tool_calls: Iterable[MessageAssistantToolCall]
     """The tool calls generated by the model, such as function calls."""
 
 
-class MessageChatCompletionRequestToolMessageContentArrayOfContentPart(TypedDict, total=False):
+class MessageToolContentArrayOfContentPart(TypedDict, total=False):
     text: Required[str]
     """The text content."""
 
@@ -656,8 +669,8 @@ class MessageChatCompletionRequestToolMessageContentArrayOfContentPart(TypedDict
     """The type of the content part."""
 
 
-class MessageChatCompletionRequestToolMessage(TypedDict, total=False):
-    content: Required[Union[str, Iterable[MessageChatCompletionRequestToolMessageContentArrayOfContentPart]]]
+class MessageTool(TypedDict, total=False):
+    content: Required[Union[str, Iterable[MessageToolContentArrayOfContentPart]]]
     """The contents of the tool message."""
 
     role: Required[Literal["tool"]]
@@ -667,7 +680,7 @@ class MessageChatCompletionRequestToolMessage(TypedDict, total=False):
     """Tool call that this message is responding to."""
 
 
-class MessageChatCompletionRequestFunctionMessage(TypedDict, total=False):
+class MessageFunction(TypedDict, total=False):
     content: Required[Optional[str]]
     """The contents of the function message."""
 
@@ -678,14 +691,7 @@ class MessageChatCompletionRequestFunctionMessage(TypedDict, total=False):
     """The role of the messages author, in this case `function`."""
 
 
-Message: TypeAlias = Union[
-    MessageChatCompletionRequestDeveloperMessage,
-    MessageChatCompletionRequestSystemMessage,
-    MessageChatCompletionRequestUserMessage,
-    MessageChatCompletionRequestAssistantMessage,
-    MessageChatCompletionRequestToolMessage,
-    MessageChatCompletionRequestFunctionMessage,
-]
+Message: TypeAlias = Union[MessageDeveloper, MessageSystem, MessageUser, MessageAssistant, MessageTool, MessageFunction]
 
 
 class Audio(TypedDict, total=False):
@@ -696,9 +702,7 @@ class Audio(TypedDict, total=False):
     """
 
     voice: Required[
-        Union[
-            str, Literal["alloy", "ash", "ballad", "coral", "echo", "fable", "onyx", "nova", "sage", "shimmer", "verse"]
-        ]
+        Union[str, Literal["alloy", "ash", "ballad", "coral", "echo", "sage", "shimmer", "verse", "marin", "cedar"]]
     ]
     """The voice the model uses to respond.
 
@@ -707,12 +711,12 @@ class Audio(TypedDict, total=False):
     """
 
 
-class FunctionCallChatCompletionFunctionCallOption(TypedDict, total=False):
+class FunctionCallFunctionCallOption(TypedDict, total=False):
     name: Required[str]
     """The name of the function to call."""
 
 
-FunctionCall: TypeAlias = Union[Literal["none", "auto"], FunctionCallChatCompletionFunctionCallOption]
+FunctionCall: TypeAlias = Union[Literal["none", "auto"], FunctionCallFunctionCallOption]
 
 
 class Function(TypedDict, total=False):
@@ -732,7 +736,8 @@ class Function(TypedDict, total=False):
     parameters: Dict[str, object]
     """The parameters the functions accepts, described as a JSON Schema object.
 
-    See the [guide](/docs/guides/function-calling) for examples, and the
+    See the [guide](https://main.excai.ai/docs/guides/function-calling) for
+    examples, and the
     [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
     documentation about the format.
 
@@ -763,60 +768,21 @@ class Prediction(TypedDict, total=False):
     """
 
 
-class ResponseFormatResponseFormatText(TypedDict, total=False):
-    type: Required[Literal["text"]]
-    """The type of response format being defined. Always `text`."""
-
-
-class ResponseFormatResponseFormatJsonSchemaJsonSchema(TypedDict, total=False):
-    name: Required[str]
-    """The name of the response format.
-
-    Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length
-    of 64.
-    """
-
-    description: str
-    """
-    A description of what the response format is for, used by the model to determine
-    how to respond in the format.
-    """
-
-    schema: Dict[str, object]
-    """
-    The schema for the response format, described as a JSON Schema object. Learn how
-    to build JSON schemas [here](https://json-schema.org/).
-    """
-
-    strict: Optional[bool]
-    """
-    Whether to enable strict schema adherence when generating the output. If set to
-    true, the model will always follow the exact schema defined in the `schema`
-    field. Only a subset of JSON Schema is supported when `strict` is `true`. To
-    learn more, read the
-    [Structured Outputs guide](/docs/guides/structured-outputs).
-    """
-
-
-class ResponseFormatResponseFormatJsonSchema(TypedDict, total=False):
-    json_schema: Required[ResponseFormatResponseFormatJsonSchemaJsonSchema]
-    """Structured Outputs configuration options, including a JSON Schema."""
-
-    type: Required[Literal["json_schema"]]
-    """The type of response format being defined. Always `json_schema`."""
-
-
-class ResponseFormatResponseFormatJsonObject(TypedDict, total=False):
-    type: Required[Literal["json_object"]]
-    """The type of response format being defined. Always `json_object`."""
-
-
-ResponseFormat: TypeAlias = Union[
-    ResponseFormatResponseFormatText, ResponseFormatResponseFormatJsonSchema, ResponseFormatResponseFormatJsonObject
-]
+ResponseFormat: TypeAlias = Union[ResponseFormatText, ResponseFormatJsonSchema, ResponseFormatJsonObject]
 
 
 class StreamOptions(TypedDict, total=False):
+    include_obfuscation: bool
+    """When true, stream obfuscation will be enabled.
+
+    Stream obfuscation adds random characters to an `obfuscation` field on streaming
+    delta events to normalize payload sizes as a mitigation to certain side-channel
+    attacks. These obfuscation fields are included by default, but add a small
+    amount of overhead to the data stream. You can set `include_obfuscation` to
+    false to optimize for bandwidth if you trust the network links between your
+    application and the EXCai API.
+    """
+
     include_usage: bool
     """If set, an additional chunk will be streamed before the `data: [DONE]` message.
 
@@ -829,6 +795,38 @@ class StreamOptions(TypedDict, total=False):
     """
 
 
+class ToolChoiceChatCompletionAllowedToolsChoiceAllowedTools(TypedDict, total=False):
+    mode: Required[Literal["auto", "required"]]
+    """Constrains the tools available to the model to a pre-defined set.
+
+    `auto` allows the model to pick from among the allowed tools and generate a
+    message.
+
+    `required` requires the model to call one or more of the allowed tools.
+    """
+
+    tools: Required[Iterable[Dict[str, object]]]
+    """A list of tool definitions that the model should be allowed to call.
+
+    For the Chat Completions API, the list of tool definitions might look like:
+
+    ```json
+    [
+      { "type": "function", "function": { "name": "get_weather" } },
+      { "type": "function", "function": { "name": "get_time" } }
+    ]
+    ```
+    """
+
+
+class ToolChoiceChatCompletionAllowedToolsChoice(TypedDict, total=False):
+    allowed_tools: Required[ToolChoiceChatCompletionAllowedToolsChoiceAllowedTools]
+    """Constrains the tools available to the model to a pre-defined set."""
+
+    type: Required[Literal["allowed_tools"]]
+    """Allowed tool configuration type. Always `allowed_tools`."""
+
+
 class ToolChoiceChatCompletionNamedToolChoiceFunction(TypedDict, total=False):
     name: Required[str]
     """The name of the function to call."""
@@ -838,51 +836,73 @@ class ToolChoiceChatCompletionNamedToolChoice(TypedDict, total=False):
     function: Required[ToolChoiceChatCompletionNamedToolChoiceFunction]
 
     type: Required[Literal["function"]]
-    """The type of the tool. Currently, only `function` is supported."""
+    """For function calling, the type is always `function`."""
 
 
-ToolChoice: TypeAlias = Union[Literal["none", "auto", "required"], ToolChoiceChatCompletionNamedToolChoice]
-
-
-class ToolFunction(TypedDict, total=False):
+class ToolChoiceChatCompletionNamedToolChoiceCustomCustom(TypedDict, total=False):
     name: Required[str]
-    """The name of the function to be called.
+    """The name of the custom tool to call."""
 
-    Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length
-    of 64.
-    """
+
+class ToolChoiceChatCompletionNamedToolChoiceCustom(TypedDict, total=False):
+    custom: Required[ToolChoiceChatCompletionNamedToolChoiceCustomCustom]
+
+    type: Required[Literal["custom"]]
+    """For custom tool calling, the type is always `custom`."""
+
+
+ToolChoice: TypeAlias = Union[
+    Literal["none", "auto", "required"],
+    ToolChoiceChatCompletionAllowedToolsChoice,
+    ToolChoiceChatCompletionNamedToolChoice,
+    ToolChoiceChatCompletionNamedToolChoiceCustom,
+]
+
+
+class ToolCustomCustomFormatText(TypedDict, total=False):
+    type: Required[Literal["text"]]
+    """Unconstrained text format. Always `text`."""
+
+
+class ToolCustomCustomFormatGrammarGrammar(TypedDict, total=False):
+    definition: Required[str]
+    """The grammar definition."""
+
+    syntax: Required[Literal["lark", "regex"]]
+    """The syntax of the grammar definition. One of `lark` or `regex`."""
+
+
+class ToolCustomCustomFormatGrammar(TypedDict, total=False):
+    grammar: Required[ToolCustomCustomFormatGrammarGrammar]
+    """Your chosen grammar."""
+
+    type: Required[Literal["grammar"]]
+    """Grammar format. Always `grammar`."""
+
+
+ToolCustomCustomFormat: TypeAlias = Union[ToolCustomCustomFormatText, ToolCustomCustomFormatGrammar]
+
+
+class ToolCustomCustom(TypedDict, total=False):
+    name: Required[str]
+    """The name of the custom tool, used to identify it in tool calls."""
 
     description: str
-    """
-    A description of what the function does, used by the model to choose when and
-    how to call the function.
-    """
+    """Optional description of the custom tool, used to provide more context."""
 
-    parameters: Dict[str, object]
-    """The parameters the functions accepts, described as a JSON Schema object.
-
-    See the [guide](/docs/guides/function-calling) for examples, and the
-    [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for
-    documentation about the format.
-
-    Omitting `parameters` defines a function with an empty parameter list.
-    """
-
-    strict: Optional[bool]
-    """Whether to enable strict schema adherence when generating the function call.
-
-    If set to true, the model will follow the exact schema defined in the
-    `parameters` field. Only a subset of JSON Schema is supported when `strict` is
-    `true`. Learn more about Structured Outputs in the
-    [function calling guide](docs/guides/function-calling).
-    """
+    format: ToolCustomCustomFormat
+    """The input format for the custom tool. Default is unconstrained text."""
 
 
-class Tool(TypedDict, total=False):
-    function: Required[ToolFunction]
+class ToolCustom(TypedDict, total=False):
+    custom: Required[ToolCustomCustom]
+    """Properties of the custom tool."""
 
-    type: Required[Literal["function"]]
-    """The type of the tool. Currently, only `function` is supported."""
+    type: Required[Literal["custom"]]
+    """The type of the custom tool. Always `custom`."""
+
+
+Tool: TypeAlias = Union[ChatCompletionToolParam, ToolCustom]
 
 
 class WebSearchOptionsUserLocationApproximate(TypedDict, total=False):

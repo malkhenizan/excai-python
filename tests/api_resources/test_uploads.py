@@ -35,6 +35,21 @@ class TestUploads:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
+    def test_method_create_with_all_params(self, client: ExCai) -> None:
+        upload = client.uploads.create(
+            bytes=0,
+            filename="filename",
+            mime_type="mime_type",
+            purpose="assistants",
+            expires_after={
+                "anchor": "created_at",
+                "seconds": 3600,
+            },
+        )
+        assert_matches_type(UploadCreateResponse, upload, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
     def test_raw_response_create(self, client: ExCai) -> None:
         response = client.uploads.with_raw_response.create(
             bytes=0,
@@ -223,6 +238,21 @@ class TestAsyncUploads:
             filename="filename",
             mime_type="mime_type",
             purpose="assistants",
+        )
+        assert_matches_type(UploadCreateResponse, upload, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_create_with_all_params(self, async_client: AsyncExCai) -> None:
+        upload = await async_client.uploads.create(
+            bytes=0,
+            filename="filename",
+            mime_type="mime_type",
+            purpose="assistants",
+            expires_after={
+                "anchor": "created_at",
+                "seconds": 3600,
+            },
         )
         assert_matches_type(UploadCreateResponse, upload, path=["response"])
 

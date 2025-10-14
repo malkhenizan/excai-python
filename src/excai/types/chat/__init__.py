@@ -10,5 +10,17 @@ from .completion_create_response import CompletionCreateResponse as CompletionCr
 from .completion_delete_response import CompletionDeleteResponse as CompletionDeleteResponse
 from .completion_update_response import CompletionUpdateResponse as CompletionUpdateResponse
 from .completion_retrieve_response import CompletionRetrieveResponse as CompletionRetrieveResponse
+from .chat_completion_token_logprob import ChatCompletionTokenLogprob as ChatCompletionTokenLogprob
 from .completion_list_messages_params import CompletionListMessagesParams as CompletionListMessagesParams
+from .chat_completion_response_message import ChatCompletionResponseMessage as ChatCompletionResponseMessage
+from .chat_completion_message_tool_call import ChatCompletionMessageToolCall as ChatCompletionMessageToolCall
 from .completion_list_messages_response import CompletionListMessagesResponse as CompletionListMessagesResponse
+from .chat_completion_message_tool_call_param import (
+    ChatCompletionMessageToolCallParam as ChatCompletionMessageToolCallParam,
+)
+from .chat_completion_message_custom_tool_call import (
+    ChatCompletionMessageCustomToolCall as ChatCompletionMessageCustomToolCall,
+)
+from .chat_completion_message_custom_tool_call_param import (
+    ChatCompletionMessageCustomToolCallParam as ChatCompletionMessageCustomToolCallParam,
+)

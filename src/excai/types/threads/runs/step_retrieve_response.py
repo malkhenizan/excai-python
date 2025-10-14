@@ -1,31 +1,32 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Dict, List, Union, Optional
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal, Annotated, TypeAlias
 
+from ...._utils import PropertyInfo
 from ...._models import BaseModel
 
 __all__ = [
     "StepRetrieveResponse",
     "LastError",
     "StepDetails",
-    "StepDetailsRunStepDetailsMessageCreationObject",
-    "StepDetailsRunStepDetailsMessageCreationObjectMessageCreation",
-    "StepDetailsRunStepDetailsToolCallsObject",
-    "StepDetailsRunStepDetailsToolCallsObjectToolCall",
-    "StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCodeObject",
-    "StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCodeObjectCodeInterpreter",
-    "StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCodeObjectCodeInterpreterOutput",
-    "StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCodeObjectCodeInterpreterOutputRunStepDetailsToolCallsCodeOutputLogsObject",
-    "StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCodeObjectCodeInterpreterOutputRunStepDetailsToolCallsCodeOutputImageObject",
-    "StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCodeObjectCodeInterpreterOutputRunStepDetailsToolCallsCodeOutputImageObjectImage",
-    "StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFileSearchObject",
-    "StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFileSearchObjectFileSearch",
-    "StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFileSearchObjectFileSearchRankingOptions",
-    "StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFileSearchObjectFileSearchResult",
-    "StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFileSearchObjectFileSearchResultContent",
-    "StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFunctionObject",
-    "StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFunctionObjectFunction",
+    "StepDetailsMessageCreation",
+    "StepDetailsMessageCreationMessageCreation",
+    "StepDetailsToolCalls",
+    "StepDetailsToolCallsToolCall",
+    "StepDetailsToolCallsToolCallCodeInterpreter",
+    "StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreter",
+    "StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreterOutput",
+    "StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreterOutputLogs",
+    "StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreterOutputImage",
+    "StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreterOutputImageImage",
+    "StepDetailsToolCallsToolCallFileSearch",
+    "StepDetailsToolCallsToolCallFileSearchFileSearch",
+    "StepDetailsToolCallsToolCallFileSearchFileSearchRankingOptions",
+    "StepDetailsToolCallsToolCallFileSearchFileSearchResult",
+    "StepDetailsToolCallsToolCallFileSearchFileSearchResultContent",
+    "StepDetailsToolCallsToolCallFunction",
+    "StepDetailsToolCallsToolCallFunctionFunction",
     "Usage",
 ]
 
@@ -38,21 +39,19 @@ class LastError(BaseModel):
     """A human-readable description of the error."""
 
 
-class StepDetailsRunStepDetailsMessageCreationObjectMessageCreation(BaseModel):
+class StepDetailsMessageCreationMessageCreation(BaseModel):
     message_id: str
     """The ID of the message that was created by this run step."""
 
 
-class StepDetailsRunStepDetailsMessageCreationObject(BaseModel):
-    message_creation: StepDetailsRunStepDetailsMessageCreationObjectMessageCreation
+class StepDetailsMessageCreation(BaseModel):
+    message_creation: StepDetailsMessageCreationMessageCreation
 
     type: Literal["message_creation"]
     """Always `message_creation`."""
 
 
-class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCodeObjectCodeInterpreterOutputRunStepDetailsToolCallsCodeOutputLogsObject(
-    BaseModel
-):
+class StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreterOutputLogs(BaseModel):
     logs: str
     """The text output from the Code Interpreter tool call."""
 
@@ -60,35 +59,32 @@ class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCod
     """Always `logs`."""
 
 
-class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCodeObjectCodeInterpreterOutputRunStepDetailsToolCallsCodeOutputImageObjectImage(
-    BaseModel
-):
+class StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreterOutputImageImage(BaseModel):
     file_id: str
-    """The [file](/docs/api-reference/files) ID of the image."""
+    """The [file](https://main.excai.ai/docs/api-reference/files) ID of the image."""
 
 
-class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCodeObjectCodeInterpreterOutputRunStepDetailsToolCallsCodeOutputImageObject(
-    BaseModel
-):
-    image: StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCodeObjectCodeInterpreterOutputRunStepDetailsToolCallsCodeOutputImageObjectImage
+class StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreterOutputImage(BaseModel):
+    image: StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreterOutputImageImage
 
     type: Literal["image"]
     """Always `image`."""
 
 
-StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCodeObjectCodeInterpreterOutput: TypeAlias = Union[
-    StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCodeObjectCodeInterpreterOutputRunStepDetailsToolCallsCodeOutputLogsObject,
-    StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCodeObjectCodeInterpreterOutputRunStepDetailsToolCallsCodeOutputImageObject,
+StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreterOutput: TypeAlias = Annotated[
+    Union[
+        StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreterOutputLogs,
+        StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreterOutputImage,
+    ],
+    PropertyInfo(discriminator="type"),
 ]
 
 
-class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCodeObjectCodeInterpreter(BaseModel):
+class StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreter(BaseModel):
     input: str
     """The input to the Code Interpreter tool call."""
 
-    outputs: List[
-        StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCodeObjectCodeInterpreterOutput
-    ]
+    outputs: List[StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreterOutput]
     """The outputs from the Code Interpreter tool call.
 
     Code Interpreter can output one or more items, including text (`logs`) or images
@@ -96,11 +92,11 @@ class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCod
     """
 
 
-class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCodeObject(BaseModel):
+class StepDetailsToolCallsToolCallCodeInterpreter(BaseModel):
     id: str
     """The ID of the tool call."""
 
-    code_interpreter: StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCodeObjectCodeInterpreter
+    code_interpreter: StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreter
     """The Code Interpreter tool call definition."""
 
     type: Literal["code_interpreter"]
@@ -110,9 +106,7 @@ class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCod
     """
 
 
-class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFileSearchObjectFileSearchRankingOptions(
-    BaseModel
-):
+class StepDetailsToolCallsToolCallFileSearchFileSearchRankingOptions(BaseModel):
     ranker: Literal["auto", "default_2024_08_21"]
     """The ranker to use for the file search.
 
@@ -126,9 +120,7 @@ class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFil
     """
 
 
-class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFileSearchObjectFileSearchResultContent(
-    BaseModel
-):
+class StepDetailsToolCallsToolCallFileSearchFileSearchResultContent(BaseModel):
     text: Optional[str] = None
     """The text content of the file."""
 
@@ -136,9 +128,7 @@ class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFil
     """The type of the content."""
 
 
-class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFileSearchObjectFileSearchResult(
-    BaseModel
-):
+class StepDetailsToolCallsToolCallFileSearchFileSearchResult(BaseModel):
     file_id: str
     """The ID of the file that result was found in."""
 
@@ -151,34 +141,26 @@ class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFil
     All values must be a floating point number between 0 and 1.
     """
 
-    content: Optional[
-        List[
-            StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFileSearchObjectFileSearchResultContent
-        ]
-    ] = None
+    content: Optional[List[StepDetailsToolCallsToolCallFileSearchFileSearchResultContent]] = None
     """The content of the result that was found.
 
     The content is only included if requested via the include query parameter.
     """
 
 
-class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFileSearchObjectFileSearch(BaseModel):
-    ranking_options: Optional[
-        StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFileSearchObjectFileSearchRankingOptions
-    ] = None
+class StepDetailsToolCallsToolCallFileSearchFileSearch(BaseModel):
+    ranking_options: Optional[StepDetailsToolCallsToolCallFileSearchFileSearchRankingOptions] = None
     """The ranking options for the file search."""
 
-    results: Optional[
-        List[StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFileSearchObjectFileSearchResult]
-    ] = None
+    results: Optional[List[StepDetailsToolCallsToolCallFileSearchFileSearchResult]] = None
     """The results of the file search."""
 
 
-class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFileSearchObject(BaseModel):
+class StepDetailsToolCallsToolCallFileSearch(BaseModel):
     id: str
     """The ID of the tool call object."""
 
-    file_search: StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFileSearchObjectFileSearch
+    file_search: StepDetailsToolCallsToolCallFileSearchFileSearch
     """For now, this is always going to be an empty object."""
 
     type: Literal["file_search"]
@@ -188,7 +170,7 @@ class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFil
     """
 
 
-class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFunctionObjectFunction(BaseModel):
+class StepDetailsToolCallsToolCallFunctionFunction(BaseModel):
     arguments: str
     """The arguments passed to the function."""
 
@@ -199,15 +181,16 @@ class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFun
     """The output of the function.
 
     This will be `null` if the outputs have not been
-    [submitted](/docs/api-reference/runs/submitToolOutputs) yet.
+    [submitted](https://main.excai.ai/docs/api-reference/runs/submitToolOutputs)
+    yet.
     """
 
 
-class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFunctionObject(BaseModel):
+class StepDetailsToolCallsToolCallFunction(BaseModel):
     id: str
     """The ID of the tool call object."""
 
-    function: StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFunctionObjectFunction
+    function: StepDetailsToolCallsToolCallFunctionFunction
     """The definition of the function that was called."""
 
     type: Literal["function"]
@@ -217,15 +200,18 @@ class StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFun
     """
 
 
-StepDetailsRunStepDetailsToolCallsObjectToolCall: TypeAlias = Union[
-    StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsCodeObject,
-    StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFileSearchObject,
-    StepDetailsRunStepDetailsToolCallsObjectToolCallRunStepDetailsToolCallsFunctionObject,
+StepDetailsToolCallsToolCall: TypeAlias = Annotated[
+    Union[
+        StepDetailsToolCallsToolCallCodeInterpreter,
+        StepDetailsToolCallsToolCallFileSearch,
+        StepDetailsToolCallsToolCallFunction,
+    ],
+    PropertyInfo(discriminator="type"),
 ]
 
 
-class StepDetailsRunStepDetailsToolCallsObject(BaseModel):
-    tool_calls: List[StepDetailsRunStepDetailsToolCallsObjectToolCall]
+class StepDetailsToolCalls(BaseModel):
+    tool_calls: List[StepDetailsToolCallsToolCall]
     """An array of tool calls the run step was involved in.
 
     These can be associated with one of three types of tools: `code_interpreter`,
@@ -236,7 +222,9 @@ class StepDetailsRunStepDetailsToolCallsObject(BaseModel):
     """Always `tool_calls`."""
 
 
-StepDetails: TypeAlias = Union[StepDetailsRunStepDetailsMessageCreationObject, StepDetailsRunStepDetailsToolCallsObject]
+StepDetails: TypeAlias = Annotated[
+    Union[StepDetailsMessageCreation, StepDetailsToolCalls], PropertyInfo(discriminator="type")
+]
 
 
 class Usage(BaseModel):
@@ -256,8 +244,8 @@ class StepRetrieveResponse(BaseModel):
 
     assistant_id: str
     """
-    The ID of the [assistant](/docs/api-reference/assistants) associated with the
-    run step.
+    The ID of the [assistant](https://main.excai.ai/docs/api-reference/assistants)
+    associated with the run step.
     """
 
     cancelled_at: Optional[int] = None
@@ -298,7 +286,10 @@ class StepRetrieveResponse(BaseModel):
     """The object type, which is always `thread.run.step`."""
 
     run_id: str
-    """The ID of the [run](/docs/api-reference/runs) that this run step is a part of."""
+    """
+    The ID of the [run](https://main.excai.ai/docs/api-reference/runs) that this run
+    step is a part of.
+    """
 
     status: Literal["in_progress", "cancelled", "failed", "completed", "expired"]
     """
@@ -310,7 +301,10 @@ class StepRetrieveResponse(BaseModel):
     """The details of the run step."""
 
     thread_id: str
-    """The ID of the [thread](/docs/api-reference/threads) that was run."""
+    """
+    The ID of the [thread](https://main.excai.ai/docs/api-reference/threads) that
+    was run.
+    """
 
     type: Literal["message_creation", "tool_calls"]
     """The type of run step, which can be either `message_creation` or `tool_calls`."""

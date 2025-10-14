@@ -4,8 +4,9 @@ from typing import Dict, List, Optional
 from typing_extensions import Literal
 
 from .._models import BaseModel
+from .vector_store_expiration_after import VectorStoreExpirationAfter
 
-__all__ = ["VectorStoreListResponse", "Data", "DataFileCounts", "DataExpiresAfter"]
+__all__ = ["VectorStoreListResponse", "Data", "DataFileCounts"]
 
 
 class DataFileCounts(BaseModel):
@@ -23,17 +24,6 @@ class DataFileCounts(BaseModel):
 
     total: int
     """The total number of files."""
-
-
-class DataExpiresAfter(BaseModel):
-    anchor: Literal["last_active_at"]
-    """Anchor timestamp after which the expiration policy applies.
-
-    Supported anchors: `last_active_at`.
-    """
-
-    days: int
-    """The number of days after the anchor time that the vector store will expire."""
 
 
 class Data(BaseModel):
@@ -74,7 +64,7 @@ class Data(BaseModel):
     usage_bytes: int
     """The total number of bytes used by the files in the vector store."""
 
-    expires_after: Optional[DataExpiresAfter] = None
+    expires_after: Optional[VectorStoreExpirationAfter] = None
     """The expiration policy for a vector store."""
 
     expires_at: Optional[int] = None

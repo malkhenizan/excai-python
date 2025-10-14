@@ -17,17 +17,17 @@ class ImageCreateGenerationParams(TypedDict, total=False):
     """
 
     background: Optional[Literal["transparent", "opaque", "auto"]]
-    """Allows to set transparency for the background of the generated image(s).
-
-    This parameter is only supported for `gpt-image-1`. Must be one of
-    `transparent`, `opaque` or `auto` (default value). When `auto` is used, the
-    model will automatically determine the best background for the image.
+    """
+    Allows to set transparency for the background of the generated image(s). This
+    parameter is only supported for `gpt-image-1`. Must be one of `transparent`,
+    `opaque` or `auto` (default value). When `auto` is used, the model will
+    automatically determine the best background for the image.
 
     If `transparent`, the output format needs to support transparency, so it should
     be set to either `png` (default value) or `webp`.
     """
 
-    model: Union[str, Literal["dall-e-2", "dall-e-3", "gpt-image-1"], None]
+    model: Union[str, Literal["dall-e-2", "dall-e-3", "gpt-image-1", "gpt-image-1-mini"], None]
     """The model to use for image generation.
 
     One of `dall-e-2`, `dall-e-3`, or `gpt-image-1`. Defaults to `dall-e-2` unless a
@@ -60,6 +60,17 @@ class ImageCreateGenerationParams(TypedDict, total=False):
     `jpeg`, or `webp`.
     """
 
+    partial_images: Optional[int]
+    """The number of partial images to generate.
+
+    This parameter is used for streaming responses that return partial images. Value
+    must be between 0 and 3. When set to 0, the response will be a single image sent
+    in one streaming event.
+
+    Note that the final image may be sent before the full number of partial images
+    are generated if the full image is generated more quickly.
+    """
+
     quality: Optional[Literal["standard", "hd", "low", "medium", "high", "auto"]]
     """The quality of the image that will be generated.
 
@@ -90,6 +101,14 @@ class ImageCreateGenerationParams(TypedDict, total=False):
     for `dall-e-3`.
     """
 
+    stream: Optional[bool]
+    """Generate the image in streaming mode.
+
+    Defaults to `false`. See the
+    [Image generation guide](https://main.excai.ai/docs/guides/image-generation) for
+    more information. This parameter is only supported for `gpt-image-1`.
+    """
+
     style: Optional[Literal["vivid", "natural"]]
     """The style of the generated images.
 
@@ -101,6 +120,7 @@ class ImageCreateGenerationParams(TypedDict, total=False):
 
     user: str
     """
-    A unique identifier representing your end-user, which can help OpenAI to monitor
-    and detect abuse. [Learn more](/docs/guides/safety-best-practices#end-user-ids).
+    A unique identifier representing your end-user, which can help EXCai to monitor
+    and detect abuse.
+    [Learn more](https://main.excai.ai/docs/guides/safety-best-practices#end-user-ids).
     """

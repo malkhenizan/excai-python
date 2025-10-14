@@ -28,7 +28,8 @@ class AudioTranslateAudioParams(TypedDict, total=False):
     """An optional text to guide the model's style or continue a previous audio
     segment.
 
-    The [prompt](/docs/guides/speech-to-text#prompting) should be in English.
+    The [prompt](https://main.excai.ai/docs/guides/speech-to-text#prompting) should
+    be in English.
     """
 
     response_format: Literal["json", "text", "srt", "verbose_json", "vtt"]

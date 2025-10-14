@@ -55,6 +55,7 @@ class TestJobs:
             ],
             metadata={"foo": "string"},
             method={
+                "type": "supervised",
                 "dpo": {
                     "hyperparameters": {
                         "batch_size": "auto",
@@ -63,6 +64,24 @@ class TestJobs:
                         "n_epochs": "auto",
                     }
                 },
+                "reinforcement": {
+                    "grader": {
+                        "input": "input",
+                        "name": "name",
+                        "operation": "eq",
+                        "reference": "reference",
+                        "type": "string_check",
+                    },
+                    "hyperparameters": {
+                        "batch_size": "auto",
+                        "compute_multiplier": "auto",
+                        "eval_interval": "auto",
+                        "eval_samples": "auto",
+                        "learning_rate_multiplier": "auto",
+                        "n_epochs": "auto",
+                        "reasoning_effort": "default",
+                    },
+                },
                 "supervised": {
                     "hyperparameters": {
                         "batch_size": "auto",
@@ -70,7 +89,6 @@ class TestJobs:
                         "n_epochs": "auto",
                     }
                 },
-                "type": "supervised",
             },
             seed=42,
             suffix="x",
@@ -267,6 +285,7 @@ class TestAsyncJobs:
             ],
             metadata={"foo": "string"},
             method={
+                "type": "supervised",
                 "dpo": {
                     "hyperparameters": {
                         "batch_size": "auto",
@@ -275,6 +294,24 @@ class TestAsyncJobs:
                         "n_epochs": "auto",
                     }
                 },
+                "reinforcement": {
+                    "grader": {
+                        "input": "input",
+                        "name": "name",
+                        "operation": "eq",
+                        "reference": "reference",
+                        "type": "string_check",
+                    },
+                    "hyperparameters": {
+                        "batch_size": "auto",
+                        "compute_multiplier": "auto",
+                        "eval_interval": "auto",
+                        "eval_samples": "auto",
+                        "learning_rate_multiplier": "auto",
+                        "n_epochs": "auto",
+                        "reasoning_effort": "default",
+                    },
+                },
                 "supervised": {
                     "hyperparameters": {
                         "batch_size": "auto",
@@ -282,7 +319,6 @@ class TestAsyncJobs:
                         "n_epochs": "auto",
                     }
                 },
-                "type": "supervised",
             },
             seed=42,
             suffix="x",

@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 from typing import List, Union, Optional
-from typing_extensions import Literal, Required, TypedDict
+from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 from .._types import FileTypes
 
-__all__ = ["AudioTranscribeAudioParams"]
+__all__ = ["AudioTranscribeAudioParams", "ChunkingStrategy", "ChunkingStrategyVadConfig"]
 
 
 class AudioTranscribeAudioParams(TypedDict, total=False):
@@ -24,13 +24,22 @@ class AudioTranscribeAudioParams(TypedDict, total=False):
     (which is powered by our open source Whisper V2 model).
     """
 
-    include: List[Literal["logprobs"]]
-    """Additional information to include in the transcription response.
+    chunking_strategy: Optional[ChunkingStrategy]
+    """Controls how the audio is cut into chunks.
 
-    `logprobs` will return the log probabilities of the tokens in the response to
-    understand the model's confidence in the transcription. `logprobs` only works
-    with response_format set to `json` and only with the models `gpt-4o-transcribe`
-    and `gpt-4o-mini-transcribe`.
+    When set to `"auto"`, the server first normalizes loudness and then uses voice
+    activity detection (VAD) to choose boundaries. `server_vad` object can be
+    provided to tweak VAD detection parameters manually. If unset, the audio is
+    transcribed as a single block.
+    """
+
+    include: List[Literal["logprobs"]]
+    """
+    Additional information to include in the transcription response. `logprobs` will
+    return the log probabilities of the tokens in the response to understand the
+    model's confidence in the transcription. `logprobs` only works with
+    response_format set to `json` and only with the models `gpt-4o-transcribe` and
+    `gpt-4o-mini-transcribe`.
     """
 
     language: str
@@ -45,8 +54,8 @@ class AudioTranscribeAudioParams(TypedDict, total=False):
     """An optional text to guide the model's style or continue a previous audio
     segment.
 
-    The [prompt](/docs/guides/speech-to-text#prompting) should match the audio
-    language.
+    The [prompt](https://main.excai.ai/docs/guides/speech-to-text#prompting) should
+    match the audio language.
     """
 
     response_format: Literal["json", "text", "srt", "verbose_json", "vtt"]
@@ -62,7 +71,7 @@ class AudioTranscribeAudioParams(TypedDict, total=False):
     generated using
     [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#Event_stream_format).
     See the
-    [Streaming section of the Speech-to-Text guide](/docs/guides/speech-to-text?lang=curl#streaming-transcriptions)
+    [Streaming section of the Speech-to-Text guide](https://main.excai.ai/docs/guides/speech-to-text?lang=curl#streaming-transcriptions)
     for more information.
 
     Note: Streaming is not supported for the `whisper-1` model and will be ignored.
@@ -85,3 +94,28 @@ class AudioTranscribeAudioParams(TypedDict, total=False):
     is no additional latency for segment timestamps, but generating word timestamps
     incurs additional latency.
     """
+
+
+class ChunkingStrategyVadConfig(TypedDict, total=False):
+    type: Required[Literal["server_vad"]]
+    """Must be set to `server_vad` to enable manual chunking using server side VAD."""
+
+    prefix_padding_ms: int
+    """Amount of audio to include before the VAD detected speech (in milliseconds)."""
+
+    silence_duration_ms: int
+    """
+    Duration of silence to detect speech stop (in milliseconds). With shorter values
+    the model will respond more quickly, but may jump in on short pauses from the
+    user.
+    """
+
+    threshold: float
+    """Sensitivity threshold (0.0 to 1.0) for voice activity detection.
+
+    A higher threshold will require louder audio to activate the model, and thus
+    might perform better in noisy environments.
+    """
+
+
+ChunkingStrategy: TypeAlias = Union[Literal["auto"], ChunkingStrategyVadConfig]

@@ -64,12 +64,13 @@ class FilesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileCreateResponse:
         """
-        Create a vector store file by attaching a [File](/docs/api-reference/files) to a
-        [vector store](/docs/api-reference/vector-stores/object).
+        Create a vector store file by attaching a
+        [File](https://main.excai.ai/docs/api-reference/files) to a
+        [vector store](https://main.excai.ai/docs/api-reference/vector-stores/object).
 
         Args:
-          file_id: A [File](/docs/api-reference/files) ID that the vector store should use. Useful
-              for tools like `file_search` that can access files.
+          file_id: A [File](https://main.excai.ai/docs/api-reference/files) ID that the vector
+              store should use. Useful for tools like `file_search` that can access files.
 
           attributes: Set of 16 key-value pairs that can be attached to an object. This can be useful
               for storing additional information about the object in a structured format, and
@@ -78,7 +79,7 @@ class FilesResource(SyncAPIResource):
               characters, booleans, or numbers.
 
           chunking_strategy: The chunking strategy used to chunk the file(s). If not set, will use the `auto`
-              strategy.
+              strategy. Only applicable if `file_ids` is non-empty.
 
           extra_headers: Send extra headers
 
@@ -271,7 +272,7 @@ class FilesResource(SyncAPIResource):
 
         This will remove the file from the vector store but
         the file itself will not be deleted. To delete the file, use the
-        [delete file](/docs/api-reference/files/delete) endpoint.
+        [delete file](https://main.excai.ai/docs/api-reference/files/delete) endpoint.
 
         Args:
           extra_headers: Send extra headers
@@ -366,12 +367,13 @@ class AsyncFilesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FileCreateResponse:
         """
-        Create a vector store file by attaching a [File](/docs/api-reference/files) to a
-        [vector store](/docs/api-reference/vector-stores/object).
+        Create a vector store file by attaching a
+        [File](https://main.excai.ai/docs/api-reference/files) to a
+        [vector store](https://main.excai.ai/docs/api-reference/vector-stores/object).
 
         Args:
-          file_id: A [File](/docs/api-reference/files) ID that the vector store should use. Useful
-              for tools like `file_search` that can access files.
+          file_id: A [File](https://main.excai.ai/docs/api-reference/files) ID that the vector
+              store should use. Useful for tools like `file_search` that can access files.
 
           attributes: Set of 16 key-value pairs that can be attached to an object. This can be useful
               for storing additional information about the object in a structured format, and
@@ -380,7 +382,7 @@ class AsyncFilesResource(AsyncAPIResource):
               characters, booleans, or numbers.
 
           chunking_strategy: The chunking strategy used to chunk the file(s). If not set, will use the `auto`
-              strategy.
+              strategy. Only applicable if `file_ids` is non-empty.
 
           extra_headers: Send extra headers
 
@@ -573,7 +575,7 @@ class AsyncFilesResource(AsyncAPIResource):
 
         This will remove the file from the vector store but
         the file itself will not be deleted. To delete the file, use the
-        [delete file](/docs/api-reference/files/delete) endpoint.
+        [delete file](https://main.excai.ai/docs/api-reference/files/delete) endpoint.
 
         Args:
           extra_headers: Send extra headers

@@ -18,11 +18,9 @@ from ...._response import (
 )
 from ...._base_client import make_request_options
 from ....types.organization.projects import user_add_params, user_list_params, user_update_params
-from ....types.organization.projects.user_add_response import UserAddResponse
+from ....types.organization.project_user import ProjectUser
 from ....types.organization.projects.user_list_response import UserListResponse
 from ....types.organization.projects.user_delete_response import UserDeleteResponse
-from ....types.organization.projects.user_update_response import UserUpdateResponse
-from ....types.organization.projects.user_retrieve_response import UserRetrieveResponse
 
 __all__ = ["UsersResource", "AsyncUsersResource"]
 
@@ -58,7 +56,7 @@ class UsersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserRetrieveResponse:
+    ) -> ProjectUser:
         """
         Retrieves a user in the project.
 
@@ -80,7 +78,7 @@ class UsersResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserRetrieveResponse,
+            cast_to=ProjectUser,
         )
 
     def update(
@@ -95,7 +93,7 @@ class UsersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserUpdateResponse:
+    ) -> ProjectUser:
         """
         Modifies a user's role in the project.
 
@@ -120,7 +118,7 @@ class UsersResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserUpdateResponse,
+            cast_to=ProjectUser,
         )
 
     def list(
@@ -224,7 +222,7 @@ class UsersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserAddResponse:
+    ) -> ProjectUser:
         """Adds a user to the project.
 
         Users must already be members of the organization to
@@ -257,7 +255,7 @@ class UsersResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserAddResponse,
+            cast_to=ProjectUser,
         )
 
 
@@ -292,7 +290,7 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserRetrieveResponse:
+    ) -> ProjectUser:
         """
         Retrieves a user in the project.
 
@@ -314,7 +312,7 @@ class AsyncUsersResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserRetrieveResponse,
+            cast_to=ProjectUser,
         )
 
     async def update(
@@ -329,7 +327,7 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserUpdateResponse:
+    ) -> ProjectUser:
         """
         Modifies a user's role in the project.
 
@@ -354,7 +352,7 @@ class AsyncUsersResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserUpdateResponse,
+            cast_to=ProjectUser,
         )
 
     async def list(
@@ -458,7 +456,7 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserAddResponse:
+    ) -> ProjectUser:
         """Adds a user to the project.
 
         Users must already be members of the organization to
@@ -491,7 +489,7 @@ class AsyncUsersResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserAddResponse,
+            cast_to=ProjectUser,
         )
 
 

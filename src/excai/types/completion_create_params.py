@@ -14,9 +14,10 @@ class CompletionCreateParams(TypedDict, total=False):
     model: Required[Union[str, Literal["gpt-3.5-turbo-instruct", "davinci-002", "babbage-002"]]]
     """ID of the model to use.
 
-    You can use the [List models](/docs/api-reference/models/list) API to see all of
-    your available models, or see our [Model overview](/docs/models) for
-    descriptions of them.
+    You can use the
+    [List models](https://main.excai.ai/docs/api-reference/models/list) API to see
+    all of your available models, or see our
+    [Model overview](https://main.excai.ai/docs/models) for descriptions of them.
     """
 
     prompt: Required[Union[str, SequenceNotStr[str], Iterable[int], Iterable[Iterable[int]], None]]
@@ -51,7 +52,7 @@ class CompletionCreateParams(TypedDict, total=False):
     Positive values penalize new tokens based on their existing frequency in the
     text so far, decreasing the model's likelihood to repeat the same line verbatim.
 
-    [See more information about frequency and presence penalties.](/docs/guides/text-generation)
+    [See more information about frequency and presence penalties.](https://main.excai.ai/docs/guides/text-generation)
     """
 
     logit_bias: Optional[Dict[str, int]]
@@ -86,7 +87,7 @@ class CompletionCreateParams(TypedDict, total=False):
 
     The token count of your prompt plus `max_tokens` cannot exceed the model's
     context length.
-    [Example Python code](https://cookbook.openai.com/examples/how_to_count_tokens_with_tiktoken)
+    [Example Python code](https://cookbook.excai.com/examples/how_to_count_tokens_with_tiktoken)
     for counting tokens.
     """
 
@@ -104,7 +105,7 @@ class CompletionCreateParams(TypedDict, total=False):
     Positive values penalize new tokens based on whether they appear in the text so
     far, increasing the model's likelihood to talk about new topics.
 
-    [See more information about frequency and presence penalties.](/docs/guides/text-generation)
+    [See more information about frequency and presence penalties.](https://main.excai.ai/docs/guides/text-generation)
     """
 
     seed: Optional[int]
@@ -131,7 +132,7 @@ class CompletionCreateParams(TypedDict, total=False):
     [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#Event_stream_format)
     as they become available, with the stream terminated by a `data: [DONE]`
     message.
-    [Example Python code](https://cookbook.openai.com/examples/how_to_stream_completions).
+    [Example Python code](https://cookbook.excai.com/examples/how_to_stream_completions).
     """
 
     stream_options: Optional[StreamOptions]
@@ -163,12 +164,24 @@ class CompletionCreateParams(TypedDict, total=False):
 
     user: str
     """
-    A unique identifier representing your end-user, which can help OpenAI to monitor
-    and detect abuse. [Learn more](/docs/guides/safety-best-practices#end-user-ids).
+    A unique identifier representing your end-user, which can help EXCai to monitor
+    and detect abuse.
+    [Learn more](https://main.excai.ai/docs/guides/safety-best-practices#end-user-ids).
     """
 
 
 class StreamOptions(TypedDict, total=False):
+    include_obfuscation: bool
+    """When true, stream obfuscation will be enabled.
+
+    Stream obfuscation adds random characters to an `obfuscation` field on streaming
+    delta events to normalize payload sizes as a mitigation to certain side-channel
+    attacks. These obfuscation fields are included by default, but add a small
+    amount of overhead to the data stream. You can set `include_obfuscation` to
+    false to optimize for bandwidth if you trust the network links between your
+    application and the EXCai API.
+    """
+
     include_usage: bool
     """If set, an additional chunk will be streamed before the `data: [DONE]` message.
 

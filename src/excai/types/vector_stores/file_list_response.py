@@ -1,58 +1,26 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Dict, List, Union, Optional
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal, Annotated, TypeAlias
 
+from ..._utils import PropertyInfo
 from ..._models import BaseModel
+from ..other_chunking_strategy_response_param import OtherChunkingStrategyResponseParam
+from ..static_chunking_strategy_response_param import StaticChunkingStrategyResponseParam
 
-__all__ = [
-    "FileListResponse",
-    "Data",
-    "DataLastError",
-    "DataChunkingStrategy",
-    "DataChunkingStrategyStaticChunkingStrategyResponseParam",
-    "DataChunkingStrategyStaticChunkingStrategyResponseParamStatic",
-    "DataChunkingStrategyOtherChunkingStrategyResponseParam",
-]
+__all__ = ["FileListResponse", "Data", "DataLastError", "DataChunkingStrategy"]
 
 
 class DataLastError(BaseModel):
     code: Literal["server_error", "unsupported_file", "invalid_file"]
-    """One of `server_error` or `rate_limit_exceeded`."""
+    """One of `server_error`, `unsupported_file`, or `invalid_file`."""
 
     message: str
     """A human-readable description of the error."""
 
 
-class DataChunkingStrategyStaticChunkingStrategyResponseParamStatic(BaseModel):
-    chunk_overlap_tokens: int
-    """The number of tokens that overlap between chunks. The default value is `400`.
-
-    Note that the overlap must not exceed half of `max_chunk_size_tokens`.
-    """
-
-    max_chunk_size_tokens: int
-    """The maximum number of tokens in each chunk.
-
-    The default value is `800`. The minimum value is `100` and the maximum value is
-    `4096`.
-    """
-
-
-class DataChunkingStrategyStaticChunkingStrategyResponseParam(BaseModel):
-    static: DataChunkingStrategyStaticChunkingStrategyResponseParamStatic
-
-    type: Literal["static"]
-    """Always `static`."""
-
-
-class DataChunkingStrategyOtherChunkingStrategyResponseParam(BaseModel):
-    type: Literal["other"]
-    """Always `other`."""
-
-
-DataChunkingStrategy: TypeAlias = Union[
-    DataChunkingStrategyStaticChunkingStrategyResponseParam, DataChunkingStrategyOtherChunkingStrategyResponseParam
+DataChunkingStrategy: TypeAlias = Annotated[
+    Union[StaticChunkingStrategyResponseParam, OtherChunkingStrategyResponseParam], PropertyInfo(discriminator="type")
 ]
 
 
@@ -87,8 +55,9 @@ class Data(BaseModel):
 
     vector_store_id: str
     """
-    The ID of the [vector store](/docs/api-reference/vector-stores/object) that the
-    [File](/docs/api-reference/files) is attached to.
+    The ID of the
+    [vector store](https://main.excai.ai/docs/api-reference/vector-stores/object)
+    that the [File](https://main.excai.ai/docs/api-reference/files) is attached to.
     """
 
     attributes: Optional[Dict[str, Union[str, float, bool]]] = None

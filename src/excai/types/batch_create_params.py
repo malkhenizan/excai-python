@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Dict, Optional
 from typing_extensions import Literal, Required, TypedDict
 
-__all__ = ["BatchCreateParams"]
+__all__ = ["BatchCreateParams", "OutputExpiresAfter"]
 
 
 class BatchCreateParams(TypedDict, total=False):
@@ -27,12 +27,13 @@ class BatchCreateParams(TypedDict, total=False):
     input_file_id: Required[str]
     """The ID of an uploaded file that contains requests for the new batch.
 
-    See [upload file](/docs/api-reference/files/create) for how to upload a file.
+    See [upload file](https://main.excai.ai/docs/api-reference/files/create) for how
+    to upload a file.
 
     Your input file must be formatted as a
-    [JSONL file](/docs/api-reference/batch/request-input), and must be uploaded with
-    the purpose `batch`. The file can contain up to 50,000 requests, and can be up
-    to 200 MB in size.
+    [JSONL file](https://main.excai.ai/docs/api-reference/batch/request-input), and
+    must be uploaded with the purpose `batch`. The file can contain up to 50,000
+    requests, and can be up to 200 MB in size.
     """
 
     metadata: Optional[Dict[str, str]]
@@ -43,4 +44,25 @@ class BatchCreateParams(TypedDict, total=False):
 
     Keys are strings with a maximum length of 64 characters. Values are strings with
     a maximum length of 512 characters.
+    """
+
+    output_expires_after: OutputExpiresAfter
+    """
+    The expiration policy for the output and/or error file that are generated for a
+    batch.
+    """
+
+
+class OutputExpiresAfter(TypedDict, total=False):
+    anchor: Required[Literal["created_at"]]
+    """Anchor timestamp after which the expiration policy applies.
+
+    Supported anchors: `created_at`. Note that the anchor is the file creation time,
+    not the time the batch is created.
+    """
+
+    seconds: Required[int]
+    """The number of seconds after the anchor time that the file will expire.
+
+    Must be between 3600 (1 hour) and 2592000 (30 days).
     """

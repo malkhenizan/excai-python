@@ -36,12 +36,18 @@ class TestImages:
         image = client.images.create_edit(
             image=b"raw file contents",
             prompt="A cute baby sea otter wearing a beret",
+            background="transparent",
+            input_fidelity="high",
             mask=b"raw file contents",
-            model="gpt-image-1",
+            model="string",
             n=1,
+            output_compression=100,
+            output_format="png",
+            partial_images=1,
             quality="high",
             response_format="url",
             size="1024x1024",
+            stream=False,
             user="user-1234",
         )
         assert_matches_type(ImageCreateEditResponse, image, path=["response"])
@@ -88,14 +94,16 @@ class TestImages:
         image = client.images.create_generation(
             prompt="A cute baby sea otter",
             background="transparent",
-            model="gpt-image-1",
+            model="string",
             moderation="low",
             n=1,
             output_compression=100,
             output_format="png",
+            partial_images=1,
             quality="medium",
             response_format="url",
             size="1024x1024",
+            stream=False,
             style="vivid",
             user="user-1234",
         )
@@ -140,7 +148,7 @@ class TestImages:
     def test_method_create_variation_with_all_params(self, client: ExCai) -> None:
         image = client.images.create_variation(
             image=b"raw file contents",
-            model="dall-e-2",
+            model="string",
             n=1,
             response_format="url",
             size="1024x1024",
@@ -195,12 +203,18 @@ class TestAsyncImages:
         image = await async_client.images.create_edit(
             image=b"raw file contents",
             prompt="A cute baby sea otter wearing a beret",
+            background="transparent",
+            input_fidelity="high",
             mask=b"raw file contents",
-            model="gpt-image-1",
+            model="string",
             n=1,
+            output_compression=100,
+            output_format="png",
+            partial_images=1,
             quality="high",
             response_format="url",
             size="1024x1024",
+            stream=False,
             user="user-1234",
         )
         assert_matches_type(ImageCreateEditResponse, image, path=["response"])
@@ -247,14 +261,16 @@ class TestAsyncImages:
         image = await async_client.images.create_generation(
             prompt="A cute baby sea otter",
             background="transparent",
-            model="gpt-image-1",
+            model="string",
             moderation="low",
             n=1,
             output_compression=100,
             output_format="png",
+            partial_images=1,
             quality="medium",
             response_format="url",
             size="1024x1024",
+            stream=False,
             style="vivid",
             user="user-1234",
         )
@@ -299,7 +315,7 @@ class TestAsyncImages:
     async def test_method_create_variation_with_all_params(self, async_client: AsyncExCai) -> None:
         image = await async_client.images.create_variation(
             image=b"raw file contents",
-            model="dall-e-2",
+            model="string",
             n=1,
             response_format="url",
             size="1024x1024",

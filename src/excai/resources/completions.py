@@ -77,8 +77,9 @@ class CompletionsResource(SyncAPIResource):
 
         Args:
           model: ID of the model to use. You can use the
-              [List models](/docs/api-reference/models/list) API to see all of your available
-              models, or see our [Model overview](/docs/models) for descriptions of them.
+              [List models](https://main.excai.ai/docs/api-reference/models/list) API to see
+              all of your available models, or see our
+              [Model overview](https://main.excai.ai/docs/models) for descriptions of them.
 
           prompt: The prompt(s) to generate completions for, encoded as a string, array of
               strings, array of tokens, or array of token arrays.
@@ -103,7 +104,7 @@ class CompletionsResource(SyncAPIResource):
               existing frequency in the text so far, decreasing the model's likelihood to
               repeat the same line verbatim.
 
-              [See more information about frequency and presence penalties.](/docs/guides/text-generation)
+              [See more information about frequency and presence penalties.](https://main.excai.ai/docs/guides/text-generation)
 
           logit_bias: Modify the likelihood of specified tokens appearing in the completion.
 
@@ -130,7 +131,7 @@ class CompletionsResource(SyncAPIResource):
 
               The token count of your prompt plus `max_tokens` cannot exceed the model's
               context length.
-              [Example Python code](https://cookbook.openai.com/examples/how_to_count_tokens_with_tiktoken)
+              [Example Python code](https://cookbook.excai.com/examples/how_to_count_tokens_with_tiktoken)
               for counting tokens.
 
           n: How many completions to generate for each prompt.
@@ -143,7 +144,7 @@ class CompletionsResource(SyncAPIResource):
               whether they appear in the text so far, increasing the model's likelihood to
               talk about new topics.
 
-              [See more information about frequency and presence penalties.](/docs/guides/text-generation)
+              [See more information about frequency and presence penalties.](https://main.excai.ai/docs/guides/text-generation)
 
           seed: If specified, our system will make a best effort to sample deterministically,
               such that repeated requests with the same `seed` and parameters should return
@@ -162,7 +163,7 @@ class CompletionsResource(SyncAPIResource):
               [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#Event_stream_format)
               as they become available, with the stream terminated by a `data: [DONE]`
               message.
-              [Example Python code](https://cookbook.openai.com/examples/how_to_stream_completions).
+              [Example Python code](https://cookbook.excai.com/examples/how_to_stream_completions).
 
           stream_options: Options for streaming response. Only set this when you set `stream: true`.
 
@@ -182,8 +183,9 @@ class CompletionsResource(SyncAPIResource):
 
               We generally recommend altering this or `temperature` but not both.
 
-          user: A unique identifier representing your end-user, which can help OpenAI to monitor
-              and detect abuse. [Learn more](/docs/guides/safety-best-practices#end-user-ids).
+          user: A unique identifier representing your end-user, which can help EXCai to monitor
+              and detect abuse.
+              [Learn more](https://main.excai.ai/docs/guides/safety-best-practices#end-user-ids).
 
           extra_headers: Send extra headers
 
@@ -278,8 +280,9 @@ class AsyncCompletionsResource(AsyncAPIResource):
 
         Args:
           model: ID of the model to use. You can use the
-              [List models](/docs/api-reference/models/list) API to see all of your available
-              models, or see our [Model overview](/docs/models) for descriptions of them.
+              [List models](https://main.excai.ai/docs/api-reference/models/list) API to see
+              all of your available models, or see our
+              [Model overview](https://main.excai.ai/docs/models) for descriptions of them.
 
           prompt: The prompt(s) to generate completions for, encoded as a string, array of
               strings, array of tokens, or array of token arrays.
@@ -304,7 +307,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
               existing frequency in the text so far, decreasing the model's likelihood to
               repeat the same line verbatim.
 
-              [See more information about frequency and presence penalties.](/docs/guides/text-generation)
+              [See more information about frequency and presence penalties.](https://main.excai.ai/docs/guides/text-generation)
 
           logit_bias: Modify the likelihood of specified tokens appearing in the completion.
 
@@ -331,7 +334,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
 
               The token count of your prompt plus `max_tokens` cannot exceed the model's
               context length.
-              [Example Python code](https://cookbook.openai.com/examples/how_to_count_tokens_with_tiktoken)
+              [Example Python code](https://cookbook.excai.com/examples/how_to_count_tokens_with_tiktoken)
               for counting tokens.
 
           n: How many completions to generate for each prompt.
@@ -344,7 +347,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
               whether they appear in the text so far, increasing the model's likelihood to
               talk about new topics.
 
-              [See more information about frequency and presence penalties.](/docs/guides/text-generation)
+              [See more information about frequency and presence penalties.](https://main.excai.ai/docs/guides/text-generation)
 
           seed: If specified, our system will make a best effort to sample deterministically,
               such that repeated requests with the same `seed` and parameters should return
@@ -363,7 +366,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
               [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#Event_stream_format)
               as they become available, with the stream terminated by a `data: [DONE]`
               message.
-              [Example Python code](https://cookbook.openai.com/examples/how_to_stream_completions).
+              [Example Python code](https://cookbook.excai.com/examples/how_to_stream_completions).
 
           stream_options: Options for streaming response. Only set this when you set `stream: true`.
 
@@ -383,8 +386,9 @@ class AsyncCompletionsResource(AsyncAPIResource):
 
               We generally recommend altering this or `temperature` but not both.
 
-          user: A unique identifier representing your end-user, which can help OpenAI to monitor
-              and detect abuse. [Learn more](/docs/guides/safety-best-practices#end-user-ids).
+          user: A unique identifier representing your end-user, which can help EXCai to monitor
+              and detect abuse.
+              [Learn more](https://main.excai.ai/docs/guides/safety-best-practices#end-user-ids).
 
           extra_headers: Send extra headers
 

@@ -39,6 +39,7 @@ from ....types.fine_tuning.job_list_response import JobListResponse
 from ....types.fine_tuning.job_cancel_response import JobCancelResponse
 from ....types.fine_tuning.job_create_response import JobCreateResponse
 from ....types.fine_tuning.job_retrieve_response import JobRetrieveResponse
+from ....types.fine_tuning.fine_tune_method_param import FineTuneMethodParam
 
 __all__ = ["JobsResource", "AsyncJobsResource"]
 
@@ -79,7 +80,7 @@ class JobsResource(SyncAPIResource):
         hyperparameters: job_create_params.Hyperparameters | Omit = omit,
         integrations: Optional[Iterable[job_create_params.Integration]] | Omit = omit,
         metadata: Optional[Dict[str, str]] | Omit = omit,
-        method: job_create_params.Method | Omit = omit,
+        method: FineTuneMethodParam | Omit = omit,
         seed: Optional[int] | Omit = omit,
         suffix: Optional[str] | Omit = omit,
         validation_file: Optional[str] | Omit = omit,
@@ -97,26 +98,30 @@ class JobsResource(SyncAPIResource):
         Response includes details of the enqueued job including job status and the name
         of the fine-tuned models once complete.
 
-        [Learn more about fine-tuning](/docs/guides/fine-tuning)
+        [Learn more about fine-tuning](https://main.excai.ai/docs/guides/model-optimization)
 
         Args:
           model: The name of the model to fine-tune. You can select one of the
-              [supported models](/docs/guides/fine-tuning#which-models-can-be-fine-tuned).
+              [supported models](https://main.excai.ai/docs/guides/fine-tuning#which-models-can-be-fine-tuned).
 
           training_file: The ID of an uploaded file that contains training data.
 
-              See [upload file](/docs/api-reference/files/create) for how to upload a file.
+              See [upload file](https://main.excai.ai/docs/api-reference/files/create) for how
+              to upload a file.
 
               Your dataset must be formatted as a JSONL file. Additionally, you must upload
               your file with the purpose `fine-tune`.
 
               The contents of the file should differ depending on if the model uses the
-              [chat](/docs/api-reference/fine-tuning/chat-input),
-              [completions](/docs/api-reference/fine-tuning/completions-input) format, or if
-              the fine-tuning method uses the
-              [preference](/docs/api-reference/fine-tuning/preference-input) format.
+              [chat](https://main.excai.ai/docs/api-reference/fine-tuning/chat-input),
+              [completions](https://main.excai.ai/docs/api-reference/fine-tuning/completions-input)
+              format, or if the fine-tuning method uses the
+              [preference](https://main.excai.ai/docs/api-reference/fine-tuning/preference-input)
+              format.
 
-              See the [fine-tuning guide](/docs/guides/fine-tuning) for more details.
+              See the
+              [fine-tuning guide](https://main.excai.ai/docs/guides/model-optimization) for
+              more details.
 
           hyperparameters: The hyperparameters used for the fine-tuning job. This value is now deprecated
               in favor of `method`, and should be passed in under the `method` parameter.
@@ -140,7 +145,7 @@ class JobsResource(SyncAPIResource):
               name.
 
               For example, a `suffix` of "custom-model-name" would produce a model name like
-              `ft:gpt-4o-mini:openai:custom-model-name:7p4lURel`.
+              `ft:gpt-4o-mini:excai:custom-model-name:7p4lURel`.
 
           validation_file: The ID of an uploaded file that contains validation data.
 
@@ -152,7 +157,9 @@ class JobsResource(SyncAPIResource):
               Your dataset must be formatted as a JSONL file. You must upload your file with
               the purpose `fine-tune`.
 
-              See the [fine-tuning guide](/docs/guides/fine-tuning) for more details.
+              See the
+              [fine-tuning guide](https://main.excai.ai/docs/guides/model-optimization) for
+              more details.
 
           extra_headers: Send extra headers
 
@@ -198,7 +205,7 @@ class JobsResource(SyncAPIResource):
         """
         Get info about a fine-tuning job.
 
-        [Learn more about fine-tuning](/docs/guides/fine-tuning)
+        [Learn more about fine-tuning](https://main.excai.ai/docs/guides/model-optimization)
 
         Args:
           extra_headers: Send extra headers
@@ -340,7 +347,7 @@ class AsyncJobsResource(AsyncAPIResource):
         hyperparameters: job_create_params.Hyperparameters | Omit = omit,
         integrations: Optional[Iterable[job_create_params.Integration]] | Omit = omit,
         metadata: Optional[Dict[str, str]] | Omit = omit,
-        method: job_create_params.Method | Omit = omit,
+        method: FineTuneMethodParam | Omit = omit,
         seed: Optional[int] | Omit = omit,
         suffix: Optional[str] | Omit = omit,
         validation_file: Optional[str] | Omit = omit,
@@ -358,26 +365,30 @@ class AsyncJobsResource(AsyncAPIResource):
         Response includes details of the enqueued job including job status and the name
         of the fine-tuned models once complete.
 
-        [Learn more about fine-tuning](/docs/guides/fine-tuning)
+        [Learn more about fine-tuning](https://main.excai.ai/docs/guides/model-optimization)
 
         Args:
           model: The name of the model to fine-tune. You can select one of the
-              [supported models](/docs/guides/fine-tuning#which-models-can-be-fine-tuned).
+              [supported models](https://main.excai.ai/docs/guides/fine-tuning#which-models-can-be-fine-tuned).
 
           training_file: The ID of an uploaded file that contains training data.
 
-              See [upload file](/docs/api-reference/files/create) for how to upload a file.
+              See [upload file](https://main.excai.ai/docs/api-reference/files/create) for how
+              to upload a file.
 
               Your dataset must be formatted as a JSONL file. Additionally, you must upload
               your file with the purpose `fine-tune`.
 
               The contents of the file should differ depending on if the model uses the
-              [chat](/docs/api-reference/fine-tuning/chat-input),
-              [completions](/docs/api-reference/fine-tuning/completions-input) format, or if
-              the fine-tuning method uses the
-              [preference](/docs/api-reference/fine-tuning/preference-input) format.
+              [chat](https://main.excai.ai/docs/api-reference/fine-tuning/chat-input),
+              [completions](https://main.excai.ai/docs/api-reference/fine-tuning/completions-input)
+              format, or if the fine-tuning method uses the
+              [preference](https://main.excai.ai/docs/api-reference/fine-tuning/preference-input)
+              format.
 
-              See the [fine-tuning guide](/docs/guides/fine-tuning) for more details.
+              See the
+              [fine-tuning guide](https://main.excai.ai/docs/guides/model-optimization) for
+              more details.
 
           hyperparameters: The hyperparameters used for the fine-tuning job. This value is now deprecated
               in favor of `method`, and should be passed in under the `method` parameter.
@@ -401,7 +412,7 @@ class AsyncJobsResource(AsyncAPIResource):
               name.
 
               For example, a `suffix` of "custom-model-name" would produce a model name like
-              `ft:gpt-4o-mini:openai:custom-model-name:7p4lURel`.
+              `ft:gpt-4o-mini:excai:custom-model-name:7p4lURel`.
 
           validation_file: The ID of an uploaded file that contains validation data.
 
@@ -413,7 +424,9 @@ class AsyncJobsResource(AsyncAPIResource):
               Your dataset must be formatted as a JSONL file. You must upload your file with
               the purpose `fine-tune`.
 
-              See the [fine-tuning guide](/docs/guides/fine-tuning) for more details.
+              See the
+              [fine-tuning guide](https://main.excai.ai/docs/guides/model-optimization) for
+              more details.
 
           extra_headers: Send extra headers
 
@@ -459,7 +472,7 @@ class AsyncJobsResource(AsyncAPIResource):
         """
         Get info about a fine-tuning job.
 
-        [Learn more about fine-tuning](/docs/guides/fine-tuning)
+        [Learn more about fine-tuning](https://main.excai.ai/docs/guides/model-optimization)
 
         Args:
           extra_headers: Send extra headers
