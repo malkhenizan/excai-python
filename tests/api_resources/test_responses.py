@@ -52,11 +52,7 @@ class TestResponses:
                     "format": {"type": "text"},
                     "verbosity": "low",
                 },
-                "tool_choice": {
-                    "mode": "auto",
-                    "tools": [{"foo": "bar"}],
-                    "type": "allowed_tools",
-                },
+                "tool_choice": "none",
                 "tools": [
                     {
                         "name": "name",
@@ -335,11 +331,7 @@ class TestAsyncResponses:
                     "format": {"type": "text"},
                     "verbosity": "low",
                 },
-                "tool_choice": {
-                    "mode": "auto",
-                    "tools": [{"foo": "bar"}],
-                    "type": "allowed_tools",
-                },
+                "tool_choice": "none",
                 "tools": [
                     {
                         "name": "name",
