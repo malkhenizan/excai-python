@@ -184,7 +184,6 @@ class TestItems:
         item = client.conversations.items.list(
             conversation_id="conv_123",
             after="after",
-            include=["code_interpreter_call.outputs"],
             limit=0,
             order="asc",
         )
@@ -444,7 +443,6 @@ class TestAsyncItems:
         item = await async_client.conversations.items.list(
             conversation_id="conv_123",
             after="after",
-            include=["code_interpreter_call.outputs"],
             limit=0,
             order="asc",
         )
