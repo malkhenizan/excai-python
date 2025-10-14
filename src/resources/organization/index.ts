@@ -15,7 +15,6 @@ export {
   type CertificateDeleteResponse,
   type CertificateActivateResponse,
   type CertificateDeactivateResponse,
-  type CertificateRetrieveParams,
   type CertificateUpdateParams,
   type CertificateListParams,
   type CertificateActivateParams,

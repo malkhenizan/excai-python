@@ -505,7 +505,7 @@ Types:
 
 Methods:
 
-- <code title="get /organization/certificates/{certificate_id}">client.organization.certificates.<a href="./src/resources/organization/certificates.ts">retrieve</a>(certificateId, { ...params }) -> Certificate</code>
+- <code title="get /organization/certificates/{certificate_id}">client.organization.certificates.<a href="./src/resources/organization/certificates.ts">retrieve</a>(certificateId) -> Certificate</code>
 - <code title="post /organization/certificates/{certificate_id}">client.organization.certificates.<a href="./src/resources/organization/certificates.ts">update</a>(certificateId, { ...params }) -> Certificate</code>
 - <code title="get /organization/certificates">client.organization.certificates.<a href="./src/resources/organization/certificates.ts">list</a>({ ...params }) -> CertificateListResponse</code>
 - <code title="delete /organization/certificates/{certificate_id}">client.organization.certificates.<a href="./src/resources/organization/certificates.ts">delete</a>(certificateId) -> CertificateDeleteResponse</code>
