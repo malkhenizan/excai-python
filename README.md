@@ -16,12 +16,9 @@ The REST API documentation can be found on [main.excai.ai](https://main.excai.ai
 ## Installation
 
 ```sh
-# install from the production repo
-pip install git+ssh://git@github.com/odel-blue-squad/EXCAi-Server.git
+# install from PyPI
+pip install excai
 ```
-
-> [!NOTE]
-> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install excai`
 
 ## Usage
 
@@ -79,8 +76,8 @@ By default, the async client uses `httpx` for HTTP requests. However, for improv
 You can enable this by installing `aiohttp`:
 
 ```sh
-# install from the production repo
-pip install 'excai[aiohttp] @ git+ssh://git@github.com/odel-blue-squad/EXCAi-Server.git'
+# install from PyPI
+pip install excai[aiohttp]
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
