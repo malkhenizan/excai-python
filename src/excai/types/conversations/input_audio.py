@@ -8,7 +8,11 @@ __all__ = ["InputAudio"]
 
 
 class InputAudio(BaseModel):
-    input_audio: InputAudio
+    data: str
+    """Base64-encoded audio data."""
+
+    format: Literal["mp3", "wav"]
+    """The format of the audio data. Currently supported formats are `mp3` and `wav`."""
 
     type: Literal["input_audio"]
     """The type of the input item. Always `input_audio`."""
