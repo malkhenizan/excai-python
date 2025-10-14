@@ -22,7 +22,6 @@ from .._base_client import make_request_options
 from ..types.assistant_object import AssistantObject
 from ..types.reasoning_effort import ReasoningEffort
 from ..types.chat.metadata_param import MetadataParam
-from ..types.assistant_tool_param import AssistantToolParam
 from ..types.assistant_list_response import AssistantListResponse
 from ..types.assistant_delete_response import AssistantDeleteResponse
 from ..types.assistant_supported_models import AssistantSupportedModels
@@ -63,7 +62,7 @@ class AssistantsResource(SyncAPIResource):
         response_format: Optional[APIResponseFormatOptionParam] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         tool_resources: Optional[assistant_create_params.ToolResources] | Omit = omit,
-        tools: Iterable[AssistantToolParam] | Omit = omit,
+        tools: Iterable[assistant_create_params.Tool] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -222,7 +221,7 @@ class AssistantsResource(SyncAPIResource):
         response_format: Optional[APIResponseFormatOptionParam] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         tool_resources: Optional[assistant_update_params.ToolResources] | Omit = omit,
-        tools: Iterable[AssistantToolParam] | Omit = omit,
+        tools: Iterable[assistant_update_params.Tool] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -467,7 +466,7 @@ class AsyncAssistantsResource(AsyncAPIResource):
         response_format: Optional[APIResponseFormatOptionParam] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         tool_resources: Optional[assistant_create_params.ToolResources] | Omit = omit,
-        tools: Iterable[AssistantToolParam] | Omit = omit,
+        tools: Iterable[assistant_create_params.Tool] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -626,7 +625,7 @@ class AsyncAssistantsResource(AsyncAPIResource):
         response_format: Optional[APIResponseFormatOptionParam] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         tool_resources: Optional[assistant_update_params.ToolResources] | Omit = omit,
-        tools: Iterable[AssistantToolParam] | Omit = omit,
+        tools: Iterable[assistant_update_params.Tool] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.

@@ -1,12 +1,15 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
-from typing_extensions import Literal
+from typing import List, Union, Optional
+from typing_extensions import Literal, Annotated, TypeAlias
 
+from ..._utils import PropertyInfo
 from ..._models import BaseModel
 from .truncation import Truncation
 from ..chat.metadata import Metadata
-from ..assistant_tool import AssistantTool
+from ..file_search_ranker import FileSearchRanker
+from .assistant_tools_code import AssistantToolsCode
+from ..chat.function_object import FunctionObject
 from .api_tool_choice_option import APIToolChoiceOption
 from .api_response_format_option import APIResponseFormatOption
 
@@ -18,6 +21,11 @@ __all__ = [
     "RequiredActionSubmitToolOutputs",
     "RequiredActionSubmitToolOutputsToolCall",
     "RequiredActionSubmitToolOutputsToolCallFunction",
+    "Tool",
+    "ToolFileSearch",
+    "ToolFileSearchFileSearch",
+    "ToolFileSearchFileSearchRankingOptions",
+    "ToolFunction",
     "Usage",
 ]
 
@@ -77,6 +85,63 @@ class RequiredAction(BaseModel):
 
     type: Literal["submit_tool_outputs"]
     """For now, this is always `submit_tool_outputs`."""
+
+
+class ToolFileSearchFileSearchRankingOptions(BaseModel):
+    score_threshold: float
+    """The score threshold for the file search.
+
+    All values must be a floating point number between 0 and 1.
+    """
+
+    ranker: Optional[FileSearchRanker] = None
+    """The ranker to use for the file search.
+
+    If not specified will use the `auto` ranker.
+    """
+
+
+class ToolFileSearchFileSearch(BaseModel):
+    max_num_results: Optional[int] = None
+    """The maximum number of results the file search tool should output.
+
+    The default is 20 for `gpt-4*` models and 5 for `gpt-3.5-turbo`. This number
+    should be between 1 and 50 inclusive.
+
+    Note that the file search tool may output fewer than `max_num_results` results.
+    See the
+    [file search tool documentation](https://main.excai.ai/docs/assistants/tools/file-search#customizing-file-search-settings)
+    for more information.
+    """
+
+    ranking_options: Optional[ToolFileSearchFileSearchRankingOptions] = None
+    """The ranking options for the file search.
+
+    If not specified, the file search tool will use the `auto` ranker and a
+    score_threshold of 0.
+
+    See the
+    [file search tool documentation](https://main.excai.ai/docs/assistants/tools/file-search#customizing-file-search-settings)
+    for more information.
+    """
+
+
+class ToolFileSearch(BaseModel):
+    type: Literal["file_search"]
+    """The type of tool being defined: `file_search`"""
+
+    file_search: Optional[ToolFileSearchFileSearch] = None
+    """Overrides for the file search tool."""
+
+
+class ToolFunction(BaseModel):
+    function: FunctionObject
+
+    type: Literal["function"]
+    """The type of tool being defined: `function`"""
+
+
+Tool: TypeAlias = Annotated[Union[AssistantToolsCode, ToolFileSearch, ToolFunction], PropertyInfo(discriminator="type")]
 
 
 class Usage(BaseModel):
@@ -237,7 +302,7 @@ class Run(BaseModel):
     call that tool.
     """
 
-    tools: List[AssistantTool]
+    tools: List[Tool]
     """
     The list of tools that the
     [assistant](https://main.excai.ai/docs/api-reference/assistants) used for this
