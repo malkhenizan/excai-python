@@ -11,6 +11,7 @@ from .message_list_params import MessageListParams as MessageListParams
 from .run_cancel_response import RunCancelResponse as RunCancelResponse
 from .run_create_response import RunCreateResponse as RunCreateResponse
 from .run_update_response import RunUpdateResponse as RunUpdateResponse
+from .run_completion_usage import RunCompletionUsage as RunCompletionUsage
 from .run_tool_call_object import RunToolCallObject as RunToolCallObject
 from .message_create_params import MessageCreateParams as MessageCreateParams
 from .message_list_response import MessageListResponse as MessageListResponse

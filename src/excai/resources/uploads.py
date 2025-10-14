@@ -54,7 +54,6 @@ class UploadsResource(SyncAPIResource):
         filename: str,
         mime_type: str,
         purpose: Literal["assistants", "batch", "fine-tune", "vision"],
-        expires_after: upload_create_params.ExpiresAfter | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -63,25 +62,22 @@ class UploadsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UploadCreateResponse:
         """
-        Creates an intermediate
-        [Upload](https://platform.excai.com/docs/api-reference/uploads/object) object
-        that you can add
-        [Parts](https://platform.excai.com/docs/api-reference/uploads/part-object) to.
-        Currently, an Upload can accept at most 8 GB in total and expires after an hour
-        after you create it.
+        Creates an intermediate [Upload](/docs/api-reference/uploads/object) object that
+        you can add [Parts](/docs/api-reference/uploads/part-object) to. Currently, an
+        Upload can accept at most 8 GB in total and expires after an hour after you
+        create it.
 
         Once you complete the Upload, we will create a
-        [File](https://platform.excai.com/docs/api-reference/files/object) object that
-        contains all the parts you uploaded. This File is usable in the rest of our
-        platform as a regular File object.
+        [File](/docs/api-reference/files/object) object that contains all the parts you
+        uploaded. This File is usable in the rest of our platform as a regular File
+        object.
 
         For certain `purpose` values, the correct `mime_type` must be specified. Please
         refer to documentation for the
-        [supported MIME types for your use case](https://platform.excai.com/docs/assistants/tools/file-search#supported-files).
+        [supported MIME types for your use case](/docs/assistants/tools/file-search#supported-files).
 
         For guidance on the proper filename extensions for each purpose, please follow
-        the documentation on
-        [creating a File](https://platform.excai.com/docs/api-reference/files/create).
+        the documentation on [creating a File](/docs/api-reference/files/create).
 
         Args:
           bytes: The number of bytes in the file you are uploading.
@@ -96,10 +92,7 @@ class UploadsResource(SyncAPIResource):
           purpose: The intended purpose of the uploaded file.
 
               See the
-              [documentation on File purposes](https://platform.excai.com/docs/api-reference/files/create#files-create-purpose).
-
-          expires_after: The expiration policy for a file. By default, files with `purpose=batch` expire
-              after 30 days and all other files are persisted until they are manually deleted.
+              [documentation on File purposes](/docs/api-reference/files/create#files-create-purpose).
 
           extra_headers: Send extra headers
 
@@ -117,7 +110,6 @@ class UploadsResource(SyncAPIResource):
                     "filename": filename,
                     "mime_type": mime_type,
                     "purpose": purpose,
-                    "expires_after": expires_after,
                 },
                 upload_create_params.UploadCreateParams,
             ),
@@ -140,17 +132,16 @@ class UploadsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UploadAddPartResponse:
         """
-        Adds a [Part](https://platform.excai.com/docs/api-reference/uploads/part-object)
-        to an [Upload](https://platform.excai.com/docs/api-reference/uploads/object)
-        object. A Part represents a chunk of bytes from the file you are trying to
-        upload.
+        Adds a [Part](/docs/api-reference/uploads/part-object) to an
+        [Upload](/docs/api-reference/uploads/object) object. A Part represents a chunk
+        of bytes from the file you are trying to upload.
 
         Each Part can be at most 64 MB, and you can add Parts until you hit the Upload
         maximum of 8 GB.
 
         It is possible to add multiple Parts in parallel. You can decide the intended
         order of the Parts when you
-        [complete the Upload](https://platform.excai.com/docs/api-reference/uploads/complete).
+        [complete the Upload](/docs/api-reference/uploads/complete).
 
         Args:
           data: The chunk of bytes for this Part.
@@ -229,12 +220,11 @@ class UploadsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UploadCompleteResponse:
         """
-        Completes the
-        [Upload](https://platform.excai.com/docs/api-reference/uploads/object).
+        Completes the [Upload](/docs/api-reference/uploads/object).
 
         Within the returned Upload object, there is a nested
-        [File](https://platform.excai.com/docs/api-reference/files/object) object that
-        is ready to use in the rest of the platform.
+        [File](/docs/api-reference/files/object) object that is ready to use in the rest
+        of the platform.
 
         You can specify the order of the Parts by passing in an ordered list of the Part
         IDs.
@@ -302,7 +292,6 @@ class AsyncUploadsResource(AsyncAPIResource):
         filename: str,
         mime_type: str,
         purpose: Literal["assistants", "batch", "fine-tune", "vision"],
-        expires_after: upload_create_params.ExpiresAfter | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -311,25 +300,22 @@ class AsyncUploadsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UploadCreateResponse:
         """
-        Creates an intermediate
-        [Upload](https://platform.excai.com/docs/api-reference/uploads/object) object
-        that you can add
-        [Parts](https://platform.excai.com/docs/api-reference/uploads/part-object) to.
-        Currently, an Upload can accept at most 8 GB in total and expires after an hour
-        after you create it.
+        Creates an intermediate [Upload](/docs/api-reference/uploads/object) object that
+        you can add [Parts](/docs/api-reference/uploads/part-object) to. Currently, an
+        Upload can accept at most 8 GB in total and expires after an hour after you
+        create it.
 
         Once you complete the Upload, we will create a
-        [File](https://platform.excai.com/docs/api-reference/files/object) object that
-        contains all the parts you uploaded. This File is usable in the rest of our
-        platform as a regular File object.
+        [File](/docs/api-reference/files/object) object that contains all the parts you
+        uploaded. This File is usable in the rest of our platform as a regular File
+        object.
 
         For certain `purpose` values, the correct `mime_type` must be specified. Please
         refer to documentation for the
-        [supported MIME types for your use case](https://platform.excai.com/docs/assistants/tools/file-search#supported-files).
+        [supported MIME types for your use case](/docs/assistants/tools/file-search#supported-files).
 
         For guidance on the proper filename extensions for each purpose, please follow
-        the documentation on
-        [creating a File](https://platform.excai.com/docs/api-reference/files/create).
+        the documentation on [creating a File](/docs/api-reference/files/create).
 
         Args:
           bytes: The number of bytes in the file you are uploading.
@@ -344,10 +330,7 @@ class AsyncUploadsResource(AsyncAPIResource):
           purpose: The intended purpose of the uploaded file.
 
               See the
-              [documentation on File purposes](https://platform.excai.com/docs/api-reference/files/create#files-create-purpose).
-
-          expires_after: The expiration policy for a file. By default, files with `purpose=batch` expire
-              after 30 days and all other files are persisted until they are manually deleted.
+              [documentation on File purposes](/docs/api-reference/files/create#files-create-purpose).
 
           extra_headers: Send extra headers
 
@@ -365,7 +348,6 @@ class AsyncUploadsResource(AsyncAPIResource):
                     "filename": filename,
                     "mime_type": mime_type,
                     "purpose": purpose,
-                    "expires_after": expires_after,
                 },
                 upload_create_params.UploadCreateParams,
             ),
@@ -388,17 +370,16 @@ class AsyncUploadsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UploadAddPartResponse:
         """
-        Adds a [Part](https://platform.excai.com/docs/api-reference/uploads/part-object)
-        to an [Upload](https://platform.excai.com/docs/api-reference/uploads/object)
-        object. A Part represents a chunk of bytes from the file you are trying to
-        upload.
+        Adds a [Part](/docs/api-reference/uploads/part-object) to an
+        [Upload](/docs/api-reference/uploads/object) object. A Part represents a chunk
+        of bytes from the file you are trying to upload.
 
         Each Part can be at most 64 MB, and you can add Parts until you hit the Upload
         maximum of 8 GB.
 
         It is possible to add multiple Parts in parallel. You can decide the intended
         order of the Parts when you
-        [complete the Upload](https://platform.excai.com/docs/api-reference/uploads/complete).
+        [complete the Upload](/docs/api-reference/uploads/complete).
 
         Args:
           data: The chunk of bytes for this Part.
@@ -477,12 +458,11 @@ class AsyncUploadsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UploadCompleteResponse:
         """
-        Completes the
-        [Upload](https://platform.excai.com/docs/api-reference/uploads/object).
+        Completes the [Upload](/docs/api-reference/uploads/object).
 
         Within the returned Upload object, there is a nested
-        [File](https://platform.excai.com/docs/api-reference/files/object) object that
-        is ready to use in the rest of the platform.
+        [File](/docs/api-reference/files/object) object that is ready to use in the rest
+        of the platform.
 
         You can specify the order of the Parts by passing in an ordered list of the Part
         IDs.

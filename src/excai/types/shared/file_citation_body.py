@@ -11,9 +11,6 @@ class FileCitationBody(BaseModel):
     file_id: str
     """The ID of the file."""
 
-    filename: str
-    """The filename of the file cited."""
-
     index: int
     """The index of the file in the list of files."""
 

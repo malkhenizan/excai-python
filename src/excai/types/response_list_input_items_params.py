@@ -12,15 +12,11 @@ class ResponseListInputItemsParams(TypedDict, total=False):
     after: str
     """An item ID to list items after, used in pagination."""
 
+    before: str
+    """An item ID to list items before, used in pagination."""
+
     include: List[
-        Literal[
-            "code_interpreter_call.outputs",
-            "computer_call_output.output.image_url",
-            "file_search_call.results",
-            "message.input_image.image_url",
-            "message.output_text.logprobs",
-            "reasoning.encrypted_content",
-        ]
+        Literal["file_search_call.results", "message.input_image.image_url", "computer_call_output.output.image_url"]
     ]
     """Additional fields to include in the response.
 
@@ -34,7 +30,7 @@ class ResponseListInputItemsParams(TypedDict, total=False):
     """
 
     order: Literal["asc", "desc"]
-    """The order to return the input items in. Default is `desc`.
+    """The order to return the input items in. Default is `asc`.
 
     - `asc`: Return the input items in ascending order.
     - `desc`: Return the input items in descending order.

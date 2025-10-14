@@ -51,18 +51,12 @@ class ImagesResource(SyncAPIResource):
         *,
         image: Union[FileTypes, SequenceNotStr[FileTypes]],
         prompt: str,
-        background: Optional[Literal["transparent", "opaque", "auto"]] | Omit = omit,
-        input_fidelity: Optional[Literal["high", "low"]] | Omit = omit,
         mask: FileTypes | Omit = omit,
-        model: Union[str, Literal["dall-e-2", "gpt-image-1", "gpt-image-1-mini"], None] | Omit = omit,
+        model: Union[str, Literal["dall-e-2", "gpt-image-1"], None] | Omit = omit,
         n: Optional[int] | Omit = omit,
-        output_compression: Optional[int] | Omit = omit,
-        output_format: Optional[Literal["png", "jpeg", "webp"]] | Omit = omit,
-        partial_images: Optional[int] | Omit = omit,
         quality: Optional[Literal["standard", "low", "medium", "high", "auto"]] | Omit = omit,
         response_format: Optional[Literal["url", "b64_json"]] | Omit = omit,
         size: Optional[Literal["256x256", "512x512", "1024x1024", "1536x1024", "1024x1536", "auto"]] | Omit = omit,
-        stream: Optional[bool] | Omit = omit,
         user: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -80,26 +74,13 @@ class ImagesResource(SyncAPIResource):
           image: The image(s) to edit. Must be a supported image file or an array of images.
 
               For `gpt-image-1`, each image should be a `png`, `webp`, or `jpg` file less than
-              50MB. You can provide up to 16 images.
+              25MB. You can provide up to 16 images.
 
               For `dall-e-2`, you can only provide one image, and it should be a square `png`
               file less than 4MB.
 
           prompt: A text description of the desired image(s). The maximum length is 1000
               characters for `dall-e-2`, and 32000 characters for `gpt-image-1`.
-
-          background: Allows to set transparency for the background of the generated image(s). This
-              parameter is only supported for `gpt-image-1`. Must be one of `transparent`,
-              `opaque` or `auto` (default value). When `auto` is used, the model will
-              automatically determine the best background for the image.
-
-              If `transparent`, the output format needs to support transparency, so it should
-              be set to either `png` (default value) or `webp`.
-
-          input_fidelity: Control how much effort the model will exert to match the style and features,
-              especially facial features, of input images. This parameter is only supported
-              for `gpt-image-1`. Unsupported for `gpt-image-1-mini`. Supports `high` and
-              `low`. Defaults to `low`.
 
           mask: An additional image whose fully transparent areas (e.g. where alpha is zero)
               indicate where `image` should be edited. If there are multiple images provided,
@@ -111,21 +92,6 @@ class ImagesResource(SyncAPIResource):
               is used.
 
           n: The number of images to generate. Must be between 1 and 10.
-
-          output_compression: The compression level (0-100%) for the generated images. This parameter is only
-              supported for `gpt-image-1` with the `webp` or `jpeg` output formats, and
-              defaults to 100.
-
-          output_format: The format in which the generated images are returned. This parameter is only
-              supported for `gpt-image-1`. Must be one of `png`, `jpeg`, or `webp`. The
-              default value is `png`.
-
-          partial_images: The number of partial images to generate. This parameter is used for streaming
-              responses that return partial images. Value must be between 0 and 3. When set to
-              0, the response will be a single image sent in one streaming event.
-
-              Note that the final image may be sent before the full number of partial images
-              are generated if the full image is generated more quickly.
 
           quality: The quality of the image that will be generated. `high`, `medium` and `low` are
               only supported for `gpt-image-1`. `dall-e-2` only supports `standard` quality.
@@ -140,13 +106,8 @@ class ImagesResource(SyncAPIResource):
               (landscape), `1024x1536` (portrait), or `auto` (default value) for
               `gpt-image-1`, and one of `256x256`, `512x512`, or `1024x1024` for `dall-e-2`.
 
-          stream: Edit the image in streaming mode. Defaults to `false`. See the
-              [Image generation guide](https://platform.excai.com/docs/guides/image-generation)
-              for more information.
-
-          user: A unique identifier representing your end-user, which can help EXCai to monitor
-              and detect abuse.
-              [Learn more](https://platform.excai.com/docs/guides/safety-best-practices#end-user-ids).
+          user: A unique identifier representing your end-user, which can help OpenAI to monitor
+              and detect abuse. [Learn more](/docs/guides/safety-best-practices#end-user-ids).
 
           extra_headers: Send extra headers
 
@@ -160,18 +121,12 @@ class ImagesResource(SyncAPIResource):
             {
                 "image": image,
                 "prompt": prompt,
-                "background": background,
-                "input_fidelity": input_fidelity,
                 "mask": mask,
                 "model": model,
                 "n": n,
-                "output_compression": output_compression,
-                "output_format": output_format,
-                "partial_images": partial_images,
                 "quality": quality,
                 "response_format": response_format,
                 "size": size,
-                "stream": stream,
                 "user": user,
             }
         )
@@ -195,19 +150,17 @@ class ImagesResource(SyncAPIResource):
         *,
         prompt: str,
         background: Optional[Literal["transparent", "opaque", "auto"]] | Omit = omit,
-        model: Union[str, Literal["dall-e-2", "dall-e-3", "gpt-image-1", "gpt-image-1-mini"], None] | Omit = omit,
+        model: Union[str, Literal["dall-e-2", "dall-e-3", "gpt-image-1"], None] | Omit = omit,
         moderation: Optional[Literal["low", "auto"]] | Omit = omit,
         n: Optional[int] | Omit = omit,
         output_compression: Optional[int] | Omit = omit,
         output_format: Optional[Literal["png", "jpeg", "webp"]] | Omit = omit,
-        partial_images: Optional[int] | Omit = omit,
         quality: Optional[Literal["standard", "hd", "low", "medium", "high", "auto"]] | Omit = omit,
         response_format: Optional[Literal["url", "b64_json"]] | Omit = omit,
         size: Optional[
             Literal["auto", "1024x1024", "1536x1024", "1024x1536", "256x256", "512x512", "1792x1024", "1024x1792"]
         ]
         | Omit = omit,
-        stream: Optional[bool] | Omit = omit,
         style: Optional[Literal["vivid", "natural"]] | Omit = omit,
         user: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -217,9 +170,9 @@ class ImagesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ImageCreateImageResponse:
-        """
-        Creates an image given a prompt.
-        [Learn more](https://platform.excai.com/docs/guides/images).
+        """Creates an image given a prompt.
+
+        [Learn more](/docs/guides/images).
 
         Args:
           prompt: A text description of the desired image(s). The maximum length is 32000
@@ -251,13 +204,6 @@ class ImagesResource(SyncAPIResource):
           output_format: The format in which the generated images are returned. This parameter is only
               supported for `gpt-image-1`. Must be one of `png`, `jpeg`, or `webp`.
 
-          partial_images: The number of partial images to generate. This parameter is used for streaming
-              responses that return partial images. Value must be between 0 and 3. When set to
-              0, the response will be a single image sent in one streaming event.
-
-              Note that the final image may be sent before the full number of partial images
-              are generated if the full image is generated more quickly.
-
           quality: The quality of the image that will be generated.
 
               - `auto` (default value) will automatically select the best quality for the
@@ -276,18 +222,13 @@ class ImagesResource(SyncAPIResource):
               `gpt-image-1`, one of `256x256`, `512x512`, or `1024x1024` for `dall-e-2`, and
               one of `1024x1024`, `1792x1024`, or `1024x1792` for `dall-e-3`.
 
-          stream: Generate the image in streaming mode. Defaults to `false`. See the
-              [Image generation guide](https://platform.excai.com/docs/guides/image-generation)
-              for more information. This parameter is only supported for `gpt-image-1`.
-
           style: The style of the generated images. This parameter is only supported for
               `dall-e-3`. Must be one of `vivid` or `natural`. Vivid causes the model to lean
               towards generating hyper-real and dramatic images. Natural causes the model to
               produce more natural, less hyper-real looking images.
 
-          user: A unique identifier representing your end-user, which can help EXCai to monitor
-              and detect abuse.
-              [Learn more](https://platform.excai.com/docs/guides/safety-best-practices#end-user-ids).
+          user: A unique identifier representing your end-user, which can help OpenAI to monitor
+              and detect abuse. [Learn more](/docs/guides/safety-best-practices#end-user-ids).
 
           extra_headers: Send extra headers
 
@@ -308,11 +249,9 @@ class ImagesResource(SyncAPIResource):
                     "n": n,
                     "output_compression": output_compression,
                     "output_format": output_format,
-                    "partial_images": partial_images,
                     "quality": quality,
                     "response_format": response_format,
                     "size": size,
-                    "stream": stream,
                     "style": style,
                     "user": user,
                 },
@@ -360,9 +299,8 @@ class ImagesResource(SyncAPIResource):
           size: The size of the generated images. Must be one of `256x256`, `512x512`, or
               `1024x1024`.
 
-          user: A unique identifier representing your end-user, which can help EXCai to monitor
-              and detect abuse.
-              [Learn more](https://platform.excai.com/docs/guides/safety-best-practices#end-user-ids).
+          user: A unique identifier representing your end-user, which can help OpenAI to monitor
+              and detect abuse. [Learn more](/docs/guides/safety-best-practices#end-user-ids).
 
           extra_headers: Send extra headers
 
@@ -423,18 +361,12 @@ class AsyncImagesResource(AsyncAPIResource):
         *,
         image: Union[FileTypes, SequenceNotStr[FileTypes]],
         prompt: str,
-        background: Optional[Literal["transparent", "opaque", "auto"]] | Omit = omit,
-        input_fidelity: Optional[Literal["high", "low"]] | Omit = omit,
         mask: FileTypes | Omit = omit,
-        model: Union[str, Literal["dall-e-2", "gpt-image-1", "gpt-image-1-mini"], None] | Omit = omit,
+        model: Union[str, Literal["dall-e-2", "gpt-image-1"], None] | Omit = omit,
         n: Optional[int] | Omit = omit,
-        output_compression: Optional[int] | Omit = omit,
-        output_format: Optional[Literal["png", "jpeg", "webp"]] | Omit = omit,
-        partial_images: Optional[int] | Omit = omit,
         quality: Optional[Literal["standard", "low", "medium", "high", "auto"]] | Omit = omit,
         response_format: Optional[Literal["url", "b64_json"]] | Omit = omit,
         size: Optional[Literal["256x256", "512x512", "1024x1024", "1536x1024", "1024x1536", "auto"]] | Omit = omit,
-        stream: Optional[bool] | Omit = omit,
         user: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -452,26 +384,13 @@ class AsyncImagesResource(AsyncAPIResource):
           image: The image(s) to edit. Must be a supported image file or an array of images.
 
               For `gpt-image-1`, each image should be a `png`, `webp`, or `jpg` file less than
-              50MB. You can provide up to 16 images.
+              25MB. You can provide up to 16 images.
 
               For `dall-e-2`, you can only provide one image, and it should be a square `png`
               file less than 4MB.
 
           prompt: A text description of the desired image(s). The maximum length is 1000
               characters for `dall-e-2`, and 32000 characters for `gpt-image-1`.
-
-          background: Allows to set transparency for the background of the generated image(s). This
-              parameter is only supported for `gpt-image-1`. Must be one of `transparent`,
-              `opaque` or `auto` (default value). When `auto` is used, the model will
-              automatically determine the best background for the image.
-
-              If `transparent`, the output format needs to support transparency, so it should
-              be set to either `png` (default value) or `webp`.
-
-          input_fidelity: Control how much effort the model will exert to match the style and features,
-              especially facial features, of input images. This parameter is only supported
-              for `gpt-image-1`. Unsupported for `gpt-image-1-mini`. Supports `high` and
-              `low`. Defaults to `low`.
 
           mask: An additional image whose fully transparent areas (e.g. where alpha is zero)
               indicate where `image` should be edited. If there are multiple images provided,
@@ -483,21 +402,6 @@ class AsyncImagesResource(AsyncAPIResource):
               is used.
 
           n: The number of images to generate. Must be between 1 and 10.
-
-          output_compression: The compression level (0-100%) for the generated images. This parameter is only
-              supported for `gpt-image-1` with the `webp` or `jpeg` output formats, and
-              defaults to 100.
-
-          output_format: The format in which the generated images are returned. This parameter is only
-              supported for `gpt-image-1`. Must be one of `png`, `jpeg`, or `webp`. The
-              default value is `png`.
-
-          partial_images: The number of partial images to generate. This parameter is used for streaming
-              responses that return partial images. Value must be between 0 and 3. When set to
-              0, the response will be a single image sent in one streaming event.
-
-              Note that the final image may be sent before the full number of partial images
-              are generated if the full image is generated more quickly.
 
           quality: The quality of the image that will be generated. `high`, `medium` and `low` are
               only supported for `gpt-image-1`. `dall-e-2` only supports `standard` quality.
@@ -512,13 +416,8 @@ class AsyncImagesResource(AsyncAPIResource):
               (landscape), `1024x1536` (portrait), or `auto` (default value) for
               `gpt-image-1`, and one of `256x256`, `512x512`, or `1024x1024` for `dall-e-2`.
 
-          stream: Edit the image in streaming mode. Defaults to `false`. See the
-              [Image generation guide](https://platform.excai.com/docs/guides/image-generation)
-              for more information.
-
-          user: A unique identifier representing your end-user, which can help EXCai to monitor
-              and detect abuse.
-              [Learn more](https://platform.excai.com/docs/guides/safety-best-practices#end-user-ids).
+          user: A unique identifier representing your end-user, which can help OpenAI to monitor
+              and detect abuse. [Learn more](/docs/guides/safety-best-practices#end-user-ids).
 
           extra_headers: Send extra headers
 
@@ -532,18 +431,12 @@ class AsyncImagesResource(AsyncAPIResource):
             {
                 "image": image,
                 "prompt": prompt,
-                "background": background,
-                "input_fidelity": input_fidelity,
                 "mask": mask,
                 "model": model,
                 "n": n,
-                "output_compression": output_compression,
-                "output_format": output_format,
-                "partial_images": partial_images,
                 "quality": quality,
                 "response_format": response_format,
                 "size": size,
-                "stream": stream,
                 "user": user,
             }
         )
@@ -567,19 +460,17 @@ class AsyncImagesResource(AsyncAPIResource):
         *,
         prompt: str,
         background: Optional[Literal["transparent", "opaque", "auto"]] | Omit = omit,
-        model: Union[str, Literal["dall-e-2", "dall-e-3", "gpt-image-1", "gpt-image-1-mini"], None] | Omit = omit,
+        model: Union[str, Literal["dall-e-2", "dall-e-3", "gpt-image-1"], None] | Omit = omit,
         moderation: Optional[Literal["low", "auto"]] | Omit = omit,
         n: Optional[int] | Omit = omit,
         output_compression: Optional[int] | Omit = omit,
         output_format: Optional[Literal["png", "jpeg", "webp"]] | Omit = omit,
-        partial_images: Optional[int] | Omit = omit,
         quality: Optional[Literal["standard", "hd", "low", "medium", "high", "auto"]] | Omit = omit,
         response_format: Optional[Literal["url", "b64_json"]] | Omit = omit,
         size: Optional[
             Literal["auto", "1024x1024", "1536x1024", "1024x1536", "256x256", "512x512", "1792x1024", "1024x1792"]
         ]
         | Omit = omit,
-        stream: Optional[bool] | Omit = omit,
         style: Optional[Literal["vivid", "natural"]] | Omit = omit,
         user: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -589,9 +480,9 @@ class AsyncImagesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ImageCreateImageResponse:
-        """
-        Creates an image given a prompt.
-        [Learn more](https://platform.excai.com/docs/guides/images).
+        """Creates an image given a prompt.
+
+        [Learn more](/docs/guides/images).
 
         Args:
           prompt: A text description of the desired image(s). The maximum length is 32000
@@ -623,13 +514,6 @@ class AsyncImagesResource(AsyncAPIResource):
           output_format: The format in which the generated images are returned. This parameter is only
               supported for `gpt-image-1`. Must be one of `png`, `jpeg`, or `webp`.
 
-          partial_images: The number of partial images to generate. This parameter is used for streaming
-              responses that return partial images. Value must be between 0 and 3. When set to
-              0, the response will be a single image sent in one streaming event.
-
-              Note that the final image may be sent before the full number of partial images
-              are generated if the full image is generated more quickly.
-
           quality: The quality of the image that will be generated.
 
               - `auto` (default value) will automatically select the best quality for the
@@ -648,18 +532,13 @@ class AsyncImagesResource(AsyncAPIResource):
               `gpt-image-1`, one of `256x256`, `512x512`, or `1024x1024` for `dall-e-2`, and
               one of `1024x1024`, `1792x1024`, or `1024x1792` for `dall-e-3`.
 
-          stream: Generate the image in streaming mode. Defaults to `false`. See the
-              [Image generation guide](https://platform.excai.com/docs/guides/image-generation)
-              for more information. This parameter is only supported for `gpt-image-1`.
-
           style: The style of the generated images. This parameter is only supported for
               `dall-e-3`. Must be one of `vivid` or `natural`. Vivid causes the model to lean
               towards generating hyper-real and dramatic images. Natural causes the model to
               produce more natural, less hyper-real looking images.
 
-          user: A unique identifier representing your end-user, which can help EXCai to monitor
-              and detect abuse.
-              [Learn more](https://platform.excai.com/docs/guides/safety-best-practices#end-user-ids).
+          user: A unique identifier representing your end-user, which can help OpenAI to monitor
+              and detect abuse. [Learn more](/docs/guides/safety-best-practices#end-user-ids).
 
           extra_headers: Send extra headers
 
@@ -680,11 +559,9 @@ class AsyncImagesResource(AsyncAPIResource):
                     "n": n,
                     "output_compression": output_compression,
                     "output_format": output_format,
-                    "partial_images": partial_images,
                     "quality": quality,
                     "response_format": response_format,
                     "size": size,
-                    "stream": stream,
                     "style": style,
                     "user": user,
                 },
@@ -732,9 +609,8 @@ class AsyncImagesResource(AsyncAPIResource):
           size: The size of the generated images. Must be one of `256x256`, `512x512`, or
               `1024x1024`.
 
-          user: A unique identifier representing your end-user, which can help EXCai to monitor
-              and detect abuse.
-              [Learn more](https://platform.excai.com/docs/guides/safety-best-practices#end-user-ids).
+          user: A unique identifier representing your end-user, which can help OpenAI to monitor
+              and detect abuse. [Learn more](/docs/guides/safety-best-practices#end-user-ids).
 
           extra_headers: Send extra headers
 

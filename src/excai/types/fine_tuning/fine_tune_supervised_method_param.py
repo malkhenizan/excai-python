@@ -2,13 +2,33 @@
 
 from __future__ import annotations
 
-from typing_extensions import TypedDict
+from typing import Union
+from typing_extensions import Literal, TypedDict
 
-from .fine_tune_supervised_hyperparameters_param import FineTuneSupervisedHyperparametersParam
+__all__ = ["FineTuneSupervisedMethodParam", "Hyperparameters"]
 
-__all__ = ["FineTuneSupervisedMethodParam"]
+
+class Hyperparameters(TypedDict, total=False):
+    batch_size: Union[Literal["auto"], int]
+    """Number of examples in each batch.
+
+    A larger batch size means that model parameters are updated less frequently, but
+    with lower variance.
+    """
+
+    learning_rate_multiplier: Union[Literal["auto"], float]
+    """Scaling factor for the learning rate.
+
+    A smaller learning rate may be useful to avoid overfitting.
+    """
+
+    n_epochs: Union[Literal["auto"], int]
+    """The number of epochs to train the model for.
+
+    An epoch refers to one full cycle through the training dataset.
+    """
 
 
 class FineTuneSupervisedMethodParam(TypedDict, total=False):
-    hyperparameters: FineTuneSupervisedHyperparametersParam
+    hyperparameters: Hyperparameters
     """The hyperparameters used for the fine-tuning job."""

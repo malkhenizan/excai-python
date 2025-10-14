@@ -14,19 +14,20 @@ class AudioCreateSpeechParams(TypedDict, total=False):
 
     model: Required[Union[str, Literal["tts-1", "tts-1-hd", "gpt-4o-mini-tts"]]]
     """
-    One of the available [TTS models](https://platform.excai.com/docs/models#tts):
-    `tts-1`, `tts-1-hd` or `gpt-4o-mini-tts`.
+    One of the available [TTS models](/docs/models#tts): `tts-1`, `tts-1-hd` or
+    `gpt-4o-mini-tts`.
     """
 
     voice: Required[
-        Union[str, Literal["alloy", "ash", "ballad", "coral", "echo", "sage", "shimmer", "verse", "marin", "cedar"]]
+        Union[
+            str, Literal["alloy", "ash", "ballad", "coral", "echo", "fable", "onyx", "nova", "sage", "shimmer", "verse"]
+        ]
     ]
     """The voice to use when generating the audio.
 
     Supported voices are `alloy`, `ash`, `ballad`, `coral`, `echo`, `fable`, `onyx`,
     `nova`, `sage`, `shimmer`, and `verse`. Previews of the voices are available in
-    the
-    [Text to speech guide](https://platform.excai.com/docs/guides/text-to-speech#voice-options).
+    the [Text to speech guide](/docs/guides/text-to-speech#voice-options).
     """
 
     instructions: str
@@ -45,11 +46,4 @@ class AudioCreateSpeechParams(TypedDict, total=False):
     """The speed of the generated audio.
 
     Select a value from `0.25` to `4.0`. `1.0` is the default.
-    """
-
-    stream_format: Literal["sse", "audio"]
-    """The format to stream the audio in.
-
-    Supported formats are `sse` and `audio`. `sse` is not supported for `tts-1` or
-    `tts-1-hd`.
     """

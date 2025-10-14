@@ -1,20 +1,16 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List, Union, Optional
-from typing_extensions import Literal, Annotated, TypeAlias
+from typing_extensions import Literal, TypeAlias
 
-from ..._utils import PropertyInfo
 from ..._models import BaseModel
-from ..shared.input_audio import InputAudio
 from ..shared.input_file_content import InputFileContent
 from ..shared.input_text_content import InputTextContent
 from ..shared.input_image_content import InputImageContent
 
 __all__ = ["EasyInputMessage", "ContentInputMessageContentList"]
 
-ContentInputMessageContentList: TypeAlias = Annotated[
-    Union[InputTextContent, InputImageContent, InputFileContent, InputAudio], PropertyInfo(discriminator="type")
-]
+ContentInputMessageContentList: TypeAlias = Union[InputTextContent, InputImageContent, InputFileContent]
 
 
 class EasyInputMessage(BaseModel):

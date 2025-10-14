@@ -1,7 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List, Union
-from typing_extensions import Literal, Annotated, TypeAlias
+from typing_extensions import Literal, TypeAlias
 
 from .drag import Drag
 from .move import Move
@@ -9,7 +9,6 @@ from .type import Type
 from .wait import Wait
 from .click import Click
 from .scroll import Scroll
-from ..._utils import PropertyInfo
 from ..._models import BaseModel
 from .key_press import KeyPress
 from .screenshot import Screenshot
@@ -18,9 +17,7 @@ from .computer_tool_call_safety_check import ComputerToolCallSafetyCheck
 
 __all__ = ["ComputerToolCall", "Action"]
 
-Action: TypeAlias = Annotated[
-    Union[Click, DoubleClick, Drag, KeyPress, Move, Screenshot, Scroll, Type, Wait], PropertyInfo(discriminator="type")
-]
+Action: TypeAlias = Union[Click, DoubleClick, Drag, KeyPress, Move, Screenshot, Scroll, Type, Wait]
 
 
 class ComputerToolCall(BaseModel):

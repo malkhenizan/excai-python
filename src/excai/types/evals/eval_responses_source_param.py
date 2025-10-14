@@ -14,6 +14,12 @@ class EvalResponsesSourceParam(TypedDict, total=False):
     type: Required[Literal["responses"]]
     """The type of run data source. Always `responses`."""
 
+    allow_parallel_tool_calls: Optional[bool]
+    """Whether to allow parallel tool calls.
+
+    This is a query parameter used to select responses.
+    """
+
     created_after: Optional[int]
     """Only include items created after this timestamp (inclusive).
 
@@ -26,8 +32,14 @@ class EvalResponsesSourceParam(TypedDict, total=False):
     This is a query parameter used to select responses.
     """
 
+    has_tool_calls: Optional[bool]
+    """Whether the response has tool calls.
+
+    This is a query parameter used to select responses.
+    """
+
     instructions_search: Optional[str]
-    """Optional string to search the 'instructions' field.
+    """Optional search string for instructions.
 
     This is a query parameter used to select responses.
     """
@@ -44,23 +56,14 @@ class EvalResponsesSourceParam(TypedDict, total=False):
     This is a query parameter used to select responses.
     """
 
-    reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]]
-    """
-    Constrains effort on reasoning for
-    [reasoning models](https://platform.excai.com/docs/guides/reasoning). Currently
-    supported values are `minimal`, `low`, `medium`, and `high`. Reducing reasoning
-    effort can result in faster responses and fewer tokens used on reasoning in a
-    response.
+    reasoning_effort: Optional[Literal["low", "medium", "high"]]
+    """Optional reasoning effort parameter.
 
-    Note: The `gpt-5-pro` model defaults to (and only supports) `high` reasoning
-    effort.
+    This is a query parameter used to select responses.
     """
 
     temperature: Optional[float]
     """Sampling temperature. This is a query parameter used to select responses."""
-
-    tools: Optional[SequenceNotStr[str]]
-    """List of tool names. This is a query parameter used to select responses."""
 
     top_p: Optional[float]
     """Nucleus sampling parameter. This is a query parameter used to select responses."""

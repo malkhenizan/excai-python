@@ -28,6 +28,7 @@ from ...types.chat.completion_list_response import CompletionListResponse
 from ...types.chat.completion_create_response import CompletionCreateResponse
 from ...types.chat.completion_delete_response import CompletionDeleteResponse
 from ...types.chat.completion_update_response import CompletionUpdateResponse
+from ...types.evals.chat_completion_tool_param import ChatCompletionToolParam
 from ...types.chat.completion_retrieve_response import CompletionRetrieveResponse
 from ...types.chat.completion_get_messages_response import CompletionGetMessagesResponse
 
@@ -61,13 +62,6 @@ class CompletionsResource(SyncAPIResource):
         model: Union[
             str,
             Literal[
-                "gpt-5",
-                "gpt-5-mini",
-                "gpt-5-nano",
-                "gpt-5-2025-08-07",
-                "gpt-5-mini-2025-08-07",
-                "gpt-5-nano-2025-08-07",
-                "gpt-5-chat-latest",
                 "gpt-4.1",
                 "gpt-4.1-mini",
                 "gpt-4.1-nano",
@@ -93,7 +87,6 @@ class CompletionsResource(SyncAPIResource):
                 "gpt-4o-audio-preview",
                 "gpt-4o-audio-preview-2024-10-01",
                 "gpt-4o-audio-preview-2024-12-17",
-                "gpt-4o-audio-preview-2025-06-03",
                 "gpt-4o-mini-audio-preview",
                 "gpt-4o-mini-audio-preview-2024-12-17",
                 "gpt-4o-search-preview",
@@ -101,7 +94,6 @@ class CompletionsResource(SyncAPIResource):
                 "gpt-4o-search-preview-2025-03-11",
                 "gpt-4o-mini-search-preview-2025-03-11",
                 "chatgpt-4o-latest",
-                "codex-mini-latest",
                 "gpt-4o-mini",
                 "gpt-4o-mini-2024-07-18",
                 "gpt-4-turbo",
@@ -139,23 +131,20 @@ class CompletionsResource(SyncAPIResource):
         parallel_tool_calls: bool | Omit = omit,
         prediction: Optional[completion_create_params.Prediction] | Omit = omit,
         presence_penalty: Optional[float] | Omit = omit,
-        prompt_cache_key: str | Omit = omit,
-        reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]] | Omit = omit,
+        reasoning_effort: Optional[Literal["low", "medium", "high"]] | Omit = omit,
         response_format: completion_create_params.ResponseFormat | Omit = omit,
-        safety_identifier: str | Omit = omit,
         seed: Optional[int] | Omit = omit,
-        service_tier: Optional[Literal["auto", "default", "flex", "scale", "priority"]] | Omit = omit,
+        service_tier: Optional[Literal["auto", "default", "flex"]] | Omit = omit,
         stop: Union[Optional[str], SequenceNotStr[str], None] | Omit = omit,
         store: Optional[bool] | Omit = omit,
         stream: Optional[bool] | Omit = omit,
         stream_options: Optional[completion_create_params.StreamOptions] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         tool_choice: completion_create_params.ToolChoice | Omit = omit,
-        tools: Iterable[completion_create_params.Tool] | Omit = omit,
+        tools: Iterable[ChatCompletionToolParam] | Omit = omit,
         top_logprobs: Optional[int] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
         user: str | Omit = omit,
-        verbosity: Optional[Literal["low", "medium", "high"]] | Omit = omit,
         web_search_options: completion_create_params.WebSearchOptions | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -166,40 +155,35 @@ class CompletionsResource(SyncAPIResource):
     ) -> CompletionCreateResponse:
         """
         **Starting a new project?** We recommend trying
-        [Responses](https://platform.excai.com/docs/api-reference/responses) to take
-        advantage of the latest EXCai platform features. Compare
-        [Chat Completions with Responses](https://platform.excai.com/docs/guides/responses-vs-chat-completions?api-mode=responses).
+        [Responses](/docs/api-reference/responses) to take advantage of the latest
+        OpenAI platform features. Compare
+        [Chat Completions with Responses](/docs/guides/responses-vs-chat-completions?api-mode=responses).
 
         ---
 
         Creates a model response for the given chat conversation. Learn more in the
-        [text generation](https://platform.excai.com/docs/guides/text-generation),
-        [vision](https://platform.excai.com/docs/guides/vision), and
-        [audio](https://platform.excai.com/docs/guides/audio) guides.
+        [text generation](/docs/guides/text-generation), [vision](/docs/guides/vision),
+        and [audio](/docs/guides/audio) guides.
 
         Parameter support can differ depending on the model used to generate the
         response, particularly for newer reasoning models. Parameters that are only
         supported for reasoning models are noted below. For the current state of
         unsupported parameters in reasoning models,
-        [refer to the reasoning guide](https://platform.excai.com/docs/guides/reasoning).
+        [refer to the reasoning guide](/docs/guides/reasoning).
 
         Args:
           messages: A list of messages comprising the conversation so far. Depending on the
-              [model](https://platform.excai.com/docs/models) you use, different message types
-              (modalities) are supported, like
-              [text](https://platform.excai.com/docs/guides/text-generation),
-              [images](https://platform.excai.com/docs/guides/vision), and
-              [audio](https://platform.excai.com/docs/guides/audio).
+              [model](/docs/models) you use, different message types (modalities) are
+              supported, like [text](/docs/guides/text-generation),
+              [images](/docs/guides/vision), and [audio](/docs/guides/audio).
 
-          model: Model ID used to generate the response, like `gpt-4o` or `o3`. EXCai offers a
+          model: Model ID used to generate the response, like `gpt-4o` or `o3`. OpenAI offers a
               wide range of models with different capabilities, performance characteristics,
-              and price points. Refer to the
-              [model guide](https://platform.excai.com/docs/models) to browse and compare
+              and price points. Refer to the [model guide](/docs/models) to browse and compare
               available models.
 
           audio: Parameters for audio output. Required when audio output is requested with
-              `modalities: ["audio"]`.
-              [Learn more](https://platform.excai.com/docs/guides/audio).
+              `modalities: ["audio"]`. [Learn more](/docs/guides/audio).
 
           frequency_penalty: Number between -2.0 and 2.0. Positive values penalize new tokens based on their
               existing frequency in the text so far, decreasing the model's likelihood to
@@ -238,16 +222,14 @@ class CompletionsResource(SyncAPIResource):
               `message`.
 
           max_completion_tokens: An upper bound for the number of tokens that can be generated for a completion,
-              including visible output tokens and
-              [reasoning tokens](https://platform.excai.com/docs/guides/reasoning).
+              including visible output tokens and [reasoning tokens](/docs/guides/reasoning).
 
           max_tokens: The maximum number of [tokens](/tokenizer) that can be generated in the chat
               completion. This value can be used to control
-              [costs](https://excai.com/api/pricing/) for text generated via API.
+              [costs](https://openai.com/api/pricing/) for text generated via API.
 
               This value is now deprecated in favor of `max_completion_tokens`, and is not
-              compatible with
-              [o-series models](https://platform.excai.com/docs/guides/reasoning).
+              compatible with [o-series models](/docs/guides/reasoning).
 
           metadata: Set of 16 key-value pairs that can be attached to an object. This can be useful
               for storing additional information about the object in a structured format, and
@@ -262,8 +244,8 @@ class CompletionsResource(SyncAPIResource):
               `["text"]`
 
               The `gpt-4o-audio-preview` model can also be used to
-              [generate audio](https://platform.excai.com/docs/guides/audio). To request that
-              this model generate both text and audio responses, you can use:
+              [generate audio](/docs/guides/audio). To request that this model generate both
+              text and audio responses, you can use:
 
               `["text", "audio"]`
 
@@ -272,7 +254,7 @@ class CompletionsResource(SyncAPIResource):
               choices. Keep `n` as `1` to minimize costs.
 
           parallel_tool_calls: Whether to enable
-              [parallel function calling](https://platform.excai.com/docs/guides/function-calling#configuring-parallel-function-calling)
+              [parallel function calling](/docs/guides/function-calling#configuring-parallel-function-calling)
               during tool use.
 
           prediction: Static predicted output content, such as the content of a text file that is
@@ -282,35 +264,22 @@ class CompletionsResource(SyncAPIResource):
               whether they appear in the text so far, increasing the model's likelihood to
               talk about new topics.
 
-          prompt_cache_key: Used by EXCai to cache responses for similar requests to optimize your cache hit
-              rates. Replaces the `user` field.
-              [Learn more](https://platform.excai.com/docs/guides/prompt-caching).
+          reasoning_effort: **o-series models only**
 
-          reasoning_effort: Constrains effort on reasoning for
-              [reasoning models](https://platform.excai.com/docs/guides/reasoning). Currently
-              supported values are `minimal`, `low`, `medium`, and `high`. Reducing reasoning
-              effort can result in faster responses and fewer tokens used on reasoning in a
-              response.
-
-              Note: The `gpt-5-pro` model defaults to (and only supports) `high` reasoning
-              effort.
+              Constrains effort on reasoning for
+              [reasoning models](https://platform.openai.com/docs/guides/reasoning). Currently
+              supported values are `low`, `medium`, and `high`. Reducing reasoning effort can
+              result in faster responses and fewer tokens used on reasoning in a response.
 
           response_format: An object specifying the format that the model must output.
 
               Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured
               Outputs which ensures the model will match your supplied JSON schema. Learn more
-              in the
-              [Structured Outputs guide](https://platform.excai.com/docs/guides/structured-outputs).
+              in the [Structured Outputs guide](/docs/guides/structured-outputs).
 
               Setting to `{ "type": "json_object" }` enables the older JSON mode, which
               ensures the message the model generates is valid JSON. Using `json_schema` is
               preferred for models that support it.
-
-          safety_identifier: A stable identifier used to help detect users of your application that may be
-              violating EXCai's usage policies. The IDs should be a string that uniquely
-              identifies each user. We recommend hashing their username or email address, in
-              order to avoid sending us any identifying information.
-              [Learn more](https://platform.excai.com/docs/guides/safety-best-practices#safety-identifiers).
 
           seed: This feature is in Beta. If specified, our system will make a best effort to
               sample deterministically, such that repeated requests with the same `seed` and
@@ -318,22 +287,22 @@ class CompletionsResource(SyncAPIResource):
               should refer to the `system_fingerprint` response parameter to monitor changes
               in the backend.
 
-          service_tier: Specifies the processing type used for serving the request.
+          service_tier: Specifies the latency tier to use for processing the request. This parameter is
+              relevant for customers subscribed to the scale tier service:
 
-              - If set to 'auto', then the request will be processed with the service tier
-                configured in the Project settings. Unless otherwise configured, the Project
-                will use 'default'.
-              - If set to 'default', then the request will be processed with the standard
-                pricing and performance for the selected model.
-              - If set to '[flex](https://platform.excai.com/docs/guides/flex-processing)' or
-                '[priority](https://excai.com/api-priority-processing/)', then the request
-                will be processed with the corresponding service tier.
+              - If set to 'auto', and the Project is Scale tier enabled, the system will
+                utilize scale tier credits until they are exhausted.
+              - If set to 'auto', and the Project is not Scale tier enabled, the request will
+                be processed using the default service tier with a lower uptime SLA and no
+                latency guarentee.
+              - If set to 'default', the request will be processed using the default service
+                tier with a lower uptime SLA and no latency guarentee.
+              - If set to 'flex', the request will be processed with the Flex Processing
+                service tier. [Learn more](/docs/guides/flex-processing).
               - When not set, the default behavior is 'auto'.
 
-              When the `service_tier` parameter is set, the response body will include the
-              `service_tier` value based on the processing mode actually used to serve the
-              request. This response value may be different from the value set in the
-              parameter.
+              When this parameter is set, the response body will include the `service_tier`
+              utilized.
 
           stop: Not supported with latest reasoning models `o3` and `o4-mini`.
 
@@ -341,19 +310,16 @@ class CompletionsResource(SyncAPIResource):
               returned text will not contain the stop sequence.
 
           store: Whether or not to store the output of this chat completion request for use in
-              our [model distillation](https://platform.excai.com/docs/guides/distillation) or
-              [evals](https://platform.excai.com/docs/guides/evals) products.
-
-              Supports text and image inputs. Note: image inputs over 8MB will be dropped.
+              our [model distillation](/docs/guides/distillation) or
+              [evals](/docs/guides/evals) products.
 
           stream: If set to true, the model response data will be streamed to the client as it is
               generated using
               [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#Event_stream_format).
-              See the
-              [Streaming section below](https://platform.excai.com/docs/api-reference/chat/streaming)
-              for more information, along with the
-              [streaming responses](https://platform.excai.com/docs/guides/streaming-responses)
-              guide for more information on how to handle the streaming events.
+              See the [Streaming section below](/docs/api-reference/chat/streaming) for more
+              information, along with the
+              [streaming responses](/docs/guides/streaming-responses) guide for more
+              information on how to handle the streaming events.
 
           stream_options: Options for streaming response. Only set this when you set `stream: true`.
 
@@ -372,9 +338,9 @@ class CompletionsResource(SyncAPIResource):
               `none` is the default when no tools are present. `auto` is the default if tools
               are present.
 
-          tools: A list of tools the model may call. You can provide either
-              [custom tools](https://platform.excai.com/docs/guides/function-calling#custom-tools)
-              or [function tools](https://platform.excai.com/docs/guides/function-calling).
+          tools: A list of tools the model may call. Currently, only functions are supported as a
+              tool. Use this to provide a list of functions the model may generate JSON inputs
+              for. A max of 128 functions are supported.
 
           top_logprobs: An integer between 0 and 20 specifying the number of most likely tokens to
               return at each token position, each with an associated log probability.
@@ -386,19 +352,11 @@ class CompletionsResource(SyncAPIResource):
 
               We generally recommend altering this or `temperature` but not both.
 
-          user: This field is being replaced by `safety_identifier` and `prompt_cache_key`. Use
-              `prompt_cache_key` instead to maintain caching optimizations. A stable
-              identifier for your end-users. Used to boost cache hit rates by better bucketing
-              similar requests and to help EXCai detect and prevent abuse.
-              [Learn more](https://platform.excai.com/docs/guides/safety-best-practices#safety-identifiers).
-
-          verbosity: Constrains the verbosity of the model's response. Lower values will result in
-              more concise responses, while higher values will result in more verbose
-              responses. Currently supported values are `low`, `medium`, and `high`.
+          user: A unique identifier representing your end-user, which can help OpenAI to monitor
+              and detect abuse. [Learn more](/docs/guides/safety-best-practices#end-user-ids).
 
           web_search_options: This tool searches the web for relevant results to use in a response. Learn more
-              about the
-              [web search tool](https://platform.excai.com/docs/guides/tools-web-search?api-mode=chat).
+              about the [web search tool](/docs/guides/tools-web-search?api-mode=chat).
 
           extra_headers: Send extra headers
 
@@ -428,10 +386,8 @@ class CompletionsResource(SyncAPIResource):
                     "parallel_tool_calls": parallel_tool_calls,
                     "prediction": prediction,
                     "presence_penalty": presence_penalty,
-                    "prompt_cache_key": prompt_cache_key,
                     "reasoning_effort": reasoning_effort,
                     "response_format": response_format,
-                    "safety_identifier": safety_identifier,
                     "seed": seed,
                     "service_tier": service_tier,
                     "stop": stop,
@@ -444,7 +400,6 @@ class CompletionsResource(SyncAPIResource):
                     "top_logprobs": top_logprobs,
                     "top_p": top_p,
                     "user": user,
-                    "verbosity": verbosity,
                     "web_search_options": web_search_options,
                 },
                 completion_create_params.CompletionCreateParams,
@@ -560,12 +515,10 @@ class CompletionsResource(SyncAPIResource):
 
           limit: Number of Chat Completions to retrieve.
 
-          metadata: Set of 16 key-value pairs that can be attached to an object. This can be useful
-              for storing additional information about the object in a structured format, and
-              querying for objects via API or the dashboard.
+          metadata:
+              A list of metadata keys to filter the Chat Completions by. Example:
 
-              Keys are strings with a maximum length of 64 characters. Values are strings with
-              a maximum length of 512 characters.
+              `metadata[key1]=value1&metadata[key2]=value2`
 
           model: The model used to generate the Chat Completions.
 
@@ -720,13 +673,6 @@ class AsyncCompletionsResource(AsyncAPIResource):
         model: Union[
             str,
             Literal[
-                "gpt-5",
-                "gpt-5-mini",
-                "gpt-5-nano",
-                "gpt-5-2025-08-07",
-                "gpt-5-mini-2025-08-07",
-                "gpt-5-nano-2025-08-07",
-                "gpt-5-chat-latest",
                 "gpt-4.1",
                 "gpt-4.1-mini",
                 "gpt-4.1-nano",
@@ -752,7 +698,6 @@ class AsyncCompletionsResource(AsyncAPIResource):
                 "gpt-4o-audio-preview",
                 "gpt-4o-audio-preview-2024-10-01",
                 "gpt-4o-audio-preview-2024-12-17",
-                "gpt-4o-audio-preview-2025-06-03",
                 "gpt-4o-mini-audio-preview",
                 "gpt-4o-mini-audio-preview-2024-12-17",
                 "gpt-4o-search-preview",
@@ -760,7 +705,6 @@ class AsyncCompletionsResource(AsyncAPIResource):
                 "gpt-4o-search-preview-2025-03-11",
                 "gpt-4o-mini-search-preview-2025-03-11",
                 "chatgpt-4o-latest",
-                "codex-mini-latest",
                 "gpt-4o-mini",
                 "gpt-4o-mini-2024-07-18",
                 "gpt-4-turbo",
@@ -798,23 +742,20 @@ class AsyncCompletionsResource(AsyncAPIResource):
         parallel_tool_calls: bool | Omit = omit,
         prediction: Optional[completion_create_params.Prediction] | Omit = omit,
         presence_penalty: Optional[float] | Omit = omit,
-        prompt_cache_key: str | Omit = omit,
-        reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]] | Omit = omit,
+        reasoning_effort: Optional[Literal["low", "medium", "high"]] | Omit = omit,
         response_format: completion_create_params.ResponseFormat | Omit = omit,
-        safety_identifier: str | Omit = omit,
         seed: Optional[int] | Omit = omit,
-        service_tier: Optional[Literal["auto", "default", "flex", "scale", "priority"]] | Omit = omit,
+        service_tier: Optional[Literal["auto", "default", "flex"]] | Omit = omit,
         stop: Union[Optional[str], SequenceNotStr[str], None] | Omit = omit,
         store: Optional[bool] | Omit = omit,
         stream: Optional[bool] | Omit = omit,
         stream_options: Optional[completion_create_params.StreamOptions] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
         tool_choice: completion_create_params.ToolChoice | Omit = omit,
-        tools: Iterable[completion_create_params.Tool] | Omit = omit,
+        tools: Iterable[ChatCompletionToolParam] | Omit = omit,
         top_logprobs: Optional[int] | Omit = omit,
         top_p: Optional[float] | Omit = omit,
         user: str | Omit = omit,
-        verbosity: Optional[Literal["low", "medium", "high"]] | Omit = omit,
         web_search_options: completion_create_params.WebSearchOptions | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -825,40 +766,35 @@ class AsyncCompletionsResource(AsyncAPIResource):
     ) -> CompletionCreateResponse:
         """
         **Starting a new project?** We recommend trying
-        [Responses](https://platform.excai.com/docs/api-reference/responses) to take
-        advantage of the latest EXCai platform features. Compare
-        [Chat Completions with Responses](https://platform.excai.com/docs/guides/responses-vs-chat-completions?api-mode=responses).
+        [Responses](/docs/api-reference/responses) to take advantage of the latest
+        OpenAI platform features. Compare
+        [Chat Completions with Responses](/docs/guides/responses-vs-chat-completions?api-mode=responses).
 
         ---
 
         Creates a model response for the given chat conversation. Learn more in the
-        [text generation](https://platform.excai.com/docs/guides/text-generation),
-        [vision](https://platform.excai.com/docs/guides/vision), and
-        [audio](https://platform.excai.com/docs/guides/audio) guides.
+        [text generation](/docs/guides/text-generation), [vision](/docs/guides/vision),
+        and [audio](/docs/guides/audio) guides.
 
         Parameter support can differ depending on the model used to generate the
         response, particularly for newer reasoning models. Parameters that are only
         supported for reasoning models are noted below. For the current state of
         unsupported parameters in reasoning models,
-        [refer to the reasoning guide](https://platform.excai.com/docs/guides/reasoning).
+        [refer to the reasoning guide](/docs/guides/reasoning).
 
         Args:
           messages: A list of messages comprising the conversation so far. Depending on the
-              [model](https://platform.excai.com/docs/models) you use, different message types
-              (modalities) are supported, like
-              [text](https://platform.excai.com/docs/guides/text-generation),
-              [images](https://platform.excai.com/docs/guides/vision), and
-              [audio](https://platform.excai.com/docs/guides/audio).
+              [model](/docs/models) you use, different message types (modalities) are
+              supported, like [text](/docs/guides/text-generation),
+              [images](/docs/guides/vision), and [audio](/docs/guides/audio).
 
-          model: Model ID used to generate the response, like `gpt-4o` or `o3`. EXCai offers a
+          model: Model ID used to generate the response, like `gpt-4o` or `o3`. OpenAI offers a
               wide range of models with different capabilities, performance characteristics,
-              and price points. Refer to the
-              [model guide](https://platform.excai.com/docs/models) to browse and compare
+              and price points. Refer to the [model guide](/docs/models) to browse and compare
               available models.
 
           audio: Parameters for audio output. Required when audio output is requested with
-              `modalities: ["audio"]`.
-              [Learn more](https://platform.excai.com/docs/guides/audio).
+              `modalities: ["audio"]`. [Learn more](/docs/guides/audio).
 
           frequency_penalty: Number between -2.0 and 2.0. Positive values penalize new tokens based on their
               existing frequency in the text so far, decreasing the model's likelihood to
@@ -897,16 +833,14 @@ class AsyncCompletionsResource(AsyncAPIResource):
               `message`.
 
           max_completion_tokens: An upper bound for the number of tokens that can be generated for a completion,
-              including visible output tokens and
-              [reasoning tokens](https://platform.excai.com/docs/guides/reasoning).
+              including visible output tokens and [reasoning tokens](/docs/guides/reasoning).
 
           max_tokens: The maximum number of [tokens](/tokenizer) that can be generated in the chat
               completion. This value can be used to control
-              [costs](https://excai.com/api/pricing/) for text generated via API.
+              [costs](https://openai.com/api/pricing/) for text generated via API.
 
               This value is now deprecated in favor of `max_completion_tokens`, and is not
-              compatible with
-              [o-series models](https://platform.excai.com/docs/guides/reasoning).
+              compatible with [o-series models](/docs/guides/reasoning).
 
           metadata: Set of 16 key-value pairs that can be attached to an object. This can be useful
               for storing additional information about the object in a structured format, and
@@ -921,8 +855,8 @@ class AsyncCompletionsResource(AsyncAPIResource):
               `["text"]`
 
               The `gpt-4o-audio-preview` model can also be used to
-              [generate audio](https://platform.excai.com/docs/guides/audio). To request that
-              this model generate both text and audio responses, you can use:
+              [generate audio](/docs/guides/audio). To request that this model generate both
+              text and audio responses, you can use:
 
               `["text", "audio"]`
 
@@ -931,7 +865,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
               choices. Keep `n` as `1` to minimize costs.
 
           parallel_tool_calls: Whether to enable
-              [parallel function calling](https://platform.excai.com/docs/guides/function-calling#configuring-parallel-function-calling)
+              [parallel function calling](/docs/guides/function-calling#configuring-parallel-function-calling)
               during tool use.
 
           prediction: Static predicted output content, such as the content of a text file that is
@@ -941,35 +875,22 @@ class AsyncCompletionsResource(AsyncAPIResource):
               whether they appear in the text so far, increasing the model's likelihood to
               talk about new topics.
 
-          prompt_cache_key: Used by EXCai to cache responses for similar requests to optimize your cache hit
-              rates. Replaces the `user` field.
-              [Learn more](https://platform.excai.com/docs/guides/prompt-caching).
+          reasoning_effort: **o-series models only**
 
-          reasoning_effort: Constrains effort on reasoning for
-              [reasoning models](https://platform.excai.com/docs/guides/reasoning). Currently
-              supported values are `minimal`, `low`, `medium`, and `high`. Reducing reasoning
-              effort can result in faster responses and fewer tokens used on reasoning in a
-              response.
-
-              Note: The `gpt-5-pro` model defaults to (and only supports) `high` reasoning
-              effort.
+              Constrains effort on reasoning for
+              [reasoning models](https://platform.openai.com/docs/guides/reasoning). Currently
+              supported values are `low`, `medium`, and `high`. Reducing reasoning effort can
+              result in faster responses and fewer tokens used on reasoning in a response.
 
           response_format: An object specifying the format that the model must output.
 
               Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured
               Outputs which ensures the model will match your supplied JSON schema. Learn more
-              in the
-              [Structured Outputs guide](https://platform.excai.com/docs/guides/structured-outputs).
+              in the [Structured Outputs guide](/docs/guides/structured-outputs).
 
               Setting to `{ "type": "json_object" }` enables the older JSON mode, which
               ensures the message the model generates is valid JSON. Using `json_schema` is
               preferred for models that support it.
-
-          safety_identifier: A stable identifier used to help detect users of your application that may be
-              violating EXCai's usage policies. The IDs should be a string that uniquely
-              identifies each user. We recommend hashing their username or email address, in
-              order to avoid sending us any identifying information.
-              [Learn more](https://platform.excai.com/docs/guides/safety-best-practices#safety-identifiers).
 
           seed: This feature is in Beta. If specified, our system will make a best effort to
               sample deterministically, such that repeated requests with the same `seed` and
@@ -977,22 +898,22 @@ class AsyncCompletionsResource(AsyncAPIResource):
               should refer to the `system_fingerprint` response parameter to monitor changes
               in the backend.
 
-          service_tier: Specifies the processing type used for serving the request.
+          service_tier: Specifies the latency tier to use for processing the request. This parameter is
+              relevant for customers subscribed to the scale tier service:
 
-              - If set to 'auto', then the request will be processed with the service tier
-                configured in the Project settings. Unless otherwise configured, the Project
-                will use 'default'.
-              - If set to 'default', then the request will be processed with the standard
-                pricing and performance for the selected model.
-              - If set to '[flex](https://platform.excai.com/docs/guides/flex-processing)' or
-                '[priority](https://excai.com/api-priority-processing/)', then the request
-                will be processed with the corresponding service tier.
+              - If set to 'auto', and the Project is Scale tier enabled, the system will
+                utilize scale tier credits until they are exhausted.
+              - If set to 'auto', and the Project is not Scale tier enabled, the request will
+                be processed using the default service tier with a lower uptime SLA and no
+                latency guarentee.
+              - If set to 'default', the request will be processed using the default service
+                tier with a lower uptime SLA and no latency guarentee.
+              - If set to 'flex', the request will be processed with the Flex Processing
+                service tier. [Learn more](/docs/guides/flex-processing).
               - When not set, the default behavior is 'auto'.
 
-              When the `service_tier` parameter is set, the response body will include the
-              `service_tier` value based on the processing mode actually used to serve the
-              request. This response value may be different from the value set in the
-              parameter.
+              When this parameter is set, the response body will include the `service_tier`
+              utilized.
 
           stop: Not supported with latest reasoning models `o3` and `o4-mini`.
 
@@ -1000,19 +921,16 @@ class AsyncCompletionsResource(AsyncAPIResource):
               returned text will not contain the stop sequence.
 
           store: Whether or not to store the output of this chat completion request for use in
-              our [model distillation](https://platform.excai.com/docs/guides/distillation) or
-              [evals](https://platform.excai.com/docs/guides/evals) products.
-
-              Supports text and image inputs. Note: image inputs over 8MB will be dropped.
+              our [model distillation](/docs/guides/distillation) or
+              [evals](/docs/guides/evals) products.
 
           stream: If set to true, the model response data will be streamed to the client as it is
               generated using
               [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#Event_stream_format).
-              See the
-              [Streaming section below](https://platform.excai.com/docs/api-reference/chat/streaming)
-              for more information, along with the
-              [streaming responses](https://platform.excai.com/docs/guides/streaming-responses)
-              guide for more information on how to handle the streaming events.
+              See the [Streaming section below](/docs/api-reference/chat/streaming) for more
+              information, along with the
+              [streaming responses](/docs/guides/streaming-responses) guide for more
+              information on how to handle the streaming events.
 
           stream_options: Options for streaming response. Only set this when you set `stream: true`.
 
@@ -1031,9 +949,9 @@ class AsyncCompletionsResource(AsyncAPIResource):
               `none` is the default when no tools are present. `auto` is the default if tools
               are present.
 
-          tools: A list of tools the model may call. You can provide either
-              [custom tools](https://platform.excai.com/docs/guides/function-calling#custom-tools)
-              or [function tools](https://platform.excai.com/docs/guides/function-calling).
+          tools: A list of tools the model may call. Currently, only functions are supported as a
+              tool. Use this to provide a list of functions the model may generate JSON inputs
+              for. A max of 128 functions are supported.
 
           top_logprobs: An integer between 0 and 20 specifying the number of most likely tokens to
               return at each token position, each with an associated log probability.
@@ -1045,19 +963,11 @@ class AsyncCompletionsResource(AsyncAPIResource):
 
               We generally recommend altering this or `temperature` but not both.
 
-          user: This field is being replaced by `safety_identifier` and `prompt_cache_key`. Use
-              `prompt_cache_key` instead to maintain caching optimizations. A stable
-              identifier for your end-users. Used to boost cache hit rates by better bucketing
-              similar requests and to help EXCai detect and prevent abuse.
-              [Learn more](https://platform.excai.com/docs/guides/safety-best-practices#safety-identifiers).
-
-          verbosity: Constrains the verbosity of the model's response. Lower values will result in
-              more concise responses, while higher values will result in more verbose
-              responses. Currently supported values are `low`, `medium`, and `high`.
+          user: A unique identifier representing your end-user, which can help OpenAI to monitor
+              and detect abuse. [Learn more](/docs/guides/safety-best-practices#end-user-ids).
 
           web_search_options: This tool searches the web for relevant results to use in a response. Learn more
-              about the
-              [web search tool](https://platform.excai.com/docs/guides/tools-web-search?api-mode=chat).
+              about the [web search tool](/docs/guides/tools-web-search?api-mode=chat).
 
           extra_headers: Send extra headers
 
@@ -1087,10 +997,8 @@ class AsyncCompletionsResource(AsyncAPIResource):
                     "parallel_tool_calls": parallel_tool_calls,
                     "prediction": prediction,
                     "presence_penalty": presence_penalty,
-                    "prompt_cache_key": prompt_cache_key,
                     "reasoning_effort": reasoning_effort,
                     "response_format": response_format,
-                    "safety_identifier": safety_identifier,
                     "seed": seed,
                     "service_tier": service_tier,
                     "stop": stop,
@@ -1103,7 +1011,6 @@ class AsyncCompletionsResource(AsyncAPIResource):
                     "top_logprobs": top_logprobs,
                     "top_p": top_p,
                     "user": user,
-                    "verbosity": verbosity,
                     "web_search_options": web_search_options,
                 },
                 completion_create_params.CompletionCreateParams,
@@ -1219,12 +1126,10 @@ class AsyncCompletionsResource(AsyncAPIResource):
 
           limit: Number of Chat Completions to retrieve.
 
-          metadata: Set of 16 key-value pairs that can be attached to an object. This can be useful
-              for storing additional information about the object in a structured format, and
-              querying for objects via API or the dashboard.
+          metadata:
+              A list of metadata keys to filter the Chat Completions by. Example:
 
-              Keys are strings with a maximum length of 64 characters. Values are strings with
-              a maximum length of 512 characters.
+              `metadata[key1]=value1&metadata[key2]=value2`
 
           model: The model used to generate the Chat Completions.
 

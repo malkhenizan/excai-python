@@ -5,14 +5,13 @@ from __future__ import annotations
 from typing import Union, Iterable
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
-from ..shared_params.input_audio import InputAudio
 from ..shared_params.input_file_content import InputFileContent
 from ..shared_params.input_text_content import InputTextContent
 from ..shared_params.input_image_content import InputImageContent
 
 __all__ = ["EasyInputMessageParam", "ContentInputMessageContentList"]
 
-ContentInputMessageContentList: TypeAlias = Union[InputTextContent, InputImageContent, InputFileContent, InputAudio]
+ContentInputMessageContentList: TypeAlias = Union[InputTextContent, InputImageContent, InputFileContent]
 
 
 class EasyInputMessageParam(TypedDict, total=False):

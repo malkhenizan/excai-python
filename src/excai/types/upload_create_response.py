@@ -4,7 +4,7 @@ from typing import Optional
 from typing_extensions import Literal
 
 from .._models import BaseModel
-from .shared.ex_cai_file import ExCaiFile
+from .shared.openai_file import OpenAIFile
 
 __all__ = ["UploadCreateResponse"]
 
@@ -25,18 +25,18 @@ class UploadCreateResponse(BaseModel):
     filename: str
     """The name of the file to be uploaded."""
 
-    object: Literal["upload"]
-    """The object type, which is always "upload"."""
-
     purpose: str
     """The intended purpose of the file.
 
-    [Please refer here](https://platform.excai.com/docs/api-reference/files/object#files/object-purpose)
-    for acceptable values.
+    [Please refer here](/docs/api-reference/files/object#files/object-purpose) for
+    acceptable values.
     """
 
     status: Literal["pending", "completed", "cancelled", "expired"]
     """The status of the Upload."""
 
-    file: Optional[ExCaiFile] = None
-    """The `File` object represents a document that has been uploaded to EXCai."""
+    file: Optional[OpenAIFile] = None
+    """The `File` object represents a document that has been uploaded to OpenAI."""
+
+    object: Optional[Literal["upload"]] = None
+    """The object type, which is always "upload"."""

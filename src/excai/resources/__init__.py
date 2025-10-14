@@ -48,14 +48,6 @@ from .models import (
     ModelsResourceWithStreamingResponse,
     AsyncModelsResourceWithStreamingResponse,
 )
-from .videos import (
-    VideosResource,
-    AsyncVideosResource,
-    VideosResourceWithRawResponse,
-    AsyncVideosResourceWithRawResponse,
-    VideosResourceWithStreamingResponse,
-    AsyncVideosResourceWithStreamingResponse,
-)
 from .batches import (
     BatchesResource,
     AsyncBatchesResource,
@@ -63,14 +55,6 @@ from .batches import (
     AsyncBatchesResourceWithRawResponse,
     BatchesResourceWithStreamingResponse,
     AsyncBatchesResourceWithStreamingResponse,
-)
-from .chatkit import (
-    ChatkitResource,
-    AsyncChatkitResource,
-    ChatkitResourceWithRawResponse,
-    AsyncChatkitResourceWithRawResponse,
-    ChatkitResourceWithStreamingResponse,
-    AsyncChatkitResourceWithStreamingResponse,
 )
 from .threads import (
     ThreadsResource,
@@ -112,14 +96,6 @@ from .assistants import (
     AssistantsResourceWithStreamingResponse,
     AsyncAssistantsResourceWithStreamingResponse,
 )
-from .containers import (
-    ContainersResource,
-    AsyncContainersResource,
-    ContainersResourceWithRawResponse,
-    AsyncContainersResourceWithRawResponse,
-    ContainersResourceWithStreamingResponse,
-    AsyncContainersResourceWithStreamingResponse,
-)
 from .embeddings import (
     EmbeddingsResource,
     AsyncEmbeddingsResource,
@@ -159,14 +135,6 @@ from .organization import (
     AsyncOrganizationResourceWithRawResponse,
     OrganizationResourceWithStreamingResponse,
     AsyncOrganizationResourceWithStreamingResponse,
-)
-from .conversations import (
-    ConversationsResource,
-    AsyncConversationsResource,
-    ConversationsResourceWithRawResponse,
-    AsyncConversationsResourceWithRawResponse,
-    ConversationsResourceWithStreamingResponse,
-    AsyncConversationsResourceWithStreamingResponse,
 )
 from .vector_stores import (
     VectorStoresResource,
@@ -208,18 +176,6 @@ __all__ = [
     "AsyncCompletionsResourceWithRawResponse",
     "CompletionsResourceWithStreamingResponse",
     "AsyncCompletionsResourceWithStreamingResponse",
-    "ContainersResource",
-    "AsyncContainersResource",
-    "ContainersResourceWithRawResponse",
-    "AsyncContainersResourceWithRawResponse",
-    "ContainersResourceWithStreamingResponse",
-    "AsyncContainersResourceWithStreamingResponse",
-    "ConversationsResource",
-    "AsyncConversationsResource",
-    "ConversationsResourceWithRawResponse",
-    "AsyncConversationsResourceWithRawResponse",
-    "ConversationsResourceWithStreamingResponse",
-    "AsyncConversationsResourceWithStreamingResponse",
     "EmbeddingsResource",
     "AsyncEmbeddingsResource",
     "EmbeddingsResourceWithRawResponse",
@@ -298,16 +254,4 @@ __all__ = [
     "AsyncVectorStoresResourceWithRawResponse",
     "VectorStoresResourceWithStreamingResponse",
     "AsyncVectorStoresResourceWithStreamingResponse",
-    "VideosResource",
-    "AsyncVideosResource",
-    "VideosResourceWithRawResponse",
-    "AsyncVideosResourceWithRawResponse",
-    "VideosResourceWithStreamingResponse",
-    "AsyncVideosResourceWithStreamingResponse",
-    "ChatkitResource",
-    "AsyncChatkitResource",
-    "ChatkitResourceWithRawResponse",
-    "AsyncChatkitResourceWithRawResponse",
-    "ChatkitResourceWithStreamingResponse",
-    "AsyncChatkitResourceWithStreamingResponse",
 ]

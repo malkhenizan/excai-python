@@ -47,7 +47,7 @@ class ModerationsResource(SyncAPIResource):
     def create(
         self,
         *,
-        input: Union[str, SequenceNotStr[str], Iterable[moderation_create_params.InputModerationMultiModalArray]],
+        input: Union[str, SequenceNotStr[str], Iterable[moderation_create_params.InputUnionMember2]],
         model: Union[
             str,
             Literal[
@@ -68,16 +68,15 @@ class ModerationsResource(SyncAPIResource):
         """Classifies if text and/or image inputs are potentially harmful.
 
         Learn more in
-        the [moderation guide](https://platform.excai.com/docs/guides/moderation).
+        the [moderation guide](/docs/guides/moderation).
 
         Args:
           input: Input (or inputs) to classify. Can be a single string, an array of strings, or
               an array of multi-modal input objects similar to other models.
 
           model: The content moderation model you would like to use. Learn more in
-              [the moderation guide](https://platform.excai.com/docs/guides/moderation), and
-              learn about available models
-              [here](https://platform.excai.com/docs/models#moderation).
+              [the moderation guide](/docs/guides/moderation), and learn about available
+              models [here](/docs/models#moderation).
 
           extra_headers: Send extra headers
 
@@ -126,7 +125,7 @@ class AsyncModerationsResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        input: Union[str, SequenceNotStr[str], Iterable[moderation_create_params.InputModerationMultiModalArray]],
+        input: Union[str, SequenceNotStr[str], Iterable[moderation_create_params.InputUnionMember2]],
         model: Union[
             str,
             Literal[
@@ -147,16 +146,15 @@ class AsyncModerationsResource(AsyncAPIResource):
         """Classifies if text and/or image inputs are potentially harmful.
 
         Learn more in
-        the [moderation guide](https://platform.excai.com/docs/guides/moderation).
+        the [moderation guide](/docs/guides/moderation).
 
         Args:
           input: Input (or inputs) to classify. Can be a single string, an array of strings, or
               an array of multi-modal input objects similar to other models.
 
           model: The content moderation model you would like to use. Learn more in
-              [the moderation guide](https://platform.excai.com/docs/guides/moderation), and
-              learn about available models
-              [here](https://platform.excai.com/docs/models#moderation).
+              [the moderation guide](/docs/guides/moderation), and learn about available
+              models [here](/docs/models#moderation).
 
           extra_headers: Send extra headers
 

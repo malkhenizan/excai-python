@@ -1,22 +1,16 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List, Union, Optional
-from typing_extensions import Literal, Annotated, TypeAlias
+from typing_extensions import TypeAlias
 
-from .._utils import PropertyInfo
 from .._models import BaseModel
 
 __all__ = [
     "AudioCreateTranscriptionResponse",
     "CreateTranscriptionResponseJson",
     "CreateTranscriptionResponseJsonLogprob",
-    "CreateTranscriptionResponseJsonUsage",
-    "CreateTranscriptionResponseJsonUsageTokens",
-    "CreateTranscriptionResponseJsonUsageTokensInputTokenDetails",
-    "CreateTranscriptionResponseJsonUsageDuration",
     "CreateTranscriptionResponseVerboseJson",
     "CreateTranscriptionResponseVerboseJsonSegment",
-    "CreateTranscriptionResponseVerboseJsonUsage",
     "CreateTranscriptionResponseVerboseJsonWord",
 ]
 
@@ -32,45 +26,6 @@ class CreateTranscriptionResponseJsonLogprob(BaseModel):
     """The log probability of the token."""
 
 
-class CreateTranscriptionResponseJsonUsageTokensInputTokenDetails(BaseModel):
-    audio_tokens: Optional[int] = None
-    """Number of audio tokens billed for this request."""
-
-    text_tokens: Optional[int] = None
-    """Number of text tokens billed for this request."""
-
-
-class CreateTranscriptionResponseJsonUsageTokens(BaseModel):
-    input_tokens: int
-    """Number of input tokens billed for this request."""
-
-    output_tokens: int
-    """Number of output tokens generated."""
-
-    total_tokens: int
-    """Total number of tokens used (input + output)."""
-
-    type: Literal["tokens"]
-    """The type of the usage object. Always `tokens` for this variant."""
-
-    input_token_details: Optional[CreateTranscriptionResponseJsonUsageTokensInputTokenDetails] = None
-    """Details about the input tokens billed for this request."""
-
-
-class CreateTranscriptionResponseJsonUsageDuration(BaseModel):
-    seconds: float
-    """Duration of the input audio in seconds."""
-
-    type: Literal["duration"]
-    """The type of the usage object. Always `duration` for this variant."""
-
-
-CreateTranscriptionResponseJsonUsage: TypeAlias = Annotated[
-    Union[CreateTranscriptionResponseJsonUsageTokens, CreateTranscriptionResponseJsonUsageDuration],
-    PropertyInfo(discriminator="type"),
-]
-
-
 class CreateTranscriptionResponseJson(BaseModel):
     text: str
     """The transcribed text."""
@@ -81,9 +36,6 @@ class CreateTranscriptionResponseJson(BaseModel):
     Only returned with the models `gpt-4o-transcribe` and `gpt-4o-mini-transcribe`
     if `logprobs` is added to the `include` array.
     """
-
-    usage: Optional[CreateTranscriptionResponseJsonUsage] = None
-    """Token usage statistics for the request."""
 
 
 class CreateTranscriptionResponseVerboseJsonSegment(BaseModel):
@@ -128,14 +80,6 @@ class CreateTranscriptionResponseVerboseJsonSegment(BaseModel):
     """Array of token IDs for the text content."""
 
 
-class CreateTranscriptionResponseVerboseJsonUsage(BaseModel):
-    seconds: float
-    """Duration of the input audio in seconds."""
-
-    type: Literal["duration"]
-    """The type of the usage object. Always `duration` for this variant."""
-
-
 class CreateTranscriptionResponseVerboseJsonWord(BaseModel):
     end: float
     """End time of the word in seconds."""
@@ -159,9 +103,6 @@ class CreateTranscriptionResponseVerboseJson(BaseModel):
 
     segments: Optional[List[CreateTranscriptionResponseVerboseJsonSegment]] = None
     """Segments of the transcribed text and their corresponding details."""
-
-    usage: Optional[CreateTranscriptionResponseVerboseJsonUsage] = None
-    """Usage statistics for models billed by audio input duration."""
 
     words: Optional[List[CreateTranscriptionResponseVerboseJsonWord]] = None
     """Extracted words and their corresponding timestamps."""

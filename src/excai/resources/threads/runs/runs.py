@@ -84,12 +84,6 @@ class RunsResource(SyncAPIResource):
         model: Union[
             str,
             Literal[
-                "gpt-5",
-                "gpt-5-mini",
-                "gpt-5-nano",
-                "gpt-5-2025-08-07",
-                "gpt-5-mini-2025-08-07",
-                "gpt-5-nano-2025-08-07",
                 "gpt-4.1",
                 "gpt-4.1-mini",
                 "gpt-4.1-nano",
@@ -131,7 +125,7 @@ class RunsResource(SyncAPIResource):
         ]
         | Omit = omit,
         parallel_tool_calls: bool | Omit = omit,
-        reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]] | Omit = omit,
+        reasoning_effort: Optional[Literal["low", "medium", "high"]] | Omit = omit,
         response_format: Optional[run_create_params.ResponseFormat] | Omit = omit,
         stream: Optional[bool] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
@@ -150,16 +144,15 @@ class RunsResource(SyncAPIResource):
         Create a run.
 
         Args:
-          assistant_id: The ID of the
-              [assistant](https://platform.excai.com/docs/api-reference/assistants) to use to
-              execute this run.
+          assistant_id: The ID of the [assistant](/docs/api-reference/assistants) to use to execute this
+              run.
 
           include: A list of additional fields to include in the response. Currently the only
               supported value is `step_details.tool_calls[*].file_search.results[*].content`
               to fetch the file search result content.
 
               See the
-              [file search tool documentation](https://platform.excai.com/docs/assistants/tools/file-search#customizing-file-search-settings)
+              [file search tool documentation](/docs/assistants/tools/file-search#customizing-file-search-settings)
               for more information.
 
           additional_instructions: Appends additional instructions at the end of the instructions for the run. This
@@ -168,9 +161,8 @@ class RunsResource(SyncAPIResource):
 
           additional_messages: Adds additional messages to the thread before creating the run.
 
-          instructions: Overrides the
-              [instructions](https://platform.excai.com/docs/api-reference/assistants/createAssistant)
-              of the assistant. This is useful for modifying the behavior on a per-run basis.
+          instructions: Overrides the [instructions](/docs/api-reference/assistants/createAssistant) of
+              the assistant. This is useful for modifying the behavior on a per-run basis.
 
           max_completion_tokens: The maximum number of completion tokens that may be used over the course of the
               run. The run will make a best effort to use only the number of completion tokens
@@ -191,33 +183,29 @@ class RunsResource(SyncAPIResource):
               Keys are strings with a maximum length of 64 characters. Values are strings with
               a maximum length of 512 characters.
 
-          model: The ID of the [Model](https://platform.excai.com/docs/api-reference/models) to
-              be used to execute this run. If a value is provided here, it will override the
-              model associated with the assistant. If not, the model associated with the
-              assistant will be used.
+          model: The ID of the [Model](/docs/api-reference/models) to be used to execute this
+              run. If a value is provided here, it will override the model associated with the
+              assistant. If not, the model associated with the assistant will be used.
 
           parallel_tool_calls: Whether to enable
-              [parallel function calling](https://platform.excai.com/docs/guides/function-calling#configuring-parallel-function-calling)
+              [parallel function calling](/docs/guides/function-calling#configuring-parallel-function-calling)
               during tool use.
 
-          reasoning_effort: Constrains effort on reasoning for
-              [reasoning models](https://platform.excai.com/docs/guides/reasoning). Currently
-              supported values are `minimal`, `low`, `medium`, and `high`. Reducing reasoning
-              effort can result in faster responses and fewer tokens used on reasoning in a
-              response.
+          reasoning_effort: **o-series models only**
 
-              Note: The `gpt-5-pro` model defaults to (and only supports) `high` reasoning
-              effort.
+              Constrains effort on reasoning for
+              [reasoning models](https://platform.openai.com/docs/guides/reasoning). Currently
+              supported values are `low`, `medium`, and `high`. Reducing reasoning effort can
+              result in faster responses and fewer tokens used on reasoning in a response.
 
           response_format: Specifies the format that the model must output. Compatible with
-              [GPT-4o](https://platform.excai.com/docs/models#gpt-4o),
-              [GPT-4 Turbo](https://platform.excai.com/docs/models#gpt-4-turbo-and-gpt-4), and
-              all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
+              [GPT-4o](/docs/models#gpt-4o),
+              [GPT-4 Turbo](/docs/models#gpt-4-turbo-and-gpt-4), and all GPT-3.5 Turbo models
+              since `gpt-3.5-turbo-1106`.
 
               Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured
               Outputs which ensures the model will match your supplied JSON schema. Learn more
-              in the
-              [Structured Outputs guide](https://platform.excai.com/docs/guides/structured-outputs).
+              in the [Structured Outputs guide](/docs/guides/structured-outputs).
 
               Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the
               message the model generates is valid JSON.
@@ -256,7 +244,7 @@ class RunsResource(SyncAPIResource):
               We generally recommend altering this or temperature but not both.
 
           truncation_strategy: Controls for how a thread will be truncated prior to the run. Use this to
-              control the initial context window of the run.
+              control the intial context window of the run.
 
           extra_headers: Send extra headers
 
@@ -495,12 +483,6 @@ class RunsResource(SyncAPIResource):
         model: Union[
             str,
             Literal[
-                "gpt-5",
-                "gpt-5-mini",
-                "gpt-5-nano",
-                "gpt-5-2025-08-07",
-                "gpt-5-mini-2025-08-07",
-                "gpt-5-nano-2025-08-07",
                 "gpt-4.1",
                 "gpt-4.1-mini",
                 "gpt-4.1-nano",
@@ -558,9 +540,8 @@ class RunsResource(SyncAPIResource):
         Create a thread and run it in one request.
 
         Args:
-          assistant_id: The ID of the
-              [assistant](https://platform.excai.com/docs/api-reference/assistants) to use to
-              execute this run.
+          assistant_id: The ID of the [assistant](/docs/api-reference/assistants) to use to execute this
+              run.
 
           instructions: Override the default system message of the assistant. This is useful for
               modifying the behavior on a per-run basis.
@@ -584,24 +565,22 @@ class RunsResource(SyncAPIResource):
               Keys are strings with a maximum length of 64 characters. Values are strings with
               a maximum length of 512 characters.
 
-          model: The ID of the [Model](https://platform.excai.com/docs/api-reference/models) to
-              be used to execute this run. If a value is provided here, it will override the
-              model associated with the assistant. If not, the model associated with the
-              assistant will be used.
+          model: The ID of the [Model](/docs/api-reference/models) to be used to execute this
+              run. If a value is provided here, it will override the model associated with the
+              assistant. If not, the model associated with the assistant will be used.
 
           parallel_tool_calls: Whether to enable
-              [parallel function calling](https://platform.excai.com/docs/guides/function-calling#configuring-parallel-function-calling)
+              [parallel function calling](/docs/guides/function-calling#configuring-parallel-function-calling)
               during tool use.
 
           response_format: Specifies the format that the model must output. Compatible with
-              [GPT-4o](https://platform.excai.com/docs/models#gpt-4o),
-              [GPT-4 Turbo](https://platform.excai.com/docs/models#gpt-4-turbo-and-gpt-4), and
-              all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
+              [GPT-4o](/docs/models#gpt-4o),
+              [GPT-4 Turbo](/docs/models#gpt-4-turbo-and-gpt-4), and all GPT-3.5 Turbo models
+              since `gpt-3.5-turbo-1106`.
 
               Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured
               Outputs which ensures the model will match your supplied JSON schema. Learn more
-              in the
-              [Structured Outputs guide](https://platform.excai.com/docs/guides/structured-outputs).
+              in the [Structured Outputs guide](/docs/guides/structured-outputs).
 
               Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the
               message the model generates is valid JSON.
@@ -648,7 +627,7 @@ class RunsResource(SyncAPIResource):
               We generally recommend altering this or temperature but not both.
 
           truncation_strategy: Controls for how a thread will be truncated prior to the run. Use this to
-              control the initial context window of the run.
+              control the intial context window of the run.
 
           extra_headers: Send extra headers
 
@@ -781,12 +760,6 @@ class AsyncRunsResource(AsyncAPIResource):
         model: Union[
             str,
             Literal[
-                "gpt-5",
-                "gpt-5-mini",
-                "gpt-5-nano",
-                "gpt-5-2025-08-07",
-                "gpt-5-mini-2025-08-07",
-                "gpt-5-nano-2025-08-07",
                 "gpt-4.1",
                 "gpt-4.1-mini",
                 "gpt-4.1-nano",
@@ -828,7 +801,7 @@ class AsyncRunsResource(AsyncAPIResource):
         ]
         | Omit = omit,
         parallel_tool_calls: bool | Omit = omit,
-        reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]] | Omit = omit,
+        reasoning_effort: Optional[Literal["low", "medium", "high"]] | Omit = omit,
         response_format: Optional[run_create_params.ResponseFormat] | Omit = omit,
         stream: Optional[bool] | Omit = omit,
         temperature: Optional[float] | Omit = omit,
@@ -847,16 +820,15 @@ class AsyncRunsResource(AsyncAPIResource):
         Create a run.
 
         Args:
-          assistant_id: The ID of the
-              [assistant](https://platform.excai.com/docs/api-reference/assistants) to use to
-              execute this run.
+          assistant_id: The ID of the [assistant](/docs/api-reference/assistants) to use to execute this
+              run.
 
           include: A list of additional fields to include in the response. Currently the only
               supported value is `step_details.tool_calls[*].file_search.results[*].content`
               to fetch the file search result content.
 
               See the
-              [file search tool documentation](https://platform.excai.com/docs/assistants/tools/file-search#customizing-file-search-settings)
+              [file search tool documentation](/docs/assistants/tools/file-search#customizing-file-search-settings)
               for more information.
 
           additional_instructions: Appends additional instructions at the end of the instructions for the run. This
@@ -865,9 +837,8 @@ class AsyncRunsResource(AsyncAPIResource):
 
           additional_messages: Adds additional messages to the thread before creating the run.
 
-          instructions: Overrides the
-              [instructions](https://platform.excai.com/docs/api-reference/assistants/createAssistant)
-              of the assistant. This is useful for modifying the behavior on a per-run basis.
+          instructions: Overrides the [instructions](/docs/api-reference/assistants/createAssistant) of
+              the assistant. This is useful for modifying the behavior on a per-run basis.
 
           max_completion_tokens: The maximum number of completion tokens that may be used over the course of the
               run. The run will make a best effort to use only the number of completion tokens
@@ -888,33 +859,29 @@ class AsyncRunsResource(AsyncAPIResource):
               Keys are strings with a maximum length of 64 characters. Values are strings with
               a maximum length of 512 characters.
 
-          model: The ID of the [Model](https://platform.excai.com/docs/api-reference/models) to
-              be used to execute this run. If a value is provided here, it will override the
-              model associated with the assistant. If not, the model associated with the
-              assistant will be used.
+          model: The ID of the [Model](/docs/api-reference/models) to be used to execute this
+              run. If a value is provided here, it will override the model associated with the
+              assistant. If not, the model associated with the assistant will be used.
 
           parallel_tool_calls: Whether to enable
-              [parallel function calling](https://platform.excai.com/docs/guides/function-calling#configuring-parallel-function-calling)
+              [parallel function calling](/docs/guides/function-calling#configuring-parallel-function-calling)
               during tool use.
 
-          reasoning_effort: Constrains effort on reasoning for
-              [reasoning models](https://platform.excai.com/docs/guides/reasoning). Currently
-              supported values are `minimal`, `low`, `medium`, and `high`. Reducing reasoning
-              effort can result in faster responses and fewer tokens used on reasoning in a
-              response.
+          reasoning_effort: **o-series models only**
 
-              Note: The `gpt-5-pro` model defaults to (and only supports) `high` reasoning
-              effort.
+              Constrains effort on reasoning for
+              [reasoning models](https://platform.openai.com/docs/guides/reasoning). Currently
+              supported values are `low`, `medium`, and `high`. Reducing reasoning effort can
+              result in faster responses and fewer tokens used on reasoning in a response.
 
           response_format: Specifies the format that the model must output. Compatible with
-              [GPT-4o](https://platform.excai.com/docs/models#gpt-4o),
-              [GPT-4 Turbo](https://platform.excai.com/docs/models#gpt-4-turbo-and-gpt-4), and
-              all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
+              [GPT-4o](/docs/models#gpt-4o),
+              [GPT-4 Turbo](/docs/models#gpt-4-turbo-and-gpt-4), and all GPT-3.5 Turbo models
+              since `gpt-3.5-turbo-1106`.
 
               Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured
               Outputs which ensures the model will match your supplied JSON schema. Learn more
-              in the
-              [Structured Outputs guide](https://platform.excai.com/docs/guides/structured-outputs).
+              in the [Structured Outputs guide](/docs/guides/structured-outputs).
 
               Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the
               message the model generates is valid JSON.
@@ -953,7 +920,7 @@ class AsyncRunsResource(AsyncAPIResource):
               We generally recommend altering this or temperature but not both.
 
           truncation_strategy: Controls for how a thread will be truncated prior to the run. Use this to
-              control the initial context window of the run.
+              control the intial context window of the run.
 
           extra_headers: Send extra headers
 
@@ -1192,12 +1159,6 @@ class AsyncRunsResource(AsyncAPIResource):
         model: Union[
             str,
             Literal[
-                "gpt-5",
-                "gpt-5-mini",
-                "gpt-5-nano",
-                "gpt-5-2025-08-07",
-                "gpt-5-mini-2025-08-07",
-                "gpt-5-nano-2025-08-07",
                 "gpt-4.1",
                 "gpt-4.1-mini",
                 "gpt-4.1-nano",
@@ -1255,9 +1216,8 @@ class AsyncRunsResource(AsyncAPIResource):
         Create a thread and run it in one request.
 
         Args:
-          assistant_id: The ID of the
-              [assistant](https://platform.excai.com/docs/api-reference/assistants) to use to
-              execute this run.
+          assistant_id: The ID of the [assistant](/docs/api-reference/assistants) to use to execute this
+              run.
 
           instructions: Override the default system message of the assistant. This is useful for
               modifying the behavior on a per-run basis.
@@ -1281,24 +1241,22 @@ class AsyncRunsResource(AsyncAPIResource):
               Keys are strings with a maximum length of 64 characters. Values are strings with
               a maximum length of 512 characters.
 
-          model: The ID of the [Model](https://platform.excai.com/docs/api-reference/models) to
-              be used to execute this run. If a value is provided here, it will override the
-              model associated with the assistant. If not, the model associated with the
-              assistant will be used.
+          model: The ID of the [Model](/docs/api-reference/models) to be used to execute this
+              run. If a value is provided here, it will override the model associated with the
+              assistant. If not, the model associated with the assistant will be used.
 
           parallel_tool_calls: Whether to enable
-              [parallel function calling](https://platform.excai.com/docs/guides/function-calling#configuring-parallel-function-calling)
+              [parallel function calling](/docs/guides/function-calling#configuring-parallel-function-calling)
               during tool use.
 
           response_format: Specifies the format that the model must output. Compatible with
-              [GPT-4o](https://platform.excai.com/docs/models#gpt-4o),
-              [GPT-4 Turbo](https://platform.excai.com/docs/models#gpt-4-turbo-and-gpt-4), and
-              all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
+              [GPT-4o](/docs/models#gpt-4o),
+              [GPT-4 Turbo](/docs/models#gpt-4-turbo-and-gpt-4), and all GPT-3.5 Turbo models
+              since `gpt-3.5-turbo-1106`.
 
               Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured
               Outputs which ensures the model will match your supplied JSON schema. Learn more
-              in the
-              [Structured Outputs guide](https://platform.excai.com/docs/guides/structured-outputs).
+              in the [Structured Outputs guide](/docs/guides/structured-outputs).
 
               Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the
               message the model generates is valid JSON.
@@ -1345,7 +1303,7 @@ class AsyncRunsResource(AsyncAPIResource):
               We generally recommend altering this or temperature but not both.
 
           truncation_strategy: Controls for how a thread will be truncated prior to the run. Use this to
-              control the initial context window of the run.
+              control the intial context window of the run.
 
           extra_headers: Send extra headers
 

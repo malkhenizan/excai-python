@@ -11,9 +11,6 @@ class FileCitationBody(TypedDict, total=False):
     file_id: Required[str]
     """The ID of the file."""
 
-    filename: Required[str]
-    """The filename of the file cited."""
-
     index: Required[int]
     """The index of the file in the list of files."""
 

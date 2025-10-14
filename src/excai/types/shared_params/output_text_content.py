@@ -5,15 +5,13 @@ from __future__ import annotations
 from typing import Union, Iterable
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
-from .log_prob import LogProb
 from .file_path import FilePath
 from .url_citation_body import URLCitationBody
 from .file_citation_body import FileCitationBody
-from .container_file_citation_body import ContainerFileCitationBody
 
 __all__ = ["OutputTextContent", "Annotation"]
 
-Annotation: TypeAlias = Union[FileCitationBody, URLCitationBody, ContainerFileCitationBody, FilePath]
+Annotation: TypeAlias = Union[FileCitationBody, URLCitationBody, FilePath]
 
 
 class OutputTextContent(TypedDict, total=False):
@@ -25,5 +23,3 @@ class OutputTextContent(TypedDict, total=False):
 
     type: Required[Literal["output_text"]]
     """The type of the output text. Always `output_text`."""
-
-    logprobs: Iterable[LogProb]

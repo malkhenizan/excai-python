@@ -21,9 +21,9 @@ __all__ = [
     "ToolResourcesFileSearch",
     "ToolResourcesFileSearchVectorStore",
     "ToolResourcesFileSearchVectorStoreChunkingStrategy",
-    "ToolResourcesFileSearchVectorStoreChunkingStrategyAuto",
-    "ToolResourcesFileSearchVectorStoreChunkingStrategyStatic",
-    "ToolResourcesFileSearchVectorStoreChunkingStrategyStaticStatic",
+    "ToolResourcesFileSearchVectorStoreChunkingStrategyAutoChunkingStrategy",
+    "ToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategy",
+    "ToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategyStatic",
     "Tool",
 ]
 
@@ -33,12 +33,6 @@ class AssistantCreateParams(TypedDict, total=False):
         Union[
             str,
             Literal[
-                "gpt-5",
-                "gpt-5-mini",
-                "gpt-5-nano",
-                "gpt-5-2025-08-07",
-                "gpt-5-mini-2025-08-07",
-                "gpt-5-nano-2025-08-07",
                 "gpt-4.1",
                 "gpt-4.1-mini",
                 "gpt-4.1-nano",
@@ -80,11 +74,9 @@ class AssistantCreateParams(TypedDict, total=False):
     ]
     """ID of the model to use.
 
-    You can use the
-    [List models](https://platform.excai.com/docs/api-reference/models/list) API to
-    see all of your available models, or see our
-    [Model overview](https://platform.excai.com/docs/models) for descriptions of
-    them.
+    You can use the [List models](/docs/api-reference/models/list) API to see all of
+    your available models, or see our [Model overview](/docs/models) for
+    descriptions of them.
     """
 
     description: Optional[str]
@@ -109,29 +101,25 @@ class AssistantCreateParams(TypedDict, total=False):
     name: Optional[str]
     """The name of the assistant. The maximum length is 256 characters."""
 
-    reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]]
-    """
-    Constrains effort on reasoning for
-    [reasoning models](https://platform.excai.com/docs/guides/reasoning). Currently
-    supported values are `minimal`, `low`, `medium`, and `high`. Reducing reasoning
-    effort can result in faster responses and fewer tokens used on reasoning in a
-    response.
+    reasoning_effort: Optional[Literal["low", "medium", "high"]]
+    """**o-series models only**
 
-    Note: The `gpt-5-pro` model defaults to (and only supports) `high` reasoning
-    effort.
+    Constrains effort on reasoning for
+    [reasoning models](https://platform.openai.com/docs/guides/reasoning). Currently
+    supported values are `low`, `medium`, and `high`. Reducing reasoning effort can
+    result in faster responses and fewer tokens used on reasoning in a response.
     """
 
     response_format: Optional[ResponseFormat]
     """Specifies the format that the model must output.
 
-    Compatible with [GPT-4o](https://platform.excai.com/docs/models#gpt-4o),
-    [GPT-4 Turbo](https://platform.excai.com/docs/models#gpt-4-turbo-and-gpt-4), and
-    all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
+    Compatible with [GPT-4o](/docs/models#gpt-4o),
+    [GPT-4 Turbo](/docs/models#gpt-4-turbo-and-gpt-4), and all GPT-3.5 Turbo models
+    since `gpt-3.5-turbo-1106`.
 
     Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured
     Outputs which ensures the model will match your supplied JSON schema. Learn more
-    in the
-    [Structured Outputs guide](https://platform.excai.com/docs/guides/structured-outputs).
+    in the [Structured Outputs guide](/docs/guides/structured-outputs).
 
     Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the
     message the model generates is valid JSON.
@@ -185,18 +173,18 @@ ResponseFormat: TypeAlias = Union[
 class ToolResourcesCodeInterpreter(TypedDict, total=False):
     file_ids: SequenceNotStr[str]
     """
-    A list of [file](https://platform.excai.com/docs/api-reference/files) IDs made
-    available to the `code_interpreter` tool. There can be a maximum of 20 files
-    associated with the tool.
+    A list of [file](/docs/api-reference/files) IDs made available to the
+    `code_interpreter` tool. There can be a maximum of 20 files associated with the
+    tool.
     """
 
 
-class ToolResourcesFileSearchVectorStoreChunkingStrategyAuto(TypedDict, total=False):
+class ToolResourcesFileSearchVectorStoreChunkingStrategyAutoChunkingStrategy(TypedDict, total=False):
     type: Required[Literal["auto"]]
     """Always `auto`."""
 
 
-class ToolResourcesFileSearchVectorStoreChunkingStrategyStaticStatic(TypedDict, total=False):
+class ToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategyStatic(TypedDict, total=False):
     chunk_overlap_tokens: Required[int]
     """The number of tokens that overlap between chunks. The default value is `400`.
 
@@ -211,15 +199,16 @@ class ToolResourcesFileSearchVectorStoreChunkingStrategyStaticStatic(TypedDict, 
     """
 
 
-class ToolResourcesFileSearchVectorStoreChunkingStrategyStatic(TypedDict, total=False):
-    static: Required[ToolResourcesFileSearchVectorStoreChunkingStrategyStaticStatic]
+class ToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategy(TypedDict, total=False):
+    static: Required[ToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategyStatic]
 
     type: Required[Literal["static"]]
     """Always `static`."""
 
 
 ToolResourcesFileSearchVectorStoreChunkingStrategy: TypeAlias = Union[
-    ToolResourcesFileSearchVectorStoreChunkingStrategyAuto, ToolResourcesFileSearchVectorStoreChunkingStrategyStatic
+    ToolResourcesFileSearchVectorStoreChunkingStrategyAutoChunkingStrategy,
+    ToolResourcesFileSearchVectorStoreChunkingStrategyStaticChunkingStrategy,
 ]
 
 
@@ -231,9 +220,9 @@ class ToolResourcesFileSearchVectorStore(TypedDict, total=False):
     """
 
     file_ids: SequenceNotStr[str]
-    """
-    A list of [file](https://platform.excai.com/docs/api-reference/files) IDs to add
-    to the vector store. There can be a maximum of 10000 files in a vector store.
+    """A list of [file](/docs/api-reference/files) IDs to add to the vector store.
+
+    There can be a maximum of 10000 files in a vector store.
     """
 
     metadata: Optional[Dict[str, str]]
@@ -250,16 +239,13 @@ class ToolResourcesFileSearchVectorStore(TypedDict, total=False):
 class ToolResourcesFileSearch(TypedDict, total=False):
     vector_store_ids: SequenceNotStr[str]
     """
-    The
-    [vector store](https://platform.excai.com/docs/api-reference/vector-stores/object)
-    attached to this assistant. There can be a maximum of 1 vector store attached to
-    the assistant.
+    The [vector store](/docs/api-reference/vector-stores/object) attached to this
+    assistant. There can be a maximum of 1 vector store attached to the assistant.
     """
 
     vector_stores: Iterable[ToolResourcesFileSearchVectorStore]
     """
-    A helper to create a
-    [vector store](https://platform.excai.com/docs/api-reference/vector-stores/object)
+    A helper to create a [vector store](/docs/api-reference/vector-stores/object)
     with file_ids and attach it to this assistant. There can be a maximum of 1
     vector store attached to the assistant.
     """

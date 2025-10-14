@@ -47,8 +47,6 @@ class FileBatchCancelResponse(BaseModel):
 
     vector_store_id: str
     """
-    The ID of the
-    [vector store](https://platform.excai.com/docs/api-reference/vector-stores/object)
-    that the [File](https://platform.excai.com/docs/api-reference/files) is attached
-    to.
+    The ID of the [vector store](/docs/api-reference/vector-stores/object) that the
+    [File](/docs/api-reference/files) is attached to.
     """

@@ -13,9 +13,9 @@ __all__ = ["FileCreateParams", "ChunkingStrategy"]
 
 class FileCreateParams(TypedDict, total=False):
     file_id: Required[str]
-    """
-    A [File](https://platform.excai.com/docs/api-reference/files) ID that the vector
-    store should use. Useful for tools like `file_search` that can access files.
+    """A [File](/docs/api-reference/files) ID that the vector store should use.
+
+    Useful for tools like `file_search` that can access files.
     """
 
     attributes: Optional[Dict[str, Union[str, float, bool]]]
@@ -30,8 +30,7 @@ class FileCreateParams(TypedDict, total=False):
     chunking_strategy: ChunkingStrategy
     """The chunking strategy used to chunk the file(s).
 
-    If not set, will use the `auto` strategy. Only applicable if `file_ids` is
-    non-empty.
+    If not set, will use the `auto` strategy.
     """
 
 

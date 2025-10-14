@@ -10,7 +10,6 @@ from .easy_input_message import EasyInputMessage as EasyInputMessage
 from .run_cancel_response import RunCancelResponse as RunCancelResponse
 from .run_create_response import RunCreateResponse as RunCreateResponse
 from .run_delete_response import RunDeleteResponse as RunDeleteResponse
-from .chat_completion_tool import ChatCompletionTool as ChatCompletionTool
 from .eval_responses_source import EvalResponsesSource as EvalResponsesSource
 from .run_retrieve_response import RunRetrieveResponse as RunRetrieveResponse
 from .easy_input_message_param import EasyInputMessageParam as EasyInputMessageParam

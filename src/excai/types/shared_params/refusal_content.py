@@ -9,7 +9,7 @@ __all__ = ["RefusalContent"]
 
 class RefusalContent(TypedDict, total=False):
     refusal: Required[str]
-    """The refusal explanation from the model."""
+    """The refusal explanationfrom the model."""
 
     type: Required[Literal["refusal"]]
     """The type of the refusal. Always `refusal`."""

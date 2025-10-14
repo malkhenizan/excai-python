@@ -9,7 +9,6 @@ import pytest
 
 from excai import ExCai, AsyncExCai
 from excai.types import (
-    ResponseCancelResponse,
     ResponseCreateResponse,
     ResponseRetrieveResponse,
     ResponseListInputItemsResponse,
@@ -25,56 +24,51 @@ class TestResponses:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create(self, client: ExCai) -> None:
-        response = client.responses.create()
+        response = client.responses.create(
+            input="string",
+            model="gpt-4o",
+        )
         assert_matches_type(ResponseCreateResponse, response, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: ExCai) -> None:
         response = client.responses.create(
-            background=True,
-            conversation="string",
-            include=["code_interpreter_call.outputs"],
             input="string",
+            model="gpt-4o",
+            include=["file_search_call.results"],
             instructions="instructions",
             max_output_tokens=0,
-            max_tool_calls=0,
             metadata={"foo": "string"},
-            model="gpt-4o",
             parallel_tool_calls=True,
             previous_response_id="previous_response_id",
-            prompt={
-                "id": "id",
-                "variables": {"foo": "string"},
-                "version": "version",
-            },
-            prompt_cache_key="prompt-cache-key-1234",
             reasoning={
-                "effort": "minimal",
+                "effort": "low",
                 "generate_summary": "auto",
                 "summary": "auto",
             },
-            safety_identifier="safety-identifier-1234",
             service_tier="auto",
             store=True,
             stream=True,
-            stream_options={"include_obfuscation": True},
             temperature=1,
-            text={
-                "format": {"type": "text"},
-                "verbosity": "low",
-            },
+            text={"format": {"type": "text"}},
             tool_choice="none",
             tools=[
                 {
-                    "name": "name",
-                    "parameters": {"foo": "bar"},
-                    "strict": True,
-                    "type": "function",
-                    "description": "description",
+                    "type": "file_search",
+                    "vector_store_ids": ["string"],
+                    "filters": {
+                        "key": "key",
+                        "type": "eq",
+                        "value": "string",
+                    },
+                    "max_num_results": 0,
+                    "ranking_options": {
+                        "ranker": "auto",
+                        "score_threshold": 0,
+                    },
                 }
             ],
-            top_logprobs=0,
             top_p=1,
             truncation="auto",
             user="user-1234",
@@ -84,7 +78,10 @@ class TestResponses:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: ExCai) -> None:
-        http_response = client.responses.with_raw_response.create()
+        http_response = client.responses.with_raw_response.create(
+            input="string",
+            model="gpt-4o",
+        )
 
         assert http_response.is_closed is True
         assert http_response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -94,7 +91,10 @@ class TestResponses:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: ExCai) -> None:
-        with client.responses.with_streaming_response.create() as http_response:
+        with client.responses.with_streaming_response.create(
+            input="string",
+            model="gpt-4o",
+        ) as http_response:
             assert not http_response.is_closed
             assert http_response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -116,10 +116,7 @@ class TestResponses:
     def test_method_retrieve_with_all_params(self, client: ExCai) -> None:
         response = client.responses.retrieve(
             response_id="resp_677efb5139a88190b512bc3fef8e535d",
-            include=["code_interpreter_call.outputs"],
-            include_obfuscation=True,
-            starting_after=0,
-            stream=True,
+            include=["file_search_call.results"],
         )
         assert_matches_type(ResponseRetrieveResponse, response, path=["response"])
 
@@ -201,48 +198,6 @@ class TestResponses:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_cancel(self, client: ExCai) -> None:
-        response = client.responses.cancel(
-            "resp_677efb5139a88190b512bc3fef8e535d",
-        )
-        assert_matches_type(ResponseCancelResponse, response, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_cancel(self, client: ExCai) -> None:
-        http_response = client.responses.with_raw_response.cancel(
-            "resp_677efb5139a88190b512bc3fef8e535d",
-        )
-
-        assert http_response.is_closed is True
-        assert http_response.http_request.headers.get("X-Stainless-Lang") == "python"
-        response = http_response.parse()
-        assert_matches_type(ResponseCancelResponse, response, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_cancel(self, client: ExCai) -> None:
-        with client.responses.with_streaming_response.cancel(
-            "resp_677efb5139a88190b512bc3fef8e535d",
-        ) as http_response:
-            assert not http_response.is_closed
-            assert http_response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            response = http_response.parse()
-            assert_matches_type(ResponseCancelResponse, response, path=["response"])
-
-        assert cast(Any, http_response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_cancel(self, client: ExCai) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `response_id` but received ''"):
-            client.responses.with_raw_response.cancel(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     def test_method_list_input_items(self, client: ExCai) -> None:
         response = client.responses.list_input_items(
             response_id="response_id",
@@ -255,7 +210,8 @@ class TestResponses:
         response = client.responses.list_input_items(
             response_id="response_id",
             after="after",
-            include=["code_interpreter_call.outputs"],
+            before="before",
+            include=["file_search_call.results"],
             limit=0,
             order="asc",
         )
@@ -304,56 +260,51 @@ class TestAsyncResponses:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncExCai) -> None:
-        response = await async_client.responses.create()
+        response = await async_client.responses.create(
+            input="string",
+            model="gpt-4o",
+        )
         assert_matches_type(ResponseCreateResponse, response, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncExCai) -> None:
         response = await async_client.responses.create(
-            background=True,
-            conversation="string",
-            include=["code_interpreter_call.outputs"],
             input="string",
+            model="gpt-4o",
+            include=["file_search_call.results"],
             instructions="instructions",
             max_output_tokens=0,
-            max_tool_calls=0,
             metadata={"foo": "string"},
-            model="gpt-4o",
             parallel_tool_calls=True,
             previous_response_id="previous_response_id",
-            prompt={
-                "id": "id",
-                "variables": {"foo": "string"},
-                "version": "version",
-            },
-            prompt_cache_key="prompt-cache-key-1234",
             reasoning={
-                "effort": "minimal",
+                "effort": "low",
                 "generate_summary": "auto",
                 "summary": "auto",
             },
-            safety_identifier="safety-identifier-1234",
             service_tier="auto",
             store=True,
             stream=True,
-            stream_options={"include_obfuscation": True},
             temperature=1,
-            text={
-                "format": {"type": "text"},
-                "verbosity": "low",
-            },
+            text={"format": {"type": "text"}},
             tool_choice="none",
             tools=[
                 {
-                    "name": "name",
-                    "parameters": {"foo": "bar"},
-                    "strict": True,
-                    "type": "function",
-                    "description": "description",
+                    "type": "file_search",
+                    "vector_store_ids": ["string"],
+                    "filters": {
+                        "key": "key",
+                        "type": "eq",
+                        "value": "string",
+                    },
+                    "max_num_results": 0,
+                    "ranking_options": {
+                        "ranker": "auto",
+                        "score_threshold": 0,
+                    },
                 }
             ],
-            top_logprobs=0,
             top_p=1,
             truncation="auto",
             user="user-1234",
@@ -363,7 +314,10 @@ class TestAsyncResponses:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncExCai) -> None:
-        http_response = await async_client.responses.with_raw_response.create()
+        http_response = await async_client.responses.with_raw_response.create(
+            input="string",
+            model="gpt-4o",
+        )
 
         assert http_response.is_closed is True
         assert http_response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -373,7 +327,10 @@ class TestAsyncResponses:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncExCai) -> None:
-        async with async_client.responses.with_streaming_response.create() as http_response:
+        async with async_client.responses.with_streaming_response.create(
+            input="string",
+            model="gpt-4o",
+        ) as http_response:
             assert not http_response.is_closed
             assert http_response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -395,10 +352,7 @@ class TestAsyncResponses:
     async def test_method_retrieve_with_all_params(self, async_client: AsyncExCai) -> None:
         response = await async_client.responses.retrieve(
             response_id="resp_677efb5139a88190b512bc3fef8e535d",
-            include=["code_interpreter_call.outputs"],
-            include_obfuscation=True,
-            starting_after=0,
-            stream=True,
+            include=["file_search_call.results"],
         )
         assert_matches_type(ResponseRetrieveResponse, response, path=["response"])
 
@@ -480,48 +434,6 @@ class TestAsyncResponses:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_cancel(self, async_client: AsyncExCai) -> None:
-        response = await async_client.responses.cancel(
-            "resp_677efb5139a88190b512bc3fef8e535d",
-        )
-        assert_matches_type(ResponseCancelResponse, response, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_cancel(self, async_client: AsyncExCai) -> None:
-        http_response = await async_client.responses.with_raw_response.cancel(
-            "resp_677efb5139a88190b512bc3fef8e535d",
-        )
-
-        assert http_response.is_closed is True
-        assert http_response.http_request.headers.get("X-Stainless-Lang") == "python"
-        response = await http_response.parse()
-        assert_matches_type(ResponseCancelResponse, response, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_cancel(self, async_client: AsyncExCai) -> None:
-        async with async_client.responses.with_streaming_response.cancel(
-            "resp_677efb5139a88190b512bc3fef8e535d",
-        ) as http_response:
-            assert not http_response.is_closed
-            assert http_response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            response = await http_response.parse()
-            assert_matches_type(ResponseCancelResponse, response, path=["response"])
-
-        assert cast(Any, http_response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_cancel(self, async_client: AsyncExCai) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `response_id` but received ''"):
-            await async_client.responses.with_raw_response.cancel(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     async def test_method_list_input_items(self, async_client: AsyncExCai) -> None:
         response = await async_client.responses.list_input_items(
             response_id="response_id",
@@ -534,7 +446,8 @@ class TestAsyncResponses:
         response = await async_client.responses.list_input_items(
             response_id="response_id",
             after="after",
-            include=["code_interpreter_call.outputs"],
+            before="before",
+            include=["file_search_call.results"],
             limit=0,
             order="asc",
         )

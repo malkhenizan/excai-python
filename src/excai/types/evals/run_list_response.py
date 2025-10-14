@@ -1,11 +1,10 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Dict, List, Union, Optional
-from typing_extensions import Literal, Annotated, TypeAlias
+from typing_extensions import Literal, TypeAlias
 
 from pydantic import Field as FieldInfo
 
-from ..._utils import PropertyInfo
 from ..._models import BaseModel
 from .eval_api_error import EvalAPIError
 from .create_eval_jsonl_run_data_source import CreateEvalJSONLRunDataSource
@@ -21,9 +20,8 @@ __all__ = [
     "DataResultCounts",
 ]
 
-DataDataSource: TypeAlias = Annotated[
-    Union[CreateEvalJSONLRunDataSource, CreateEvalCompletionsRunDataSource, CreateEvalResponsesRunDataSource],
-    PropertyInfo(discriminator="type"),
+DataDataSource: TypeAlias = Union[
+    CreateEvalJSONLRunDataSource, CreateEvalCompletionsRunDataSource, CreateEvalResponsesRunDataSource
 ]
 
 
@@ -37,7 +35,7 @@ class DataPerModelUsage(BaseModel):
     invocation_count: int
     """The number of invocations."""
 
-    run_model_name: str = FieldInfo(alias="model_name")
+    api_model_name: str = FieldInfo(alias="model_name")
     """The name of the model."""
 
     prompt_tokens: int

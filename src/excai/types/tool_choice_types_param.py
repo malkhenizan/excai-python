@@ -9,24 +9,15 @@ __all__ = ["ToolChoiceTypesParam"]
 
 class ToolChoiceTypesParam(TypedDict, total=False):
     type: Required[
-        Literal[
-            "file_search",
-            "web_search_preview",
-            "computer_use_preview",
-            "web_search_preview_2025_03_11",
-            "image_generation",
-            "code_interpreter",
-        ]
+        Literal["file_search", "web_search_preview", "computer_use_preview", "web_search_preview_2025_03_11"]
     ]
     """The type of hosted tool the model should to use.
 
-    Learn more about [built-in tools](https://platform.excai.com/docs/guides/tools).
+    Learn more about [built-in tools](/docs/guides/tools).
 
     Allowed values are:
 
     - `file_search`
     - `web_search_preview`
     - `computer_use_preview`
-    - `code_interpreter`
-    - `image_generation`
     """

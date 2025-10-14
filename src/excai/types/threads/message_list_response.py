@@ -1,9 +1,8 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Dict, List, Union, Optional
-from typing_extensions import Literal, Annotated, TypeAlias
+from typing_extensions import Literal, TypeAlias
 
-from ..._utils import PropertyInfo
 from ..._models import BaseModel
 from .message_content_text_object import MessageContentTextObject
 from ..shared.assistant_tools_code import AssistantToolsCode
@@ -32,14 +31,8 @@ class DataAttachment(BaseModel):
     """The tools to add this file to."""
 
 
-DataContent: TypeAlias = Annotated[
-    Union[
-        MessageContentImageFileObject,
-        MessageContentImageURLObject,
-        MessageContentTextObject,
-        MessageContentRefusalObject,
-    ],
-    PropertyInfo(discriminator="type"),
+DataContent: TypeAlias = Union[
+    MessageContentImageFileObject, MessageContentImageURLObject, MessageContentTextObject, MessageContentRefusalObject
 ]
 
 
@@ -54,8 +47,7 @@ class Data(BaseModel):
 
     assistant_id: Optional[str] = None
     """
-    If applicable, the ID of the
-    [assistant](https://platform.excai.com/docs/api-reference/assistants) that
+    If applicable, the ID of the [assistant](/docs/api-reference/assistants) that
     authored this message.
     """
 
@@ -95,9 +87,9 @@ class Data(BaseModel):
 
     run_id: Optional[str] = None
     """
-    The ID of the [run](https://platform.excai.com/docs/api-reference/runs)
-    associated with the creation of this message. Value is `null` when messages are
-    created manually using the create message or create thread endpoints.
+    The ID of the [run](/docs/api-reference/runs) associated with the creation of
+    this message. Value is `null` when messages are created manually using the
+    create message or create thread endpoints.
     """
 
     status: Literal["in_progress", "incomplete", "completed"]
@@ -107,10 +99,7 @@ class Data(BaseModel):
     """
 
     thread_id: str
-    """
-    The [thread](https://platform.excai.com/docs/api-reference/threads) ID that this
-    message belongs to.
-    """
+    """The [thread](/docs/api-reference/threads) ID that this message belongs to."""
 
 
 class MessageListResponse(BaseModel):

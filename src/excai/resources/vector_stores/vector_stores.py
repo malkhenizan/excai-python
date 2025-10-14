@@ -103,9 +103,8 @@ class VectorStoresResource(SyncAPIResource):
 
           expires_after: The expiration policy for a vector store.
 
-          file_ids: A list of [File](https://platform.excai.com/docs/api-reference/files) IDs that
-              the vector store should use. Useful for tools like `file_search` that can access
-              files.
+          file_ids: A list of [File](/docs/api-reference/files) IDs that the vector store should
+              use. Useful for tools like `file_search` that can access files.
 
           metadata: Set of 16 key-value pairs that can be attached to an object. This can be useful
               for storing additional information about the object in a structured format, and
@@ -439,9 +438,8 @@ class AsyncVectorStoresResource(AsyncAPIResource):
 
           expires_after: The expiration policy for a vector store.
 
-          file_ids: A list of [File](https://platform.excai.com/docs/api-reference/files) IDs that
-              the vector store should use. Useful for tools like `file_search` that can access
-              files.
+          file_ids: A list of [File](/docs/api-reference/files) IDs that the vector store should
+              use. Useful for tools like `file_search` that can access files.
 
           metadata: Set of 16 key-value pairs that can be attached to an object. This can be useful
               for storing additional information about the object in a structured format, and

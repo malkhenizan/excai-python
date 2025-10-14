@@ -9,10 +9,10 @@ __all__ = ["MessageContentImageFileObjectParam", "ImageFile"]
 
 class ImageFile(TypedDict, total=False):
     file_id: Required[str]
-    """
-    The [File](https://platform.excai.com/docs/api-reference/files) ID of the image
-    in the message content. Set `purpose="vision"` when uploading the File if you
-    need to later display the file content.
+    """The [File](/docs/api-reference/files) ID of the image in the message content.
+
+    Set `purpose="vision"` when uploading the File if you need to later display the
+    file content.
     """
 
     detail: Literal["auto", "low", "high"]

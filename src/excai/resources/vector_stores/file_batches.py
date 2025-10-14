@@ -65,9 +65,8 @@ class FileBatchesResource(SyncAPIResource):
         Create a vector store file batch.
 
         Args:
-          file_ids: A list of [File](https://platform.excai.com/docs/api-reference/files) IDs that
-              the vector store should use. Useful for tools like `file_search` that can access
-              files.
+          file_ids: A list of [File](/docs/api-reference/files) IDs that the vector store should
+              use. Useful for tools like `file_search` that can access files.
 
           attributes: Set of 16 key-value pairs that can be attached to an object. This can be useful
               for storing additional information about the object in a structured format, and
@@ -76,7 +75,7 @@ class FileBatchesResource(SyncAPIResource):
               characters, booleans, or numbers.
 
           chunking_strategy: The chunking strategy used to chunk the file(s). If not set, will use the `auto`
-              strategy. Only applicable if `file_ids` is non-empty.
+              strategy.
 
           extra_headers: Send extra headers
 
@@ -289,9 +288,8 @@ class AsyncFileBatchesResource(AsyncAPIResource):
         Create a vector store file batch.
 
         Args:
-          file_ids: A list of [File](https://platform.excai.com/docs/api-reference/files) IDs that
-              the vector store should use. Useful for tools like `file_search` that can access
-              files.
+          file_ids: A list of [File](/docs/api-reference/files) IDs that the vector store should
+              use. Useful for tools like `file_search` that can access files.
 
           attributes: Set of 16 key-value pairs that can be attached to an object. This can be useful
               for storing additional information about the object in a structured format, and
@@ -300,7 +298,7 @@ class AsyncFileBatchesResource(AsyncAPIResource):
               characters, booleans, or numbers.
 
           chunking_strategy: The chunking strategy used to chunk the file(s). If not set, will use the `auto`
-              strategy. Only applicable if `file_ids` is non-empty.
+              strategy.
 
           extra_headers: Send extra headers
 

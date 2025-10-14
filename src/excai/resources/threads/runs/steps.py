@@ -68,7 +68,7 @@ class StepsResource(SyncAPIResource):
               to fetch the file search result content.
 
               See the
-              [file search tool documentation](https://platform.excai.com/docs/assistants/tools/file-search#customizing-file-search-settings)
+              [file search tool documentation](/docs/assistants/tools/file-search#customizing-file-search-settings)
               for more information.
 
           extra_headers: Send extra headers
@@ -133,7 +133,7 @@ class StepsResource(SyncAPIResource):
               to fetch the file search result content.
 
               See the
-              [file search tool documentation](https://platform.excai.com/docs/assistants/tools/file-search#customizing-file-search-settings)
+              [file search tool documentation](/docs/assistants/tools/file-search#customizing-file-search-settings)
               for more information.
 
           limit: A limit on the number of objects to be returned. Limit can range between 1 and
@@ -219,7 +219,7 @@ class AsyncStepsResource(AsyncAPIResource):
               to fetch the file search result content.
 
               See the
-              [file search tool documentation](https://platform.excai.com/docs/assistants/tools/file-search#customizing-file-search-settings)
+              [file search tool documentation](/docs/assistants/tools/file-search#customizing-file-search-settings)
               for more information.
 
           extra_headers: Send extra headers
@@ -284,7 +284,7 @@ class AsyncStepsResource(AsyncAPIResource):
               to fetch the file search result content.
 
               See the
-              [file search tool documentation](https://platform.excai.com/docs/assistants/tools/file-search#customizing-file-search-settings)
+              [file search tool documentation](/docs/assistants/tools/file-search#customizing-file-search-settings)
               for more information.
 
           limit: A limit on the number of objects to be returned. Limit can range between 1 and

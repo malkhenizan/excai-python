@@ -3,11 +3,19 @@
 from typing import List, Optional
 from typing_extensions import Literal
 
-from .summary import Summary
 from ..._models import BaseModel
-from .reasoning_text_content import ReasoningTextContent
 
-__all__ = ["ReasoningItem"]
+__all__ = ["ReasoningItem", "Summary"]
+
+
+class Summary(BaseModel):
+    text: str
+    """
+    A short summary of the reasoning used by the model when generating the response.
+    """
+
+    type: Literal["summary_text"]
+    """The type of the object. Always `summary_text`."""
 
 
 class ReasoningItem(BaseModel):
@@ -15,19 +23,10 @@ class ReasoningItem(BaseModel):
     """The unique identifier of the reasoning content."""
 
     summary: List[Summary]
-    """Reasoning summary content."""
+    """Reasoning text contents."""
 
     type: Literal["reasoning"]
     """The type of the object. Always `reasoning`."""
-
-    content: Optional[List[ReasoningTextContent]] = None
-    """Reasoning text content."""
-
-    encrypted_content: Optional[str] = None
-    """
-    The encrypted content of the reasoning item - populated when a response is
-    generated with `reasoning.encrypted_content` in the `include` parameter.
-    """
 
     status: Optional[Literal["in_progress", "completed", "incomplete"]] = None
     """The status of the item.

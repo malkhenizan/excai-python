@@ -74,10 +74,9 @@ class RunsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> RunCreateResponse:
-        """
-        Kicks off a new run for a given evaluation, specifying the data source, and what
-        model configuration to use to test. The datasource will be validated against the
-        schema specified in the config of the evaluation.
+        """Create a new evaluation run.
+
+        This is the endpoint that will kick off grading.
 
         Args:
           data_source: Details about the run's data source.
@@ -323,10 +322,9 @@ class AsyncRunsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> RunCreateResponse:
-        """
-        Kicks off a new run for a given evaluation, specifying the data source, and what
-        model configuration to use to test. The datasource will be validated against the
-        schema specified in the config of the evaluation.
+        """Create a new evaluation run.
+
+        This is the endpoint that will kick off grading.
 
         Args:
           data_source: Details about the run's data source.

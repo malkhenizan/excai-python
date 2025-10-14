@@ -13,7 +13,7 @@ from ..assistant_tools_file_search_type_only_param import AssistantToolsFileSear
 __all__ = [
     "MessageCreateParams",
     "ContentArrayOfContentPart",
-    "ContentArrayOfContentPartText",
+    "ContentArrayOfContentPartMessageRequestContentTextObject",
     "Attachment",
     "AttachmentTool",
 ]
@@ -46,7 +46,7 @@ class MessageCreateParams(TypedDict, total=False):
     """
 
 
-class ContentArrayOfContentPartText(TypedDict, total=False):
+class ContentArrayOfContentPartMessageRequestContentTextObject(TypedDict, total=False):
     text: Required[str]
     """Text content to be sent to the model"""
 
@@ -55,7 +55,9 @@ class ContentArrayOfContentPartText(TypedDict, total=False):
 
 
 ContentArrayOfContentPart: TypeAlias = Union[
-    MessageContentImageFileObjectParam, MessageContentImageURLObjectParam, ContentArrayOfContentPartText
+    MessageContentImageFileObjectParam,
+    MessageContentImageURLObjectParam,
+    ContentArrayOfContentPartMessageRequestContentTextObject,
 ]
 
 AttachmentTool: TypeAlias = Union[AssistantToolsCode, AssistantToolsFileSearchTypeOnlyParam]

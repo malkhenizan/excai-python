@@ -5,16 +5,21 @@ from __future__ import annotations
 from typing import List
 from typing_extensions import Literal, TypedDict
 
-from .audio_transcription_param import AudioTranscriptionParam
+from .._types import SequenceNotStr
 
-__all__ = ["RealtimeCreateTranscriptionSessionParams", "InputAudioNoiseReduction", "TurnDetection"]
+__all__ = [
+    "RealtimeCreateTranscriptionSessionParams",
+    "InputAudioNoiseReduction",
+    "InputAudioTranscription",
+    "TurnDetection",
+]
 
 
 class RealtimeCreateTranscriptionSessionParams(TypedDict, total=False):
-    include: List[Literal["item.input_audio_transcription.logprobs"]]
-    """The set of items to include in the transcription.
+    include: SequenceNotStr[str]
+    """The set of items to include in the transcription. Current available items are:
 
-    Current available items are: `item.input_audio_transcription.logprobs`
+    - `item.input_audio_transcription.logprobs`
     """
 
     input_audio_format: Literal["pcm16", "g711_ulaw", "g711_alaw"]
@@ -34,19 +39,31 @@ class RealtimeCreateTranscriptionSessionParams(TypedDict, total=False):
     model performance by improving perception of the input audio.
     """
 
-    input_audio_transcription: AudioTranscriptionParam
+    input_audio_transcription: InputAudioTranscription
     """Configuration for input audio transcription.
 
     The client can optionally set the language and prompt for transcription, these
     offer additional guidance to the transcription service.
     """
 
-    turn_detection: TurnDetection
-    """Configuration for turn detection.
+    modalities: List[Literal["text", "audio"]]
+    """The set of modalities the model can respond with.
 
-    Can be set to `null` to turn off. Server VAD means that the model will detect
-    the start and end of speech based on audio volume and respond at the end of user
-    speech.
+    To disable audio, set this to ["text"].
+    """
+
+    turn_detection: TurnDetection
+    """Configuration for turn detection, ether Server VAD or Semantic VAD.
+
+    This can be set to `null` to turn off, in which case the client must manually
+    trigger model response. Server VAD means that the model will detect the start
+    and end of speech based on audio volume and respond at the end of user speech.
+    Semantic VAD is more advanced and uses a turn detection model (in conjuction
+    with VAD) to semantically estimate whether the user has finished speaking, then
+    dynamically sets a timeout based on this probability. For example, if user audio
+    trails off with "uhhm", the model will score a low probability of turn end and
+    wait longer for the user to continue speaking. This can be useful for more
+    natural conversations, but may have a higher latency.
     """
 
 
@@ -59,29 +76,76 @@ class InputAudioNoiseReduction(TypedDict, total=False):
     """
 
 
-class TurnDetection(TypedDict, total=False):
-    prefix_padding_ms: int
-    """Amount of audio to include before the VAD detected speech (in milliseconds).
+class InputAudioTranscription(TypedDict, total=False):
+    language: str
+    """The language of the input audio.
 
+    Supplying the input language in
+    [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`)
+    format will improve accuracy and latency.
+    """
+
+    model: Literal["gpt-4o-transcribe", "gpt-4o-mini-transcribe", "whisper-1"]
+    """
+    The model to use for transcription, current options are `gpt-4o-transcribe`,
+    `gpt-4o-mini-transcribe`, and `whisper-1`.
+    """
+
+    prompt: str
+    """
+    An optional text to guide the model's style or continue a previous audio
+    segment. For `whisper-1`, the
+    [prompt is a list of keywords](/docs/guides/speech-to-text#prompting). For
+    `gpt-4o-transcribe` models, the prompt is a free text string, for example
+    "expect words related to technology".
+    """
+
+
+class TurnDetection(TypedDict, total=False):
+    create_response: bool
+    """Whether or not to automatically generate a response when a VAD stop event
+    occurs.
+
+    Not available for transcription sessions.
+    """
+
+    eagerness: Literal["low", "medium", "high", "auto"]
+    """Used only for `semantic_vad` mode.
+
+    The eagerness of the model to respond. `low` will wait longer for the user to
+    continue speaking, `high` will respond more quickly. `auto` is the default and
+    is equivalent to `medium`.
+    """
+
+    interrupt_response: bool
+    """
+    Whether or not to automatically interrupt any ongoing response with output to
+    the default conversation (i.e. `conversation` of `auto`) when a VAD start event
+    occurs. Not available for transcription sessions.
+    """
+
+    prefix_padding_ms: int
+    """Used only for `server_vad` mode.
+
+    Amount of audio to include before the VAD detected speech (in milliseconds).
     Defaults to 300ms.
     """
 
     silence_duration_ms: int
-    """Duration of silence to detect speech stop (in milliseconds).
+    """Used only for `server_vad` mode.
 
-    Defaults to 500ms. With shorter values the model will respond more quickly, but
-    may jump in on short pauses from the user.
+    Duration of silence to detect speech stop (in milliseconds). Defaults to 500ms.
+    With shorter values the model will respond more quickly, but may jump in on
+    short pauses from the user.
     """
 
     threshold: float
-    """Activation threshold for VAD (0.0 to 1.0), this defaults to 0.5.
+    """Used only for `server_vad` mode.
 
-    A higher threshold will require louder audio to activate the model, and thus
-    might perform better in noisy environments.
+    Activation threshold for VAD (0.0 to 1.0), this defaults to 0.5. A higher
+    threshold will require louder audio to activate the model, and thus might
+    perform better in noisy environments.
     """
 
-    type: Literal["server_vad"]
-    """Type of turn detection.
-
-    Only `server_vad` is currently supported for transcription sessions.
-    """
+    type: Literal["server_vad", "semantic_vad"]
+    """Type of turn detection."""

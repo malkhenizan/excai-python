@@ -13,7 +13,7 @@ from excai.types import (
     FileDeleteResponse,
 )
 from tests.utils import assert_matches_type
-from excai.types.shared import ExCaiFile
+from excai.types.shared import OpenAIFile
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -27,7 +27,7 @@ class TestFiles:
         file = client.files.retrieve(
             "file_id",
         )
-        assert_matches_type(ExCaiFile, file, path=["response"])
+        assert_matches_type(OpenAIFile, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -39,7 +39,7 @@ class TestFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = response.parse()
-        assert_matches_type(ExCaiFile, file, path=["response"])
+        assert_matches_type(OpenAIFile, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -51,7 +51,7 @@ class TestFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = response.parse()
-            assert_matches_type(ExCaiFile, file, path=["response"])
+            assert_matches_type(OpenAIFile, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -193,20 +193,7 @@ class TestFiles:
             file=b"raw file contents",
             purpose="assistants",
         )
-        assert_matches_type(ExCaiFile, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_upload_with_all_params(self, client: ExCai) -> None:
-        file = client.files.upload(
-            file=b"raw file contents",
-            purpose="assistants",
-            expires_after={
-                "anchor": "created_at",
-                "seconds": 3600,
-            },
-        )
-        assert_matches_type(ExCaiFile, file, path=["response"])
+        assert_matches_type(OpenAIFile, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -219,7 +206,7 @@ class TestFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = response.parse()
-        assert_matches_type(ExCaiFile, file, path=["response"])
+        assert_matches_type(OpenAIFile, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -232,7 +219,7 @@ class TestFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = response.parse()
-            assert_matches_type(ExCaiFile, file, path=["response"])
+            assert_matches_type(OpenAIFile, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -248,7 +235,7 @@ class TestAsyncFiles:
         file = await async_client.files.retrieve(
             "file_id",
         )
-        assert_matches_type(ExCaiFile, file, path=["response"])
+        assert_matches_type(OpenAIFile, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -260,7 +247,7 @@ class TestAsyncFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = await response.parse()
-        assert_matches_type(ExCaiFile, file, path=["response"])
+        assert_matches_type(OpenAIFile, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -272,7 +259,7 @@ class TestAsyncFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = await response.parse()
-            assert_matches_type(ExCaiFile, file, path=["response"])
+            assert_matches_type(OpenAIFile, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -414,20 +401,7 @@ class TestAsyncFiles:
             file=b"raw file contents",
             purpose="assistants",
         )
-        assert_matches_type(ExCaiFile, file, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_upload_with_all_params(self, async_client: AsyncExCai) -> None:
-        file = await async_client.files.upload(
-            file=b"raw file contents",
-            purpose="assistants",
-            expires_after={
-                "anchor": "created_at",
-                "seconds": 3600,
-            },
-        )
-        assert_matches_type(ExCaiFile, file, path=["response"])
+        assert_matches_type(OpenAIFile, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -440,7 +414,7 @@ class TestAsyncFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = await response.parse()
-        assert_matches_type(ExCaiFile, file, path=["response"])
+        assert_matches_type(OpenAIFile, file, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -453,6 +427,6 @@ class TestAsyncFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = await response.parse()
-            assert_matches_type(ExCaiFile, file, path=["response"])
+            assert_matches_type(OpenAIFile, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True

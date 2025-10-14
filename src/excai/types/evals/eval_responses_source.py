@@ -12,6 +12,12 @@ class EvalResponsesSource(BaseModel):
     type: Literal["responses"]
     """The type of run data source. Always `responses`."""
 
+    allow_parallel_tool_calls: Optional[bool] = None
+    """Whether to allow parallel tool calls.
+
+    This is a query parameter used to select responses.
+    """
+
     created_after: Optional[int] = None
     """Only include items created after this timestamp (inclusive).
 
@@ -24,8 +30,14 @@ class EvalResponsesSource(BaseModel):
     This is a query parameter used to select responses.
     """
 
+    has_tool_calls: Optional[bool] = None
+    """Whether the response has tool calls.
+
+    This is a query parameter used to select responses.
+    """
+
     instructions_search: Optional[str] = None
-    """Optional string to search the 'instructions' field.
+    """Optional search string for instructions.
 
     This is a query parameter used to select responses.
     """
@@ -42,23 +54,14 @@ class EvalResponsesSource(BaseModel):
     This is a query parameter used to select responses.
     """
 
-    reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]] = None
-    """
-    Constrains effort on reasoning for
-    [reasoning models](https://platform.excai.com/docs/guides/reasoning). Currently
-    supported values are `minimal`, `low`, `medium`, and `high`. Reducing reasoning
-    effort can result in faster responses and fewer tokens used on reasoning in a
-    response.
+    reasoning_effort: Optional[Literal["low", "medium", "high"]] = None
+    """Optional reasoning effort parameter.
 
-    Note: The `gpt-5-pro` model defaults to (and only supports) `high` reasoning
-    effort.
+    This is a query parameter used to select responses.
     """
 
     temperature: Optional[float] = None
     """Sampling temperature. This is a query parameter used to select responses."""
-
-    tools: Optional[List[str]] = None
-    """List of tool names. This is a query parameter used to select responses."""
 
     top_p: Optional[float] = None
     """Nucleus sampling parameter. This is a query parameter used to select responses."""

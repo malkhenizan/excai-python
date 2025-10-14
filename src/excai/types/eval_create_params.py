@@ -7,38 +7,29 @@ from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 from .._types import SequenceNotStr
 from .shared_params.eval_item import EvalItem
-from .eval_grader_python_param import EvalGraderPythonParam
-from .eval_grader_score_model_param import EvalGraderScoreModelParam
-from .eval_grader_text_similarity_param import EvalGraderTextSimilarityParam
-from .shared_params.grader_string_check import GraderStringCheck
+from .eval_python_grader_param import EvalPythonGraderParam
+from .eval_score_model_grader_param import EvalScoreModelGraderParam
+from .eval_string_check_grader_param import EvalStringCheckGraderParam
+from .eval_text_similarity_grader_param import EvalTextSimilarityGraderParam
 
 __all__ = [
     "EvalCreateParams",
     "DataSourceConfig",
-    "DataSourceConfigCustom",
-    "DataSourceConfigLogs",
-    "DataSourceConfigStoredCompletions",
+    "DataSourceConfigCreateEvalCustomDataSourceConfig",
+    "DataSourceConfigCreateEvalLogsDataSourceConfig",
     "TestingCriterion",
-    "TestingCriterionLabelModel",
-    "TestingCriterionLabelModelInput",
-    "TestingCriterionLabelModelInputSimpleInputMessage",
+    "TestingCriterionCreateEvalLabelModelGrader",
+    "TestingCriterionCreateEvalLabelModelGraderInput",
+    "TestingCriterionCreateEvalLabelModelGraderInputSimpleInputMessage",
 ]
 
 
 class EvalCreateParams(TypedDict, total=False):
     data_source_config: Required[DataSourceConfig]
-    """The configuration for the data source used for the evaluation runs.
-
-    Dictates the schema of the data used in the evaluation.
-    """
+    """The configuration for the data source used for the evaluation runs."""
 
     testing_criteria: Required[Iterable[TestingCriterion]]
-    """A list of graders for all eval runs in this group.
-
-    Graders can reference variables in the data source using double curly braces
-    notation, like `{{item.variable_name}}`. To reference the model's output, use
-    the `sample` namespace (ie, `{{sample.output_text}}`).
-    """
+    """A list of graders for all eval runs in this group."""
 
     metadata: Optional[Dict[str, str]]
     """Set of 16 key-value pairs that can be attached to an object.
@@ -54,7 +45,7 @@ class EvalCreateParams(TypedDict, total=False):
     """The name of the evaluation."""
 
 
-class DataSourceConfigCustom(TypedDict, total=False):
+class DataSourceConfigCreateEvalCustomDataSourceConfig(TypedDict, total=False):
     item_schema: Required[Dict[str, object]]
     """The json schema for each row in the data source."""
 
@@ -68,7 +59,7 @@ class DataSourceConfigCustom(TypedDict, total=False):
     """
 
 
-class DataSourceConfigLogs(TypedDict, total=False):
+class DataSourceConfigCreateEvalLogsDataSourceConfig(TypedDict, total=False):
     type: Required[Literal["logs"]]
     """The type of data source. Always `logs`."""
 
@@ -76,18 +67,12 @@ class DataSourceConfigLogs(TypedDict, total=False):
     """Metadata filters for the logs data source."""
 
 
-class DataSourceConfigStoredCompletions(TypedDict, total=False):
-    type: Required[Literal["stored_completions"]]
-    """The type of data source. Always `stored_completions`."""
-
-    metadata: Dict[str, object]
-    """Metadata filters for the stored completions data source."""
+DataSourceConfig: TypeAlias = Union[
+    DataSourceConfigCreateEvalCustomDataSourceConfig, DataSourceConfigCreateEvalLogsDataSourceConfig
+]
 
 
-DataSourceConfig: TypeAlias = Union[DataSourceConfigCustom, DataSourceConfigLogs, DataSourceConfigStoredCompletions]
-
-
-class TestingCriterionLabelModelInputSimpleInputMessage(TypedDict, total=False):
+class TestingCriterionCreateEvalLabelModelGraderInputSimpleInputMessage(TypedDict, total=False):
     content: Required[str]
     """The content of the message."""
 
@@ -95,14 +80,16 @@ class TestingCriterionLabelModelInputSimpleInputMessage(TypedDict, total=False):
     """The role of the message (e.g. "system", "assistant", "user")."""
 
 
-TestingCriterionLabelModelInput: TypeAlias = Union[TestingCriterionLabelModelInputSimpleInputMessage, EvalItem]
+TestingCriterionCreateEvalLabelModelGraderInput: TypeAlias = Union[
+    TestingCriterionCreateEvalLabelModelGraderInputSimpleInputMessage, EvalItem
+]
 
 
-class TestingCriterionLabelModel(TypedDict, total=False):
-    input: Required[Iterable[TestingCriterionLabelModelInput]]
+class TestingCriterionCreateEvalLabelModelGrader(TypedDict, total=False):
+    input: Required[Iterable[TestingCriterionCreateEvalLabelModelGraderInput]]
     """A list of chat messages forming the prompt or context.
 
-    May include variable references to the `item` namespace, ie {{item.name}}.
+    May include variable references to the "item" namespace, ie {{item.name}}.
     """
 
     labels: Required[SequenceNotStr[str]]
@@ -122,9 +109,9 @@ class TestingCriterionLabelModel(TypedDict, total=False):
 
 
 TestingCriterion: TypeAlias = Union[
-    TestingCriterionLabelModel,
-    GraderStringCheck,
-    EvalGraderTextSimilarityParam,
-    EvalGraderPythonParam,
-    EvalGraderScoreModelParam,
+    TestingCriterionCreateEvalLabelModelGrader,
+    EvalStringCheckGraderParam,
+    EvalTextSimilarityGraderParam,
+    EvalPythonGraderParam,
+    EvalScoreModelGraderParam,
 ]

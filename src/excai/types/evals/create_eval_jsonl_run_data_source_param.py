@@ -15,7 +15,6 @@ Source: TypeAlias = Union[EvalJSONLFileContentSourceParam, EvalJSONLFileIDSource
 
 class CreateEvalJSONLRunDataSourceParam(TypedDict, total=False):
     source: Required[Source]
-    """Determines what populates the `item` namespace in the data source."""
 
     type: Required[Literal["jsonl"]]
     """The type of data source. Always `jsonl`."""
