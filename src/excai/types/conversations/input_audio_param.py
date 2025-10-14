@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 
-from typing_extensions import Literal, Required, Annotated, TypedDict
-
-from ..._utils import PropertyInfo
+from typing_extensions import Literal, Required, TypedDict
 
 __all__ = ["InputAudioParam", "InputAudio"]
 
@@ -18,7 +16,7 @@ class InputAudio(TypedDict, total=False):
 
 
 class InputAudioParam(TypedDict, total=False):
+    input_audio: Required[InputAudio]
+
     type: Required[Literal["input_audio"]]
     """The type of the input item. Always `input_audio`."""
-
-    input_audio: Annotated[InputAudio, PropertyInfo(alias="input_audio_")]

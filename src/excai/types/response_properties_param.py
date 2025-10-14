@@ -9,6 +9,7 @@ from .chat.verbosity import Verbosity
 from .reasoning_effort import ReasoningEffort
 from .response_tool_param import ResponseToolParam
 from .realtime.prompt_param import PromptParam
+from .realtime.tool_choice_options import ToolChoiceOptions
 from .realtime.tool_choice_mcp_param import ToolChoiceMcpParam
 from .realtime.tool_choice_function_param import ToolChoiceFunctionParam
 from .text_response_format_configuration_param import TextResponseFormatConfigurationParam
@@ -18,9 +19,9 @@ __all__ = [
     "Reasoning",
     "Text",
     "ToolChoice",
-    "ToolChoiceAllowedTools",
+    "ToolChoiceToolChoiceAllowed",
     "ToolChoiceToolChoiceTypes",
-    "ToolChoiceCustom",
+    "ToolChoiceToolChoiceCustom",
 ]
 
 
@@ -79,7 +80,7 @@ class Text(TypedDict, total=False):
     """
 
 
-class ToolChoiceAllowedTools(TypedDict, total=False):
+class ToolChoiceToolChoiceAllowed(TypedDict, total=False):
     mode: Required[Literal["auto", "required"]]
     """Constrains the tools available to the model to a pre-defined set.
 
@@ -132,7 +133,7 @@ class ToolChoiceToolChoiceTypes(TypedDict, total=False):
     """
 
 
-class ToolChoiceCustom(TypedDict, total=False):
+class ToolChoiceToolChoiceCustom(TypedDict, total=False):
     name: Required[str]
     """The name of the custom tool to call."""
 
@@ -141,7 +142,12 @@ class ToolChoiceCustom(TypedDict, total=False):
 
 
 ToolChoice: TypeAlias = Union[
-    ToolChoiceAllowedTools, ToolChoiceToolChoiceTypes, ToolChoiceFunctionParam, ToolChoiceMcpParam, ToolChoiceCustom
+    ToolChoiceOptions,
+    ToolChoiceToolChoiceAllowed,
+    ToolChoiceToolChoiceTypes,
+    ToolChoiceFunctionParam,
+    ToolChoiceMcpParam,
+    ToolChoiceToolChoiceCustom,
 ]
 
 
