@@ -2,45 +2,19 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Iterable, Optional
-from typing_extensions import Literal, Required, TypeAlias, TypedDict
+from typing import List, Union, Iterable, Optional
+from typing_extensions import Literal, Required, TypedDict
 
-from ..._types import SequenceNotStr
-from .truncation_object_param import TruncationObjectParam
-from .assistants_named_tool_choice_param import AssistantsNamedToolChoiceParam
-from ..shared_params.assistant_tools_code import AssistantToolsCode
-from ..shared_params.response_format_text import ResponseFormatText
-from .message_content_image_url_object_param import MessageContentImageURLObjectParam
-from ..shared_params.assistant_tools_function import AssistantToolsFunction
-from .message_content_image_file_object_param import MessageContentImageFileObjectParam
-from ..shared_params.assistant_tools_file_search import AssistantToolsFileSearch
-from ..shared_params.response_format_json_object import ResponseFormatJsonObject
-from ..shared_params.response_format_json_schema import ResponseFormatJsonSchema
-from ..assistant_tools_file_search_type_only_param import AssistantToolsFileSearchTypeOnlyParam
+from .truncation_param import TruncationParam
+from ..reasoning_effort import ReasoningEffort
+from ..chat.metadata_param import MetadataParam
+from .create_message_param import CreateMessageParam
+from ..assistant_tool_param import AssistantToolParam
+from ..assistant_supported_models import AssistantSupportedModels
+from .api_tool_choice_option_param import APIToolChoiceOptionParam
+from .api_response_format_option_param import APIResponseFormatOptionParam
 
-__all__ = [
-    "RunCreateParams",
-    "ResponseFormat",
-    "Thread",
-    "ThreadMessage",
-    "ThreadMessageContentArrayOfContentPart",
-    "ThreadMessageContentArrayOfContentPartText",
-    "ThreadMessageAttachment",
-    "ThreadMessageAttachmentTool",
-    "ThreadToolResources",
-    "ThreadToolResourcesCodeInterpreter",
-    "ThreadToolResourcesFileSearch",
-    "ThreadToolResourcesFileSearchVectorStore",
-    "ThreadToolResourcesFileSearchVectorStoreChunkingStrategy",
-    "ThreadToolResourcesFileSearchVectorStoreChunkingStrategyAuto",
-    "ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStatic",
-    "ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticStatic",
-    "ToolChoice",
-    "ToolResources",
-    "ToolResourcesCodeInterpreter",
-    "ToolResourcesFileSearch",
-    "Tool",
-]
+__all__ = ["RunCreateParams"]
 
 
 class RunCreateParams(TypedDict, total=False):
@@ -50,10 +24,33 @@ class RunCreateParams(TypedDict, total=False):
     to use to execute this run.
     """
 
-    instructions: Optional[str]
-    """Override the default system message of the assistant.
+    include: List[Literal["step_details.tool_calls[*].file_search.results[*].content"]]
+    """A list of additional fields to include in the response.
 
-    This is useful for modifying the behavior on a per-run basis.
+    Currently the only supported value is
+    `step_details.tool_calls[*].file_search.results[*].content` to fetch the file
+    search result content.
+
+    See the
+    [file search tool documentation](https://main.excai.ai/docs/assistants/tools/file-search#customizing-file-search-settings)
+    for more information.
+    """
+
+    additional_instructions: Optional[str]
+    """Appends additional instructions at the end of the instructions for the run.
+
+    This is useful for modifying the behavior on a per-run basis without overriding
+    other instructions.
+    """
+
+    additional_messages: Optional[Iterable[CreateMessageParam]]
+    """Adds additional messages to the thread before creating the run."""
+
+    instructions: Optional[str]
+    """
+    Overrides the
+    [instructions](https://main.excai.ai/docs/api-reference/assistants/createAssistant)
+    of the assistant. This is useful for modifying the behavior on a per-run basis.
     """
 
     max_completion_tokens: Optional[int]
@@ -74,7 +71,7 @@ class RunCreateParams(TypedDict, total=False):
     `incomplete_details` for more info.
     """
 
-    metadata: Optional[Dict[str, str]]
+    metadata: Optional[MetadataParam]
     """Set of 16 key-value pairs that can be attached to an object.
 
     This can be useful for storing additional information about the object in a
@@ -84,50 +81,7 @@ class RunCreateParams(TypedDict, total=False):
     a maximum length of 512 characters.
     """
 
-    model: Union[
-        str,
-        Literal[
-            "gpt-5",
-            "gpt-5-mini",
-            "gpt-5-nano",
-            "gpt-5-2025-08-07",
-            "gpt-5-mini-2025-08-07",
-            "gpt-5-nano-2025-08-07",
-            "gpt-4.1",
-            "gpt-4.1-mini",
-            "gpt-4.1-nano",
-            "gpt-4.1-2025-04-14",
-            "gpt-4.1-mini-2025-04-14",
-            "gpt-4.1-nano-2025-04-14",
-            "gpt-4o",
-            "gpt-4o-2024-11-20",
-            "gpt-4o-2024-08-06",
-            "gpt-4o-2024-05-13",
-            "gpt-4o-mini",
-            "gpt-4o-mini-2024-07-18",
-            "gpt-4.5-preview",
-            "gpt-4.5-preview-2025-02-27",
-            "gpt-4-turbo",
-            "gpt-4-turbo-2024-04-09",
-            "gpt-4-0125-preview",
-            "gpt-4-turbo-preview",
-            "gpt-4-1106-preview",
-            "gpt-4-vision-preview",
-            "gpt-4",
-            "gpt-4-0314",
-            "gpt-4-0613",
-            "gpt-4-32k",
-            "gpt-4-32k-0314",
-            "gpt-4-32k-0613",
-            "gpt-3.5-turbo",
-            "gpt-3.5-turbo-16k",
-            "gpt-3.5-turbo-0613",
-            "gpt-3.5-turbo-1106",
-            "gpt-3.5-turbo-0125",
-            "gpt-3.5-turbo-16k-0613",
-        ],
-        None,
-    ]
+    model: Union[str, AssistantSupportedModels, None]
     """
     The ID of the [Model](https://main.excai.ai/docs/api-reference/models) to be
     used to execute this run. If a value is provided here, it will override the
@@ -142,7 +96,19 @@ class RunCreateParams(TypedDict, total=False):
     during tool use.
     """
 
-    response_format: Optional[ResponseFormat]
+    reasoning_effort: Optional[ReasoningEffort]
+    """
+    Constrains effort on reasoning for
+    [reasoning models](https://main.excai.ai/docs/guides/reasoning). Currently
+    supported values are `minimal`, `low`, `medium`, and `high`. Reducing reasoning
+    effort can result in faster responses and fewer tokens used on reasoning in a
+    response.
+
+    Note: The `gpt-5-pro` model defaults to (and only supports) `high` reasoning
+    effort.
+    """
+
+    response_format: Optional[APIResponseFormatOptionParam]
     """Specifies the format that the model must output.
 
     Compatible with [GPT-4o](https://main.excai.ai/docs/models#gpt-4o),
@@ -180,14 +146,7 @@ class RunCreateParams(TypedDict, total=False):
     0.2 will make it more focused and deterministic.
     """
 
-    thread: Thread
-    """Options to create a new thread.
-
-    If no thread is provided when running a request, an empty thread will be
-    created.
-    """
-
-    tool_choice: Optional[ToolChoice]
+    tool_choice: Optional[APIToolChoiceOptionParam]
     """
     Controls which (if any) tool is called by the model. `none` means the model will
     not call any tools and instead generates a message. `auto` is the default value
@@ -198,15 +157,7 @@ class RunCreateParams(TypedDict, total=False):
     call that tool.
     """
 
-    tool_resources: Optional[ToolResources]
-    """A set of resources that are used by the assistant's tools.
-
-    The resources are specific to the type of tool. For example, the
-    `code_interpreter` tool requires a list of file IDs, while the `file_search`
-    tool requires a list of vector store IDs.
-    """
-
-    tools: Optional[Iterable[Tool]]
+    tools: Optional[Iterable[AssistantToolParam]]
     """Override the tools the assistant can use for this run.
 
     This is useful for modifying the behavior on a per-run basis.
@@ -221,210 +172,8 @@ class RunCreateParams(TypedDict, total=False):
     We generally recommend altering this or temperature but not both.
     """
 
-    truncation_strategy: Optional[TruncationObjectParam]
+    truncation_strategy: Optional[TruncationParam]
     """Controls for how a thread will be truncated prior to the run.
 
     Use this to control the initial context window of the run.
     """
-
-
-ResponseFormat: TypeAlias = Union[
-    Literal["auto"], ResponseFormatText, ResponseFormatJsonObject, ResponseFormatJsonSchema
-]
-
-
-class ThreadMessageContentArrayOfContentPartText(TypedDict, total=False):
-    text: Required[str]
-    """Text content to be sent to the model"""
-
-    type: Required[Literal["text"]]
-    """Always `text`."""
-
-
-ThreadMessageContentArrayOfContentPart: TypeAlias = Union[
-    MessageContentImageFileObjectParam, MessageContentImageURLObjectParam, ThreadMessageContentArrayOfContentPartText
-]
-
-ThreadMessageAttachmentTool: TypeAlias = Union[AssistantToolsCode, AssistantToolsFileSearchTypeOnlyParam]
-
-
-class ThreadMessageAttachment(TypedDict, total=False):
-    file_id: str
-    """The ID of the file to attach to the message."""
-
-    tools: Iterable[ThreadMessageAttachmentTool]
-    """The tools to add this file to."""
-
-
-class ThreadMessage(TypedDict, total=False):
-    content: Required[Union[str, Iterable[ThreadMessageContentArrayOfContentPart]]]
-    """The text contents of the message."""
-
-    role: Required[Literal["user", "assistant"]]
-    """The role of the entity that is creating the message. Allowed values include:
-
-    - `user`: Indicates the message is sent by an actual user and should be used in
-      most cases to represent user-generated messages.
-    - `assistant`: Indicates the message is generated by the assistant. Use this
-      value to insert messages from the assistant into the conversation.
-    """
-
-    attachments: Optional[Iterable[ThreadMessageAttachment]]
-    """A list of files attached to the message, and the tools they should be added to."""
-
-    metadata: Optional[Dict[str, str]]
-    """Set of 16 key-value pairs that can be attached to an object.
-
-    This can be useful for storing additional information about the object in a
-    structured format, and querying for objects via API or the dashboard.
-
-    Keys are strings with a maximum length of 64 characters. Values are strings with
-    a maximum length of 512 characters.
-    """
-
-
-class ThreadToolResourcesCodeInterpreter(TypedDict, total=False):
-    file_ids: SequenceNotStr[str]
-    """
-    A list of [file](https://main.excai.ai/docs/api-reference/files) IDs made
-    available to the `code_interpreter` tool. There can be a maximum of 20 files
-    associated with the tool.
-    """
-
-
-class ThreadToolResourcesFileSearchVectorStoreChunkingStrategyAuto(TypedDict, total=False):
-    type: Required[Literal["auto"]]
-    """Always `auto`."""
-
-
-class ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticStatic(TypedDict, total=False):
-    chunk_overlap_tokens: Required[int]
-    """The number of tokens that overlap between chunks. The default value is `400`.
-
-    Note that the overlap must not exceed half of `max_chunk_size_tokens`.
-    """
-
-    max_chunk_size_tokens: Required[int]
-    """The maximum number of tokens in each chunk.
-
-    The default value is `800`. The minimum value is `100` and the maximum value is
-    `4096`.
-    """
-
-
-class ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStatic(TypedDict, total=False):
-    static: Required[ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStaticStatic]
-
-    type: Required[Literal["static"]]
-    """Always `static`."""
-
-
-ThreadToolResourcesFileSearchVectorStoreChunkingStrategy: TypeAlias = Union[
-    ThreadToolResourcesFileSearchVectorStoreChunkingStrategyAuto,
-    ThreadToolResourcesFileSearchVectorStoreChunkingStrategyStatic,
-]
-
-
-class ThreadToolResourcesFileSearchVectorStore(TypedDict, total=False):
-    chunking_strategy: ThreadToolResourcesFileSearchVectorStoreChunkingStrategy
-    """The chunking strategy used to chunk the file(s).
-
-    If not set, will use the `auto` strategy.
-    """
-
-    file_ids: SequenceNotStr[str]
-    """
-    A list of [file](https://main.excai.ai/docs/api-reference/files) IDs to add to
-    the vector store. There can be a maximum of 10000 files in a vector store.
-    """
-
-    metadata: Optional[Dict[str, str]]
-    """Set of 16 key-value pairs that can be attached to an object.
-
-    This can be useful for storing additional information about the object in a
-    structured format, and querying for objects via API or the dashboard.
-
-    Keys are strings with a maximum length of 64 characters. Values are strings with
-    a maximum length of 512 characters.
-    """
-
-
-class ThreadToolResourcesFileSearch(TypedDict, total=False):
-    vector_store_ids: SequenceNotStr[str]
-    """
-    The
-    [vector store](https://main.excai.ai/docs/api-reference/vector-stores/object)
-    attached to this thread. There can be a maximum of 1 vector store attached to
-    the thread.
-    """
-
-    vector_stores: Iterable[ThreadToolResourcesFileSearchVectorStore]
-    """
-    A helper to create a
-    [vector store](https://main.excai.ai/docs/api-reference/vector-stores/object)
-    with file_ids and attach it to this thread. There can be a maximum of 1 vector
-    store attached to the thread.
-    """
-
-
-class ThreadToolResources(TypedDict, total=False):
-    code_interpreter: ThreadToolResourcesCodeInterpreter
-
-    file_search: ThreadToolResourcesFileSearch
-
-
-class Thread(TypedDict, total=False):
-    messages: Iterable[ThreadMessage]
-    """
-    A list of [messages](https://main.excai.ai/docs/api-reference/messages) to start
-    the thread with.
-    """
-
-    metadata: Optional[Dict[str, str]]
-    """Set of 16 key-value pairs that can be attached to an object.
-
-    This can be useful for storing additional information about the object in a
-    structured format, and querying for objects via API or the dashboard.
-
-    Keys are strings with a maximum length of 64 characters. Values are strings with
-    a maximum length of 512 characters.
-    """
-
-    tool_resources: Optional[ThreadToolResources]
-    """
-    A set of resources that are made available to the assistant's tools in this
-    thread. The resources are specific to the type of tool. For example, the
-    `code_interpreter` tool requires a list of file IDs, while the `file_search`
-    tool requires a list of vector store IDs.
-    """
-
-
-ToolChoice: TypeAlias = Union[Literal["none", "auto", "required"], AssistantsNamedToolChoiceParam]
-
-
-class ToolResourcesCodeInterpreter(TypedDict, total=False):
-    file_ids: SequenceNotStr[str]
-    """
-    A list of [file](https://main.excai.ai/docs/api-reference/files) IDs made
-    available to the `code_interpreter` tool. There can be a maximum of 20 files
-    associated with the tool.
-    """
-
-
-class ToolResourcesFileSearch(TypedDict, total=False):
-    vector_store_ids: SequenceNotStr[str]
-    """
-    The ID of the
-    [vector store](https://main.excai.ai/docs/api-reference/vector-stores/object)
-    attached to this assistant. There can be a maximum of 1 vector store attached to
-    the assistant.
-    """
-
-
-class ToolResources(TypedDict, total=False):
-    code_interpreter: ToolResourcesCodeInterpreter
-
-    file_search: ToolResourcesFileSearch
-
-
-Tool: TypeAlias = Union[AssistantToolsCode, AssistantToolsFileSearch, AssistantToolsFunction]

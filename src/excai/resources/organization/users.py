@@ -18,10 +18,9 @@ from ..._response import (
 )
 from ..._base_client import make_request_options
 from ...types.organization import user_list_params, user_update_params
+from ...types.organization.user import User
 from ...types.organization.user_list_response import UserListResponse
 from ...types.organization.user_delete_response import UserDeleteResponse
-from ...types.organization.user_update_response import UserUpdateResponse
-from ...types.organization.user_retrieve_response import UserRetrieveResponse
 
 __all__ = ["UsersResource", "AsyncUsersResource"]
 
@@ -33,7 +32,7 @@ class UsersResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return UsersResourceWithRawResponse(self)
 
@@ -42,7 +41,7 @@ class UsersResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return UsersResourceWithStreamingResponse(self)
 
@@ -56,7 +55,7 @@ class UsersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserRetrieveResponse:
+    ) -> User:
         """
         Retrieves a user by their identifier.
 
@@ -76,7 +75,7 @@ class UsersResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserRetrieveResponse,
+            cast_to=User,
         )
 
     def update(
@@ -90,7 +89,7 @@ class UsersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserUpdateResponse:
+    ) -> User:
         """
         Modifies a user's role in the organization.
 
@@ -113,7 +112,7 @@ class UsersResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserUpdateResponse,
+            cast_to=User,
         )
 
     def list(
@@ -211,7 +210,7 @@ class AsyncUsersResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncUsersResourceWithRawResponse(self)
 
@@ -220,7 +219,7 @@ class AsyncUsersResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncUsersResourceWithStreamingResponse(self)
 
@@ -234,7 +233,7 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserRetrieveResponse:
+    ) -> User:
         """
         Retrieves a user by their identifier.
 
@@ -254,7 +253,7 @@ class AsyncUsersResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserRetrieveResponse,
+            cast_to=User,
         )
 
     async def update(
@@ -268,7 +267,7 @@ class AsyncUsersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserUpdateResponse:
+    ) -> User:
         """
         Modifies a user's role in the organization.
 
@@ -291,7 +290,7 @@ class AsyncUsersResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserUpdateResponse,
+            cast_to=User,
         )
 
     async def list(

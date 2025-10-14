@@ -1,9 +1,9 @@
-# Ex Cai Python API library
+# Excai Python API library
 
 <!-- prettier-ignore -->
 [![PyPI version](https://img.shields.io/pypi/v/excai.svg?label=pypi%20(stable))](https://pypi.org/project/excai/)
 
-The Ex Cai Python library provides convenient access to the Ex Cai REST API from any Python 3.8+
+The Excai Python library provides convenient access to the Excai REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -11,14 +11,17 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 ## Documentation
 
-The REST API documentation can be found on [main.excai.ai](https://main.excai.ai/documentation). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [odel.sa](https://odel.sa/). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
 ```sh
-# install from PyPI
-pip install excai
+# install from this staging repo
+pip install git+ssh://git@github.com/stainless-sdks/excai-python.git
 ```
+
+> [!NOTE]
+> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install excai`
 
 ## Usage
 
@@ -26,22 +29,14 @@ The full API of this library can be found in [api.md](api.md).
 
 ```python
 import os
-from excai import ExCai
+from excai import Excai
 
-client = ExCai(
+client = Excai(
     api_key=os.environ.get("EXCAI_API_KEY"),  # This is the default and can be omitted
 )
 
-completion = client.chat.completions.create(
-    messages=[
-        {
-            "role": "user",
-            "content": "Hello, how are you?",
-        }
-    ],
-    model="gpt-4o",
-)
-print(completion.id)
+assistants = client.assistants.list()
+print(assistants.first_id)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -51,29 +46,21 @@ so that your API Key is not stored in source control.
 
 ## Async usage
 
-Simply import `AsyncExCai` instead of `ExCai` and use `await` with each API call:
+Simply import `AsyncExcai` instead of `Excai` and use `await` with each API call:
 
 ```python
 import os
 import asyncio
-from excai import AsyncExCai
+from excai import AsyncExcai
 
-client = AsyncExCai(
+client = AsyncExcai(
     api_key=os.environ.get("EXCAI_API_KEY"),  # This is the default and can be omitted
 )
 
 
 async def main() -> None:
-    completion = await client.chat.completions.create(
-        messages=[
-            {
-                "role": "user",
-                "content": "Hello, how are you?",
-            }
-        ],
-        model="gpt-4o",
-    )
-    print(completion.id)
+    assistants = await client.assistants.list()
+    print(assistants.first_id)
 
 
 asyncio.run(main())
@@ -88,8 +75,8 @@ By default, the async client uses `httpx` for HTTP requests. However, for improv
 You can enable this by installing `aiohttp`:
 
 ```sh
-# install from PyPI
-pip install excai[aiohttp]
+# install from this staging repo
+pip install 'excai[aiohttp] @ git+ssh://git@github.com/stainless-sdks/excai-python.git'
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
@@ -97,24 +84,16 @@ Then you can enable it by instantiating the client with `http_client=DefaultAioH
 ```python
 import asyncio
 from excai import DefaultAioHttpClient
-from excai import AsyncExCai
+from excai import AsyncExcai
 
 
 async def main() -> None:
-    async with AsyncExCai(
+    async with AsyncExcai(
         api_key="My API Key",
         http_client=DefaultAioHttpClient(),
     ) as client:
-        completion = await client.chat.completions.create(
-            messages=[
-                {
-                    "role": "user",
-                    "content": "Hello, how are you?",
-                }
-            ],
-            model="gpt-4o",
-        )
-        print(completion.id)
+        assistants = await client.assistants.list()
+        print(assistants.first_id)
 
 
 asyncio.run(main())
@@ -134,24 +113,15 @@ Typed requests and responses provide autocomplete and documentation within your 
 Nested parameters are dictionaries, typed using `TypedDict`, for example:
 
 ```python
-from excai import ExCai
+from excai import Excai
 
-client = ExCai()
+client = Excai()
 
-completion = client.chat.completions.create(
-    messages=[
-        {
-            "content": "string",
-            "role": "developer",
-        }
-    ],
+assistant_object = client.assistants.create(
     model="gpt-4o",
-    audio={
-        "format": "wav",
-        "voice": "ash",
-    },
+    tool_resources={},
 )
-print(completion.audio)
+print(assistant_object.tool_resources)
 ```
 
 ## File uploads
@@ -160,11 +130,11 @@ Request parameters that correspond to file uploads can be passed as `bytes`, or 
 
 ```python
 from pathlib import Path
-from excai import ExCai
+from excai import Excai
 
-client = ExCai()
+client = Excai()
 
-client.audio.transcribe_audio(
+client.audio.create_transcription(
     file=Path("/path/to/file"),
     model="gpt-4o-transcribe",
 )
@@ -183,12 +153,12 @@ All errors inherit from `excai.APIError`.
 
 ```python
 import excai
-from excai import ExCai
+from excai import Excai
 
-client = ExCai()
+client = Excai()
 
 try:
-    client.chat.completions.list()
+    client.assistants.list()
 except excai.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
@@ -222,16 +192,16 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 You can use the `max_retries` option to configure or disable retry settings:
 
 ```python
-from excai import ExCai
+from excai import Excai
 
 # Configure the default for all requests:
-client = ExCai(
+client = Excai(
     # default is 2
     max_retries=0,
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).chat.completions.list()
+client.with_options(max_retries=5).assistants.list()
 ```
 
 ### Timeouts
@@ -240,21 +210,21 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:
 
 ```python
-from excai import ExCai
+from excai import Excai
 
 # Configure the default for all requests:
-client = ExCai(
+client = Excai(
     # 20 seconds (default is 1 minute)
     timeout=20.0,
 )
 
 # More granular control:
-client = ExCai(
+client = Excai(
     timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).chat.completions.list()
+client.with_options(timeout=5.0).assistants.list()
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -267,10 +237,10 @@ Note that requests that time out are [retried twice by default](#retries).
 
 We use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.
 
-You can enable logging by setting the environment variable `EX_CAI_LOG` to `info`.
+You can enable logging by setting the environment variable `EXCAI_LOG` to `info`.
 
 ```shell
-$ export EX_CAI_LOG=info
+$ export EXCAI_LOG=info
 ```
 
 Or to `debug` for more verbose logging.
@@ -292,19 +262,19 @@ if response.my_field is None:
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
 ```py
-from excai import ExCai
+from excai import Excai
 
-client = ExCai()
-response = client.chat.completions.with_raw_response.list()
+client = Excai()
+response = client.assistants.with_raw_response.list()
 print(response.headers.get('X-My-Header'))
 
-completion = response.parse()  # get the object that `chat.completions.list()` would have returned
-print(completion.first_id)
+assistant = response.parse()  # get the object that `assistants.list()` would have returned
+print(assistant.first_id)
 ```
 
-These methods return an [`APIResponse`](https://github.com/malkhenizan/excai-python/tree/main/src/excai/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/stainless-sdks/excai-python/tree/main/src/excai/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/malkhenizan/excai-python/tree/main/src/excai/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/excai-python/tree/main/src/excai/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 #### `.with_streaming_response`
 
@@ -313,7 +283,7 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.chat.completions.with_streaming_response.list() as response:
+with client.assistants.with_streaming_response.list() as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():
@@ -366,10 +336,10 @@ You can directly override the [httpx client](https://www.python-httpx.org/api/#c
 
 ```python
 import httpx
-from excai import ExCai, DefaultHttpxClient
+from excai import Excai, DefaultHttpxClient
 
-client = ExCai(
-    # Or use the `EX_CAI_BASE_URL` env var
+client = Excai(
+    # Or use the `EXCAI_BASE_URL` env var
     base_url="http://my.test.server.example.com:8083",
     http_client=DefaultHttpxClient(
         proxy="http://my.test.proxy.example.com",
@@ -389,9 +359,9 @@ client.with_options(http_client=DefaultHttpxClient(...))
 By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
 
 ```py
-from excai import ExCai
+from excai import Excai
 
-with ExCai() as client:
+with Excai() as client:
   # make requests here
   ...
 
@@ -408,7 +378,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/malkhenizan/excai-python/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/excai-python/issues) with questions, bugs, or suggestions.
 
 ### Determining the installed version
 

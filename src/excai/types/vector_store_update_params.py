@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Dict, Optional
+from typing import Optional
 from typing_extensions import TypedDict
 
+from .chat.metadata_param import MetadataParam
 from .vector_store_expiration_after_param import VectorStoreExpirationAfterParam
 
 __all__ = ["VectorStoreUpdateParams"]
@@ -14,7 +15,7 @@ class VectorStoreUpdateParams(TypedDict, total=False):
     expires_after: Optional[VectorStoreExpirationAfterParam]
     """The expiration policy for a vector store."""
 
-    metadata: Optional[Dict[str, str]]
+    metadata: Optional[MetadataParam]
     """Set of 16 key-value pairs that can be attached to an object.
 
     This can be useful for storing additional information about the object in a

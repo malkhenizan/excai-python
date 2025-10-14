@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Optional
+from typing import Union, Optional
 from typing_extensions import Required, TypeAlias, TypedDict
 
-from .create_eval_jsonl_run_data_source_param import CreateEvalJSONLRunDataSourceParam
-from .create_eval_responses_run_data_source_param import CreateEvalResponsesRunDataSourceParam
-from .create_eval_completions_run_data_source_param import CreateEvalCompletionsRunDataSourceParam
+from ..chat.metadata_param import MetadataParam
+from .jsonl_run_data_source_param import JSONLRunDataSourceParam
+from .responses_run_data_source_param import ResponsesRunDataSourceParam
+from .completions_run_data_source_param import CompletionsRunDataSourceParam
 
 __all__ = ["RunCreateParams", "DataSource"]
 
@@ -16,7 +17,7 @@ class RunCreateParams(TypedDict, total=False):
     data_source: Required[DataSource]
     """Details about the run's data source."""
 
-    metadata: Optional[Dict[str, str]]
+    metadata: Optional[MetadataParam]
     """Set of 16 key-value pairs that can be attached to an object.
 
     This can be useful for storing additional information about the object in a
@@ -30,6 +31,4 @@ class RunCreateParams(TypedDict, total=False):
     """The name of the run."""
 
 
-DataSource: TypeAlias = Union[
-    CreateEvalJSONLRunDataSourceParam, CreateEvalCompletionsRunDataSourceParam, CreateEvalResponsesRunDataSourceParam
-]
+DataSource: TypeAlias = Union[JSONLRunDataSourceParam, CompletionsRunDataSourceParam, ResponsesRunDataSourceParam]

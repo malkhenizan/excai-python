@@ -6,6 +6,8 @@ from typing import Union, Optional
 from typing_extensions import Literal, Required, TypedDict
 
 from .._types import FileTypes, SequenceNotStr
+from .partial_images import PartialImages
+from .image_input_fidelity import ImageInputFidelity
 
 __all__ = ["ImageCreateEditParams"]
 
@@ -39,7 +41,7 @@ class ImageCreateEditParams(TypedDict, total=False):
     be set to either `png` (default value) or `webp`.
     """
 
-    input_fidelity: Optional[Literal["high", "low"]]
+    input_fidelity: Optional[ImageInputFidelity]
     """
     Control how much effort the model will exert to match the style and features,
     especially facial features, of input images. This parameter is only supported
@@ -79,7 +81,7 @@ class ImageCreateEditParams(TypedDict, total=False):
     `jpeg`, or `webp`. The default value is `png`.
     """
 
-    partial_images: Optional[int]
+    partial_images: Optional[PartialImages]
     """The number of partial images to generate.
 
     This parameter is used for streaming responses that return partial images. Value

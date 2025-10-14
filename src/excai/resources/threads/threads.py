@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Iterable, Optional
+from typing import Iterable, Optional
 
 import httpx
 
@@ -34,10 +34,10 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.thread_create_response import ThreadCreateResponse
+from ...types.thread_messages import ThreadMessages
+from ...types.chat.metadata_param import MetadataParam
 from ...types.thread_delete_response import ThreadDeleteResponse
-from ...types.thread_update_response import ThreadUpdateResponse
-from ...types.thread_retrieve_response import ThreadRetrieveResponse
+from ...types.threads.create_message_param import CreateMessageParam
 
 __all__ = ["ThreadsResource", "AsyncThreadsResource"]
 
@@ -57,7 +57,7 @@ class ThreadsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return ThreadsResourceWithRawResponse(self)
 
@@ -66,15 +66,15 @@ class ThreadsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return ThreadsResourceWithStreamingResponse(self)
 
     def create(
         self,
         *,
-        messages: Iterable[thread_create_params.Message] | Omit = omit,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        messages: Iterable[CreateMessageParam] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         tool_resources: Optional[thread_create_params.ToolResources] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -82,7 +82,7 @@ class ThreadsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ThreadCreateResponse:
+    ) -> ThreadMessages:
         """
         Create a thread.
 
@@ -123,7 +123,7 @@ class ThreadsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ThreadCreateResponse,
+            cast_to=ThreadMessages,
         )
 
     def retrieve(
@@ -136,7 +136,7 @@ class ThreadsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ThreadRetrieveResponse:
+    ) -> ThreadMessages:
         """
         Retrieves a thread.
 
@@ -156,14 +156,14 @@ class ThreadsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ThreadRetrieveResponse,
+            cast_to=ThreadMessages,
         )
 
     def update(
         self,
         thread_id: str,
         *,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         tool_resources: Optional[thread_update_params.ToolResources] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -171,7 +171,7 @@ class ThreadsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ThreadUpdateResponse:
+    ) -> ThreadMessages:
         """
         Modifies a thread.
 
@@ -210,7 +210,7 @@ class ThreadsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ThreadUpdateResponse,
+            cast_to=ThreadMessages,
         )
 
     def delete(
@@ -262,7 +262,7 @@ class AsyncThreadsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncThreadsResourceWithRawResponse(self)
 
@@ -271,15 +271,15 @@ class AsyncThreadsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncThreadsResourceWithStreamingResponse(self)
 
     async def create(
         self,
         *,
-        messages: Iterable[thread_create_params.Message] | Omit = omit,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        messages: Iterable[CreateMessageParam] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         tool_resources: Optional[thread_create_params.ToolResources] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -287,7 +287,7 @@ class AsyncThreadsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ThreadCreateResponse:
+    ) -> ThreadMessages:
         """
         Create a thread.
 
@@ -328,7 +328,7 @@ class AsyncThreadsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ThreadCreateResponse,
+            cast_to=ThreadMessages,
         )
 
     async def retrieve(
@@ -341,7 +341,7 @@ class AsyncThreadsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ThreadRetrieveResponse:
+    ) -> ThreadMessages:
         """
         Retrieves a thread.
 
@@ -361,14 +361,14 @@ class AsyncThreadsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ThreadRetrieveResponse,
+            cast_to=ThreadMessages,
         )
 
     async def update(
         self,
         thread_id: str,
         *,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         tool_resources: Optional[thread_update_params.ToolResources] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -376,7 +376,7 @@ class AsyncThreadsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ThreadUpdateResponse:
+    ) -> ThreadMessages:
         """
         Modifies a thread.
 
@@ -415,7 +415,7 @@ class AsyncThreadsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ThreadUpdateResponse,
+            cast_to=ThreadMessages,
         )
 
     async def delete(

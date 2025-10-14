@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Optional
+from typing import Union, Optional
 from typing_extensions import Literal
 
 import httpx
@@ -16,6 +16,7 @@ from .files import (
     AsyncFilesResourceWithStreamingResponse,
 )
 from ...types import (
+    ChunkingStrategyRequestParam,
     vector_store_list_params,
     vector_store_create_params,
     vector_store_search_params,
@@ -40,12 +41,12 @@ from .file_batches import (
     AsyncFileBatchesResourceWithStreamingResponse,
 )
 from ..._base_client import make_request_options
+from ...types.chat.metadata_param import MetadataParam
+from ...types.vector_store_object import VectorStoreObject
 from ...types.vector_store_list_response import VectorStoreListResponse
-from ...types.vector_store_create_response import VectorStoreCreateResponse
 from ...types.vector_store_delete_response import VectorStoreDeleteResponse
 from ...types.vector_store_search_response import VectorStoreSearchResponse
-from ...types.vector_store_update_response import VectorStoreUpdateResponse
-from ...types.vector_store_retrieve_response import VectorStoreRetrieveResponse
+from ...types.chunking_strategy_request_param import ChunkingStrategyRequestParam
 from ...types.vector_store_expiration_after_param import VectorStoreExpirationAfterParam
 
 __all__ = ["VectorStoresResource", "AsyncVectorStoresResource"]
@@ -66,7 +67,7 @@ class VectorStoresResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return VectorStoresResourceWithRawResponse(self)
 
@@ -75,17 +76,17 @@ class VectorStoresResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return VectorStoresResourceWithStreamingResponse(self)
 
     def create(
         self,
         *,
-        chunking_strategy: vector_store_create_params.ChunkingStrategy | Omit = omit,
+        chunking_strategy: ChunkingStrategyRequestParam | Omit = omit,
         expires_after: VectorStoreExpirationAfterParam | Omit = omit,
         file_ids: SequenceNotStr[str] | Omit = omit,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         name: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -93,7 +94,7 @@ class VectorStoresResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> VectorStoreCreateResponse:
+    ) -> VectorStoreObject:
         """
         Create a vector store.
 
@@ -139,7 +140,7 @@ class VectorStoresResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreCreateResponse,
+            cast_to=VectorStoreObject,
         )
 
     def retrieve(
@@ -152,7 +153,7 @@ class VectorStoresResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> VectorStoreRetrieveResponse:
+    ) -> VectorStoreObject:
         """
         Retrieves a vector store.
 
@@ -172,7 +173,7 @@ class VectorStoresResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreRetrieveResponse,
+            cast_to=VectorStoreObject,
         )
 
     def update(
@@ -180,7 +181,7 @@ class VectorStoresResource(SyncAPIResource):
         vector_store_id: str,
         *,
         expires_after: Optional[VectorStoreExpirationAfterParam] | Omit = omit,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         name: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -188,7 +189,7 @@ class VectorStoresResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> VectorStoreUpdateResponse:
+    ) -> VectorStoreObject:
         """
         Modifies a vector store.
 
@@ -227,7 +228,7 @@ class VectorStoresResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreUpdateResponse,
+            cast_to=VectorStoreObject,
         )
 
     def list(
@@ -402,7 +403,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncVectorStoresResourceWithRawResponse(self)
 
@@ -411,17 +412,17 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncVectorStoresResourceWithStreamingResponse(self)
 
     async def create(
         self,
         *,
-        chunking_strategy: vector_store_create_params.ChunkingStrategy | Omit = omit,
+        chunking_strategy: ChunkingStrategyRequestParam | Omit = omit,
         expires_after: VectorStoreExpirationAfterParam | Omit = omit,
         file_ids: SequenceNotStr[str] | Omit = omit,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         name: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -429,7 +430,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> VectorStoreCreateResponse:
+    ) -> VectorStoreObject:
         """
         Create a vector store.
 
@@ -475,7 +476,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreCreateResponse,
+            cast_to=VectorStoreObject,
         )
 
     async def retrieve(
@@ -488,7 +489,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> VectorStoreRetrieveResponse:
+    ) -> VectorStoreObject:
         """
         Retrieves a vector store.
 
@@ -508,7 +509,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreRetrieveResponse,
+            cast_to=VectorStoreObject,
         )
 
     async def update(
@@ -516,7 +517,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         vector_store_id: str,
         *,
         expires_after: Optional[VectorStoreExpirationAfterParam] | Omit = omit,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         name: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -524,7 +525,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> VectorStoreUpdateResponse:
+    ) -> VectorStoreObject:
         """
         Modifies a vector store.
 
@@ -563,7 +564,7 @@ class AsyncVectorStoresResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=VectorStoreUpdateResponse,
+            cast_to=VectorStoreObject,
         )
 
     async def list(

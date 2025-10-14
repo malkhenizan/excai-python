@@ -1,192 +1,33 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Union, Optional
+from typing import List, Union
 from typing_extensions import Literal, Annotated, TypeAlias
 
 from .._utils import PropertyInfo
 from .._models import BaseModel
-from .mcp_tool_call import McpToolCall
-from .mcp_list_tools import McpListTools
-from .output_message import OutputMessage
-from .computer_tool_call import ComputerToolCall
-from .shared.input_audio import InputAudio
-from .image_gen_tool_call import ImageGenToolCall
-from .mcp_approval_request import McpApprovalRequest
-from .web_search_tool_call import WebSearchToolCall
-from .file_search_tool_call import FileSearchToolCall
-from .local_shell_tool_call import LocalShellToolCall
-from .shared.input_file_content import InputFileContent
-from .shared.input_text_content import InputTextContent
-from .code_interpreter_tool_call import CodeInterpreterToolCall
-from .shared.input_image_content import InputImageContent
-from .computer_tool_call_safety_check import ComputerToolCallSafetyCheck
+from .conversations.input_message import InputMessage
+from .conversations.mcp_tool_call import McpToolCall
+from .conversations.mcp_list_tools import McpListTools
+from .conversations.output_message import OutputMessage
+from .conversations.computer_tool_call import ComputerToolCall
+from .conversations.image_gen_tool_call import ImageGenToolCall
+from .conversations.mcp_approval_request import McpApprovalRequest
+from .conversations.web_search_tool_call import WebSearchToolCall
+from .conversations.file_search_tool_call import FileSearchToolCall
+from .conversations.local_shell_tool_call import LocalShellToolCall
+from .conversations.code_interpreter_tool_call import CodeInterpreterToolCall
+from .conversations.function_tool_call_resource import FunctionToolCallResource
+from .conversations.local_shell_tool_call_output import LocalShellToolCallOutput
+from .conversations.mcp_approval_response_resource import McpApprovalResponseResource
+from .conversations.computer_tool_call_output_resource import ComputerToolCallOutputResource
+from .conversations.function_tool_call_output_resource import FunctionToolCallOutputResource
 
-__all__ = [
-    "ResponseListInputItemsResponse",
-    "Data",
-    "DataMessage",
-    "DataMessageContent",
-    "DataComputerCallOutput",
-    "DataComputerCallOutputOutput",
-    "DataFunctionCall",
-    "DataFunctionCallOutput",
-    "DataFunctionCallOutputOutputOutputContentList",
-    "DataLocalShellCallOutput",
-    "DataMcpApprovalResponse",
-]
-
-DataMessageContent: TypeAlias = Annotated[
-    Union[InputTextContent, InputImageContent, InputFileContent, InputAudio], PropertyInfo(discriminator="type")
-]
+__all__ = ["ResponseListInputItemsResponse", "Data", "DataMessage"]
 
 
-class DataMessage(BaseModel):
+class DataMessage(InputMessage):
     id: str
     """The unique ID of the message input."""
-
-    content: List[DataMessageContent]
-    """
-    A list of one or many input items to the model, containing different content
-    types.
-    """
-
-    role: Literal["user", "system", "developer"]
-    """The role of the message input. One of `user`, `system`, or `developer`."""
-
-    status: Optional[Literal["in_progress", "completed", "incomplete"]] = None
-    """The status of item.
-
-    One of `in_progress`, `completed`, or `incomplete`. Populated when items are
-    returned via API.
-    """
-
-    type: Optional[Literal["message"]] = None
-    """The type of the message input. Always set to `message`."""
-
-
-class DataComputerCallOutputOutput(BaseModel):
-    type: Literal["computer_screenshot"]
-    """Specifies the event type.
-
-    For a computer screenshot, this property is always set to `computer_screenshot`.
-    """
-
-    file_id: Optional[str] = None
-    """The identifier of an uploaded file that contains the screenshot."""
-
-    image_url: Optional[str] = None
-    """The URL of the screenshot image."""
-
-
-class DataComputerCallOutput(BaseModel):
-    id: str
-    """The unique ID of the computer call tool output."""
-
-    call_id: str
-    """The ID of the computer tool call that produced the output."""
-
-    output: DataComputerCallOutputOutput
-    """A computer screenshot image used with the computer use tool."""
-
-    type: Literal["computer_call_output"]
-    """The type of the computer tool call output. Always `computer_call_output`."""
-
-    acknowledged_safety_checks: Optional[List[ComputerToolCallSafetyCheck]] = None
-    """
-    The safety checks reported by the API that have been acknowledged by the
-    developer.
-    """
-
-    status: Optional[Literal["in_progress", "completed", "incomplete"]] = None
-    """The status of the message input.
-
-    One of `in_progress`, `completed`, or `incomplete`. Populated when input items
-    are returned via API.
-    """
-
-
-class DataFunctionCall(BaseModel):
-    id: str
-    """The unique ID of the function tool call."""
-
-    arguments: str
-    """A JSON string of the arguments to pass to the function."""
-
-    call_id: str
-    """The unique ID of the function tool call generated by the model."""
-
-    name: str
-    """The name of the function to run."""
-
-    type: Literal["function_call"]
-    """The type of the function tool call. Always `function_call`."""
-
-    status: Optional[Literal["in_progress", "completed", "incomplete"]] = None
-    """The status of the item.
-
-    One of `in_progress`, `completed`, or `incomplete`. Populated when items are
-    returned via API.
-    """
-
-
-DataFunctionCallOutputOutputOutputContentList: TypeAlias = Annotated[
-    Union[InputTextContent, InputImageContent, InputFileContent], PropertyInfo(discriminator="type")
-]
-
-
-class DataFunctionCallOutput(BaseModel):
-    id: str
-    """The unique ID of the function call tool output."""
-
-    call_id: str
-    """The unique ID of the function tool call generated by the model."""
-
-    output: Union[str, List[DataFunctionCallOutputOutputOutputContentList]]
-    """
-    The output from the function call generated by your code. Can be a string or an
-    list of output content.
-    """
-
-    type: Literal["function_call_output"]
-    """The type of the function tool call output. Always `function_call_output`."""
-
-    status: Optional[Literal["in_progress", "completed", "incomplete"]] = None
-    """The status of the item.
-
-    One of `in_progress`, `completed`, or `incomplete`. Populated when items are
-    returned via API.
-    """
-
-
-class DataLocalShellCallOutput(BaseModel):
-    id: str
-    """The unique ID of the local shell tool call generated by the model."""
-
-    output: str
-    """A JSON string of the output of the local shell tool call."""
-
-    type: Literal["local_shell_call_output"]
-    """The type of the local shell tool call output. Always `local_shell_call_output`."""
-
-    status: Optional[Literal["in_progress", "completed", "incomplete"]] = None
-    """The status of the item. One of `in_progress`, `completed`, or `incomplete`."""
-
-
-class DataMcpApprovalResponse(BaseModel):
-    id: str
-    """The unique ID of the approval response"""
-
-    approval_request_id: str
-    """The ID of the approval request being answered."""
-
-    approve: bool
-    """Whether the request was approved."""
-
-    type: Literal["mcp_approval_response"]
-    """The type of the item. Always `mcp_approval_response`."""
-
-    reason: Optional[str] = None
-    """Optional reason for the decision."""
 
 
 Data: TypeAlias = Annotated[
@@ -195,17 +36,17 @@ Data: TypeAlias = Annotated[
         OutputMessage,
         FileSearchToolCall,
         ComputerToolCall,
-        DataComputerCallOutput,
+        ComputerToolCallOutputResource,
         WebSearchToolCall,
-        DataFunctionCall,
-        DataFunctionCallOutput,
+        FunctionToolCallResource,
+        FunctionToolCallOutputResource,
         ImageGenToolCall,
         CodeInterpreterToolCall,
         LocalShellToolCall,
-        DataLocalShellCallOutput,
+        LocalShellToolCallOutput,
         McpListTools,
         McpApprovalRequest,
-        DataMcpApprovalResponse,
+        McpApprovalResponseResource,
         McpToolCall,
     ],
     PropertyInfo(discriminator="type"),

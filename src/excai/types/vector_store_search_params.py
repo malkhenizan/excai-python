@@ -6,8 +6,8 @@ from typing import Union
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 from .._types import SequenceNotStr
-from .shared_params.compound_filter import CompoundFilter
-from .shared_params.comparison_filter import ComparisonFilter
+from .compound_filter_param import CompoundFilterParam
+from .comparison_filter_param import ComparisonFilterParam
 
 __all__ = ["VectorStoreSearchParams", "Filters", "RankingOptions"]
 
@@ -32,7 +32,7 @@ class VectorStoreSearchParams(TypedDict, total=False):
     """Whether to rewrite the natural language query for vector search."""
 
 
-Filters: TypeAlias = Union[ComparisonFilter, CompoundFilter]
+Filters: TypeAlias = Union[ComparisonFilterParam, CompoundFilterParam]
 
 
 class RankingOptions(TypedDict, total=False):

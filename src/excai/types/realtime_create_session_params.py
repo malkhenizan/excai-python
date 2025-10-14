@@ -2,24 +2,20 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Union, Iterable, Optional
+from typing import List, Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
-from .shared_params.input_file_content import InputFileContent
-from .shared_params.input_text_content import InputTextContent
-from .shared_params.input_image_content import InputImageContent
+from .realtime.prompt_param import PromptParam
+from .voice_ids_shared_param import VoiceIDsSharedParam
+from .realtime.realtime_truncation_param import RealtimeTruncationParam
 
 __all__ = [
     "RealtimeCreateSessionParams",
     "ClientSecret",
     "InputAudioTranscription",
-    "Prompt",
-    "PromptVariables",
     "Tool",
     "Tracing",
     "TracingTracingConfiguration",
-    "Truncation",
-    "TruncationRetentionRatioTruncation",
     "TurnDetection",
 ]
 
@@ -70,7 +66,7 @@ class RealtimeCreateSessionParams(TypedDict, total=False):
     output_audio_format: str
     """The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`."""
 
-    prompt: Optional[Prompt]
+    prompt: Optional[PromptParam]
     """
     Reference to a prompt template and its variables.
     [Learn more](https://main.excai.ai/docs/guides/text?api-mode=responses#reusable-prompts).
@@ -106,7 +102,7 @@ class RealtimeCreateSessionParams(TypedDict, total=False):
     name, group id, and metadata.
     """
 
-    truncation: Truncation
+    truncation: RealtimeTruncationParam
     """
     Controls how the realtime conversation is truncated prior to model inference.
     The default is `auto`.
@@ -120,7 +116,7 @@ class RealtimeCreateSessionParams(TypedDict, total=False):
     speech.
     """
 
-    voice: Union[str, Literal["alloy", "ash", "ballad", "coral", "echo", "sage", "shimmer", "verse", "marin", "cedar"]]
+    voice: VoiceIDsSharedParam
     """The voice the model uses to respond.
 
     Voice cannot be changed during the session once the model has responded with
@@ -147,24 +143,6 @@ class ClientSecret(TypedDict, total=False):
 class InputAudioTranscription(TypedDict, total=False):
     model: str
     """The model to use for transcription."""
-
-
-PromptVariables: TypeAlias = Union[str, InputTextContent, InputImageContent, InputFileContent]
-
-
-class Prompt(TypedDict, total=False):
-    id: Required[str]
-    """The unique identifier of the prompt template to use."""
-
-    variables: Optional[Dict[str, PromptVariables]]
-    """Optional map of values to substitute in for variables in your prompt.
-
-    The substitution values can either be strings, or other Response input types
-    like images or files.
-    """
-
-    version: Optional[str]
-    """Optional version of the prompt template."""
 
 
 class Tool(TypedDict, total=False):
@@ -205,20 +183,6 @@ class TracingTracingConfiguration(TypedDict, total=False):
 
 
 Tracing: TypeAlias = Union[Literal["auto"], TracingTracingConfiguration]
-
-
-class TruncationRetentionRatioTruncation(TypedDict, total=False):
-    retention_ratio: Required[float]
-    """
-    Fraction of post-instruction conversation tokens to retain (0.0 - 1.0) when the
-    conversation exceeds the input token limit.
-    """
-
-    type: Required[Literal["retention_ratio"]]
-    """Use retention ratio truncation."""
-
-
-Truncation: TypeAlias = Union[Literal["auto", "disabled"], TruncationRetentionRatioTruncation]
 
 
 class TurnDetection(TypedDict, total=False):

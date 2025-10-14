@@ -19,9 +19,10 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.excai_file import ExcaiFile
 from ..types.file_list_response import FileListResponse
-from ..types.shared.ex_cai_file import ExCaiFile
 from ..types.file_delete_response import FileDeleteResponse
+from ..types.file_expiration_after_param import FileExpirationAfterParam
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -33,7 +34,7 @@ class FilesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return FilesResourceWithRawResponse(self)
 
@@ -42,7 +43,7 @@ class FilesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return FilesResourceWithStreamingResponse(self)
 
@@ -56,7 +57,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExCaiFile:
+    ) -> ExcaiFile:
         """
         Returns information about a specific file.
 
@@ -76,7 +77,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ExCaiFile,
+            cast_to=ExcaiFile,
         )
 
     def list(
@@ -210,14 +211,14 @@ class FilesResource(SyncAPIResource):
         *,
         file: FileTypes,
         purpose: Literal["assistants", "batch", "fine-tune", "vision", "user_data", "evals"],
-        expires_after: file_upload_params.ExpiresAfter | Omit = omit,
+        expires_after: FileExpirationAfterParam | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExCaiFile:
+    ) -> ExcaiFile:
         """Upload a file that can be used across various endpoints.
 
         Individual files can be
@@ -280,7 +281,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ExCaiFile,
+            cast_to=ExcaiFile,
         )
 
 
@@ -291,7 +292,7 @@ class AsyncFilesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncFilesResourceWithRawResponse(self)
 
@@ -300,7 +301,7 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncFilesResourceWithStreamingResponse(self)
 
@@ -314,7 +315,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExCaiFile:
+    ) -> ExcaiFile:
         """
         Returns information about a specific file.
 
@@ -334,7 +335,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ExCaiFile,
+            cast_to=ExcaiFile,
         )
 
     async def list(
@@ -468,14 +469,14 @@ class AsyncFilesResource(AsyncAPIResource):
         *,
         file: FileTypes,
         purpose: Literal["assistants", "batch", "fine-tune", "vision", "user_data", "evals"],
-        expires_after: file_upload_params.ExpiresAfter | Omit = omit,
+        expires_after: FileExpirationAfterParam | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ExCaiFile:
+    ) -> ExcaiFile:
         """Upload a file that can be used across various endpoints.
 
         Individual files can be
@@ -538,7 +539,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ExCaiFile,
+            cast_to=ExcaiFile,
         )
 
 

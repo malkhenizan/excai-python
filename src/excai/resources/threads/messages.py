@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Iterable, Optional
+from typing import Union, Iterable, Optional
 from typing_extensions import Literal
 
 import httpx
@@ -19,11 +19,10 @@ from ..._response import (
 )
 from ..._base_client import make_request_options
 from ...types.threads import message_list_params, message_create_params, message_update_params
+from ...types.threads.message import Message
+from ...types.chat.metadata_param import MetadataParam
 from ...types.threads.message_list_response import MessageListResponse
-from ...types.threads.message_create_response import MessageCreateResponse
 from ...types.threads.message_delete_response import MessageDeleteResponse
-from ...types.threads.message_update_response import MessageUpdateResponse
-from ...types.threads.message_retrieve_response import MessageRetrieveResponse
 
 __all__ = ["MessagesResource", "AsyncMessagesResource"]
 
@@ -35,7 +34,7 @@ class MessagesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return MessagesResourceWithRawResponse(self)
 
@@ -44,7 +43,7 @@ class MessagesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return MessagesResourceWithStreamingResponse(self)
 
@@ -55,14 +54,14 @@ class MessagesResource(SyncAPIResource):
         content: Union[str, Iterable[message_create_params.ContentArrayOfContentPart]],
         role: Literal["user", "assistant"],
         attachments: Optional[Iterable[message_create_params.Attachment]] | Omit = omit,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> MessageCreateResponse:
+    ) -> Message:
         """
         Create a message.
 
@@ -110,7 +109,7 @@ class MessagesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=MessageCreateResponse,
+            cast_to=Message,
         )
 
     def retrieve(
@@ -124,7 +123,7 @@ class MessagesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> MessageRetrieveResponse:
+    ) -> Message:
         """
         Retrieve a message.
 
@@ -146,7 +145,7 @@ class MessagesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=MessageRetrieveResponse,
+            cast_to=Message,
         )
 
     def update(
@@ -154,14 +153,14 @@ class MessagesResource(SyncAPIResource):
         message_id: str,
         *,
         thread_id: str,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> MessageUpdateResponse:
+    ) -> Message:
         """
         Modifies a message.
 
@@ -191,7 +190,7 @@ class MessagesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=MessageUpdateResponse,
+            cast_to=Message,
         )
 
     def list(
@@ -307,7 +306,7 @@ class AsyncMessagesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncMessagesResourceWithRawResponse(self)
 
@@ -316,7 +315,7 @@ class AsyncMessagesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncMessagesResourceWithStreamingResponse(self)
 
@@ -327,14 +326,14 @@ class AsyncMessagesResource(AsyncAPIResource):
         content: Union[str, Iterable[message_create_params.ContentArrayOfContentPart]],
         role: Literal["user", "assistant"],
         attachments: Optional[Iterable[message_create_params.Attachment]] | Omit = omit,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> MessageCreateResponse:
+    ) -> Message:
         """
         Create a message.
 
@@ -382,7 +381,7 @@ class AsyncMessagesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=MessageCreateResponse,
+            cast_to=Message,
         )
 
     async def retrieve(
@@ -396,7 +395,7 @@ class AsyncMessagesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> MessageRetrieveResponse:
+    ) -> Message:
         """
         Retrieve a message.
 
@@ -418,7 +417,7 @@ class AsyncMessagesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=MessageRetrieveResponse,
+            cast_to=Message,
         )
 
     async def update(
@@ -426,14 +425,14 @@ class AsyncMessagesResource(AsyncAPIResource):
         message_id: str,
         *,
         thread_id: str,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> MessageUpdateResponse:
+    ) -> Message:
         """
         Modifies a message.
 
@@ -463,7 +462,7 @@ class AsyncMessagesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=MessageUpdateResponse,
+            cast_to=Message,
         )
 
     async def list(

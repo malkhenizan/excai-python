@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import List
 from typing_extensions import Literal, TypedDict
 
+from .noise_reduction_type import NoiseReductionType
 from .audio_transcription_param import AudioTranscriptionParam
 
 __all__ = ["RealtimeCreateTranscriptionSessionParams", "InputAudioNoiseReduction", "TurnDetection"]
@@ -51,7 +52,7 @@ class RealtimeCreateTranscriptionSessionParams(TypedDict, total=False):
 
 
 class InputAudioNoiseReduction(TypedDict, total=False):
-    type: Literal["near_field", "far_field"]
+    type: NoiseReductionType
     """Type of noise reduction.
 
     `near_field` is for close-talking microphones such as headphones, `far_field` is

@@ -3,7 +3,7 @@
 from typing import List
 
 from ...._models import BaseModel
-from ..project_user import ProjectUser
+from .project_user import ProjectUser
 
 __all__ = ["UserListResponse"]
 

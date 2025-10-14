@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Iterable, Optional
+from typing import Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypedDict
 
 from ..._types import SequenceNotStr
+from ..chat.metadata_param import MetadataParam
 from .fine_tune_method_param import FineTuneMethodParam
 
 __all__ = ["JobCreateParams", "Hyperparameters", "Integration", "IntegrationWandb"]
@@ -49,7 +50,7 @@ class JobCreateParams(TypedDict, total=False):
     integrations: Optional[Iterable[Integration]]
     """A list of integrations to enable for your fine-tuning job."""
 
-    metadata: Optional[Dict[str, str]]
+    metadata: Optional[MetadataParam]
     """Set of 16 key-value pairs that can be attached to an object.
 
     This can be useful for storing additional information about the object in a

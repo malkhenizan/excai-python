@@ -7,8 +7,10 @@ from typing import Any, cast
 
 import pytest
 
-from excai import ExCai, AsyncExCai
-from excai.types import CompletionCreateResponse
+from excai import Excai, AsyncExcai
+from excai.types import (
+    CompletionCreateResponse,
+)
 from tests.utils import assert_matches_type
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -19,7 +21,7 @@ class TestCompletions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create(self, client: ExCai) -> None:
+    def test_method_create(self, client: Excai) -> None:
         completion = client.completions.create(
             model="string",
             prompt="This is a test.",
@@ -28,7 +30,7 @@ class TestCompletions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create_with_all_params(self, client: ExCai) -> None:
+    def test_method_create_with_all_params(self, client: Excai) -> None:
         completion = client.completions.create(
             model="string",
             prompt="This is a test.",
@@ -56,7 +58,7 @@ class TestCompletions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_create(self, client: ExCai) -> None:
+    def test_raw_response_create(self, client: Excai) -> None:
         response = client.completions.with_raw_response.create(
             model="string",
             prompt="This is a test.",
@@ -69,7 +71,7 @@ class TestCompletions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_create(self, client: ExCai) -> None:
+    def test_streaming_response_create(self, client: Excai) -> None:
         with client.completions.with_streaming_response.create(
             model="string",
             prompt="This is a test.",
@@ -90,7 +92,7 @@ class TestAsyncCompletions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create(self, async_client: AsyncExCai) -> None:
+    async def test_method_create(self, async_client: AsyncExcai) -> None:
         completion = await async_client.completions.create(
             model="string",
             prompt="This is a test.",
@@ -99,7 +101,7 @@ class TestAsyncCompletions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create_with_all_params(self, async_client: AsyncExCai) -> None:
+    async def test_method_create_with_all_params(self, async_client: AsyncExcai) -> None:
         completion = await async_client.completions.create(
             model="string",
             prompt="This is a test.",
@@ -127,7 +129,7 @@ class TestAsyncCompletions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_create(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_create(self, async_client: AsyncExcai) -> None:
         response = await async_client.completions.with_raw_response.create(
             model="string",
             prompt="This is a test.",
@@ -140,7 +142,7 @@ class TestAsyncCompletions:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_create(self, async_client: AsyncExcai) -> None:
         async with async_client.completions.with_streaming_response.create(
             model="string",
             prompt="This is a test.",

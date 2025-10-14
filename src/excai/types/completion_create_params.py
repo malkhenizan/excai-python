@@ -6,8 +6,10 @@ from typing import Dict, Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypedDict
 
 from .._types import SequenceNotStr
+from .stop_configuration_param import StopConfigurationParam
+from .chat_completion_stream_options_param import ChatCompletionStreamOptionsParam
 
-__all__ = ["CompletionCreateParams", "StreamOptions"]
+__all__ = ["CompletionCreateParams"]
 
 
 class CompletionCreateParams(TypedDict, total=False):
@@ -118,7 +120,7 @@ class CompletionCreateParams(TypedDict, total=False):
     response parameter to monitor changes in the backend.
     """
 
-    stop: Union[Optional[str], SequenceNotStr[str], None]
+    stop: Optional[StopConfigurationParam]
     """Not supported with latest reasoning models `o3` and `o4-mini`.
 
     Up to 4 sequences where the API will stop generating further tokens. The
@@ -135,7 +137,7 @@ class CompletionCreateParams(TypedDict, total=False):
     [Example Python code](https://cookbook.excai.com/examples/how_to_stream_completions).
     """
 
-    stream_options: Optional[StreamOptions]
+    stream_options: Optional[ChatCompletionStreamOptionsParam]
     """Options for streaming response. Only set this when you set `stream: true`."""
 
     suffix: Optional[str]
@@ -167,28 +169,4 @@ class CompletionCreateParams(TypedDict, total=False):
     A unique identifier representing your end-user, which can help EXCai to monitor
     and detect abuse.
     [Learn more](https://main.excai.ai/docs/guides/safety-best-practices#end-user-ids).
-    """
-
-
-class StreamOptions(TypedDict, total=False):
-    include_obfuscation: bool
-    """When true, stream obfuscation will be enabled.
-
-    Stream obfuscation adds random characters to an `obfuscation` field on streaming
-    delta events to normalize payload sizes as a mitigation to certain side-channel
-    attacks. These obfuscation fields are included by default, but add a small
-    amount of overhead to the data stream. You can set `include_obfuscation` to
-    false to optimize for bandwidth if you trust the network links between your
-    application and the EXCai API.
-    """
-
-    include_usage: bool
-    """If set, an additional chunk will be streamed before the `data: [DONE]` message.
-
-    The `usage` field on this chunk shows the token usage statistics for the entire
-    request, and the `choices` field will always be an empty array.
-
-    All other chunks will also include a `usage` field, but with a null value.
-    **NOTE:** If the stream is interrupted, you may not receive the final usage
-    chunk which contains the total token usage for the request.
     """

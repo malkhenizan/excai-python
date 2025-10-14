@@ -4,7 +4,7 @@ from typing import Dict, List, Optional
 from typing_extensions import Literal
 
 from .._models import BaseModel
-from .shared.completion_usage import CompletionUsage
+from .chat.usage import Usage
 
 __all__ = ["CompletionCreateResponse", "Choice", "ChoiceLogprobs"]
 
@@ -59,5 +59,5 @@ class CompletionCreateResponse(BaseModel):
     backend changes have been made that might impact determinism.
     """
 
-    usage: Optional[CompletionUsage] = None
+    usage: Optional[Usage] = None
     """Usage statistics for the completion request."""

@@ -7,10 +7,10 @@ from typing import Any, cast
 
 import pytest
 
-from excai import ExCai, AsyncExCai
+from excai import Excai, AsyncExcai
 from tests.utils import assert_matches_type
-from excai.types.organization import ProjectServiceAccount
 from excai.types.organization.projects import (
+    ProjectServiceAccount,
     ServiceAccountListResponse,
     ServiceAccountCreateResponse,
     ServiceAccountDeleteResponse,
@@ -24,7 +24,7 @@ class TestServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_create(self, client: ExCai) -> None:
+    def test_method_create(self, client: Excai) -> None:
         service_account = client.organization.projects.service_accounts.create(
             project_id="project_id",
             name="name",
@@ -33,7 +33,7 @@ class TestServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_create(self, client: ExCai) -> None:
+    def test_raw_response_create(self, client: Excai) -> None:
         response = client.organization.projects.service_accounts.with_raw_response.create(
             project_id="project_id",
             name="name",
@@ -46,7 +46,7 @@ class TestServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_create(self, client: ExCai) -> None:
+    def test_streaming_response_create(self, client: Excai) -> None:
         with client.organization.projects.service_accounts.with_streaming_response.create(
             project_id="project_id",
             name="name",
@@ -61,7 +61,7 @@ class TestServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_create(self, client: ExCai) -> None:
+    def test_path_params_create(self, client: Excai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             client.organization.projects.service_accounts.with_raw_response.create(
                 project_id="",
@@ -70,7 +70,7 @@ class TestServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve(self, client: ExCai) -> None:
+    def test_method_retrieve(self, client: Excai) -> None:
         service_account = client.organization.projects.service_accounts.retrieve(
             service_account_id="service_account_id",
             project_id="project_id",
@@ -79,7 +79,7 @@ class TestServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_retrieve(self, client: ExCai) -> None:
+    def test_raw_response_retrieve(self, client: Excai) -> None:
         response = client.organization.projects.service_accounts.with_raw_response.retrieve(
             service_account_id="service_account_id",
             project_id="project_id",
@@ -92,7 +92,7 @@ class TestServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve(self, client: ExCai) -> None:
+    def test_streaming_response_retrieve(self, client: Excai) -> None:
         with client.organization.projects.service_accounts.with_streaming_response.retrieve(
             service_account_id="service_account_id",
             project_id="project_id",
@@ -107,7 +107,7 @@ class TestServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_retrieve(self, client: ExCai) -> None:
+    def test_path_params_retrieve(self, client: Excai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             client.organization.projects.service_accounts.with_raw_response.retrieve(
                 service_account_id="service_account_id",
@@ -122,7 +122,7 @@ class TestServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_list(self, client: ExCai) -> None:
+    def test_method_list(self, client: Excai) -> None:
         service_account = client.organization.projects.service_accounts.list(
             project_id="project_id",
         )
@@ -130,7 +130,7 @@ class TestServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_list_with_all_params(self, client: ExCai) -> None:
+    def test_method_list_with_all_params(self, client: Excai) -> None:
         service_account = client.organization.projects.service_accounts.list(
             project_id="project_id",
             after="after",
@@ -140,7 +140,7 @@ class TestServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_list(self, client: ExCai) -> None:
+    def test_raw_response_list(self, client: Excai) -> None:
         response = client.organization.projects.service_accounts.with_raw_response.list(
             project_id="project_id",
         )
@@ -152,7 +152,7 @@ class TestServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_list(self, client: ExCai) -> None:
+    def test_streaming_response_list(self, client: Excai) -> None:
         with client.organization.projects.service_accounts.with_streaming_response.list(
             project_id="project_id",
         ) as response:
@@ -166,7 +166,7 @@ class TestServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_list(self, client: ExCai) -> None:
+    def test_path_params_list(self, client: Excai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             client.organization.projects.service_accounts.with_raw_response.list(
                 project_id="",
@@ -174,7 +174,7 @@ class TestServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_delete(self, client: ExCai) -> None:
+    def test_method_delete(self, client: Excai) -> None:
         service_account = client.organization.projects.service_accounts.delete(
             service_account_id="service_account_id",
             project_id="project_id",
@@ -183,7 +183,7 @@ class TestServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_delete(self, client: ExCai) -> None:
+    def test_raw_response_delete(self, client: Excai) -> None:
         response = client.organization.projects.service_accounts.with_raw_response.delete(
             service_account_id="service_account_id",
             project_id="project_id",
@@ -196,7 +196,7 @@ class TestServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_delete(self, client: ExCai) -> None:
+    def test_streaming_response_delete(self, client: Excai) -> None:
         with client.organization.projects.service_accounts.with_streaming_response.delete(
             service_account_id="service_account_id",
             project_id="project_id",
@@ -211,7 +211,7 @@ class TestServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_delete(self, client: ExCai) -> None:
+    def test_path_params_delete(self, client: Excai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             client.organization.projects.service_accounts.with_raw_response.delete(
                 service_account_id="service_account_id",
@@ -232,7 +232,7 @@ class TestAsyncServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_create(self, async_client: AsyncExCai) -> None:
+    async def test_method_create(self, async_client: AsyncExcai) -> None:
         service_account = await async_client.organization.projects.service_accounts.create(
             project_id="project_id",
             name="name",
@@ -241,7 +241,7 @@ class TestAsyncServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_create(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_create(self, async_client: AsyncExcai) -> None:
         response = await async_client.organization.projects.service_accounts.with_raw_response.create(
             project_id="project_id",
             name="name",
@@ -254,7 +254,7 @@ class TestAsyncServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_create(self, async_client: AsyncExcai) -> None:
         async with async_client.organization.projects.service_accounts.with_streaming_response.create(
             project_id="project_id",
             name="name",
@@ -269,7 +269,7 @@ class TestAsyncServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_create(self, async_client: AsyncExCai) -> None:
+    async def test_path_params_create(self, async_client: AsyncExcai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             await async_client.organization.projects.service_accounts.with_raw_response.create(
                 project_id="",
@@ -278,7 +278,7 @@ class TestAsyncServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncExCai) -> None:
+    async def test_method_retrieve(self, async_client: AsyncExcai) -> None:
         service_account = await async_client.organization.projects.service_accounts.retrieve(
             service_account_id="service_account_id",
             project_id="project_id",
@@ -287,7 +287,7 @@ class TestAsyncServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_retrieve(self, async_client: AsyncExcai) -> None:
         response = await async_client.organization.projects.service_accounts.with_raw_response.retrieve(
             service_account_id="service_account_id",
             project_id="project_id",
@@ -300,7 +300,7 @@ class TestAsyncServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_retrieve(self, async_client: AsyncExcai) -> None:
         async with async_client.organization.projects.service_accounts.with_streaming_response.retrieve(
             service_account_id="service_account_id",
             project_id="project_id",
@@ -315,7 +315,7 @@ class TestAsyncServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncExCai) -> None:
+    async def test_path_params_retrieve(self, async_client: AsyncExcai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             await async_client.organization.projects.service_accounts.with_raw_response.retrieve(
                 service_account_id="service_account_id",
@@ -330,7 +330,7 @@ class TestAsyncServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_list(self, async_client: AsyncExCai) -> None:
+    async def test_method_list(self, async_client: AsyncExcai) -> None:
         service_account = await async_client.organization.projects.service_accounts.list(
             project_id="project_id",
         )
@@ -338,7 +338,7 @@ class TestAsyncServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_list_with_all_params(self, async_client: AsyncExCai) -> None:
+    async def test_method_list_with_all_params(self, async_client: AsyncExcai) -> None:
         service_account = await async_client.organization.projects.service_accounts.list(
             project_id="project_id",
             after="after",
@@ -348,7 +348,7 @@ class TestAsyncServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_list(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_list(self, async_client: AsyncExcai) -> None:
         response = await async_client.organization.projects.service_accounts.with_raw_response.list(
             project_id="project_id",
         )
@@ -360,7 +360,7 @@ class TestAsyncServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_list(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_list(self, async_client: AsyncExcai) -> None:
         async with async_client.organization.projects.service_accounts.with_streaming_response.list(
             project_id="project_id",
         ) as response:
@@ -374,7 +374,7 @@ class TestAsyncServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_list(self, async_client: AsyncExCai) -> None:
+    async def test_path_params_list(self, async_client: AsyncExcai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             await async_client.organization.projects.service_accounts.with_raw_response.list(
                 project_id="",
@@ -382,7 +382,7 @@ class TestAsyncServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_delete(self, async_client: AsyncExCai) -> None:
+    async def test_method_delete(self, async_client: AsyncExcai) -> None:
         service_account = await async_client.organization.projects.service_accounts.delete(
             service_account_id="service_account_id",
             project_id="project_id",
@@ -391,7 +391,7 @@ class TestAsyncServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_delete(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_delete(self, async_client: AsyncExcai) -> None:
         response = await async_client.organization.projects.service_accounts.with_raw_response.delete(
             service_account_id="service_account_id",
             project_id="project_id",
@@ -404,7 +404,7 @@ class TestAsyncServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_delete(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_delete(self, async_client: AsyncExcai) -> None:
         async with async_client.organization.projects.service_accounts.with_streaming_response.delete(
             service_account_id="service_account_id",
             project_id="project_id",
@@ -419,7 +419,7 @@ class TestAsyncServiceAccounts:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_delete(self, async_client: AsyncExCai) -> None:
+    async def test_path_params_delete(self, async_client: AsyncExcai) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
             await async_client.organization.projects.service_accounts.with_raw_response.delete(
                 service_account_id="service_account_id",

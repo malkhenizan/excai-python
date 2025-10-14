@@ -19,10 +19,9 @@ from ..._response import (
 )
 from ..._base_client import make_request_options
 from ...types.organization import admin_api_key_list_params, admin_api_key_create_params
+from ...types.organization.admin_api_key import AdminAPIKey
 from ...types.organization.admin_api_key_list_response import AdminAPIKeyListResponse
-from ...types.organization.admin_api_key_create_response import AdminAPIKeyCreateResponse
 from ...types.organization.admin_api_key_delete_response import AdminAPIKeyDeleteResponse
-from ...types.organization.admin_api_key_retrieve_response import AdminAPIKeyRetrieveResponse
 
 __all__ = ["AdminAPIKeysResource", "AsyncAdminAPIKeysResource"]
 
@@ -34,7 +33,7 @@ class AdminAPIKeysResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AdminAPIKeysResourceWithRawResponse(self)
 
@@ -43,7 +42,7 @@ class AdminAPIKeysResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AdminAPIKeysResourceWithStreamingResponse(self)
 
@@ -57,7 +56,7 @@ class AdminAPIKeysResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AdminAPIKeyCreateResponse:
+    ) -> AdminAPIKey:
         """
         Create an organization admin API key
 
@@ -76,7 +75,7 @@ class AdminAPIKeysResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AdminAPIKeyCreateResponse,
+            cast_to=AdminAPIKey,
         )
 
     def retrieve(
@@ -89,7 +88,7 @@ class AdminAPIKeysResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AdminAPIKeyRetrieveResponse:
+    ) -> AdminAPIKey:
         """
         Retrieve a single organization API key
 
@@ -111,7 +110,7 @@ class AdminAPIKeysResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AdminAPIKeyRetrieveResponse,
+            cast_to=AdminAPIKey,
         )
 
     def list(
@@ -207,7 +206,7 @@ class AsyncAdminAPIKeysResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncAdminAPIKeysResourceWithRawResponse(self)
 
@@ -216,7 +215,7 @@ class AsyncAdminAPIKeysResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncAdminAPIKeysResourceWithStreamingResponse(self)
 
@@ -230,7 +229,7 @@ class AsyncAdminAPIKeysResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AdminAPIKeyCreateResponse:
+    ) -> AdminAPIKey:
         """
         Create an organization admin API key
 
@@ -249,7 +248,7 @@ class AsyncAdminAPIKeysResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AdminAPIKeyCreateResponse,
+            cast_to=AdminAPIKey,
         )
 
     async def retrieve(
@@ -262,7 +261,7 @@ class AsyncAdminAPIKeysResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AdminAPIKeyRetrieveResponse:
+    ) -> AdminAPIKey:
         """
         Retrieve a single organization API key
 
@@ -284,7 +283,7 @@ class AsyncAdminAPIKeysResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AdminAPIKeyRetrieveResponse,
+            cast_to=AdminAPIKey,
         )
 
     async def list(

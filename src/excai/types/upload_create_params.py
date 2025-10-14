@@ -4,7 +4,9 @@ from __future__ import annotations
 
 from typing_extensions import Literal, Required, TypedDict
 
-__all__ = ["UploadCreateParams", "ExpiresAfter"]
+from .file_expiration_after_param import FileExpirationAfterParam
+
+__all__ = ["UploadCreateParams"]
 
 
 class UploadCreateParams(TypedDict, total=False):
@@ -28,23 +30,9 @@ class UploadCreateParams(TypedDict, total=False):
     [documentation on File purposes](https://main.excai.ai/docs/api-reference/files/create#files-create-purpose).
     """
 
-    expires_after: ExpiresAfter
+    expires_after: FileExpirationAfterParam
     """The expiration policy for a file.
 
     By default, files with `purpose=batch` expire after 30 days and all other files
     are persisted until they are manually deleted.
-    """
-
-
-class ExpiresAfter(TypedDict, total=False):
-    anchor: Required[Literal["created_at"]]
-    """Anchor timestamp after which the expiration policy applies.
-
-    Supported anchors: `created_at`.
-    """
-
-    seconds: Required[int]
-    """The number of seconds after the anchor time that the file will expire.
-
-    Must be between 3600 (1 hour) and 2592000 (30 days).
     """

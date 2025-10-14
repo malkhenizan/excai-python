@@ -18,11 +18,11 @@ import pytest
 from respx import MockRouter
 from pydantic import ValidationError
 
-from excai import ExCai, AsyncExCai, APIResponseValidationError
+from excai import Excai, AsyncExcai, APIResponseValidationError
 from excai._types import Omit
 from excai._utils import asyncify
 from excai._models import BaseModel, FinalRequestOptions
-from excai._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
+from excai._exceptions import ExcaiError, APIStatusError, APITimeoutError, APIResponseValidationError
 from excai._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
@@ -50,7 +50,7 @@ def _low_retry_timeout(*_args: Any, **_kwargs: Any) -> float:
     return 0.1
 
 
-def _get_open_connections(client: ExCai | AsyncExCai) -> int:
+def _get_open_connections(client: Excai | AsyncExcai) -> int:
     transport = client._client._transport
     assert isinstance(transport, httpx.HTTPTransport) or isinstance(transport, httpx.AsyncHTTPTransport)
 
@@ -58,8 +58,8 @@ def _get_open_connections(client: ExCai | AsyncExCai) -> int:
     return len(pool._requests)
 
 
-class TestExCai:
-    client = ExCai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+class TestExcai:
+    client = Excai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
     @pytest.mark.respx(base_url=base_url)
     def test_raw_response(self, respx_mock: MockRouter) -> None:
@@ -106,7 +106,7 @@ class TestExCai:
         assert isinstance(self.client.timeout, httpx.Timeout)
 
     def test_copy_default_headers(self) -> None:
-        client = ExCai(
+        client = Excai(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         assert client.default_headers["X-Foo"] == "bar"
@@ -140,7 +140,7 @@ class TestExCai:
             client.copy(set_default_headers={}, default_headers={"X-Foo": "Bar"})
 
     def test_copy_default_query(self) -> None:
-        client = ExCai(
+        client = Excai(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"foo": "bar"}
         )
         assert _get_params(client)["foo"] == "bar"
@@ -266,7 +266,7 @@ class TestExCai:
         assert timeout == httpx.Timeout(100.0)
 
     def test_client_timeout_option(self) -> None:
-        client = ExCai(base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx.Timeout(0))
+        client = Excai(base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx.Timeout(0))
 
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
@@ -275,7 +275,7 @@ class TestExCai:
     def test_http_client_timeout_option(self) -> None:
         # custom timeout given to the httpx client should be used
         with httpx.Client(timeout=None) as http_client:
-            client = ExCai(
+            client = Excai(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -285,7 +285,7 @@ class TestExCai:
 
         # no timeout given to the httpx client should not use the httpx default
         with httpx.Client() as http_client:
-            client = ExCai(
+            client = Excai(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -295,7 +295,7 @@ class TestExCai:
 
         # explicitly passing the default timeout currently results in it being ignored
         with httpx.Client(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
-            client = ExCai(
+            client = Excai(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -306,7 +306,7 @@ class TestExCai:
     async def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
             async with httpx.AsyncClient() as http_client:
-                ExCai(
+                Excai(
                     base_url=base_url,
                     api_key=api_key,
                     _strict_response_validation=True,
@@ -314,14 +314,14 @@ class TestExCai:
                 )
 
     def test_default_headers_option(self) -> None:
-        client = ExCai(
+        client = Excai(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "bar"
         assert request.headers.get("x-stainless-lang") == "python"
 
-        client2 = ExCai(
+        client2 = Excai(
             base_url=base_url,
             api_key=api_key,
             _strict_response_validation=True,
@@ -335,26 +335,17 @@ class TestExCai:
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
     def test_validate_headers(self) -> None:
-        client = ExCai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = Excai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("Authorization") == f"Bearer {api_key}"
 
-        with update_env(**{"EXCAI_API_KEY": Omit()}):
-            client2 = ExCai(base_url=base_url, api_key=None, _strict_response_validation=True)
-
-        with pytest.raises(
-            TypeError,
-            match="Could not resolve authentication method. Expected the api_key to be set. Or for the `Authorization` headers to be explicitly omitted",
-        ):
-            client2._build_request(FinalRequestOptions(method="get", url="/foo"))
-
-        request2 = client2._build_request(
-            FinalRequestOptions(method="get", url="/foo", headers={"Authorization": Omit()})
-        )
-        assert request2.headers.get("Authorization") is None
+        with pytest.raises(ExcaiError):
+            with update_env(**{"EXCAI_API_KEY": Omit()}):
+                client2 = Excai(base_url=base_url, api_key=None, _strict_response_validation=True)
+            _ = client2
 
     def test_default_query_option(self) -> None:
-        client = ExCai(
+        client = Excai(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"query_param": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -468,7 +459,7 @@ class TestExCai:
         params = dict(request.url.params)
         assert params == {"foo": "2"}
 
-    def test_multipart_repeating_array(self, client: ExCai) -> None:
+    def test_multipart_repeating_array(self, client: Excai) -> None:
         request = client._build_request(
             FinalRequestOptions.construct(
                 method="post",
@@ -555,7 +546,7 @@ class TestExCai:
         assert response.foo == 2
 
     def test_base_url_setter(self) -> None:
-        client = ExCai(base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True)
+        client = Excai(base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True)
         assert client.base_url == "https://example.com/from_init/"
 
         client.base_url = "https://example.com/from_setter"  # type: ignore[assignment]
@@ -563,15 +554,15 @@ class TestExCai:
         assert client.base_url == "https://example.com/from_setter/"
 
     def test_base_url_env(self) -> None:
-        with update_env(EX_CAI_BASE_URL="http://localhost:5000/from/env"):
-            client = ExCai(api_key=api_key, _strict_response_validation=True)
+        with update_env(EXCAI_BASE_URL="http://localhost:5000/from/env"):
+            client = Excai(api_key=api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
     @pytest.mark.parametrize(
         "client",
         [
-            ExCai(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
-            ExCai(
+            Excai(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
+            Excai(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -580,7 +571,7 @@ class TestExCai:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_trailing_slash(self, client: ExCai) -> None:
+    def test_base_url_trailing_slash(self, client: Excai) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -593,8 +584,8 @@ class TestExCai:
     @pytest.mark.parametrize(
         "client",
         [
-            ExCai(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
-            ExCai(
+            Excai(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
+            Excai(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -603,7 +594,7 @@ class TestExCai:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_no_trailing_slash(self, client: ExCai) -> None:
+    def test_base_url_no_trailing_slash(self, client: Excai) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -616,8 +607,8 @@ class TestExCai:
     @pytest.mark.parametrize(
         "client",
         [
-            ExCai(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
-            ExCai(
+            Excai(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
+            Excai(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -626,7 +617,7 @@ class TestExCai:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_absolute_request_url(self, client: ExCai) -> None:
+    def test_absolute_request_url(self, client: Excai) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -637,7 +628,7 @@ class TestExCai:
         assert request.url == "https://myapi.com/foo"
 
     def test_copied_client_does_not_close_http(self) -> None:
-        client = ExCai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = Excai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         assert not client.is_closed()
 
         copied = client.copy()
@@ -648,7 +639,7 @@ class TestExCai:
         assert not client.is_closed()
 
     def test_client_context_manager(self) -> None:
-        client = ExCai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = Excai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         with client as c2:
             assert c2 is client
             assert not c2.is_closed()
@@ -669,7 +660,7 @@ class TestExCai:
 
     def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
-            ExCai(base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None))
+            Excai(base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None))
 
     @pytest.mark.respx(base_url=base_url)
     def test_received_text_for_expected_json(self, respx_mock: MockRouter) -> None:
@@ -678,12 +669,12 @@ class TestExCai:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = ExCai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        strict_client = Excai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         with pytest.raises(APIResponseValidationError):
             strict_client.get("/foo", cast_to=Model)
 
-        client = ExCai(base_url=base_url, api_key=api_key, _strict_response_validation=False)
+        client = Excai(base_url=base_url, api_key=api_key, _strict_response_validation=False)
 
         response = client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
@@ -711,7 +702,7 @@ class TestExCai:
     )
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = ExCai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = Excai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
@@ -720,21 +711,21 @@ class TestExCai:
 
     @mock.patch("excai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: ExCai) -> None:
-        respx_mock.get("/chat/completions").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+    def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: Excai) -> None:
+        respx_mock.get("/assistants").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            client.chat.completions.with_streaming_response.list().__enter__()
+            client.assistants.with_streaming_response.list().__enter__()
 
         assert _get_open_connections(self.client) == 0
 
     @mock.patch("excai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: ExCai) -> None:
-        respx_mock.get("/chat/completions").mock(return_value=httpx.Response(500))
+    def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: Excai) -> None:
+        respx_mock.get("/assistants").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            client.chat.completions.with_streaming_response.list().__enter__()
+            client.assistants.with_streaming_response.list().__enter__()
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -743,7 +734,7 @@ class TestExCai:
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     def test_retries_taken(
         self,
-        client: ExCai,
+        client: Excai,
         failures_before_success: int,
         failure_mode: Literal["status", "exception"],
         respx_mock: MockRouter,
@@ -761,9 +752,9 @@ class TestExCai:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/chat/completions").mock(side_effect=retry_handler)
+        respx_mock.get("/assistants").mock(side_effect=retry_handler)
 
-        response = client.chat.completions.with_raw_response.list()
+        response = client.assistants.with_raw_response.list()
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -771,7 +762,7 @@ class TestExCai:
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
     @mock.patch("excai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    def test_omit_retry_count_header(self, client: ExCai, failures_before_success: int, respx_mock: MockRouter) -> None:
+    def test_omit_retry_count_header(self, client: Excai, failures_before_success: int, respx_mock: MockRouter) -> None:
         client = client.with_options(max_retries=4)
 
         nb_retries = 0
@@ -783,9 +774,9 @@ class TestExCai:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/chat/completions").mock(side_effect=retry_handler)
+        respx_mock.get("/assistants").mock(side_effect=retry_handler)
 
-        response = client.chat.completions.with_raw_response.list(extra_headers={"x-stainless-retry-count": Omit()})
+        response = client.assistants.with_raw_response.list(extra_headers={"x-stainless-retry-count": Omit()})
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -793,7 +784,7 @@ class TestExCai:
     @mock.patch("excai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_overwrite_retry_count_header(
-        self, client: ExCai, failures_before_success: int, respx_mock: MockRouter
+        self, client: Excai, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = client.with_options(max_retries=4)
 
@@ -806,9 +797,9 @@ class TestExCai:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/chat/completions").mock(side_effect=retry_handler)
+        respx_mock.get("/assistants").mock(side_effect=retry_handler)
 
-        response = client.chat.completions.with_raw_response.list(extra_headers={"x-stainless-retry-count": "42"})
+        response = client.assistants.with_raw_response.list(extra_headers={"x-stainless-retry-count": "42"})
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
@@ -862,8 +853,8 @@ class TestExCai:
         assert exc_info.value.response.headers["Location"] == f"{base_url}/redirected"
 
 
-class TestAsyncExCai:
-    client = AsyncExCai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+class TestAsyncExcai:
+    client = AsyncExcai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
@@ -912,7 +903,7 @@ class TestAsyncExCai:
         assert isinstance(self.client.timeout, httpx.Timeout)
 
     def test_copy_default_headers(self) -> None:
-        client = AsyncExCai(
+        client = AsyncExcai(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         assert client.default_headers["X-Foo"] == "bar"
@@ -946,7 +937,7 @@ class TestAsyncExCai:
             client.copy(set_default_headers={}, default_headers={"X-Foo": "Bar"})
 
     def test_copy_default_query(self) -> None:
-        client = AsyncExCai(
+        client = AsyncExcai(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"foo": "bar"}
         )
         assert _get_params(client)["foo"] == "bar"
@@ -1072,7 +1063,7 @@ class TestAsyncExCai:
         assert timeout == httpx.Timeout(100.0)
 
     async def test_client_timeout_option(self) -> None:
-        client = AsyncExCai(
+        client = AsyncExcai(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx.Timeout(0)
         )
 
@@ -1083,7 +1074,7 @@ class TestAsyncExCai:
     async def test_http_client_timeout_option(self) -> None:
         # custom timeout given to the httpx client should be used
         async with httpx.AsyncClient(timeout=None) as http_client:
-            client = AsyncExCai(
+            client = AsyncExcai(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -1093,7 +1084,7 @@ class TestAsyncExCai:
 
         # no timeout given to the httpx client should not use the httpx default
         async with httpx.AsyncClient() as http_client:
-            client = AsyncExCai(
+            client = AsyncExcai(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -1103,7 +1094,7 @@ class TestAsyncExCai:
 
         # explicitly passing the default timeout currently results in it being ignored
         async with httpx.AsyncClient(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
-            client = AsyncExCai(
+            client = AsyncExcai(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -1114,7 +1105,7 @@ class TestAsyncExCai:
     def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
             with httpx.Client() as http_client:
-                AsyncExCai(
+                AsyncExcai(
                     base_url=base_url,
                     api_key=api_key,
                     _strict_response_validation=True,
@@ -1122,14 +1113,14 @@ class TestAsyncExCai:
                 )
 
     def test_default_headers_option(self) -> None:
-        client = AsyncExCai(
+        client = AsyncExcai(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "bar"
         assert request.headers.get("x-stainless-lang") == "python"
 
-        client2 = AsyncExCai(
+        client2 = AsyncExcai(
             base_url=base_url,
             api_key=api_key,
             _strict_response_validation=True,
@@ -1143,26 +1134,17 @@ class TestAsyncExCai:
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
     def test_validate_headers(self) -> None:
-        client = AsyncExCai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = AsyncExcai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("Authorization") == f"Bearer {api_key}"
 
-        with update_env(**{"EXCAI_API_KEY": Omit()}):
-            client2 = AsyncExCai(base_url=base_url, api_key=None, _strict_response_validation=True)
-
-        with pytest.raises(
-            TypeError,
-            match="Could not resolve authentication method. Expected the api_key to be set. Or for the `Authorization` headers to be explicitly omitted",
-        ):
-            client2._build_request(FinalRequestOptions(method="get", url="/foo"))
-
-        request2 = client2._build_request(
-            FinalRequestOptions(method="get", url="/foo", headers={"Authorization": Omit()})
-        )
-        assert request2.headers.get("Authorization") is None
+        with pytest.raises(ExcaiError):
+            with update_env(**{"EXCAI_API_KEY": Omit()}):
+                client2 = AsyncExcai(base_url=base_url, api_key=None, _strict_response_validation=True)
+            _ = client2
 
     def test_default_query_option(self) -> None:
-        client = AsyncExCai(
+        client = AsyncExcai(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"query_param": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -1276,7 +1258,7 @@ class TestAsyncExCai:
         params = dict(request.url.params)
         assert params == {"foo": "2"}
 
-    def test_multipart_repeating_array(self, async_client: AsyncExCai) -> None:
+    def test_multipart_repeating_array(self, async_client: AsyncExcai) -> None:
         request = async_client._build_request(
             FinalRequestOptions.construct(
                 method="post",
@@ -1363,7 +1345,7 @@ class TestAsyncExCai:
         assert response.foo == 2
 
     def test_base_url_setter(self) -> None:
-        client = AsyncExCai(base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True)
+        client = AsyncExcai(base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True)
         assert client.base_url == "https://example.com/from_init/"
 
         client.base_url = "https://example.com/from_setter"  # type: ignore[assignment]
@@ -1371,17 +1353,17 @@ class TestAsyncExCai:
         assert client.base_url == "https://example.com/from_setter/"
 
     def test_base_url_env(self) -> None:
-        with update_env(EX_CAI_BASE_URL="http://localhost:5000/from/env"):
-            client = AsyncExCai(api_key=api_key, _strict_response_validation=True)
+        with update_env(EXCAI_BASE_URL="http://localhost:5000/from/env"):
+            client = AsyncExcai(api_key=api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncExCai(
+            AsyncExcai(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            AsyncExCai(
+            AsyncExcai(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -1390,7 +1372,7 @@ class TestAsyncExCai:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_trailing_slash(self, client: AsyncExCai) -> None:
+    def test_base_url_trailing_slash(self, client: AsyncExcai) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1403,10 +1385,10 @@ class TestAsyncExCai:
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncExCai(
+            AsyncExcai(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            AsyncExCai(
+            AsyncExcai(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -1415,7 +1397,7 @@ class TestAsyncExCai:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_no_trailing_slash(self, client: AsyncExCai) -> None:
+    def test_base_url_no_trailing_slash(self, client: AsyncExcai) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1428,10 +1410,10 @@ class TestAsyncExCai:
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncExCai(
+            AsyncExcai(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            AsyncExCai(
+            AsyncExcai(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -1440,7 +1422,7 @@ class TestAsyncExCai:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_absolute_request_url(self, client: AsyncExCai) -> None:
+    def test_absolute_request_url(self, client: AsyncExcai) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1451,7 +1433,7 @@ class TestAsyncExCai:
         assert request.url == "https://myapi.com/foo"
 
     async def test_copied_client_does_not_close_http(self) -> None:
-        client = AsyncExCai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = AsyncExcai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         assert not client.is_closed()
 
         copied = client.copy()
@@ -1463,7 +1445,7 @@ class TestAsyncExCai:
         assert not client.is_closed()
 
     async def test_client_context_manager(self) -> None:
-        client = AsyncExCai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = AsyncExcai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         async with client as c2:
             assert c2 is client
             assert not c2.is_closed()
@@ -1485,7 +1467,7 @@ class TestAsyncExCai:
 
     async def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
-            AsyncExCai(
+            AsyncExcai(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None)
             )
 
@@ -1497,12 +1479,12 @@ class TestAsyncExCai:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = AsyncExCai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        strict_client = AsyncExcai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         with pytest.raises(APIResponseValidationError):
             await strict_client.get("/foo", cast_to=Model)
 
-        client = AsyncExCai(base_url=base_url, api_key=api_key, _strict_response_validation=False)
+        client = AsyncExcai(base_url=base_url, api_key=api_key, _strict_response_validation=False)
 
         response = await client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
@@ -1531,7 +1513,7 @@ class TestAsyncExCai:
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     @pytest.mark.asyncio
     async def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = AsyncExCai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = AsyncExcai(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
@@ -1540,21 +1522,21 @@ class TestAsyncExCai:
 
     @mock.patch("excai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, async_client: AsyncExCai) -> None:
-        respx_mock.get("/chat/completions").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+    async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, async_client: AsyncExcai) -> None:
+        respx_mock.get("/assistants").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            await async_client.chat.completions.with_streaming_response.list().__aenter__()
+            await async_client.assistants.with_streaming_response.list().__aenter__()
 
         assert _get_open_connections(self.client) == 0
 
     @mock.patch("excai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, async_client: AsyncExCai) -> None:
-        respx_mock.get("/chat/completions").mock(return_value=httpx.Response(500))
+    async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, async_client: AsyncExcai) -> None:
+        respx_mock.get("/assistants").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            await async_client.chat.completions.with_streaming_response.list().__aenter__()
+            await async_client.assistants.with_streaming_response.list().__aenter__()
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -1564,7 +1546,7 @@ class TestAsyncExCai:
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     async def test_retries_taken(
         self,
-        async_client: AsyncExCai,
+        async_client: AsyncExcai,
         failures_before_success: int,
         failure_mode: Literal["status", "exception"],
         respx_mock: MockRouter,
@@ -1582,9 +1564,9 @@ class TestAsyncExCai:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/chat/completions").mock(side_effect=retry_handler)
+        respx_mock.get("/assistants").mock(side_effect=retry_handler)
 
-        response = await client.chat.completions.with_raw_response.list()
+        response = await client.assistants.with_raw_response.list()
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1594,7 +1576,7 @@ class TestAsyncExCai:
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_omit_retry_count_header(
-        self, async_client: AsyncExCai, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncExcai, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 
@@ -1607,11 +1589,9 @@ class TestAsyncExCai:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/chat/completions").mock(side_effect=retry_handler)
+        respx_mock.get("/assistants").mock(side_effect=retry_handler)
 
-        response = await client.chat.completions.with_raw_response.list(
-            extra_headers={"x-stainless-retry-count": Omit()}
-        )
+        response = await client.assistants.with_raw_response.list(extra_headers={"x-stainless-retry-count": Omit()})
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -1620,7 +1600,7 @@ class TestAsyncExCai:
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_overwrite_retry_count_header(
-        self, async_client: AsyncExCai, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncExcai, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 
@@ -1633,9 +1613,9 @@ class TestAsyncExCai:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/chat/completions").mock(side_effect=retry_handler)
+        respx_mock.get("/assistants").mock(side_effect=retry_handler)
 
-        response = await client.chat.completions.with_raw_response.list(extra_headers={"x-stainless-retry-count": "42"})
+        response = await client.assistants.with_raw_response.list(extra_headers={"x-stainless-retry-count": "42"})
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 

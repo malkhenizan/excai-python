@@ -19,8 +19,8 @@ from ...._response import (
 )
 from ...._base_client import make_request_options
 from ....types.threads.runs import step_list_params, step_retrieve_params
+from ....types.threads.runs.run_step import RunStep
 from ....types.threads.runs.step_list_response import StepListResponse
-from ....types.threads.runs.step_retrieve_response import StepRetrieveResponse
 
 __all__ = ["StepsResource", "AsyncStepsResource"]
 
@@ -32,7 +32,7 @@ class StepsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return StepsResourceWithRawResponse(self)
 
@@ -41,7 +41,7 @@ class StepsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return StepsResourceWithStreamingResponse(self)
 
@@ -58,7 +58,7 @@ class StepsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> StepRetrieveResponse:
+    ) -> RunStep:
         """
         Retrieves a run step.
 
@@ -94,7 +94,7 @@ class StepsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform({"include": include}, step_retrieve_params.StepRetrieveParams),
             ),
-            cast_to=StepRetrieveResponse,
+            cast_to=RunStep,
         )
 
     def list(
@@ -183,7 +183,7 @@ class AsyncStepsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncStepsResourceWithRawResponse(self)
 
@@ -192,7 +192,7 @@ class AsyncStepsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncStepsResourceWithStreamingResponse(self)
 
@@ -209,7 +209,7 @@ class AsyncStepsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> StepRetrieveResponse:
+    ) -> RunStep:
         """
         Retrieves a run step.
 
@@ -245,7 +245,7 @@ class AsyncStepsResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform({"include": include}, step_retrieve_params.StepRetrieveParams),
             ),
-            cast_to=StepRetrieveResponse,
+            cast_to=RunStep,
         )
 
     async def list(

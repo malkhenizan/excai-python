@@ -58,11 +58,8 @@ from .service_accounts import (
     AsyncServiceAccountsResourceWithStreamingResponse,
 )
 from ....types.organization import project_list_params, project_create_params, project_update_params
+from ....types.organization.project import Project
 from ....types.organization.project_list_response import ProjectListResponse
-from ....types.organization.project_create_response import ProjectCreateResponse
-from ....types.organization.project_update_response import ProjectUpdateResponse
-from ....types.organization.project_archive_response import ProjectArchiveResponse
-from ....types.organization.project_retrieve_response import ProjectRetrieveResponse
 
 __all__ = ["ProjectsResource", "AsyncProjectsResource"]
 
@@ -94,7 +91,7 @@ class ProjectsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return ProjectsResourceWithRawResponse(self)
 
@@ -103,7 +100,7 @@ class ProjectsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return ProjectsResourceWithStreamingResponse(self)
 
@@ -118,7 +115,7 @@ class ProjectsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProjectCreateResponse:
+    ) -> Project:
         """Create a new project in the organization.
 
         Projects can be created and archived,
@@ -152,7 +149,7 @@ class ProjectsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ProjectCreateResponse,
+            cast_to=Project,
         )
 
     def retrieve(
@@ -165,7 +162,7 @@ class ProjectsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProjectRetrieveResponse:
+    ) -> Project:
         """
         Retrieves a project.
 
@@ -185,7 +182,7 @@ class ProjectsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ProjectRetrieveResponse,
+            cast_to=Project,
         )
 
     def update(
@@ -199,7 +196,7 @@ class ProjectsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProjectUpdateResponse:
+    ) -> Project:
         """
         Modifies a project in the organization.
 
@@ -222,7 +219,7 @@ class ProjectsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ProjectUpdateResponse,
+            cast_to=Project,
         )
 
     def list(
@@ -291,7 +288,7 @@ class ProjectsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProjectArchiveResponse:
+    ) -> Project:
         """Archives a project in the organization.
 
         Archived projects cannot be used or
@@ -313,7 +310,7 @@ class ProjectsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ProjectArchiveResponse,
+            cast_to=Project,
         )
 
 
@@ -344,7 +341,7 @@ class AsyncProjectsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncProjectsResourceWithRawResponse(self)
 
@@ -353,7 +350,7 @@ class AsyncProjectsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncProjectsResourceWithStreamingResponse(self)
 
@@ -368,7 +365,7 @@ class AsyncProjectsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProjectCreateResponse:
+    ) -> Project:
         """Create a new project in the organization.
 
         Projects can be created and archived,
@@ -402,7 +399,7 @@ class AsyncProjectsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ProjectCreateResponse,
+            cast_to=Project,
         )
 
     async def retrieve(
@@ -415,7 +412,7 @@ class AsyncProjectsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProjectRetrieveResponse:
+    ) -> Project:
         """
         Retrieves a project.
 
@@ -435,7 +432,7 @@ class AsyncProjectsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ProjectRetrieveResponse,
+            cast_to=Project,
         )
 
     async def update(
@@ -449,7 +446,7 @@ class AsyncProjectsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProjectUpdateResponse:
+    ) -> Project:
         """
         Modifies a project in the organization.
 
@@ -472,7 +469,7 @@ class AsyncProjectsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ProjectUpdateResponse,
+            cast_to=Project,
         )
 
     async def list(
@@ -541,7 +538,7 @@ class AsyncProjectsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProjectArchiveResponse:
+    ) -> Project:
         """Archives a project in the organization.
 
         Archived projects cannot be used or
@@ -563,7 +560,7 @@ class AsyncProjectsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ProjectArchiveResponse,
+            cast_to=Project,
         )
 
 

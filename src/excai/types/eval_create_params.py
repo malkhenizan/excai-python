@@ -6,11 +6,12 @@ from typing import Dict, Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
 from .._types import SequenceNotStr
-from .shared_params.eval_item import EvalItem
-from .eval_grader_python_param import EvalGraderPythonParam
-from .eval_grader_score_model_param import EvalGraderScoreModelParam
-from .eval_grader_text_similarity_param import EvalGraderTextSimilarityParam
-from .shared_params.grader_string_check import GraderStringCheck
+from .chat.metadata_param import MetadataParam
+from .grader_python_eval_param import GraderPythonEvalParam
+from .grader_score_eval_model_param import GraderScoreEvalModelParam
+from .grader_string_check_eval_param import GraderStringCheckEvalParam
+from .fine_tuning.alpha.eval_item_param import EvalItemParam
+from .grader_text_similarity_eval_param import GraderTextSimilarityEvalParam
 
 __all__ = [
     "EvalCreateParams",
@@ -40,7 +41,7 @@ class EvalCreateParams(TypedDict, total=False):
     the `sample` namespace (ie, `{{sample.output_text}}`).
     """
 
-    metadata: Optional[Dict[str, str]]
+    metadata: Optional[MetadataParam]
     """Set of 16 key-value pairs that can be attached to an object.
 
     This can be useful for storing additional information about the object in a
@@ -95,7 +96,7 @@ class TestingCriterionLabelModelInputSimpleInputMessage(TypedDict, total=False):
     """The role of the message (e.g. "system", "assistant", "user")."""
 
 
-TestingCriterionLabelModelInput: TypeAlias = Union[TestingCriterionLabelModelInputSimpleInputMessage, EvalItem]
+TestingCriterionLabelModelInput: TypeAlias = Union[TestingCriterionLabelModelInputSimpleInputMessage, EvalItemParam]
 
 
 class TestingCriterionLabelModel(TypedDict, total=False):
@@ -123,8 +124,8 @@ class TestingCriterionLabelModel(TypedDict, total=False):
 
 TestingCriterion: TypeAlias = Union[
     TestingCriterionLabelModel,
-    GraderStringCheck,
-    EvalGraderTextSimilarityParam,
-    EvalGraderPythonParam,
-    EvalGraderScoreModelParam,
+    GraderStringCheckEvalParam,
+    GraderTextSimilarityEvalParam,
+    GraderPythonEvalParam,
+    GraderScoreEvalModelParam,
 ]

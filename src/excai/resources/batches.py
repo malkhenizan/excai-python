@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Optional
+from typing import Optional
 from typing_extensions import Literal
 
 import httpx
@@ -18,11 +18,10 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from ..types.batch import Batch
 from .._base_client import make_request_options
 from ..types.batch_list_response import BatchListResponse
-from ..types.batch_cancel_response import BatchCancelResponse
-from ..types.batch_create_response import BatchCreateResponse
-from ..types.batch_retrieve_response import BatchRetrieveResponse
+from ..types.chat.metadata_param import MetadataParam
 
 __all__ = ["BatchesResource", "AsyncBatchesResource"]
 
@@ -34,7 +33,7 @@ class BatchesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return BatchesResourceWithRawResponse(self)
 
@@ -43,7 +42,7 @@ class BatchesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return BatchesResourceWithStreamingResponse(self)
 
@@ -53,7 +52,7 @@ class BatchesResource(SyncAPIResource):
         completion_window: Literal["24h"],
         endpoint: Literal["/v1/responses", "/v1/chat/completions", "/v1/embeddings", "/v1/completions"],
         input_file_id: str,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         output_expires_after: batch_create_params.OutputExpiresAfter | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -61,7 +60,7 @@ class BatchesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BatchCreateResponse:
+    ) -> Batch:
         """
         Creates and executes a batch from an uploaded file of requests
 
@@ -117,7 +116,7 @@ class BatchesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=BatchCreateResponse,
+            cast_to=Batch,
         )
 
     def retrieve(
@@ -130,7 +129,7 @@ class BatchesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BatchRetrieveResponse:
+    ) -> Batch:
         """
         Retrieves a batch.
 
@@ -150,7 +149,7 @@ class BatchesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=BatchRetrieveResponse,
+            cast_to=Batch,
         )
 
     def list(
@@ -214,7 +213,7 @@ class BatchesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BatchCancelResponse:
+    ) -> Batch:
         """Cancels an in-progress batch.
 
         The batch will be in status `cancelling` for up to
@@ -237,7 +236,7 @@ class BatchesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=BatchCancelResponse,
+            cast_to=Batch,
         )
 
 
@@ -248,7 +247,7 @@ class AsyncBatchesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncBatchesResourceWithRawResponse(self)
 
@@ -257,7 +256,7 @@ class AsyncBatchesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncBatchesResourceWithStreamingResponse(self)
 
@@ -267,7 +266,7 @@ class AsyncBatchesResource(AsyncAPIResource):
         completion_window: Literal["24h"],
         endpoint: Literal["/v1/responses", "/v1/chat/completions", "/v1/embeddings", "/v1/completions"],
         input_file_id: str,
-        metadata: Optional[Dict[str, str]] | Omit = omit,
+        metadata: Optional[MetadataParam] | Omit = omit,
         output_expires_after: batch_create_params.OutputExpiresAfter | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -275,7 +274,7 @@ class AsyncBatchesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BatchCreateResponse:
+    ) -> Batch:
         """
         Creates and executes a batch from an uploaded file of requests
 
@@ -331,7 +330,7 @@ class AsyncBatchesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=BatchCreateResponse,
+            cast_to=Batch,
         )
 
     async def retrieve(
@@ -344,7 +343,7 @@ class AsyncBatchesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BatchRetrieveResponse:
+    ) -> Batch:
         """
         Retrieves a batch.
 
@@ -364,7 +363,7 @@ class AsyncBatchesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=BatchRetrieveResponse,
+            cast_to=Batch,
         )
 
     async def list(
@@ -428,7 +427,7 @@ class AsyncBatchesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BatchCancelResponse:
+    ) -> Batch:
         """Cancels an in-progress batch.
 
         The batch will be in status `cancelling` for up to
@@ -451,7 +450,7 @@ class AsyncBatchesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=BatchCancelResponse,
+            cast_to=Batch,
         )
 
 

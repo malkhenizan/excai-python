@@ -7,18 +7,9 @@ from typing import Any, cast
 
 import pytest
 
-from excai import ExCai, AsyncExCai
+from excai import Excai, AsyncExcai
+from excai.types import UsageResponse
 from tests.utils import assert_matches_type
-from excai.types.organization import (
-    UsageImagesResponse,
-    UsageEmbeddingsResponse,
-    UsageCompletionsResponse,
-    UsageModerationsResponse,
-    UsageVectorStoresResponse,
-    UsageAudioSpeechesResponse,
-    UsageAudioTranscriptionsResponse,
-    UsageCodeInterpreterSessionsResponse,
-)
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -28,15 +19,15 @@ class TestUsage:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_audio_speeches(self, client: ExCai) -> None:
+    def test_method_audio_speeches(self, client: Excai) -> None:
         usage = client.organization.usage.audio_speeches(
             start_time=0,
         )
-        assert_matches_type(UsageAudioSpeechesResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_audio_speeches_with_all_params(self, client: ExCai) -> None:
+    def test_method_audio_speeches_with_all_params(self, client: Excai) -> None:
         usage = client.organization.usage.audio_speeches(
             start_time=0,
             api_key_ids=["string"],
@@ -49,11 +40,11 @@ class TestUsage:
             project_ids=["string"],
             user_ids=["string"],
         )
-        assert_matches_type(UsageAudioSpeechesResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_audio_speeches(self, client: ExCai) -> None:
+    def test_raw_response_audio_speeches(self, client: Excai) -> None:
         response = client.organization.usage.with_raw_response.audio_speeches(
             start_time=0,
         )
@@ -61,11 +52,11 @@ class TestUsage:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         usage = response.parse()
-        assert_matches_type(UsageAudioSpeechesResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_audio_speeches(self, client: ExCai) -> None:
+    def test_streaming_response_audio_speeches(self, client: Excai) -> None:
         with client.organization.usage.with_streaming_response.audio_speeches(
             start_time=0,
         ) as response:
@@ -73,21 +64,21 @@ class TestUsage:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             usage = response.parse()
-            assert_matches_type(UsageAudioSpeechesResponse, usage, path=["response"])
+            assert_matches_type(UsageResponse, usage, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_audio_transcriptions(self, client: ExCai) -> None:
+    def test_method_audio_transcriptions(self, client: Excai) -> None:
         usage = client.organization.usage.audio_transcriptions(
             start_time=0,
         )
-        assert_matches_type(UsageAudioTranscriptionsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_audio_transcriptions_with_all_params(self, client: ExCai) -> None:
+    def test_method_audio_transcriptions_with_all_params(self, client: Excai) -> None:
         usage = client.organization.usage.audio_transcriptions(
             start_time=0,
             api_key_ids=["string"],
@@ -100,11 +91,11 @@ class TestUsage:
             project_ids=["string"],
             user_ids=["string"],
         )
-        assert_matches_type(UsageAudioTranscriptionsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_audio_transcriptions(self, client: ExCai) -> None:
+    def test_raw_response_audio_transcriptions(self, client: Excai) -> None:
         response = client.organization.usage.with_raw_response.audio_transcriptions(
             start_time=0,
         )
@@ -112,11 +103,11 @@ class TestUsage:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         usage = response.parse()
-        assert_matches_type(UsageAudioTranscriptionsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_audio_transcriptions(self, client: ExCai) -> None:
+    def test_streaming_response_audio_transcriptions(self, client: Excai) -> None:
         with client.organization.usage.with_streaming_response.audio_transcriptions(
             start_time=0,
         ) as response:
@@ -124,21 +115,21 @@ class TestUsage:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             usage = response.parse()
-            assert_matches_type(UsageAudioTranscriptionsResponse, usage, path=["response"])
+            assert_matches_type(UsageResponse, usage, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_code_interpreter_sessions(self, client: ExCai) -> None:
+    def test_method_code_interpreter_sessions(self, client: Excai) -> None:
         usage = client.organization.usage.code_interpreter_sessions(
             start_time=0,
         )
-        assert_matches_type(UsageCodeInterpreterSessionsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_code_interpreter_sessions_with_all_params(self, client: ExCai) -> None:
+    def test_method_code_interpreter_sessions_with_all_params(self, client: Excai) -> None:
         usage = client.organization.usage.code_interpreter_sessions(
             start_time=0,
             bucket_width="1m",
@@ -148,11 +139,11 @@ class TestUsage:
             page="page",
             project_ids=["string"],
         )
-        assert_matches_type(UsageCodeInterpreterSessionsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_code_interpreter_sessions(self, client: ExCai) -> None:
+    def test_raw_response_code_interpreter_sessions(self, client: Excai) -> None:
         response = client.organization.usage.with_raw_response.code_interpreter_sessions(
             start_time=0,
         )
@@ -160,11 +151,11 @@ class TestUsage:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         usage = response.parse()
-        assert_matches_type(UsageCodeInterpreterSessionsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_code_interpreter_sessions(self, client: ExCai) -> None:
+    def test_streaming_response_code_interpreter_sessions(self, client: Excai) -> None:
         with client.organization.usage.with_streaming_response.code_interpreter_sessions(
             start_time=0,
         ) as response:
@@ -172,21 +163,21 @@ class TestUsage:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             usage = response.parse()
-            assert_matches_type(UsageCodeInterpreterSessionsResponse, usage, path=["response"])
+            assert_matches_type(UsageResponse, usage, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_completions(self, client: ExCai) -> None:
+    def test_method_completions(self, client: Excai) -> None:
         usage = client.organization.usage.completions(
             start_time=0,
         )
-        assert_matches_type(UsageCompletionsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_completions_with_all_params(self, client: ExCai) -> None:
+    def test_method_completions_with_all_params(self, client: Excai) -> None:
         usage = client.organization.usage.completions(
             start_time=0,
             api_key_ids=["string"],
@@ -200,11 +191,11 @@ class TestUsage:
             project_ids=["string"],
             user_ids=["string"],
         )
-        assert_matches_type(UsageCompletionsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_completions(self, client: ExCai) -> None:
+    def test_raw_response_completions(self, client: Excai) -> None:
         response = client.organization.usage.with_raw_response.completions(
             start_time=0,
         )
@@ -212,11 +203,11 @@ class TestUsage:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         usage = response.parse()
-        assert_matches_type(UsageCompletionsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_completions(self, client: ExCai) -> None:
+    def test_streaming_response_completions(self, client: Excai) -> None:
         with client.organization.usage.with_streaming_response.completions(
             start_time=0,
         ) as response:
@@ -224,21 +215,21 @@ class TestUsage:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             usage = response.parse()
-            assert_matches_type(UsageCompletionsResponse, usage, path=["response"])
+            assert_matches_type(UsageResponse, usage, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_embeddings(self, client: ExCai) -> None:
+    def test_method_embeddings(self, client: Excai) -> None:
         usage = client.organization.usage.embeddings(
             start_time=0,
         )
-        assert_matches_type(UsageEmbeddingsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_embeddings_with_all_params(self, client: ExCai) -> None:
+    def test_method_embeddings_with_all_params(self, client: Excai) -> None:
         usage = client.organization.usage.embeddings(
             start_time=0,
             api_key_ids=["string"],
@@ -251,11 +242,11 @@ class TestUsage:
             project_ids=["string"],
             user_ids=["string"],
         )
-        assert_matches_type(UsageEmbeddingsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_embeddings(self, client: ExCai) -> None:
+    def test_raw_response_embeddings(self, client: Excai) -> None:
         response = client.organization.usage.with_raw_response.embeddings(
             start_time=0,
         )
@@ -263,11 +254,11 @@ class TestUsage:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         usage = response.parse()
-        assert_matches_type(UsageEmbeddingsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_embeddings(self, client: ExCai) -> None:
+    def test_streaming_response_embeddings(self, client: Excai) -> None:
         with client.organization.usage.with_streaming_response.embeddings(
             start_time=0,
         ) as response:
@@ -275,21 +266,21 @@ class TestUsage:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             usage = response.parse()
-            assert_matches_type(UsageEmbeddingsResponse, usage, path=["response"])
+            assert_matches_type(UsageResponse, usage, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_images(self, client: ExCai) -> None:
+    def test_method_images(self, client: Excai) -> None:
         usage = client.organization.usage.images(
             start_time=0,
         )
-        assert_matches_type(UsageImagesResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_images_with_all_params(self, client: ExCai) -> None:
+    def test_method_images_with_all_params(self, client: Excai) -> None:
         usage = client.organization.usage.images(
             start_time=0,
             api_key_ids=["string"],
@@ -304,11 +295,11 @@ class TestUsage:
             sources=["image.generation"],
             user_ids=["string"],
         )
-        assert_matches_type(UsageImagesResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_images(self, client: ExCai) -> None:
+    def test_raw_response_images(self, client: Excai) -> None:
         response = client.organization.usage.with_raw_response.images(
             start_time=0,
         )
@@ -316,11 +307,11 @@ class TestUsage:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         usage = response.parse()
-        assert_matches_type(UsageImagesResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_images(self, client: ExCai) -> None:
+    def test_streaming_response_images(self, client: Excai) -> None:
         with client.organization.usage.with_streaming_response.images(
             start_time=0,
         ) as response:
@@ -328,21 +319,21 @@ class TestUsage:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             usage = response.parse()
-            assert_matches_type(UsageImagesResponse, usage, path=["response"])
+            assert_matches_type(UsageResponse, usage, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_moderations(self, client: ExCai) -> None:
+    def test_method_moderations(self, client: Excai) -> None:
         usage = client.organization.usage.moderations(
             start_time=0,
         )
-        assert_matches_type(UsageModerationsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_moderations_with_all_params(self, client: ExCai) -> None:
+    def test_method_moderations_with_all_params(self, client: Excai) -> None:
         usage = client.organization.usage.moderations(
             start_time=0,
             api_key_ids=["string"],
@@ -355,11 +346,11 @@ class TestUsage:
             project_ids=["string"],
             user_ids=["string"],
         )
-        assert_matches_type(UsageModerationsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_moderations(self, client: ExCai) -> None:
+    def test_raw_response_moderations(self, client: Excai) -> None:
         response = client.organization.usage.with_raw_response.moderations(
             start_time=0,
         )
@@ -367,11 +358,11 @@ class TestUsage:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         usage = response.parse()
-        assert_matches_type(UsageModerationsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_moderations(self, client: ExCai) -> None:
+    def test_streaming_response_moderations(self, client: Excai) -> None:
         with client.organization.usage.with_streaming_response.moderations(
             start_time=0,
         ) as response:
@@ -379,21 +370,21 @@ class TestUsage:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             usage = response.parse()
-            assert_matches_type(UsageModerationsResponse, usage, path=["response"])
+            assert_matches_type(UsageResponse, usage, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_vector_stores(self, client: ExCai) -> None:
+    def test_method_vector_stores(self, client: Excai) -> None:
         usage = client.organization.usage.vector_stores(
             start_time=0,
         )
-        assert_matches_type(UsageVectorStoresResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_vector_stores_with_all_params(self, client: ExCai) -> None:
+    def test_method_vector_stores_with_all_params(self, client: Excai) -> None:
         usage = client.organization.usage.vector_stores(
             start_time=0,
             bucket_width="1m",
@@ -403,11 +394,11 @@ class TestUsage:
             page="page",
             project_ids=["string"],
         )
-        assert_matches_type(UsageVectorStoresResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_vector_stores(self, client: ExCai) -> None:
+    def test_raw_response_vector_stores(self, client: Excai) -> None:
         response = client.organization.usage.with_raw_response.vector_stores(
             start_time=0,
         )
@@ -415,11 +406,11 @@ class TestUsage:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         usage = response.parse()
-        assert_matches_type(UsageVectorStoresResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_vector_stores(self, client: ExCai) -> None:
+    def test_streaming_response_vector_stores(self, client: Excai) -> None:
         with client.organization.usage.with_streaming_response.vector_stores(
             start_time=0,
         ) as response:
@@ -427,7 +418,7 @@ class TestUsage:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             usage = response.parse()
-            assert_matches_type(UsageVectorStoresResponse, usage, path=["response"])
+            assert_matches_type(UsageResponse, usage, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -439,15 +430,15 @@ class TestAsyncUsage:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_audio_speeches(self, async_client: AsyncExCai) -> None:
+    async def test_method_audio_speeches(self, async_client: AsyncExcai) -> None:
         usage = await async_client.organization.usage.audio_speeches(
             start_time=0,
         )
-        assert_matches_type(UsageAudioSpeechesResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_audio_speeches_with_all_params(self, async_client: AsyncExCai) -> None:
+    async def test_method_audio_speeches_with_all_params(self, async_client: AsyncExcai) -> None:
         usage = await async_client.organization.usage.audio_speeches(
             start_time=0,
             api_key_ids=["string"],
@@ -460,11 +451,11 @@ class TestAsyncUsage:
             project_ids=["string"],
             user_ids=["string"],
         )
-        assert_matches_type(UsageAudioSpeechesResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_audio_speeches(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_audio_speeches(self, async_client: AsyncExcai) -> None:
         response = await async_client.organization.usage.with_raw_response.audio_speeches(
             start_time=0,
         )
@@ -472,11 +463,11 @@ class TestAsyncUsage:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         usage = await response.parse()
-        assert_matches_type(UsageAudioSpeechesResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_audio_speeches(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_audio_speeches(self, async_client: AsyncExcai) -> None:
         async with async_client.organization.usage.with_streaming_response.audio_speeches(
             start_time=0,
         ) as response:
@@ -484,21 +475,21 @@ class TestAsyncUsage:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             usage = await response.parse()
-            assert_matches_type(UsageAudioSpeechesResponse, usage, path=["response"])
+            assert_matches_type(UsageResponse, usage, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_audio_transcriptions(self, async_client: AsyncExCai) -> None:
+    async def test_method_audio_transcriptions(self, async_client: AsyncExcai) -> None:
         usage = await async_client.organization.usage.audio_transcriptions(
             start_time=0,
         )
-        assert_matches_type(UsageAudioTranscriptionsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_audio_transcriptions_with_all_params(self, async_client: AsyncExCai) -> None:
+    async def test_method_audio_transcriptions_with_all_params(self, async_client: AsyncExcai) -> None:
         usage = await async_client.organization.usage.audio_transcriptions(
             start_time=0,
             api_key_ids=["string"],
@@ -511,11 +502,11 @@ class TestAsyncUsage:
             project_ids=["string"],
             user_ids=["string"],
         )
-        assert_matches_type(UsageAudioTranscriptionsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_audio_transcriptions(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_audio_transcriptions(self, async_client: AsyncExcai) -> None:
         response = await async_client.organization.usage.with_raw_response.audio_transcriptions(
             start_time=0,
         )
@@ -523,11 +514,11 @@ class TestAsyncUsage:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         usage = await response.parse()
-        assert_matches_type(UsageAudioTranscriptionsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_audio_transcriptions(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_audio_transcriptions(self, async_client: AsyncExcai) -> None:
         async with async_client.organization.usage.with_streaming_response.audio_transcriptions(
             start_time=0,
         ) as response:
@@ -535,21 +526,21 @@ class TestAsyncUsage:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             usage = await response.parse()
-            assert_matches_type(UsageAudioTranscriptionsResponse, usage, path=["response"])
+            assert_matches_type(UsageResponse, usage, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_code_interpreter_sessions(self, async_client: AsyncExCai) -> None:
+    async def test_method_code_interpreter_sessions(self, async_client: AsyncExcai) -> None:
         usage = await async_client.organization.usage.code_interpreter_sessions(
             start_time=0,
         )
-        assert_matches_type(UsageCodeInterpreterSessionsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_code_interpreter_sessions_with_all_params(self, async_client: AsyncExCai) -> None:
+    async def test_method_code_interpreter_sessions_with_all_params(self, async_client: AsyncExcai) -> None:
         usage = await async_client.organization.usage.code_interpreter_sessions(
             start_time=0,
             bucket_width="1m",
@@ -559,11 +550,11 @@ class TestAsyncUsage:
             page="page",
             project_ids=["string"],
         )
-        assert_matches_type(UsageCodeInterpreterSessionsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_code_interpreter_sessions(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_code_interpreter_sessions(self, async_client: AsyncExcai) -> None:
         response = await async_client.organization.usage.with_raw_response.code_interpreter_sessions(
             start_time=0,
         )
@@ -571,11 +562,11 @@ class TestAsyncUsage:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         usage = await response.parse()
-        assert_matches_type(UsageCodeInterpreterSessionsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_code_interpreter_sessions(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_code_interpreter_sessions(self, async_client: AsyncExcai) -> None:
         async with async_client.organization.usage.with_streaming_response.code_interpreter_sessions(
             start_time=0,
         ) as response:
@@ -583,21 +574,21 @@ class TestAsyncUsage:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             usage = await response.parse()
-            assert_matches_type(UsageCodeInterpreterSessionsResponse, usage, path=["response"])
+            assert_matches_type(UsageResponse, usage, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_completions(self, async_client: AsyncExCai) -> None:
+    async def test_method_completions(self, async_client: AsyncExcai) -> None:
         usage = await async_client.organization.usage.completions(
             start_time=0,
         )
-        assert_matches_type(UsageCompletionsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_completions_with_all_params(self, async_client: AsyncExCai) -> None:
+    async def test_method_completions_with_all_params(self, async_client: AsyncExcai) -> None:
         usage = await async_client.organization.usage.completions(
             start_time=0,
             api_key_ids=["string"],
@@ -611,11 +602,11 @@ class TestAsyncUsage:
             project_ids=["string"],
             user_ids=["string"],
         )
-        assert_matches_type(UsageCompletionsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_completions(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_completions(self, async_client: AsyncExcai) -> None:
         response = await async_client.organization.usage.with_raw_response.completions(
             start_time=0,
         )
@@ -623,11 +614,11 @@ class TestAsyncUsage:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         usage = await response.parse()
-        assert_matches_type(UsageCompletionsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_completions(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_completions(self, async_client: AsyncExcai) -> None:
         async with async_client.organization.usage.with_streaming_response.completions(
             start_time=0,
         ) as response:
@@ -635,21 +626,21 @@ class TestAsyncUsage:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             usage = await response.parse()
-            assert_matches_type(UsageCompletionsResponse, usage, path=["response"])
+            assert_matches_type(UsageResponse, usage, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_embeddings(self, async_client: AsyncExCai) -> None:
+    async def test_method_embeddings(self, async_client: AsyncExcai) -> None:
         usage = await async_client.organization.usage.embeddings(
             start_time=0,
         )
-        assert_matches_type(UsageEmbeddingsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_embeddings_with_all_params(self, async_client: AsyncExCai) -> None:
+    async def test_method_embeddings_with_all_params(self, async_client: AsyncExcai) -> None:
         usage = await async_client.organization.usage.embeddings(
             start_time=0,
             api_key_ids=["string"],
@@ -662,11 +653,11 @@ class TestAsyncUsage:
             project_ids=["string"],
             user_ids=["string"],
         )
-        assert_matches_type(UsageEmbeddingsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_embeddings(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_embeddings(self, async_client: AsyncExcai) -> None:
         response = await async_client.organization.usage.with_raw_response.embeddings(
             start_time=0,
         )
@@ -674,11 +665,11 @@ class TestAsyncUsage:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         usage = await response.parse()
-        assert_matches_type(UsageEmbeddingsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_embeddings(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_embeddings(self, async_client: AsyncExcai) -> None:
         async with async_client.organization.usage.with_streaming_response.embeddings(
             start_time=0,
         ) as response:
@@ -686,21 +677,21 @@ class TestAsyncUsage:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             usage = await response.parse()
-            assert_matches_type(UsageEmbeddingsResponse, usage, path=["response"])
+            assert_matches_type(UsageResponse, usage, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_images(self, async_client: AsyncExCai) -> None:
+    async def test_method_images(self, async_client: AsyncExcai) -> None:
         usage = await async_client.organization.usage.images(
             start_time=0,
         )
-        assert_matches_type(UsageImagesResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_images_with_all_params(self, async_client: AsyncExCai) -> None:
+    async def test_method_images_with_all_params(self, async_client: AsyncExcai) -> None:
         usage = await async_client.organization.usage.images(
             start_time=0,
             api_key_ids=["string"],
@@ -715,11 +706,11 @@ class TestAsyncUsage:
             sources=["image.generation"],
             user_ids=["string"],
         )
-        assert_matches_type(UsageImagesResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_images(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_images(self, async_client: AsyncExcai) -> None:
         response = await async_client.organization.usage.with_raw_response.images(
             start_time=0,
         )
@@ -727,11 +718,11 @@ class TestAsyncUsage:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         usage = await response.parse()
-        assert_matches_type(UsageImagesResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_images(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_images(self, async_client: AsyncExcai) -> None:
         async with async_client.organization.usage.with_streaming_response.images(
             start_time=0,
         ) as response:
@@ -739,21 +730,21 @@ class TestAsyncUsage:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             usage = await response.parse()
-            assert_matches_type(UsageImagesResponse, usage, path=["response"])
+            assert_matches_type(UsageResponse, usage, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_moderations(self, async_client: AsyncExCai) -> None:
+    async def test_method_moderations(self, async_client: AsyncExcai) -> None:
         usage = await async_client.organization.usage.moderations(
             start_time=0,
         )
-        assert_matches_type(UsageModerationsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_moderations_with_all_params(self, async_client: AsyncExCai) -> None:
+    async def test_method_moderations_with_all_params(self, async_client: AsyncExcai) -> None:
         usage = await async_client.organization.usage.moderations(
             start_time=0,
             api_key_ids=["string"],
@@ -766,11 +757,11 @@ class TestAsyncUsage:
             project_ids=["string"],
             user_ids=["string"],
         )
-        assert_matches_type(UsageModerationsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_moderations(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_moderations(self, async_client: AsyncExcai) -> None:
         response = await async_client.organization.usage.with_raw_response.moderations(
             start_time=0,
         )
@@ -778,11 +769,11 @@ class TestAsyncUsage:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         usage = await response.parse()
-        assert_matches_type(UsageModerationsResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_moderations(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_moderations(self, async_client: AsyncExcai) -> None:
         async with async_client.organization.usage.with_streaming_response.moderations(
             start_time=0,
         ) as response:
@@ -790,21 +781,21 @@ class TestAsyncUsage:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             usage = await response.parse()
-            assert_matches_type(UsageModerationsResponse, usage, path=["response"])
+            assert_matches_type(UsageResponse, usage, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_vector_stores(self, async_client: AsyncExCai) -> None:
+    async def test_method_vector_stores(self, async_client: AsyncExcai) -> None:
         usage = await async_client.organization.usage.vector_stores(
             start_time=0,
         )
-        assert_matches_type(UsageVectorStoresResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_vector_stores_with_all_params(self, async_client: AsyncExCai) -> None:
+    async def test_method_vector_stores_with_all_params(self, async_client: AsyncExcai) -> None:
         usage = await async_client.organization.usage.vector_stores(
             start_time=0,
             bucket_width="1m",
@@ -814,11 +805,11 @@ class TestAsyncUsage:
             page="page",
             project_ids=["string"],
         )
-        assert_matches_type(UsageVectorStoresResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_vector_stores(self, async_client: AsyncExCai) -> None:
+    async def test_raw_response_vector_stores(self, async_client: AsyncExcai) -> None:
         response = await async_client.organization.usage.with_raw_response.vector_stores(
             start_time=0,
         )
@@ -826,11 +817,11 @@ class TestAsyncUsage:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         usage = await response.parse()
-        assert_matches_type(UsageVectorStoresResponse, usage, path=["response"])
+        assert_matches_type(UsageResponse, usage, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_vector_stores(self, async_client: AsyncExCai) -> None:
+    async def test_streaming_response_vector_stores(self, async_client: AsyncExcai) -> None:
         async with async_client.organization.usage.with_streaming_response.vector_stores(
             start_time=0,
         ) as response:
@@ -838,6 +829,6 @@ class TestAsyncUsage:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             usage = await response.parse()
-            assert_matches_type(UsageVectorStoresResponse, usage, path=["response"])
+            assert_matches_type(UsageResponse, usage, path=["response"])
 
         assert cast(Any, response.is_closed) is True

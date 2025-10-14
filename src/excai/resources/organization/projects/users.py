@@ -17,8 +17,8 @@ from ...._response import (
     async_to_streamed_response_wrapper,
 )
 from ...._base_client import make_request_options
-from ....types.organization.projects import user_add_params, user_list_params, user_update_params
-from ....types.organization.project_user import ProjectUser
+from ....types.organization.projects import user_list_params, user_create_params, user_update_params
+from ....types.organization.projects.project_user import ProjectUser
 from ....types.organization.projects.user_list_response import UserListResponse
 from ....types.organization.projects.user_delete_response import UserDeleteResponse
 
@@ -32,7 +32,7 @@ class UsersResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return UsersResourceWithRawResponse(self)
 
@@ -41,9 +41,57 @@ class UsersResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return UsersResourceWithStreamingResponse(self)
+
+    def create(
+        self,
+        project_id: str,
+        *,
+        role: Literal["owner", "member"],
+        user_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ProjectUser:
+        """Adds a user to the project.
+
+        Users must already be members of the organization to
+        be added to a project.
+
+        Args:
+          role: `owner` or `member`
+
+          user_id: The ID of the user.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not project_id:
+            raise ValueError(f"Expected a non-empty value for `project_id` but received {project_id!r}")
+        return self._post(
+            f"/organization/projects/{project_id}/users",
+            body=maybe_transform(
+                {
+                    "role": role,
+                    "user_id": user_id,
+                },
+                user_create_params.UserCreateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ProjectUser,
+        )
 
     def retrieve(
         self,
@@ -210,7 +258,28 @@ class UsersResource(SyncAPIResource):
             cast_to=UserDeleteResponse,
         )
 
-    def add(
+
+class AsyncUsersResource(AsyncAPIResource):
+    @cached_property
+    def with_raw_response(self) -> AsyncUsersResourceWithRawResponse:
+        """
+        This property can be used as a prefix for any HTTP method call to return
+        the raw response object instead of the parsed content.
+
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
+        """
+        return AsyncUsersResourceWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncUsersResourceWithStreamingResponse:
+        """
+        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
+
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
+        """
+        return AsyncUsersResourceWithStreamingResponse(self)
+
+    async def create(
         self,
         project_id: str,
         *,
@@ -243,41 +312,20 @@ class UsersResource(SyncAPIResource):
         """
         if not project_id:
             raise ValueError(f"Expected a non-empty value for `project_id` but received {project_id!r}")
-        return self._post(
+        return await self._post(
             f"/organization/projects/{project_id}/users",
-            body=maybe_transform(
+            body=await async_maybe_transform(
                 {
                     "role": role,
                     "user_id": user_id,
                 },
-                user_add_params.UserAddParams,
+                user_create_params.UserCreateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ProjectUser,
         )
-
-
-class AsyncUsersResource(AsyncAPIResource):
-    @cached_property
-    def with_raw_response(self) -> AsyncUsersResourceWithRawResponse:
-        """
-        This property can be used as a prefix for any HTTP method call to return
-        the raw response object instead of the parsed content.
-
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
-        """
-        return AsyncUsersResourceWithRawResponse(self)
-
-    @cached_property
-    def with_streaming_response(self) -> AsyncUsersResourceWithStreamingResponse:
-        """
-        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
-
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
-        """
-        return AsyncUsersResourceWithStreamingResponse(self)
 
     async def retrieve(
         self,
@@ -444,59 +492,14 @@ class AsyncUsersResource(AsyncAPIResource):
             cast_to=UserDeleteResponse,
         )
 
-    async def add(
-        self,
-        project_id: str,
-        *,
-        role: Literal["owner", "member"],
-        user_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ProjectUser:
-        """Adds a user to the project.
-
-        Users must already be members of the organization to
-        be added to a project.
-
-        Args:
-          role: `owner` or `member`
-
-          user_id: The ID of the user.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not project_id:
-            raise ValueError(f"Expected a non-empty value for `project_id` but received {project_id!r}")
-        return await self._post(
-            f"/organization/projects/{project_id}/users",
-            body=await async_maybe_transform(
-                {
-                    "role": role,
-                    "user_id": user_id,
-                },
-                user_add_params.UserAddParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ProjectUser,
-        )
-
 
 class UsersResourceWithRawResponse:
     def __init__(self, users: UsersResource) -> None:
         self._users = users
 
+        self.create = to_raw_response_wrapper(
+            users.create,
+        )
         self.retrieve = to_raw_response_wrapper(
             users.retrieve,
         )
@@ -509,15 +512,15 @@ class UsersResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             users.delete,
         )
-        self.add = to_raw_response_wrapper(
-            users.add,
-        )
 
 
 class AsyncUsersResourceWithRawResponse:
     def __init__(self, users: AsyncUsersResource) -> None:
         self._users = users
 
+        self.create = async_to_raw_response_wrapper(
+            users.create,
+        )
         self.retrieve = async_to_raw_response_wrapper(
             users.retrieve,
         )
@@ -530,15 +533,15 @@ class AsyncUsersResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             users.delete,
         )
-        self.add = async_to_raw_response_wrapper(
-            users.add,
-        )
 
 
 class UsersResourceWithStreamingResponse:
     def __init__(self, users: UsersResource) -> None:
         self._users = users
 
+        self.create = to_streamed_response_wrapper(
+            users.create,
+        )
         self.retrieve = to_streamed_response_wrapper(
             users.retrieve,
         )
@@ -551,15 +554,15 @@ class UsersResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             users.delete,
         )
-        self.add = to_streamed_response_wrapper(
-            users.add,
-        )
 
 
 class AsyncUsersResourceWithStreamingResponse:
     def __init__(self, users: AsyncUsersResource) -> None:
         self._users = users
 
+        self.create = async_to_streamed_response_wrapper(
+            users.create,
+        )
         self.retrieve = async_to_streamed_response_wrapper(
             users.retrieve,
         )
@@ -571,7 +574,4 @@ class AsyncUsersResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             users.delete,
-        )
-        self.add = async_to_streamed_response_wrapper(
-            users.add,
         )

@@ -1,11 +1,11 @@
 [project]
 name = "excai"
 version = "0.0.1"
-description = "The official Python library for the EXCai API"
+description = "The official Python library for the excai API"
 dynamic = ["readme"]
-license = "Apache-2.0"
+license = "MIT"
 authors = [
-{ name = "Ex Cai", email = "support@odel.sa" },
+{ name = "Excai", email = "" },
 ]
 dependencies = [
     "httpx>=0.23.0, <1",
@@ -31,12 +31,12 @@ classifiers = [
   "Operating System :: POSIX :: Linux",
   "Operating System :: Microsoft :: Windows",
   "Topic :: Software Development :: Libraries :: Python Modules",
-  "License :: OSI Approved :: Apache Software License"
+  "License :: OSI Approved :: MIT License"
 ]
 
 [project.urls]
-Homepage = "https://github.com/malkhenizan/excai-python"
-Repository = "https://github.com/malkhenizan/excai-python"
+Homepage = "https://github.com/stainless-sdks/excai-python"
+Repository = "https://github.com/stainless-sdks/excai-python"
 
 [project.optional-dependencies]
 aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.8"]
@@ -124,7 +124,7 @@ path = "README.md"
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 # replace relative links with absolute links
 pattern = '\[(.+?)\]\(((?!https?://)\S+?)\)'
-replacement = '[\1](https://github.com/malkhenizan/excai-python/tree/main/\g<2>)'
+replacement = '[\1](https://github.com/stainless-sdks/excai-python/tree/main/\g<2>)'
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

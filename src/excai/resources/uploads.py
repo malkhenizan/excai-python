@@ -19,10 +19,9 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.upload_cancel_response import UploadCancelResponse
-from ..types.upload_create_response import UploadCreateResponse
+from ..types.upload import Upload
 from ..types.upload_add_part_response import UploadAddPartResponse
-from ..types.upload_complete_response import UploadCompleteResponse
+from ..types.file_expiration_after_param import FileExpirationAfterParam
 
 __all__ = ["UploadsResource", "AsyncUploadsResource"]
 
@@ -34,7 +33,7 @@ class UploadsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return UploadsResourceWithRawResponse(self)
 
@@ -43,7 +42,7 @@ class UploadsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return UploadsResourceWithStreamingResponse(self)
 
@@ -54,14 +53,14 @@ class UploadsResource(SyncAPIResource):
         filename: str,
         mime_type: str,
         purpose: Literal["assistants", "batch", "fine-tune", "vision"],
-        expires_after: upload_create_params.ExpiresAfter | Omit = omit,
+        expires_after: FileExpirationAfterParam | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UploadCreateResponse:
+    ) -> Upload:
         """
         Creates an intermediate
         [Upload](https://main.excai.ai/docs/api-reference/uploads/object) object that
@@ -124,7 +123,7 @@ class UploadsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UploadCreateResponse,
+            cast_to=Upload,
         )
 
     def add_part(
@@ -190,7 +189,7 @@ class UploadsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UploadCancelResponse:
+    ) -> Upload:
         """Cancels the Upload.
 
         No Parts may be added after an Upload is cancelled.
@@ -211,7 +210,7 @@ class UploadsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UploadCancelResponse,
+            cast_to=Upload,
         )
 
     def complete(
@@ -226,7 +225,7 @@ class UploadsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UploadCompleteResponse:
+    ) -> Upload:
         """
         Completes the [Upload](https://main.excai.ai/docs/api-reference/uploads/object).
 
@@ -269,7 +268,7 @@ class UploadsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UploadCompleteResponse,
+            cast_to=Upload,
         )
 
 
@@ -280,7 +279,7 @@ class AsyncUploadsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncUploadsResourceWithRawResponse(self)
 
@@ -289,7 +288,7 @@ class AsyncUploadsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncUploadsResourceWithStreamingResponse(self)
 
@@ -300,14 +299,14 @@ class AsyncUploadsResource(AsyncAPIResource):
         filename: str,
         mime_type: str,
         purpose: Literal["assistants", "batch", "fine-tune", "vision"],
-        expires_after: upload_create_params.ExpiresAfter | Omit = omit,
+        expires_after: FileExpirationAfterParam | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UploadCreateResponse:
+    ) -> Upload:
         """
         Creates an intermediate
         [Upload](https://main.excai.ai/docs/api-reference/uploads/object) object that
@@ -370,7 +369,7 @@ class AsyncUploadsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UploadCreateResponse,
+            cast_to=Upload,
         )
 
     async def add_part(
@@ -436,7 +435,7 @@ class AsyncUploadsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UploadCancelResponse:
+    ) -> Upload:
         """Cancels the Upload.
 
         No Parts may be added after an Upload is cancelled.
@@ -457,7 +456,7 @@ class AsyncUploadsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UploadCancelResponse,
+            cast_to=Upload,
         )
 
     async def complete(
@@ -472,7 +471,7 @@ class AsyncUploadsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UploadCompleteResponse:
+    ) -> Upload:
         """
         Completes the [Upload](https://main.excai.ai/docs/api-reference/uploads/object).
 
@@ -515,7 +514,7 @@ class AsyncUploadsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UploadCompleteResponse,
+            cast_to=Upload,
         )
 
 

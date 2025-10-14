@@ -22,9 +22,7 @@ from ....types.organization.projects import (
     certificate_activate_params,
     certificate_deactivate_params,
 )
-from ....types.organization.projects.certificate_list_response import CertificateListResponse
-from ....types.organization.projects.certificate_activate_response import CertificateActivateResponse
-from ....types.organization.projects.certificate_deactivate_response import CertificateDeactivateResponse
+from ....types.organization.list_certificates import ListCertificates
 
 __all__ = ["CertificatesResource", "AsyncCertificatesResource"]
 
@@ -36,7 +34,7 @@ class CertificatesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return CertificatesResourceWithRawResponse(self)
 
@@ -45,7 +43,7 @@ class CertificatesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return CertificatesResourceWithStreamingResponse(self)
 
@@ -62,7 +60,7 @@ class CertificatesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> CertificateListResponse:
+    ) -> ListCertificates:
         """
         List certificates for this project.
 
@@ -104,7 +102,7 @@ class CertificatesResource(SyncAPIResource):
                     certificate_list_params.CertificateListParams,
                 ),
             ),
-            cast_to=CertificateListResponse,
+            cast_to=ListCertificates,
         )
 
     def activate(
@@ -118,7 +116,7 @@ class CertificatesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> CertificateActivateResponse:
+    ) -> ListCertificates:
         """
         Activate certificates at the project level.
 
@@ -143,7 +141,7 @@ class CertificatesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CertificateActivateResponse,
+            cast_to=ListCertificates,
         )
 
     def deactivate(
@@ -157,7 +155,7 @@ class CertificatesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> CertificateDeactivateResponse:
+    ) -> ListCertificates:
         """Deactivate certificates at the project level.
 
         You can atomically and
@@ -182,7 +180,7 @@ class CertificatesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CertificateDeactivateResponse,
+            cast_to=ListCertificates,
         )
 
 
@@ -193,7 +191,7 @@ class AsyncCertificatesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncCertificatesResourceWithRawResponse(self)
 
@@ -202,7 +200,7 @@ class AsyncCertificatesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncCertificatesResourceWithStreamingResponse(self)
 
@@ -219,7 +217,7 @@ class AsyncCertificatesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> CertificateListResponse:
+    ) -> ListCertificates:
         """
         List certificates for this project.
 
@@ -261,7 +259,7 @@ class AsyncCertificatesResource(AsyncAPIResource):
                     certificate_list_params.CertificateListParams,
                 ),
             ),
-            cast_to=CertificateListResponse,
+            cast_to=ListCertificates,
         )
 
     async def activate(
@@ -275,7 +273,7 @@ class AsyncCertificatesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> CertificateActivateResponse:
+    ) -> ListCertificates:
         """
         Activate certificates at the project level.
 
@@ -300,7 +298,7 @@ class AsyncCertificatesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CertificateActivateResponse,
+            cast_to=ListCertificates,
         )
 
     async def deactivate(
@@ -314,7 +312,7 @@ class AsyncCertificatesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> CertificateDeactivateResponse:
+    ) -> ListCertificates:
         """Deactivate certificates at the project level.
 
         You can atomically and
@@ -339,7 +337,7 @@ class AsyncCertificatesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CertificateDeactivateResponse,
+            cast_to=ListCertificates,
         )
 
 

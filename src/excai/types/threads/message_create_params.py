@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Iterable, Optional
+from typing import Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
-from ..shared_params.assistant_tools_code import AssistantToolsCode
-from .message_content_image_url_object_param import MessageContentImageURLObjectParam
-from .message_content_image_file_object_param import MessageContentImageFileObjectParam
-from ..assistant_tools_file_search_type_only_param import AssistantToolsFileSearchTypeOnlyParam
+from ..chat.metadata_param import MetadataParam
+from .assistant_tools_code_param import AssistantToolsCodeParam
+from .message_content_image_url_param import MessageContentImageURLParam
+from .message_content_image_file_param import MessageContentImageFileParam
+from .assistant_tools_file_search_type_only_param import AssistantToolsFileSearchTypeOnlyParam
 
 __all__ = [
     "MessageCreateParams",
@@ -35,7 +36,7 @@ class MessageCreateParams(TypedDict, total=False):
     attachments: Optional[Iterable[Attachment]]
     """A list of files attached to the message, and the tools they should be added to."""
 
-    metadata: Optional[Dict[str, str]]
+    metadata: Optional[MetadataParam]
     """Set of 16 key-value pairs that can be attached to an object.
 
     This can be useful for storing additional information about the object in a
@@ -55,10 +56,10 @@ class ContentArrayOfContentPartText(TypedDict, total=False):
 
 
 ContentArrayOfContentPart: TypeAlias = Union[
-    MessageContentImageFileObjectParam, MessageContentImageURLObjectParam, ContentArrayOfContentPartText
+    MessageContentImageFileParam, MessageContentImageURLParam, ContentArrayOfContentPartText
 ]
 
-AttachmentTool: TypeAlias = Union[AssistantToolsCode, AssistantToolsFileSearchTypeOnlyParam]
+AttachmentTool: TypeAlias = Union[AssistantToolsCodeParam, AssistantToolsFileSearchTypeOnlyParam]
 
 
 class Attachment(TypedDict, total=False):

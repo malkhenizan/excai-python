@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Optional
+from typing import Optional
 from typing_extensions import Literal
 
 import httpx
 
+from ...types import ChunkingStrategyRequestParam
 from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
@@ -19,10 +20,10 @@ from ..._response import (
 )
 from ..._base_client import make_request_options
 from ...types.vector_stores import file_batch_create_params, file_batch_list_files_params
-from ...types.vector_stores.file_batch_cancel_response import FileBatchCancelResponse
-from ...types.vector_stores.file_batch_create_response import FileBatchCreateResponse
-from ...types.vector_stores.file_batch_retrieve_response import FileBatchRetrieveResponse
-from ...types.vector_stores.file_batch_list_files_response import FileBatchListFilesResponse
+from ...types.chunking_strategy_request_param import ChunkingStrategyRequestParam
+from ...types.vector_stores.vector_store_file_batch_object import VectorStoreFileBatchObject
+from ...types.vector_stores.list_vector_store_files_response import ListVectorStoreFilesResponse
+from ...types.vector_stores.vector_store_file_attributes_param import VectorStoreFileAttributesParam
 
 __all__ = ["FileBatchesResource", "AsyncFileBatchesResource"]
 
@@ -34,7 +35,7 @@ class FileBatchesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return FileBatchesResourceWithRawResponse(self)
 
@@ -43,7 +44,7 @@ class FileBatchesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return FileBatchesResourceWithStreamingResponse(self)
 
@@ -52,15 +53,15 @@ class FileBatchesResource(SyncAPIResource):
         vector_store_id: str,
         *,
         file_ids: SequenceNotStr[str],
-        attributes: Optional[Dict[str, Union[str, float, bool]]] | Omit = omit,
-        chunking_strategy: file_batch_create_params.ChunkingStrategy | Omit = omit,
+        attributes: Optional[VectorStoreFileAttributesParam] | Omit = omit,
+        chunking_strategy: ChunkingStrategyRequestParam | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileBatchCreateResponse:
+    ) -> VectorStoreFileBatchObject:
         """
         Create a vector store file batch.
 
@@ -101,7 +102,7 @@ class FileBatchesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileBatchCreateResponse,
+            cast_to=VectorStoreFileBatchObject,
         )
 
     def retrieve(
@@ -115,7 +116,7 @@ class FileBatchesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileBatchRetrieveResponse:
+    ) -> VectorStoreFileBatchObject:
         """
         Retrieves a vector store file batch.
 
@@ -137,7 +138,7 @@ class FileBatchesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileBatchRetrieveResponse,
+            cast_to=VectorStoreFileBatchObject,
         )
 
     def cancel(
@@ -151,7 +152,7 @@ class FileBatchesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileBatchCancelResponse:
+    ) -> VectorStoreFileBatchObject:
         """Cancel a vector store file batch.
 
         This attempts to cancel the processing of
@@ -175,7 +176,7 @@ class FileBatchesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileBatchCancelResponse,
+            cast_to=VectorStoreFileBatchObject,
         )
 
     def list_files(
@@ -194,7 +195,7 @@ class FileBatchesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileBatchListFilesResponse:
+    ) -> ListVectorStoreFilesResponse:
         """
         Returns a list of vector store files in a batch.
 
@@ -247,7 +248,7 @@ class FileBatchesResource(SyncAPIResource):
                     file_batch_list_files_params.FileBatchListFilesParams,
                 ),
             ),
-            cast_to=FileBatchListFilesResponse,
+            cast_to=ListVectorStoreFilesResponse,
         )
 
 
@@ -258,7 +259,7 @@ class AsyncFileBatchesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncFileBatchesResourceWithRawResponse(self)
 
@@ -267,7 +268,7 @@ class AsyncFileBatchesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncFileBatchesResourceWithStreamingResponse(self)
 
@@ -276,15 +277,15 @@ class AsyncFileBatchesResource(AsyncAPIResource):
         vector_store_id: str,
         *,
         file_ids: SequenceNotStr[str],
-        attributes: Optional[Dict[str, Union[str, float, bool]]] | Omit = omit,
-        chunking_strategy: file_batch_create_params.ChunkingStrategy | Omit = omit,
+        attributes: Optional[VectorStoreFileAttributesParam] | Omit = omit,
+        chunking_strategy: ChunkingStrategyRequestParam | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileBatchCreateResponse:
+    ) -> VectorStoreFileBatchObject:
         """
         Create a vector store file batch.
 
@@ -325,7 +326,7 @@ class AsyncFileBatchesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileBatchCreateResponse,
+            cast_to=VectorStoreFileBatchObject,
         )
 
     async def retrieve(
@@ -339,7 +340,7 @@ class AsyncFileBatchesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileBatchRetrieveResponse:
+    ) -> VectorStoreFileBatchObject:
         """
         Retrieves a vector store file batch.
 
@@ -361,7 +362,7 @@ class AsyncFileBatchesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileBatchRetrieveResponse,
+            cast_to=VectorStoreFileBatchObject,
         )
 
     async def cancel(
@@ -375,7 +376,7 @@ class AsyncFileBatchesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileBatchCancelResponse:
+    ) -> VectorStoreFileBatchObject:
         """Cancel a vector store file batch.
 
         This attempts to cancel the processing of
@@ -399,7 +400,7 @@ class AsyncFileBatchesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=FileBatchCancelResponse,
+            cast_to=VectorStoreFileBatchObject,
         )
 
     async def list_files(
@@ -418,7 +419,7 @@ class AsyncFileBatchesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileBatchListFilesResponse:
+    ) -> ListVectorStoreFilesResponse:
         """
         Returns a list of vector store files in a batch.
 
@@ -471,7 +472,7 @@ class AsyncFileBatchesResource(AsyncAPIResource):
                     file_batch_list_files_params.FileBatchListFilesParams,
                 ),
             ),
-            cast_to=FileBatchListFilesResponse,
+            cast_to=ListVectorStoreFilesResponse,
         )
 
 

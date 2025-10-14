@@ -4,7 +4,7 @@ from typing import List
 from typing_extensions import Literal
 
 from ...._models import BaseModel
-from ..project_service_account import ProjectServiceAccount
+from .project_service_account import ProjectServiceAccount
 
 __all__ = ["ServiceAccountListResponse"]
 

@@ -2,25 +2,17 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Iterable, Optional
-from typing_extensions import Literal, TypeAlias, TypedDict
+from typing import Union, Iterable, Optional
+from typing_extensions import TypedDict
 
 from .._types import SequenceNotStr
-from .shared_params.assistant_tools_code import AssistantToolsCode
-from .shared_params.response_format_text import ResponseFormatText
-from .shared_params.assistant_tools_function import AssistantToolsFunction
-from .shared_params.assistant_tools_file_search import AssistantToolsFileSearch
-from .shared_params.response_format_json_object import ResponseFormatJsonObject
-from .shared_params.response_format_json_schema import ResponseFormatJsonSchema
+from .reasoning_effort import ReasoningEffort
+from .chat.metadata_param import MetadataParam
+from .assistant_tool_param import AssistantToolParam
+from .assistant_supported_models import AssistantSupportedModels
+from .threads.api_response_format_option_param import APIResponseFormatOptionParam
 
-__all__ = [
-    "AssistantUpdateParams",
-    "ResponseFormat",
-    "ToolResources",
-    "ToolResourcesCodeInterpreter",
-    "ToolResourcesFileSearch",
-    "Tool",
-]
+__all__ = ["AssistantUpdateParams", "ToolResources", "ToolResourcesCodeInterpreter", "ToolResourcesFileSearch"]
 
 
 class AssistantUpdateParams(TypedDict, total=False):
@@ -33,7 +25,7 @@ class AssistantUpdateParams(TypedDict, total=False):
     The maximum length is 256,000 characters.
     """
 
-    metadata: Optional[Dict[str, str]]
+    metadata: Optional[MetadataParam]
     """Set of 16 key-value pairs that can be attached to an object.
 
     This can be useful for storing additional information about the object in a
@@ -43,53 +35,7 @@ class AssistantUpdateParams(TypedDict, total=False):
     a maximum length of 512 characters.
     """
 
-    model: Union[
-        str,
-        Literal[
-            "gpt-5",
-            "gpt-5-mini",
-            "gpt-5-nano",
-            "gpt-5-2025-08-07",
-            "gpt-5-mini-2025-08-07",
-            "gpt-5-nano-2025-08-07",
-            "gpt-4.1",
-            "gpt-4.1-mini",
-            "gpt-4.1-nano",
-            "gpt-4.1-2025-04-14",
-            "gpt-4.1-mini-2025-04-14",
-            "gpt-4.1-nano-2025-04-14",
-            "o3-mini",
-            "o3-mini-2025-01-31",
-            "o1",
-            "o1-2024-12-17",
-            "gpt-4o",
-            "gpt-4o-2024-11-20",
-            "gpt-4o-2024-08-06",
-            "gpt-4o-2024-05-13",
-            "gpt-4o-mini",
-            "gpt-4o-mini-2024-07-18",
-            "gpt-4.5-preview",
-            "gpt-4.5-preview-2025-02-27",
-            "gpt-4-turbo",
-            "gpt-4-turbo-2024-04-09",
-            "gpt-4-0125-preview",
-            "gpt-4-turbo-preview",
-            "gpt-4-1106-preview",
-            "gpt-4-vision-preview",
-            "gpt-4",
-            "gpt-4-0314",
-            "gpt-4-0613",
-            "gpt-4-32k",
-            "gpt-4-32k-0314",
-            "gpt-4-32k-0613",
-            "gpt-3.5-turbo",
-            "gpt-3.5-turbo-16k",
-            "gpt-3.5-turbo-0613",
-            "gpt-3.5-turbo-1106",
-            "gpt-3.5-turbo-0125",
-            "gpt-3.5-turbo-16k-0613",
-        ],
-    ]
+    model: Union[str, AssistantSupportedModels]
     """ID of the model to use.
 
     You can use the
@@ -101,7 +47,7 @@ class AssistantUpdateParams(TypedDict, total=False):
     name: Optional[str]
     """The name of the assistant. The maximum length is 256 characters."""
 
-    reasoning_effort: Optional[Literal["minimal", "low", "medium", "high"]]
+    reasoning_effort: Optional[ReasoningEffort]
     """
     Constrains effort on reasoning for
     [reasoning models](https://main.excai.ai/docs/guides/reasoning). Currently
@@ -113,7 +59,7 @@ class AssistantUpdateParams(TypedDict, total=False):
     effort.
     """
 
-    response_format: Optional[ResponseFormat]
+    response_format: Optional[APIResponseFormatOptionParam]
     """Specifies the format that the model must output.
 
     Compatible with [GPT-4o](https://main.excai.ai/docs/models#gpt-4o),
@@ -152,7 +98,7 @@ class AssistantUpdateParams(TypedDict, total=False):
     tool requires a list of vector store IDs.
     """
 
-    tools: Iterable[Tool]
+    tools: Iterable[AssistantToolParam]
     """A list of tool enabled on the assistant.
 
     There can be a maximum of 128 tools per assistant. Tools can be of types
@@ -167,11 +113,6 @@ class AssistantUpdateParams(TypedDict, total=False):
 
     We generally recommend altering this or temperature but not both.
     """
-
-
-ResponseFormat: TypeAlias = Union[
-    Literal["auto"], ResponseFormatText, ResponseFormatJsonObject, ResponseFormatJsonSchema
-]
 
 
 class ToolResourcesCodeInterpreter(TypedDict, total=False):
@@ -197,6 +138,3 @@ class ToolResources(TypedDict, total=False):
     code_interpreter: ToolResourcesCodeInterpreter
 
     file_search: ToolResourcesFileSearch
-
-
-Tool: TypeAlias = Union[AssistantToolsCode, AssistantToolsFileSearch, AssistantToolsFunction]

@@ -67,7 +67,8 @@ from .projects.projects import (
     ProjectsResourceWithStreamingResponse,
     AsyncProjectsResourceWithStreamingResponse,
 )
-from ...types.organization_get_costs_response import OrganizationGetCostsResponse
+from ...types.usage_response import UsageResponse
+from ...types.audit_log_event_type import AuditLogEventType
 from ...types.organization_list_audit_logs_response import OrganizationListAuditLogsResponse
 
 __all__ = ["OrganizationResource", "AsyncOrganizationResource"]
@@ -104,7 +105,7 @@ class OrganizationResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return OrganizationResourceWithRawResponse(self)
 
@@ -113,7 +114,7 @@ class OrganizationResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return OrganizationResourceWithStreamingResponse(self)
 
@@ -133,7 +134,7 @@ class OrganizationResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationGetCostsResponse:
+    ) -> UsageResponse:
         """
         Get costs details for the organization.
 
@@ -184,7 +185,7 @@ class OrganizationResource(SyncAPIResource):
                     organization_get_costs_params.OrganizationGetCostsParams,
                 ),
             ),
-            cast_to=OrganizationGetCostsResponse,
+            cast_to=UsageResponse,
         )
 
     def list_audit_logs(
@@ -195,59 +196,7 @@ class OrganizationResource(SyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         effective_at: organization_list_audit_logs_params.EffectiveAt | Omit = omit,
-        event_types: List[
-            Literal[
-                "api_key.created",
-                "api_key.updated",
-                "api_key.deleted",
-                "certificate.created",
-                "certificate.updated",
-                "certificate.deleted",
-                "certificates.activated",
-                "certificates.deactivated",
-                "checkpoint.permission.created",
-                "checkpoint.permission.deleted",
-                "external_key.registered",
-                "external_key.removed",
-                "group.created",
-                "group.updated",
-                "group.deleted",
-                "invite.sent",
-                "invite.accepted",
-                "invite.deleted",
-                "ip_allowlist.created",
-                "ip_allowlist.updated",
-                "ip_allowlist.deleted",
-                "ip_allowlist.config.activated",
-                "ip_allowlist.config.deactivated",
-                "login.succeeded",
-                "login.failed",
-                "logout.succeeded",
-                "logout.failed",
-                "organization.updated",
-                "project.created",
-                "project.updated",
-                "project.archived",
-                "project.deleted",
-                "rate_limit.updated",
-                "rate_limit.deleted",
-                "resource.deleted",
-                "role.created",
-                "role.updated",
-                "role.deleted",
-                "role.assignment.created",
-                "role.assignment.deleted",
-                "scim.enabled",
-                "scim.disabled",
-                "service_account.created",
-                "service_account.updated",
-                "service_account.deleted",
-                "user.added",
-                "user.updated",
-                "user.deleted",
-            ]
-        ]
-        | Omit = omit,
+        event_types: List[AuditLogEventType] | Omit = omit,
         limit: int | Omit = omit,
         project_ids: SequenceNotStr[str] | Omit = omit,
         resource_ids: SequenceNotStr[str] | Omit = omit,
@@ -356,7 +305,7 @@ class AsyncOrganizationResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/excai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncOrganizationResourceWithRawResponse(self)
 
@@ -365,7 +314,7 @@ class AsyncOrganizationResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/malkhenizan/excai-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/excai-python#with_streaming_response
         """
         return AsyncOrganizationResourceWithStreamingResponse(self)
 
@@ -385,7 +334,7 @@ class AsyncOrganizationResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationGetCostsResponse:
+    ) -> UsageResponse:
         """
         Get costs details for the organization.
 
@@ -436,7 +385,7 @@ class AsyncOrganizationResource(AsyncAPIResource):
                     organization_get_costs_params.OrganizationGetCostsParams,
                 ),
             ),
-            cast_to=OrganizationGetCostsResponse,
+            cast_to=UsageResponse,
         )
 
     async def list_audit_logs(
@@ -447,59 +396,7 @@ class AsyncOrganizationResource(AsyncAPIResource):
         after: str | Omit = omit,
         before: str | Omit = omit,
         effective_at: organization_list_audit_logs_params.EffectiveAt | Omit = omit,
-        event_types: List[
-            Literal[
-                "api_key.created",
-                "api_key.updated",
-                "api_key.deleted",
-                "certificate.created",
-                "certificate.updated",
-                "certificate.deleted",
-                "certificates.activated",
-                "certificates.deactivated",
-                "checkpoint.permission.created",
-                "checkpoint.permission.deleted",
-                "external_key.registered",
-                "external_key.removed",
-                "group.created",
-                "group.updated",
-                "group.deleted",
-                "invite.sent",
-                "invite.accepted",
-                "invite.deleted",
-                "ip_allowlist.created",
-                "ip_allowlist.updated",
-                "ip_allowlist.deleted",
-                "ip_allowlist.config.activated",
-                "ip_allowlist.config.deactivated",
-                "login.succeeded",
-                "login.failed",
-                "logout.succeeded",
-                "logout.failed",
-                "organization.updated",
-                "project.created",
-                "project.updated",
-                "project.archived",
-                "project.deleted",
-                "rate_limit.updated",
-                "rate_limit.deleted",
-                "resource.deleted",
-                "role.created",
-                "role.updated",
-                "role.deleted",
-                "role.assignment.created",
-                "role.assignment.deleted",
-                "scim.enabled",
-                "scim.disabled",
-                "service_account.created",
-                "service_account.updated",
-                "service_account.deleted",
-                "user.added",
-                "user.updated",
-                "user.deleted",
-            ]
-        ]
-        | Omit = omit,
+        event_types: List[AuditLogEventType] | Omit = omit,
         limit: int | Omit = omit,
         project_ids: SequenceNotStr[str] | Omit = omit,
         resource_ids: SequenceNotStr[str] | Omit = omit,
