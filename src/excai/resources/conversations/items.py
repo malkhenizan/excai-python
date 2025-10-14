@@ -194,24 +194,7 @@ class ItemsResource(SyncAPIResource):
         Args:
           after: An item ID to list items after, used in pagination.
 
-          include: Specify additional output data to include in the model response. Currently
-              supported values are:
-
-              - `web_search_call.action.sources`: Include the sources of the web search tool
-                call.
-              - `code_interpreter_call.outputs`: Includes the outputs of python code execution
-                in code interpreter tool call items.
-              - `computer_call_output.output.image_url`: Include image urls from the computer
-                call output.
-              - `file_search_call.results`: Include the search results of the file search tool
-                call.
-              - `message.input_image.image_url`: Include image urls from the input message.
-              - `message.output_text.logprobs`: Include logprobs with assistant messages.
-              - `reasoning.encrypted_content`: Includes an encrypted version of reasoning
-                tokens in reasoning item outputs. This enables reasoning items to be used in
-                multi-turn conversations when using the Responses API statelessly (like when
-                the `store` parameter is set to `false`, or when an organization is enrolled
-                in the zero data retention program).
+          include: Specify additional output data to include in the model response.
 
           limit: A limit on the number of objects to be returned. Limit can range between 1 and
               100, and the default is 20.
@@ -455,24 +438,7 @@ class AsyncItemsResource(AsyncAPIResource):
         Args:
           after: An item ID to list items after, used in pagination.
 
-          include: Specify additional output data to include in the model response. Currently
-              supported values are:
-
-              - `web_search_call.action.sources`: Include the sources of the web search tool
-                call.
-              - `code_interpreter_call.outputs`: Includes the outputs of python code execution
-                in code interpreter tool call items.
-              - `computer_call_output.output.image_url`: Include image urls from the computer
-                call output.
-              - `file_search_call.results`: Include the search results of the file search tool
-                call.
-              - `message.input_image.image_url`: Include image urls from the input message.
-              - `message.output_text.logprobs`: Include logprobs with assistant messages.
-              - `reasoning.encrypted_content`: Includes an encrypted version of reasoning
-                tokens in reasoning item outputs. This enables reasoning items to be used in
-                multi-turn conversations when using the Responses API statelessly (like when
-                the `store` parameter is set to `false`, or when an organization is enrolled
-                in the zero data retention program).
+          include: Specify additional output data to include in the model response.
 
           limit: A limit on the number of objects to be returned. Limit can range between 1 and
               100, and the default is 20.
