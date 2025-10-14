@@ -4,19 +4,15 @@ from __future__ import annotations
 
 from typing_extensions import Literal, Required, TypedDict
 
-__all__ = ["InputAudioParam", "InputAudio"]
+__all__ = ["InputAudioParam"]
 
 
-class InputAudio(TypedDict, total=False):
+class InputAudioParam(TypedDict, total=False):
     data: Required[str]
     """Base64-encoded audio data."""
 
     format: Required[Literal["mp3", "wav"]]
     """The format of the audio data. Currently supported formats are `mp3` and `wav`."""
-
-
-class InputAudioParam(TypedDict, total=False):
-    input_audio: Required[InputAudio]
 
     type: Required[Literal["input_audio"]]
     """The type of the input item. Always `input_audio`."""
