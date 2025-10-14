@@ -5,7 +5,6 @@ from __future__ import annotations
 from typing import Union
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
-from ...grader_label_model_param import GraderLabelModelParam
 from .grader_python_script_param import GraderPythonScriptParam
 from .grader_text_similarity_ft_param import GraderTextSimilarityFtParam
 from .grader_score_assignment_model_param import GraderScoreAssignmentModelParam
@@ -18,7 +17,6 @@ Graders: TypeAlias = Union[
     GraderTextSimilarityFtParam,
     GraderPythonScriptParam,
     GraderScoreAssignmentModelParam,
-    GraderLabelModelParam,
 ]
 
 

@@ -228,7 +228,6 @@ Types:
 ```python
 from excai.types import (
     Eval,
-    GraderLabelModel,
     GraderPythonEval,
     GraderScoreEvalModel,
     GraderStringCheckEval,
