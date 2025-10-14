@@ -4,7 +4,6 @@ from typing import Union
 from typing_extensions import Literal, TypeAlias
 
 from ...._models import BaseModel
-from ...grader_label_model import GraderLabelModel
 from .grader_python_script import GraderPythonScript
 from .grader_text_similarity_ft import GraderTextSimilarityFt
 from .grader_score_assignment_model import GraderScoreAssignmentModel
@@ -13,11 +12,7 @@ from .grader_string_check_comparison import GraderStringCheckComparison
 __all__ = ["GraderMulti", "Graders"]
 
 Graders: TypeAlias = Union[
-    GraderStringCheckComparison,
-    GraderTextSimilarityFt,
-    GraderPythonScript,
-    GraderScoreAssignmentModel,
-    GraderLabelModel,
+    GraderStringCheckComparison, GraderTextSimilarityFt, GraderPythonScript, GraderScoreAssignmentModel
 ]
 
 

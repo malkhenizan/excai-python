@@ -35,7 +35,6 @@ from .eval_update_params import EvalUpdateParams as EvalUpdateParams
 from .file_list_response import FileListResponse as FileListResponse
 from .file_search_ranker import FileSearchRanker as FileSearchRanker
 from .file_upload_params import FileUploadParams as FileUploadParams
-from .grader_label_model import GraderLabelModel as GraderLabelModel
 from .grader_python_eval import GraderPythonEval as GraderPythonEval
 from .video_remix_params import VideoRemixParams as VideoRemixParams
 from .audio_transcription import AudioTranscription as AudioTranscription
@@ -80,7 +79,6 @@ from .container_list_response import ContainerListResponse as ContainerListRespo
 from .embedding_create_params import EmbeddingCreateParams as EmbeddingCreateParams
 from .grader_score_eval_model import GraderScoreEvalModel as GraderScoreEvalModel
 from .completion_create_params import CompletionCreateParams as CompletionCreateParams
-from .grader_label_model_param import GraderLabelModelParam as GraderLabelModelParam
 from .grader_python_eval_param import GraderPythonEvalParam as GraderPythonEvalParam
 from .grader_string_check_eval import GraderStringCheckEval as GraderStringCheckEval
 from .image_create_edit_params import ImageCreateEditParams as ImageCreateEditParams

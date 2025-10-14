@@ -8,7 +8,6 @@ from pydantic import Field as FieldInfo
 from .._utils import PropertyInfo
 from .._models import BaseModel
 from .chat.metadata import Metadata
-from .grader_label_model import GraderLabelModel
 from .grader_python_eval import GraderPythonEval
 from .grader_score_eval_model import GraderScoreEvalModel
 from .grader_string_check_eval import GraderStringCheckEval
@@ -83,7 +82,7 @@ DataSourceConfig: TypeAlias = Annotated[
 ]
 
 TestingCriterion: TypeAlias = Union[
-    GraderLabelModel, GraderStringCheckEval, GraderTextSimilarityEval, GraderPythonEval, GraderScoreEvalModel
+    GraderStringCheckEval, GraderTextSimilarityEval, GraderPythonEval, GraderScoreEvalModel
 ]
 
 
