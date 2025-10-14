@@ -30,6 +30,18 @@ describe('resource certificates', () => {
   });
 
   // Prism tests are disabled
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.organization.certificates.retrieve(
+        'certificate_id',
+        { include: ['content'] },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(ExCai.NotFoundError);
+  });
+
+  // Prism tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.organization.certificates.update('certificate_id', { name: 'name' });
     const rawResponse = await responsePromise.asResponse();

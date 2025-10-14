@@ -233,7 +233,7 @@ Types:
 Methods:
 
 - <code title="post /conversations/{conversation_id}/items">client.conversations.items.<a href="./src/resources/conversations/items.ts">create</a>(conversationId, { ...params }) -> ItemCreateResponse</code>
-- <code title="get /conversations/{conversation_id}/items/{item_id}">client.conversations.items.<a href="./src/resources/conversations/items.ts">retrieve</a>(conversationId, itemId) -> ItemRetrieveResponse</code>
+- <code title="get /conversations/{conversation_id}/items/{item_id}">client.conversations.items.<a href="./src/resources/conversations/items.ts">retrieve</a>(conversationId, itemId, { ...params }) -> ItemRetrieveResponse</code>
 - <code title="get /conversations/{conversation_id}/items">client.conversations.items.<a href="./src/resources/conversations/items.ts">list</a>(conversationId, { ...params }) -> ItemListResponse</code>
 - <code title="delete /conversations/{conversation_id}/items/{item_id}">client.conversations.items.<a href="./src/resources/conversations/items.ts">delete</a>(conversationId, itemId) -> ItemDeleteResponse</code>
 
@@ -505,7 +505,7 @@ Types:
 
 Methods:
 
-- <code title="get /organization/certificates/{certificate_id}">client.organization.certificates.<a href="./src/resources/organization/certificates.ts">retrieve</a>(certificateId) -> Certificate</code>
+- <code title="get /organization/certificates/{certificate_id}">client.organization.certificates.<a href="./src/resources/organization/certificates.ts">retrieve</a>(certificateId, { ...params }) -> Certificate</code>
 - <code title="post /organization/certificates/{certificate_id}">client.organization.certificates.<a href="./src/resources/organization/certificates.ts">update</a>(certificateId, { ...params }) -> Certificate</code>
 - <code title="get /organization/certificates">client.organization.certificates.<a href="./src/resources/organization/certificates.ts">list</a>({ ...params }) -> CertificateListResponse</code>
 - <code title="delete /organization/certificates/{certificate_id}">client.organization.certificates.<a href="./src/resources/organization/certificates.ts">delete</a>(certificateId) -> CertificateDeleteResponse</code>

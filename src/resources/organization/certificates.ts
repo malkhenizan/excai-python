@@ -21,9 +21,22 @@ export class Certificates extends APIResource {
    */
   retrieve(
     certificateId: string,
+    query?: CertificateRetrieveParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<OrganizationAPI.Certificate>;
+  retrieve(
+    certificateId: string,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<OrganizationAPI.Certificate>;
+  retrieve(
+    certificateId: string,
+    query: CertificateRetrieveParams | Core.RequestOptions = {},
     options?: Core.RequestOptions,
   ): Core.APIPromise<OrganizationAPI.Certificate> {
-    return this._client.get(`/organization/certificates/${certificateId}`, options);
+    if (isRequestOptions(query)) {
+      return this.retrieve(certificateId, {}, query);
+    }
+    return this._client.get(`/organization/certificates/${certificateId}`, { query, ...options });
   }
 
   /**
@@ -197,6 +210,14 @@ export interface CertificateDeactivateResponse {
   last_id?: string;
 }
 
+export interface CertificateRetrieveParams {
+  /**
+   * A list of additional fields to include in the response. Currently the only
+   * supported value is `content` to fetch the PEM content of the certificate.
+   */
+  include?: Array<'content'>;
+}
+
 export interface CertificateUpdateParams {
   /**
    * The updated name for the certificate
@@ -252,6 +273,7 @@ export declare namespace Certificates {
     type CertificateDeleteResponse as CertificateDeleteResponse,
     type CertificateActivateResponse as CertificateActivateResponse,
     type CertificateDeactivateResponse as CertificateDeactivateResponse,
+    type CertificateRetrieveParams as CertificateRetrieveParams,
     type CertificateUpdateParams as CertificateUpdateParams,
     type CertificateListParams as CertificateListParams,
     type CertificateActivateParams as CertificateActivateParams,

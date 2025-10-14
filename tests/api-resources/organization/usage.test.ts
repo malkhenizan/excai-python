@@ -32,6 +32,8 @@ describe('resource usage', () => {
       limit: 0,
       models: ['string'],
       page: 'page',
+      project_ids: ['string'],
+      user_ids: ['string'],
     });
   });
 

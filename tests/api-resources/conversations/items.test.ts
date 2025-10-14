@@ -51,6 +51,19 @@ describe('resource items', () => {
   });
 
   // Prism tests are disabled
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.conversations.items.retrieve(
+        'conv_123',
+        'msg_abc',
+        { include: ['code_interpreter_call.outputs'] },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(ExCai.NotFoundError);
+  });
+
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.conversations.items.list('conv_123');
     const rawResponse = await responsePromise.asResponse();

@@ -14,6 +14,7 @@ import {
   ItemDeleteResponse,
   ItemListParams,
   ItemListResponse,
+  ItemRetrieveParams,
   ItemRetrieveResponse,
   Items,
   Message as ItemsAPIMessage,
@@ -483,6 +484,7 @@ export declare namespace Conversations {
     type ItemListResponse as ItemListResponse,
     type ItemDeleteResponse as ItemDeleteResponse,
     type ItemCreateParams as ItemCreateParams,
+    type ItemRetrieveParams as ItemRetrieveParams,
     type ItemListParams as ItemListParams,
   };
 }

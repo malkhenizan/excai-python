@@ -27,8 +27,10 @@ describe('resource organization', () => {
       start_time: 0,
       bucket_width: '1d',
       end_time: 0,
+      group_by: ['project_id'],
       limit: 0,
       page: 'page',
+      project_ids: ['string'],
     });
   });
 

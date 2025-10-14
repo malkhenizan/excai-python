@@ -25,9 +25,24 @@ export class Items extends APIResource {
   retrieve(
     conversationId: string,
     itemId: string,
+    query?: ItemRetrieveParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<ItemRetrieveResponse>;
+  retrieve(
+    conversationId: string,
+    itemId: string,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<ItemRetrieveResponse>;
+  retrieve(
+    conversationId: string,
+    itemId: string,
+    query: ItemRetrieveParams | Core.RequestOptions = {},
     options?: Core.RequestOptions,
   ): Core.APIPromise<ItemRetrieveResponse> {
-    return this._client.get(`/conversations/${conversationId}/items/${itemId}`, options);
+    if (isRequestOptions(query)) {
+      return this.retrieve(conversationId, itemId, {}, query);
+    }
+    return this._client.get(`/conversations/${conversationId}/items/${itemId}`, { query, ...options });
   }
 
   /**
@@ -600,6 +615,22 @@ export namespace ItemCreateParams {
   }
 }
 
+export interface ItemRetrieveParams {
+  /**
+   * Additional fields to include in the response. See the `include` parameter for
+   * [listing Conversation items above](https://platform.excai.com/docs/api-reference/conversations/list-items#conversations_list_items-include)
+   * for more information.
+   */
+  include?: Array<
+    | 'code_interpreter_call.outputs'
+    | 'computer_call_output.output.image_url'
+    | 'file_search_call.results'
+    | 'message.input_image.image_url'
+    | 'message.output_text.logprobs'
+    | 'reasoning.encrypted_content'
+  >;
+}
+
 export interface ItemListParams {
   /**
    * An item ID to list items after, used in pagination.
@@ -633,6 +664,7 @@ export declare namespace Items {
     type ItemListResponse as ItemListResponse,
     type ItemDeleteResponse as ItemDeleteResponse,
     type ItemCreateParams as ItemCreateParams,
+    type ItemRetrieveParams as ItemRetrieveParams,
     type ItemListParams as ItemListParams,
   };
 }

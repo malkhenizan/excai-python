@@ -22,6 +22,7 @@ import {
   CertificateDeleteResponse,
   CertificateListParams,
   CertificateListResponse,
+  CertificateRetrieveParams,
   CertificateUpdateParams,
   CertificateUploadParams,
   Certificates,
@@ -2039,6 +2040,12 @@ export interface OrganizationGetCostsParams {
   end_time?: number;
 
   /**
+   * Group the costs by the specified fields. Support fields include `project_id`,
+   * `line_item` and any combination of them.
+   */
+  group_by?: Array<'project_id' | 'line_item'>;
+
+  /**
    * A limit on the number of buckets to be returned. Limit can range between 1 and
    * 180, and the default is 7.
    */
@@ -2049,6 +2056,11 @@ export interface OrganizationGetCostsParams {
    * previous response.
    */
   page?: string;
+
+  /**
+   * Return only costs for these projects.
+   */
+  project_ids?: Array<string>;
 }
 
 export interface OrganizationListAuditLogsParams {
@@ -2230,6 +2242,7 @@ export declare namespace Organization {
     type CertificateDeleteResponse as CertificateDeleteResponse,
     type CertificateActivateResponse as CertificateActivateResponse,
     type CertificateDeactivateResponse as CertificateDeactivateResponse,
+    type CertificateRetrieveParams as CertificateRetrieveParams,
     type CertificateUpdateParams as CertificateUpdateParams,
     type CertificateListParams as CertificateListParams,
     type CertificateActivateParams as CertificateActivateParams,
