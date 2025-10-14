@@ -21,6 +21,5 @@ export {
   type ItemListResponse,
   type ItemDeleteResponse,
   type ItemCreateParams,
-  type ItemRetrieveParams,
   type ItemListParams,
 } from './items';
