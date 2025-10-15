@@ -8,11 +8,11 @@ from typing_extensions import Literal, Required, TypeAlias, TypedDict
 from .truncation_param import TruncationParam
 from ..reasoning_effort import ReasoningEffort
 from ..file_search_ranker import FileSearchRanker
+from ..chat.function_param import FunctionParam
 from ..chat.metadata_param import MetadataParam
 from .create_message_param import CreateMessageParam
 from .assistant_tools_code_param import AssistantToolsCodeParam
 from ..assistant_supported_models import AssistantSupportedModels
-from ..chat.function_object_param import FunctionObjectParam
 from .api_tool_choice_option_param import APIToolChoiceOptionParam
 from .api_response_format_option_param import APIResponseFormatOptionParam
 
@@ -236,7 +236,7 @@ class ToolFileSearch(TypedDict, total=False):
 
 
 class ToolFunction(TypedDict, total=False):
-    function: Required[FunctionObjectParam]
+    function: Required[FunctionParam]
 
     type: Required[Literal["function"]]
     """The type of tool being defined: `function`"""

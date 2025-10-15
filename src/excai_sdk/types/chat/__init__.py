@@ -3,14 +3,15 @@
 from __future__ import annotations
 
 from .usage import Usage as Usage
+from .function import Function as Function
 from .metadata import Metadata as Metadata
 from .verbosity import Verbosity as Verbosity
 from .text_format import TextFormat as TextFormat
 from .service_tier import ServiceTier as ServiceTier
 from .token_logprob import TokenLogprob as TokenLogprob
+from .function_param import FunctionParam as FunctionParam
 from .metadata_param import MetadataParam as MetadataParam
 from .create_response import CreateResponse as CreateResponse
-from .function_object import FunctionObject as FunctionObject
 from .response_message import ResponseMessage as ResponseMessage
 from .message_tool_call import ChatCompletionMessageToolCallUnion as ChatCompletionMessageToolCallUnion
 from .text_content_part import TextContentPart as TextContentPart
@@ -19,7 +20,6 @@ from .image_content_part import ImageContentPart as ImageContentPart
 from .json_object_format import JsonObjectFormat as JsonObjectFormat
 from .json_schema_format import JsonSchemaFormat as JsonSchemaFormat
 from .chat_completion_tool import ChatCompletionTool as ChatCompletionTool
-from .function_object_param import FunctionObjectParam as FunctionObjectParam
 from .completion_list_params import CompletionListParams as CompletionListParams
 from .shared_model_ids_param import SharedModelIDsParam as SharedModelIDsParam
 from .text_content_part_param import TextContentPartParam as TextContentPartParam

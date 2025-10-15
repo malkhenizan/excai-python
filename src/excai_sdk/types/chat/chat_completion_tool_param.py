@@ -4,13 +4,13 @@ from __future__ import annotations
 
 from typing_extensions import Literal, Required, TypedDict
 
-from .function_object_param import FunctionObjectParam
+from .function_param import FunctionParam
 
 __all__ = ["ChatCompletionToolParam"]
 
 
 class ChatCompletionToolParam(TypedDict, total=False):
-    function: Required[FunctionObjectParam]
+    function: Required[FunctionParam]
 
     type: Required[Literal["function"]]
     """The type of the tool. Currently, only `function` is supported."""

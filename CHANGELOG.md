@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.2.0 (2025-10-15)
+
+Full Changelog: [v1.1.0...v1.2.0](https://github.com/malkhenizan/excai-python/compare/v1.1.0...v1.2.0)
+
+### Features
+
+* **api:** manual updates ([975c9e6](https://github.com/malkhenizan/excai-python/commit/975c9e6012304484c5ddf614de77c74c3f6521eb))
+* **api:** manual updates ([5517a73](https://github.com/malkhenizan/excai-python/commit/5517a734c255b49870f8d98cb1630b951850282f))
+* **api:** manual updates ([1d77c56](https://github.com/malkhenizan/excai-python/commit/1d77c56f3782d25f1dec4ea73d7e15bfe8856323))
+* **api:** manual updates ([e91af40](https://github.com/malkhenizan/excai-python/commit/e91af40f19826659df3ec3507cc89e01db622413))
+* **api:** manual updates ([0a703bf](https://github.com/malkhenizan/excai-python/commit/0a703bf14530b75ec5689c4d31ff628ef34a33bc))
+* **api:** manual updates ([cfc26f2](https://github.com/malkhenizan/excai-python/commit/cfc26f27e425b5cd378a60a87f8c66d9929dc676))
+* **api:** manual updates ([1d1fd58](https://github.com/malkhenizan/excai-python/commit/1d1fd58316dd0ebc33600273c5633c8f38e8bce6))
+
 ## 1.1.0 (2025-10-14)
 
 Full Changelog: [v1.0.2...v1.1.0](https://github.com/malkhenizan/excai-python/compare/v1.0.2...v1.1.0)
