@@ -132,7 +132,7 @@ class SamplingParamsText(TypedDict, total=False):
 
     The default format is `{ "type": "text" }` with no additional options.
 
-    **Not recommended for gpt-4o and newer models:**
+    **Not recommended for openai/gpt-oss-120b and newer models:**
 
     Setting to `{ "type": "json_object" }` enables the older JSON mode, which
     ensures the message the model generates is valid JSON. Using `json_schema` is

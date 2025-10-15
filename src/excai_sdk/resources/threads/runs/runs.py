@@ -164,7 +164,7 @@ class RunsResource(SyncAPIResource):
               effort.
 
           response_format: Specifies the format that the model must output. Compatible with
-              [GPT-4o](https://main.excai.ai/docs/models#gpt-4o),
+              [openai/gpt-oss-120b](https://main.excai.ai/docs/models#openai/gpt-oss-120b),
               [GPT-4 Turbo](https://main.excai.ai/docs/models#gpt-4-turbo-and-gpt-4), and all
               GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
 
@@ -461,12 +461,11 @@ class RunsResource(SyncAPIResource):
                 "gpt-4.1-2025-04-14",
                 "gpt-4.1-mini-2025-04-14",
                 "gpt-4.1-nano-2025-04-14",
-                "gpt-4o",
-                "gpt-4o-2024-11-20",
-                "gpt-4o-2024-08-06",
-                "gpt-4o-2024-05-13",
-                "gpt-4o-mini",
-                "gpt-4o-mini-2024-07-18",
+                "openai/gpt-oss-120b",
+                "openai/gpt-oss-120b-2024-11-20",
+                "openai/gpt-oss-120b-2024-08-06",
+                "openai/gpt-oss-120b-2024-05-13",
+                "openai/gpt-oss-120b-2024-07-18",
                 "gpt-4.5-preview",
                 "gpt-4.5-preview-2025-02-27",
                 "gpt-4-turbo",
@@ -547,7 +546,7 @@ class RunsResource(SyncAPIResource):
               during tool use.
 
           response_format: Specifies the format that the model must output. Compatible with
-              [GPT-4o](https://main.excai.ai/docs/models#gpt-4o),
+              [openai/gpt-oss-120b](https://main.excai.ai/docs/models#openai/gpt-oss-120b),
               [GPT-4 Turbo](https://main.excai.ai/docs/models#gpt-4-turbo-and-gpt-4), and all
               GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
 
@@ -811,7 +810,7 @@ class AsyncRunsResource(AsyncAPIResource):
               effort.
 
           response_format: Specifies the format that the model must output. Compatible with
-              [GPT-4o](https://main.excai.ai/docs/models#gpt-4o),
+              [openai/gpt-oss-120b](https://main.excai.ai/docs/models#openai/gpt-oss-120b),
               [GPT-4 Turbo](https://main.excai.ai/docs/models#gpt-4-turbo-and-gpt-4), and all
               GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
 
@@ -1108,12 +1107,11 @@ class AsyncRunsResource(AsyncAPIResource):
                 "gpt-4.1-2025-04-14",
                 "gpt-4.1-mini-2025-04-14",
                 "gpt-4.1-nano-2025-04-14",
-                "gpt-4o",
-                "gpt-4o-2024-11-20",
-                "gpt-4o-2024-08-06",
-                "gpt-4o-2024-05-13",
-                "gpt-4o-mini",
-                "gpt-4o-mini-2024-07-18",
+                "openai/gpt-oss-120b",
+                "openai/gpt-oss-120b-2024-11-20",
+                "openai/gpt-oss-120b-2024-08-06",
+                "openai/gpt-oss-120b-2024-05-13",
+                "openai/gpt-oss-120b-2024-07-18",
                 "gpt-4.5-preview",
                 "gpt-4.5-preview-2025-02-27",
                 "gpt-4-turbo",
@@ -1194,7 +1192,7 @@ class AsyncRunsResource(AsyncAPIResource):
               during tool use.
 
           response_format: Specifies the format that the model must output. Compatible with
-              [GPT-4o](https://main.excai.ai/docs/models#gpt-4o),
+              [openai/gpt-oss-120b](https://main.excai.ai/docs/models#openai/gpt-oss-120b),
               [GPT-4 Turbo](https://main.excai.ai/docs/models#gpt-4-turbo-and-gpt-4), and all
               GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
 

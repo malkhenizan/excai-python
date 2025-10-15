@@ -62,7 +62,7 @@ class AudioResource(SyncAPIResource):
         self,
         *,
         input: str,
-        model: Union[str, Literal["tts-1", "tts-1-hd", "gpt-4o-mini-tts"]],
+        model: Union[str, Literal["tts-1", "tts-1-hd", "openai/gpt-oss-120b-tts"]],
         voice: VoiceIDsSharedParam,
         instructions: str | Omit = omit,
         response_format: Literal["mp3", "opus", "aac", "flac", "wav", "pcm"] | Omit = omit,
@@ -83,7 +83,7 @@ class AudioResource(SyncAPIResource):
 
           model:
               One of the available [TTS models](https://main.excai.ai/docs/models#tts):
-              `tts-1`, `tts-1-hd` or `gpt-4o-mini-tts`.
+              `tts-1`, `tts-1-hd` or `openai/gpt-oss-120b-tts`.
 
           voice: The voice to use when generating the audio. Supported voices are `alloy`, `ash`,
               `ballad`, `coral`, `echo`, `fable`, `onyx`, `nova`, `sage`, `shimmer`, and
@@ -135,7 +135,7 @@ class AudioResource(SyncAPIResource):
         self,
         *,
         file: FileTypes,
-        model: Union[str, Literal["whisper-1", "gpt-4o-transcribe", "gpt-4o-mini-transcribe"]],
+        model: Union[str, Literal["whisper-1", "openai/gpt-oss-120b-transcribe"]],
         chunking_strategy: Optional[audio_create_transcription_params.ChunkingStrategy] | Omit = omit,
         include: List[Literal["logprobs"]] | Omit = omit,
         language: str | Omit = omit,
@@ -159,9 +159,9 @@ class AudioResource(SyncAPIResource):
               The audio file object (not file name) to transcribe, in one of these formats:
               flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm.
 
-          model: ID of the model to use. The options are `gpt-4o-transcribe`,
-              `gpt-4o-mini-transcribe`, and `whisper-1` (which is powered by our open source
-              Whisper V2 model).
+          model: ID of the model to use. The options are `openai/gpt-oss-120b-transcribe`,
+              `openai/gpt-oss-120b-transcribe`, and `whisper-1` (which is powered by our open
+              source Whisper V2 model).
 
           chunking_strategy: Controls how the audio is cut into chunks. When set to `"auto"`, the server
               first normalizes loudness and then uses voice activity detection (VAD) to choose
@@ -171,8 +171,8 @@ class AudioResource(SyncAPIResource):
           include: Additional information to include in the transcription response. `logprobs` will
               return the log probabilities of the tokens in the response to understand the
               model's confidence in the transcription. `logprobs` only works with
-              response_format set to `json` and only with the models `gpt-4o-transcribe` and
-              `gpt-4o-mini-transcribe`.
+              response_format set to `json` and only with the models
+              `openai/gpt-oss-120b-transcribe` and `openai/gpt-oss-120b-transcribe`.
 
           language: The language of the input audio. Supplying the input language in
               [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`)
@@ -184,8 +184,8 @@ class AudioResource(SyncAPIResource):
               match the audio language.
 
           response_format: The format of the output, in one of these options: `json`, `text`, `srt`,
-              `verbose_json`, or `vtt`. For `gpt-4o-transcribe` and `gpt-4o-mini-transcribe`,
-              the only supported format is `json`.
+              `verbose_json`, or `vtt`. For `openai/gpt-oss-120b-transcribe` and
+              `openai/gpt-oss-120b-transcribe`, the only supported format is `json`.
 
           stream: If set to true, the model response data will be streamed to the client as it is
               generated using
@@ -351,7 +351,7 @@ class AsyncAudioResource(AsyncAPIResource):
         self,
         *,
         input: str,
-        model: Union[str, Literal["tts-1", "tts-1-hd", "gpt-4o-mini-tts"]],
+        model: Union[str, Literal["tts-1", "tts-1-hd", "openai/gpt-oss-120b-tts"]],
         voice: VoiceIDsSharedParam,
         instructions: str | Omit = omit,
         response_format: Literal["mp3", "opus", "aac", "flac", "wav", "pcm"] | Omit = omit,
@@ -372,7 +372,7 @@ class AsyncAudioResource(AsyncAPIResource):
 
           model:
               One of the available [TTS models](https://main.excai.ai/docs/models#tts):
-              `tts-1`, `tts-1-hd` or `gpt-4o-mini-tts`.
+              `tts-1`, `tts-1-hd` or `openai/gpt-oss-120b-tts`.
 
           voice: The voice to use when generating the audio. Supported voices are `alloy`, `ash`,
               `ballad`, `coral`, `echo`, `fable`, `onyx`, `nova`, `sage`, `shimmer`, and
@@ -424,7 +424,7 @@ class AsyncAudioResource(AsyncAPIResource):
         self,
         *,
         file: FileTypes,
-        model: Union[str, Literal["whisper-1", "gpt-4o-transcribe", "gpt-4o-mini-transcribe"]],
+        model: Union[str, Literal["whisper-1", "openai/gpt-oss-120b-transcribe"]],
         chunking_strategy: Optional[audio_create_transcription_params.ChunkingStrategy] | Omit = omit,
         include: List[Literal["logprobs"]] | Omit = omit,
         language: str | Omit = omit,
@@ -448,9 +448,9 @@ class AsyncAudioResource(AsyncAPIResource):
               The audio file object (not file name) to transcribe, in one of these formats:
               flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm.
 
-          model: ID of the model to use. The options are `gpt-4o-transcribe`,
-              `gpt-4o-mini-transcribe`, and `whisper-1` (which is powered by our open source
-              Whisper V2 model).
+          model: ID of the model to use. The options are `openai/gpt-oss-120b-transcribe`,
+              `openai/gpt-oss-120b-transcribe`, and `whisper-1` (which is powered by our open
+              source Whisper V2 model).
 
           chunking_strategy: Controls how the audio is cut into chunks. When set to `"auto"`, the server
               first normalizes loudness and then uses voice activity detection (VAD) to choose
@@ -460,8 +460,8 @@ class AsyncAudioResource(AsyncAPIResource):
           include: Additional information to include in the transcription response. `logprobs` will
               return the log probabilities of the tokens in the response to understand the
               model's confidence in the transcription. `logprobs` only works with
-              response_format set to `json` and only with the models `gpt-4o-transcribe` and
-              `gpt-4o-mini-transcribe`.
+              response_format set to `json` and only with the models
+              `openai/gpt-oss-120b-transcribe` and `openai/gpt-oss-120b-transcribe`.
 
           language: The language of the input audio. Supplying the input language in
               [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`)
@@ -473,8 +473,8 @@ class AsyncAudioResource(AsyncAPIResource):
               match the audio language.
 
           response_format: The format of the output, in one of these options: `json`, `text`, `srt`,
-              `verbose_json`, or `vtt`. For `gpt-4o-transcribe` and `gpt-4o-mini-transcribe`,
-              the only supported format is `json`.
+              `verbose_json`, or `vtt`. For `openai/gpt-oss-120b-transcribe` and
+              `openai/gpt-oss-120b-transcribe`, the only supported format is `json`.
 
           stream: If set to true, the model response data will be streamed to the client as it is
               generated using

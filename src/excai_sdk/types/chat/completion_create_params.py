@@ -462,7 +462,7 @@ class Body(ModelResponsePropertiesCreateParam, total=False):
     """
 
     model: Required[SharedModelIDsParam]
-    """Model ID used to generate the response, like `gpt-4o` or `o3`.
+    """Model ID used to generate the response, like `openai/gpt-oss-120b` or `o3`.
 
     EXCai offers a wide range of models with different capabilities, performance
     characteristics, and price points. Refer to the
@@ -549,7 +549,7 @@ class Body(ModelResponsePropertiesCreateParam, total=False):
 
     `["text"]`
 
-    The `gpt-4o-audio-preview` model can also be used to
+    The `openai/gpt-oss-120b-audio-preview` model can also be used to
     [generate audio](https://main.excai.ai/docs/guides/audio). To request that this
     model generate both text and audio responses, you can use:
 
