@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Union, Optional
+from typing import Optional
 
 from .._models import BaseModel
 from .chat.metadata import Metadata
@@ -63,7 +63,7 @@ class ModelResponsePropertiesStandard(BaseModel):
     this or `top_p` but not both.
     """
 
-    top_logprobs: Union[int, int, None] = None
+    top_logprobs: Optional[int] = None
     """
     An integer between 0 and 20 specifying the number of most likely tokens to
     return at each token position, each with an associated log probability.
