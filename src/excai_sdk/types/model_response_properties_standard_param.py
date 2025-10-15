@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Union, Optional
+from typing import Optional
 from typing_extensions import TypedDict
 
 from .chat.service_tier import ServiceTier
@@ -65,7 +65,7 @@ class ModelResponsePropertiesStandardParam(TypedDict, total=False):
     this or `top_p` but not both.
     """
 
-    top_logprobs: Union[int, int]
+    top_logprobs: Optional[int]
     """
     An integer between 0 and 20 specifying the number of most likely tokens to
     return at each token position, each with an associated log probability.
