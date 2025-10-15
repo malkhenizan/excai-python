@@ -4,10 +4,10 @@ from typing import Dict, Optional
 
 from ..._models import BaseModel
 
-__all__ = ["FunctionObject"]
+__all__ = ["Function"]
 
 
-class FunctionObject(BaseModel):
+class Function(BaseModel):
     name: str
     """The name of the function to be called.
 

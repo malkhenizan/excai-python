@@ -5,9 +5,9 @@ from typing_extensions import Literal, Annotated, TypeAlias
 
 from .._utils import PropertyInfo
 from .._models import BaseModel
+from .chat.function import Function
 from .chat.metadata import Metadata
 from .file_search_ranker import FileSearchRanker
-from .chat.function_object import FunctionObject
 from .threads.assistant_tools_code import AssistantToolsCode
 from .threads.api_response_format_option import APIResponseFormatOption
 
@@ -72,7 +72,7 @@ class ToolFileSearch(BaseModel):
 
 
 class ToolFunction(BaseModel):
-    function: FunctionObject
+    function: Function
 
     type: Literal["function"]
     """The type of tool being defined: `function`"""

@@ -2,14 +2,14 @@
 
 from typing_extensions import Literal
 
+from .function import Function
 from ..._models import BaseModel
-from .function_object import FunctionObject
 
 __all__ = ["ChatCompletionTool"]
 
 
 class ChatCompletionTool(BaseModel):
-    function: FunctionObject
+    function: Function
 
     type: Literal["function"]
     """The type of the tool. Currently, only `function` is supported."""

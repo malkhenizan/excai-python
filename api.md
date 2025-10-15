@@ -66,7 +66,7 @@ Types:
 from excai_sdk.types.chat import (
     ChatCompletionTool,
     CreateResponse,
-    FunctionObject,
+    Function,
     ImageContentPart,
     JsonObjectFormat,
     JsonSchemaFormat,
