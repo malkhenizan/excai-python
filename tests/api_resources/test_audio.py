@@ -99,7 +99,7 @@ class TestAudio:
     def test_method_create_transcription(self, client: ExcaiSDK) -> None:
         audio = client.audio.create_transcription(
             file=b"raw file contents",
-            model="gpt-4o-transcribe",
+            model="openai/gpt-oss-120b-transcribe",
         )
         assert_matches_type(AudioCreateTranscriptionResponse, audio, path=["response"])
 
@@ -108,7 +108,7 @@ class TestAudio:
     def test_method_create_transcription_with_all_params(self, client: ExcaiSDK) -> None:
         audio = client.audio.create_transcription(
             file=b"raw file contents",
-            model="gpt-4o-transcribe",
+            model="openai/gpt-oss-120b-transcribe",
             chunking_strategy="auto",
             include=["logprobs"],
             language="language",
@@ -125,7 +125,7 @@ class TestAudio:
     def test_raw_response_create_transcription(self, client: ExcaiSDK) -> None:
         response = client.audio.with_raw_response.create_transcription(
             file=b"raw file contents",
-            model="gpt-4o-transcribe",
+            model="openai/gpt-oss-120b-transcribe",
         )
 
         assert response.is_closed is True
@@ -138,7 +138,7 @@ class TestAudio:
     def test_streaming_response_create_transcription(self, client: ExcaiSDK) -> None:
         with client.audio.with_streaming_response.create_transcription(
             file=b"raw file contents",
-            model="gpt-4o-transcribe",
+            model="openai/gpt-oss-120b-transcribe",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -276,7 +276,7 @@ class TestAsyncAudio:
     async def test_method_create_transcription(self, async_client: AsyncExcaiSDK) -> None:
         audio = await async_client.audio.create_transcription(
             file=b"raw file contents",
-            model="gpt-4o-transcribe",
+            model="openai/gpt-oss-120b-transcribe",
         )
         assert_matches_type(AudioCreateTranscriptionResponse, audio, path=["response"])
 
@@ -285,7 +285,7 @@ class TestAsyncAudio:
     async def test_method_create_transcription_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         audio = await async_client.audio.create_transcription(
             file=b"raw file contents",
-            model="gpt-4o-transcribe",
+            model="openai/gpt-oss-120b-transcribe",
             chunking_strategy="auto",
             include=["logprobs"],
             language="language",
@@ -302,7 +302,7 @@ class TestAsyncAudio:
     async def test_raw_response_create_transcription(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.audio.with_raw_response.create_transcription(
             file=b"raw file contents",
-            model="gpt-4o-transcribe",
+            model="openai/gpt-oss-120b-transcribe",
         )
 
         assert response.is_closed is True
@@ -315,7 +315,7 @@ class TestAsyncAudio:
     async def test_streaming_response_create_transcription(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.audio.with_streaming_response.create_transcription(
             file=b"raw file contents",
-            model="gpt-4o-transcribe",
+            model="openai/gpt-oss-120b-transcribe",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

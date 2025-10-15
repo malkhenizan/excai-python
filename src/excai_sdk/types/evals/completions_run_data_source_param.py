@@ -53,7 +53,7 @@ class SourceStoredCompletions(TypedDict, total=False):
     """
 
     model: Optional[str]
-    """An optional model to filter by (e.g., 'gpt-4o')."""
+    """An optional model to filter by (e.g., 'openai/gpt-oss-120b')."""
 
 
 Source: TypeAlias = Union[JSONLFileContentSourceParam, JSONLFileIDSourceParam, SourceStoredCompletions]

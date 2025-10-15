@@ -68,8 +68,8 @@ class CreateTranscriptionResponseJson(BaseModel):
     logprobs: Optional[List[CreateTranscriptionResponseJsonLogprob]] = None
     """The log probabilities of the tokens in the transcription.
 
-    Only returned with the models `gpt-4o-transcribe` and `gpt-4o-mini-transcribe`
-    if `logprobs` is added to the `include` array.
+    Only returned with the models `openai/gpt-oss-120b-transcribe` and
+    `openai/gpt-oss-120b-transcribe` if `logprobs` is added to the `include` array.
     """
 
     usage: Optional[CreateTranscriptionResponseJsonUsage] = None

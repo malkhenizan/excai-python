@@ -104,7 +104,7 @@ class AssistantsResource(SyncAPIResource):
               effort.
 
           response_format: Specifies the format that the model must output. Compatible with
-              [GPT-4o](https://main.excai.ai/docs/models#gpt-4o),
+              [openai/gpt-oss-120b](https://main.excai.ai/docs/models#openai/gpt-oss-120b),
               [GPT-4 Turbo](https://main.excai.ai/docs/models#gpt-4-turbo-and-gpt-4), and all
               GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
 
@@ -264,7 +264,7 @@ class AssistantsResource(SyncAPIResource):
               effort.
 
           response_format: Specifies the format that the model must output. Compatible with
-              [GPT-4o](https://main.excai.ai/docs/models#gpt-4o),
+              [openai/gpt-oss-120b](https://main.excai.ai/docs/models#openai/gpt-oss-120b),
               [GPT-4 Turbo](https://main.excai.ai/docs/models#gpt-4-turbo-and-gpt-4), and all
               GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
 
@@ -508,7 +508,7 @@ class AsyncAssistantsResource(AsyncAPIResource):
               effort.
 
           response_format: Specifies the format that the model must output. Compatible with
-              [GPT-4o](https://main.excai.ai/docs/models#gpt-4o),
+              [openai/gpt-oss-120b](https://main.excai.ai/docs/models#openai/gpt-oss-120b),
               [GPT-4 Turbo](https://main.excai.ai/docs/models#gpt-4-turbo-and-gpt-4), and all
               GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
 
@@ -668,7 +668,7 @@ class AsyncAssistantsResource(AsyncAPIResource):
               effort.
 
           response_format: Specifies the format that the model must output. Compatible with
-              [GPT-4o](https://main.excai.ai/docs/models#gpt-4o),
+              [openai/gpt-oss-120b](https://main.excai.ai/docs/models#openai/gpt-oss-120b),
               [GPT-4 Turbo](https://main.excai.ai/docs/models#gpt-4-turbo-and-gpt-4), and all
               GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
 

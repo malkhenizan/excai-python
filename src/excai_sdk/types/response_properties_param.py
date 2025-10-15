@@ -63,7 +63,7 @@ class Text(TypedDict, total=False):
 
     The default format is `{ "type": "text" }` with no additional options.
 
-    **Not recommended for gpt-4o and newer models:**
+    **Not recommended for openai/gpt-oss-120b and newer models:**
 
     Setting to `{ "type": "json_object" }` enables the older JSON mode, which
     ensures the message the model generates is valid JSON. Using `json_schema` is
@@ -194,24 +194,19 @@ class ResponsePropertiesParam(TypedDict, total=False):
             "o1-preview-2024-09-12",
             "o1-mini",
             "o1-mini-2024-09-12",
-            "gpt-4o",
-            "gpt-4o-2024-11-20",
-            "gpt-4o-2024-08-06",
-            "gpt-4o-2024-05-13",
-            "gpt-4o-audio-preview",
-            "gpt-4o-audio-preview-2024-10-01",
-            "gpt-4o-audio-preview-2024-12-17",
-            "gpt-4o-audio-preview-2025-06-03",
-            "gpt-4o-mini-audio-preview",
-            "gpt-4o-mini-audio-preview-2024-12-17",
-            "gpt-4o-search-preview",
-            "gpt-4o-mini-search-preview",
-            "gpt-4o-search-preview-2025-03-11",
-            "gpt-4o-mini-search-preview-2025-03-11",
-            "chatgpt-4o-latest",
+            "openai/gpt-oss-120b",
+            "openai/gpt-oss-120b-2024-11-20",
+            "openai/gpt-oss-120b-2024-08-06",
+            "openai/gpt-oss-120b-2024-05-13",
+            "openai/gpt-oss-120b-audio-preview",
+            "openai/gpt-oss-120b-audio-preview-2024-10-01",
+            "openai/gpt-oss-120b-audio-preview-2024-12-17",
+            "openai/gpt-oss-120b-audio-preview-2025-06-03",
+            "openai/gpt-oss-120b-search-preview",
+            "openai/gpt-oss-120b-search-preview-2025-03-11",
+            "chatopenai/gpt-oss-120b-latest",
             "codex-mini-latest",
-            "gpt-4o-mini",
-            "gpt-4o-mini-2024-07-18",
+            "openai/gpt-oss-120b-2024-07-18",
             "gpt-4-turbo",
             "gpt-4-turbo-2024-04-09",
             "gpt-4-0125-preview",
@@ -247,7 +242,7 @@ class ResponsePropertiesParam(TypedDict, total=False):
         ],
         str,
     ]
-    """Model ID used to generate the response, like `gpt-4o` or `o3`.
+    """Model ID used to generate the response, like `openai/gpt-oss-120b` or `o3`.
 
     EXCai offers a wide range of models with different capabilities, performance
     characteristics, and price points. Refer to the

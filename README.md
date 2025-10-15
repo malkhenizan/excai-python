@@ -40,7 +40,7 @@ create_response = client.chat.completions.create(
                 "role": "developer",
             }
         ],
-        "model": "gpt-4o",
+        "model": "openai/gpt-oss-120b",
     },
 )
 print(create_response.id)
@@ -74,7 +74,7 @@ async def main() -> None:
                     "role": "developer",
                 }
             ],
-            "model": "gpt-4o",
+            "model": "openai/gpt-oss-120b",
         },
     )
     print(create_response.id)
@@ -117,7 +117,7 @@ async def main() -> None:
                         "role": "developer",
                     }
                 ],
-                "model": "gpt-4o",
+                "model": "openai/gpt-oss-120b",
             },
         )
         print(create_response.id)
@@ -152,7 +152,7 @@ create_response = client.chat.completions.create(
                 "role": "developer",
             }
         ],
-        "model": "gpt-4o",
+        "model": "openai/gpt-oss-120b",
     },
 )
 print(create_response.audio)
@@ -170,7 +170,7 @@ client = ExcaiSDK()
 
 client.audio.create_transcription(
     file=Path("/path/to/file"),
-    model="gpt-4o-transcribe",
+    model="openai/gpt-oss-120b-transcribe",
 )
 ```
 
@@ -200,7 +200,7 @@ try:
                     "role": "developer",
                 }
             ],
-            "model": "gpt-4o",
+            "model": "openai/gpt-oss-120b",
         },
     )
 except excai_sdk.APIConnectionError as e:
@@ -253,7 +253,7 @@ client.with_options(max_retries=5).chat.completions.create(
                 "role": "developer",
             }
         ],
-        "model": "gpt-4o",
+        "model": "openai/gpt-oss-120b",
     },
 )
 ```
@@ -286,7 +286,7 @@ client.with_options(timeout=5.0).chat.completions.create(
                 "role": "developer",
             }
         ],
-        "model": "gpt-4o",
+        "model": "openai/gpt-oss-120b",
     },
 )
 ```
@@ -335,7 +335,7 @@ response = client.chat.completions.with_raw_response.create(
             "content": "string",
             "role": "developer",
         }],
-        "model": "gpt-4o",
+        "model": "openai/gpt-oss-120b",
     },
 )
 print(response.headers.get('X-My-Header'))
@@ -363,7 +363,7 @@ with client.chat.completions.with_streaming_response.create(
                 "role": "developer",
             }
         ],
-        "model": "gpt-4o",
+        "model": "openai/gpt-oss-120b",
     },
 ) as response:
     print(response.headers.get("X-My-Header"))

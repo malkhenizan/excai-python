@@ -17,13 +17,13 @@ class AudioTranscription(BaseModel):
     format will improve accuracy and latency.
     """
 
-    model: Optional[Literal["whisper-1", "gpt-4o-transcribe-latest", "gpt-4o-mini-transcribe", "gpt-4o-transcribe"]] = (
+    model: Optional[Literal["whisper-1", "openai/gpt-oss-120b-transcribe-latest", "openai/gpt-oss-120b-transcribe"]] = (
         None
     )
     """The model to use for transcription.
 
-    Current options are `whisper-1`, `gpt-4o-transcribe-latest`,
-    `gpt-4o-mini-transcribe`, and `gpt-4o-transcribe`.
+    Current options are `whisper-1`, `openai/gpt-oss-120b-transcribe-latest`,
+    `openai/gpt-oss-120b-transcribe`, and `openai/gpt-oss-120b-transcribe`.
     """
 
     prompt: Optional[str] = None
@@ -31,6 +31,6 @@ class AudioTranscription(BaseModel):
     An optional text to guide the model's style or continue a previous audio
     segment. For `whisper-1`, the
     [prompt is a list of keywords](https://main.excai.ai/docs/guides/speech-to-text#prompting).
-    For `gpt-4o-transcribe` models, the prompt is a free text string, for example
-    "expect words related to technology".
+    For `openai/gpt-oss-120b-transcribe` models, the prompt is a free text string,
+    for example "expect words related to technology".
     """

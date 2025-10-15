@@ -725,7 +725,7 @@ class TestExcaiSDK:
                             "role": "developer",
                         }
                     ],
-                    "model": "gpt-4o",
+                    "model": "openai/gpt-oss-120b",
                 }
             ).__enter__()
 
@@ -745,7 +745,7 @@ class TestExcaiSDK:
                             "role": "developer",
                         }
                     ],
-                    "model": "gpt-4o",
+                    "model": "openai/gpt-oss-120b",
                 }
             ).__enter__()
         assert _get_open_connections(self.client) == 0
@@ -784,7 +784,7 @@ class TestExcaiSDK:
                         "role": "developer",
                     }
                 ],
-                "model": "gpt-4o",
+                "model": "openai/gpt-oss-120b",
             }
         )
 
@@ -818,7 +818,7 @@ class TestExcaiSDK:
                         "role": "developer",
                     }
                 ],
-                "model": "gpt-4o",
+                "model": "openai/gpt-oss-120b",
             },
             extra_headers={"x-stainless-retry-count": Omit()},
         )
@@ -852,7 +852,7 @@ class TestExcaiSDK:
                         "role": "developer",
                     }
                 ],
-                "model": "gpt-4o",
+                "model": "openai/gpt-oss-120b",
             },
             extra_headers={"x-stainless-retry-count": "42"},
         )
@@ -1594,7 +1594,7 @@ class TestAsyncExcaiSDK:
                             "role": "developer",
                         }
                     ],
-                    "model": "gpt-4o",
+                    "model": "openai/gpt-oss-120b",
                 }
             ).__aenter__()
 
@@ -1616,7 +1616,7 @@ class TestAsyncExcaiSDK:
                             "role": "developer",
                         }
                     ],
-                    "model": "gpt-4o",
+                    "model": "openai/gpt-oss-120b",
                 }
             ).__aenter__()
         assert _get_open_connections(self.client) == 0
@@ -1656,7 +1656,7 @@ class TestAsyncExcaiSDK:
                         "role": "developer",
                     }
                 ],
-                "model": "gpt-4o",
+                "model": "openai/gpt-oss-120b",
             }
         )
 
@@ -1691,7 +1691,7 @@ class TestAsyncExcaiSDK:
                         "role": "developer",
                     }
                 ],
-                "model": "gpt-4o",
+                "model": "openai/gpt-oss-120b",
             },
             extra_headers={"x-stainless-retry-count": Omit()},
         )
@@ -1726,7 +1726,7 @@ class TestAsyncExcaiSDK:
                         "role": "developer",
                     }
                 ],
-                "model": "gpt-4o",
+                "model": "openai/gpt-oss-120b",
             },
             extra_headers={"x-stainless-retry-count": "42"},
         )

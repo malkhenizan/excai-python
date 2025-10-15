@@ -33,7 +33,7 @@ class TestCompletions:
                         "role": "developer",
                     }
                 ],
-                "model": "gpt-4o",
+                "model": "openai/gpt-oss-120b",
             },
         )
         assert_matches_type(CreateResponse, completion, path=["response"])
@@ -51,7 +51,7 @@ class TestCompletions:
                         "name": "name",
                     }
                 ],
-                "model": "gpt-4o",
+                "model": "openai/gpt-oss-120b",
                 "audio": {
                     "format": "wav",
                     "voice": "ash",
@@ -127,7 +127,7 @@ class TestCompletions:
                         "role": "developer",
                     }
                 ],
-                "model": "gpt-4o",
+                "model": "openai/gpt-oss-120b",
             },
         )
 
@@ -147,7 +147,7 @@ class TestCompletions:
                         "role": "developer",
                     }
                 ],
-                "model": "gpt-4o",
+                "model": "openai/gpt-oss-120b",
             },
         ) as response:
             assert not response.is_closed
@@ -398,7 +398,7 @@ class TestAsyncCompletions:
                         "role": "developer",
                     }
                 ],
-                "model": "gpt-4o",
+                "model": "openai/gpt-oss-120b",
             },
         )
         assert_matches_type(CreateResponse, completion, path=["response"])
@@ -416,7 +416,7 @@ class TestAsyncCompletions:
                         "name": "name",
                     }
                 ],
-                "model": "gpt-4o",
+                "model": "openai/gpt-oss-120b",
                 "audio": {
                     "format": "wav",
                     "voice": "ash",
@@ -492,7 +492,7 @@ class TestAsyncCompletions:
                         "role": "developer",
                     }
                 ],
-                "model": "gpt-4o",
+                "model": "openai/gpt-oss-120b",
             },
         )
 
@@ -512,7 +512,7 @@ class TestAsyncCompletions:
                         "role": "developer",
                     }
                 ],
-                "model": "gpt-4o",
+                "model": "openai/gpt-oss-120b",
             },
         ) as response:
             assert not response.is_closed
