@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Dict, Optional
 from typing_extensions import Required, TypedDict
 
-__all__ = ["FunctionObjectParam"]
+__all__ = ["FunctionParam"]
 
 
-class FunctionObjectParam(TypedDict, total=False):
+class FunctionParam(TypedDict, total=False):
     name: Required[str]
     """The name of the function to be called.
 
