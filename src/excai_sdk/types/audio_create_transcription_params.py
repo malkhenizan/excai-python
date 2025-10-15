@@ -17,11 +17,12 @@ class AudioCreateTranscriptionParams(TypedDict, total=False):
     flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm.
     """
 
-    model: Required[Union[str, Literal["whisper-1", "gpt-4o-transcribe", "gpt-4o-mini-transcribe"]]]
+    model: Required[Union[str, Literal["whisper-1", "openai/gpt-oss-120b-transcribe"]]]
     """ID of the model to use.
 
-    The options are `gpt-4o-transcribe`, `gpt-4o-mini-transcribe`, and `whisper-1`
-    (which is powered by our open source Whisper V2 model).
+    The options are `openai/gpt-oss-120b-transcribe`,
+    `openai/gpt-oss-120b-transcribe`, and `whisper-1` (which is powered by our open
+    source Whisper V2 model).
     """
 
     chunking_strategy: Optional[ChunkingStrategy]
@@ -38,8 +39,8 @@ class AudioCreateTranscriptionParams(TypedDict, total=False):
     Additional information to include in the transcription response. `logprobs` will
     return the log probabilities of the tokens in the response to understand the
     model's confidence in the transcription. `logprobs` only works with
-    response_format set to `json` and only with the models `gpt-4o-transcribe` and
-    `gpt-4o-mini-transcribe`.
+    response_format set to `json` and only with the models
+    `openai/gpt-oss-120b-transcribe` and `openai/gpt-oss-120b-transcribe`.
     """
 
     language: str
@@ -61,8 +62,8 @@ class AudioCreateTranscriptionParams(TypedDict, total=False):
     response_format: Literal["json", "text", "srt", "verbose_json", "vtt"]
     """
     The format of the output, in one of these options: `json`, `text`, `srt`,
-    `verbose_json`, or `vtt`. For `gpt-4o-transcribe` and `gpt-4o-mini-transcribe`,
-    the only supported format is `json`.
+    `verbose_json`, or `vtt`. For `openai/gpt-oss-120b-transcribe` and
+    `openai/gpt-oss-120b-transcribe`, the only supported format is `json`.
     """
 
     stream: Optional[bool]

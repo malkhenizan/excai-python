@@ -57,7 +57,7 @@ class JobsResource(SyncAPIResource):
     def create(
         self,
         *,
-        model: Union[str, Literal["babbage-002", "davinci-002", "gpt-3.5-turbo", "gpt-4o-mini"]],
+        model: Union[str, Literal["babbage-002", "davinci-002", "gpt-3.5-turbo", "openai/gpt-oss-120b"]],
         training_file: str,
         hyperparameters: job_create_params.Hyperparameters | Omit = omit,
         integrations: Optional[Iterable[job_create_params.Integration]] | Omit = omit,
@@ -127,7 +127,7 @@ class JobsResource(SyncAPIResource):
               name.
 
               For example, a `suffix` of "custom-model-name" would produce a model name like
-              `ft:gpt-4o-mini:excai:custom-model-name:7p4lURel`.
+              `ft:openai/gpt-oss-120b:excai:custom-model-name:7p4lURel`.
 
           validation_file: The ID of an uploaded file that contains validation data.
 
@@ -480,7 +480,7 @@ class AsyncJobsResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        model: Union[str, Literal["babbage-002", "davinci-002", "gpt-3.5-turbo", "gpt-4o-mini"]],
+        model: Union[str, Literal["babbage-002", "davinci-002", "gpt-3.5-turbo", "openai/gpt-oss-120b"]],
         training_file: str,
         hyperparameters: job_create_params.Hyperparameters | Omit = omit,
         integrations: Optional[Iterable[job_create_params.Integration]] | Omit = omit,
@@ -550,7 +550,7 @@ class AsyncJobsResource(AsyncAPIResource):
               name.
 
               For example, a `suffix` of "custom-model-name" would produce a model name like
-              `ft:gpt-4o-mini:excai:custom-model-name:7p4lURel`.
+              `ft:openai/gpt-oss-120b:excai:custom-model-name:7p4lURel`.
 
           validation_file: The ID of an uploaded file that contains validation data.
 

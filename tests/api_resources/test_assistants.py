@@ -25,7 +25,7 @@ class TestAssistants:
     @parametrize
     def test_method_create(self, client: ExcaiSDK) -> None:
         assistant = client.assistants.create(
-            model="gpt-4o",
+            model="openai/gpt-oss-120b",
         )
         assert_matches_type(AssistantObject, assistant, path=["response"])
 
@@ -33,7 +33,7 @@ class TestAssistants:
     @parametrize
     def test_method_create_with_all_params(self, client: ExcaiSDK) -> None:
         assistant = client.assistants.create(
-            model="gpt-4o",
+            model="openai/gpt-oss-120b",
             description="description",
             instructions="instructions",
             metadata={"foo": "string"},
@@ -63,7 +63,7 @@ class TestAssistants:
     @parametrize
     def test_raw_response_create(self, client: ExcaiSDK) -> None:
         response = client.assistants.with_raw_response.create(
-            model="gpt-4o",
+            model="openai/gpt-oss-120b",
         )
 
         assert response.is_closed is True
@@ -75,7 +75,7 @@ class TestAssistants:
     @parametrize
     def test_streaming_response_create(self, client: ExcaiSDK) -> None:
         with client.assistants.with_streaming_response.create(
-            model="gpt-4o",
+            model="openai/gpt-oss-120b",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -282,7 +282,7 @@ class TestAsyncAssistants:
     @parametrize
     async def test_method_create(self, async_client: AsyncExcaiSDK) -> None:
         assistant = await async_client.assistants.create(
-            model="gpt-4o",
+            model="openai/gpt-oss-120b",
         )
         assert_matches_type(AssistantObject, assistant, path=["response"])
 
@@ -290,7 +290,7 @@ class TestAsyncAssistants:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncExcaiSDK) -> None:
         assistant = await async_client.assistants.create(
-            model="gpt-4o",
+            model="openai/gpt-oss-120b",
             description="description",
             instructions="instructions",
             metadata={"foo": "string"},
@@ -320,7 +320,7 @@ class TestAsyncAssistants:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.assistants.with_raw_response.create(
-            model="gpt-4o",
+            model="openai/gpt-oss-120b",
         )
 
         assert response.is_closed is True
@@ -332,7 +332,7 @@ class TestAsyncAssistants:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.assistants.with_streaming_response.create(
-            model="gpt-4o",
+            model="openai/gpt-oss-120b",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

@@ -36,7 +36,7 @@ class TestResponses:
                 "background": True,
                 "max_output_tokens": 0,
                 "max_tool_calls": 0,
-                "model": "gpt-4o",
+                "model": "openai/gpt-oss-120b",
                 "previous_response_id": "previous_response_id",
                 "prompt": {
                     "id": "id",
@@ -319,7 +319,7 @@ class TestAsyncResponses:
                 "background": True,
                 "max_output_tokens": 0,
                 "max_tool_calls": 0,
-                "model": "gpt-4o",
+                "model": "openai/gpt-oss-120b",
                 "previous_response_id": "previous_response_id",
                 "prompt": {
                     "id": "id",

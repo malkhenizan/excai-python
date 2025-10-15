@@ -24,7 +24,7 @@ class TestPermissions:
     @parametrize
     def test_method_create(self, client: ExcaiSDK) -> None:
         permission = client.fine_tuning.checkpoints.permissions.create(
-            fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
+            fine_tuned_model_checkpoint="ft:openai/gpt-oss-120b-2024-07-18:org:weather:B7R9VjQd",
             project_ids=["string"],
         )
         assert_matches_type(ListFineTuningCheckpointPermissionResponse, permission, path=["response"])
@@ -33,7 +33,7 @@ class TestPermissions:
     @parametrize
     def test_raw_response_create(self, client: ExcaiSDK) -> None:
         response = client.fine_tuning.checkpoints.permissions.with_raw_response.create(
-            fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
+            fine_tuned_model_checkpoint="ft:openai/gpt-oss-120b-2024-07-18:org:weather:B7R9VjQd",
             project_ids=["string"],
         )
 
@@ -46,7 +46,7 @@ class TestPermissions:
     @parametrize
     def test_streaming_response_create(self, client: ExcaiSDK) -> None:
         with client.fine_tuning.checkpoints.permissions.with_streaming_response.create(
-            fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
+            fine_tuned_model_checkpoint="ft:openai/gpt-oss-120b-2024-07-18:org:weather:B7R9VjQd",
             project_ids=["string"],
         ) as response:
             assert not response.is_closed
@@ -129,7 +129,7 @@ class TestPermissions:
     def test_method_delete(self, client: ExcaiSDK) -> None:
         permission = client.fine_tuning.checkpoints.permissions.delete(
             permission_id="cp_zc4Q7MP6XxulcVzj4MZdwsAB",
-            fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
+            fine_tuned_model_checkpoint="ft:openai/gpt-oss-120b-2024-07-18:org:weather:B7R9VjQd",
         )
         assert_matches_type(PermissionDeleteResponse, permission, path=["response"])
 
@@ -138,7 +138,7 @@ class TestPermissions:
     def test_raw_response_delete(self, client: ExcaiSDK) -> None:
         response = client.fine_tuning.checkpoints.permissions.with_raw_response.delete(
             permission_id="cp_zc4Q7MP6XxulcVzj4MZdwsAB",
-            fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
+            fine_tuned_model_checkpoint="ft:openai/gpt-oss-120b-2024-07-18:org:weather:B7R9VjQd",
         )
 
         assert response.is_closed is True
@@ -151,7 +151,7 @@ class TestPermissions:
     def test_streaming_response_delete(self, client: ExcaiSDK) -> None:
         with client.fine_tuning.checkpoints.permissions.with_streaming_response.delete(
             permission_id="cp_zc4Q7MP6XxulcVzj4MZdwsAB",
-            fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
+            fine_tuned_model_checkpoint="ft:openai/gpt-oss-120b-2024-07-18:org:weather:B7R9VjQd",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -175,7 +175,7 @@ class TestPermissions:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `permission_id` but received ''"):
             client.fine_tuning.checkpoints.permissions.with_raw_response.delete(
                 permission_id="",
-                fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
+                fine_tuned_model_checkpoint="ft:openai/gpt-oss-120b-2024-07-18:org:weather:B7R9VjQd",
             )
 
 
@@ -188,7 +188,7 @@ class TestAsyncPermissions:
     @parametrize
     async def test_method_create(self, async_client: AsyncExcaiSDK) -> None:
         permission = await async_client.fine_tuning.checkpoints.permissions.create(
-            fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
+            fine_tuned_model_checkpoint="ft:openai/gpt-oss-120b-2024-07-18:org:weather:B7R9VjQd",
             project_ids=["string"],
         )
         assert_matches_type(ListFineTuningCheckpointPermissionResponse, permission, path=["response"])
@@ -197,7 +197,7 @@ class TestAsyncPermissions:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.fine_tuning.checkpoints.permissions.with_raw_response.create(
-            fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
+            fine_tuned_model_checkpoint="ft:openai/gpt-oss-120b-2024-07-18:org:weather:B7R9VjQd",
             project_ids=["string"],
         )
 
@@ -210,7 +210,7 @@ class TestAsyncPermissions:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.fine_tuning.checkpoints.permissions.with_streaming_response.create(
-            fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
+            fine_tuned_model_checkpoint="ft:openai/gpt-oss-120b-2024-07-18:org:weather:B7R9VjQd",
             project_ids=["string"],
         ) as response:
             assert not response.is_closed
@@ -293,7 +293,7 @@ class TestAsyncPermissions:
     async def test_method_delete(self, async_client: AsyncExcaiSDK) -> None:
         permission = await async_client.fine_tuning.checkpoints.permissions.delete(
             permission_id="cp_zc4Q7MP6XxulcVzj4MZdwsAB",
-            fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
+            fine_tuned_model_checkpoint="ft:openai/gpt-oss-120b-2024-07-18:org:weather:B7R9VjQd",
         )
         assert_matches_type(PermissionDeleteResponse, permission, path=["response"])
 
@@ -302,7 +302,7 @@ class TestAsyncPermissions:
     async def test_raw_response_delete(self, async_client: AsyncExcaiSDK) -> None:
         response = await async_client.fine_tuning.checkpoints.permissions.with_raw_response.delete(
             permission_id="cp_zc4Q7MP6XxulcVzj4MZdwsAB",
-            fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
+            fine_tuned_model_checkpoint="ft:openai/gpt-oss-120b-2024-07-18:org:weather:B7R9VjQd",
         )
 
         assert response.is_closed is True
@@ -315,7 +315,7 @@ class TestAsyncPermissions:
     async def test_streaming_response_delete(self, async_client: AsyncExcaiSDK) -> None:
         async with async_client.fine_tuning.checkpoints.permissions.with_streaming_response.delete(
             permission_id="cp_zc4Q7MP6XxulcVzj4MZdwsAB",
-            fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
+            fine_tuned_model_checkpoint="ft:openai/gpt-oss-120b-2024-07-18:org:weather:B7R9VjQd",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -339,5 +339,5 @@ class TestAsyncPermissions:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `permission_id` but received ''"):
             await async_client.fine_tuning.checkpoints.permissions.with_raw_response.delete(
                 permission_id="",
-                fine_tuned_model_checkpoint="ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd",
+                fine_tuned_model_checkpoint="ft:openai/gpt-oss-120b-2024-07-18:org:weather:B7R9VjQd",
             )

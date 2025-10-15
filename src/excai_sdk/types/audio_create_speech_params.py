@@ -14,10 +14,10 @@ class AudioCreateSpeechParams(TypedDict, total=False):
     input: Required[str]
     """The text to generate audio for. The maximum length is 4096 characters."""
 
-    model: Required[Union[str, Literal["tts-1", "tts-1-hd", "gpt-4o-mini-tts"]]]
+    model: Required[Union[str, Literal["tts-1", "tts-1-hd", "openai/gpt-oss-120b-tts"]]]
     """
     One of the available [TTS models](https://main.excai.ai/docs/models#tts):
-    `tts-1`, `tts-1-hd` or `gpt-4o-mini-tts`.
+    `tts-1`, `tts-1-hd` or `openai/gpt-oss-120b-tts`.
     """
 
     voice: Required[VoiceIDsSharedParam]
