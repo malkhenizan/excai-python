@@ -2,13 +2,15 @@
 
 from __future__ import annotations
 
+from typing import Optional
+
 from ..model_response_properties_standard_param import ModelResponsePropertiesStandardParam
 
 __all__ = ["ModelResponsePropertiesCreateParam"]
 
 
 class ModelResponsePropertiesCreateParam(ModelResponsePropertiesStandardParam, total=False):
-    top_logprobs: None  # type: ignore
+    top_logprobs: Optional[int]  # type: ignore
     """
     An integer between 0 and 20 specifying the number of most likely tokens to
     return at each token position, each with an associated log probability.
