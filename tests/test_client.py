@@ -714,20 +714,40 @@ class TestExcaiSDK:
     @mock.patch("excai_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: ExcaiSDK) -> None:
-        respx_mock.get("/assistants").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/chat/completions").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            client.assistants.with_streaming_response.list().__enter__()
+            client.chat.completions.with_streaming_response.create(
+                body={
+                    "messages": [
+                        {
+                            "content": "string",
+                            "role": "developer",
+                        }
+                    ],
+                    "model": "gpt-4o",
+                }
+            ).__enter__()
 
         assert _get_open_connections(self.client) == 0
 
     @mock.patch("excai_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: ExcaiSDK) -> None:
-        respx_mock.get("/assistants").mock(return_value=httpx.Response(500))
+        respx_mock.post("/chat/completions").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            client.assistants.with_streaming_response.list().__enter__()
+            client.chat.completions.with_streaming_response.create(
+                body={
+                    "messages": [
+                        {
+                            "content": "string",
+                            "role": "developer",
+                        }
+                    ],
+                    "model": "gpt-4o",
+                }
+            ).__enter__()
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -754,9 +774,19 @@ class TestExcaiSDK:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/assistants").mock(side_effect=retry_handler)
+        respx_mock.post("/chat/completions").mock(side_effect=retry_handler)
 
-        response = client.assistants.with_raw_response.list()
+        response = client.chat.completions.with_raw_response.create(
+            body={
+                "messages": [
+                    {
+                        "content": "string",
+                        "role": "developer",
+                    }
+                ],
+                "model": "gpt-4o",
+            }
+        )
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -778,9 +808,20 @@ class TestExcaiSDK:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/assistants").mock(side_effect=retry_handler)
+        respx_mock.post("/chat/completions").mock(side_effect=retry_handler)
 
-        response = client.assistants.with_raw_response.list(extra_headers={"x-stainless-retry-count": Omit()})
+        response = client.chat.completions.with_raw_response.create(
+            body={
+                "messages": [
+                    {
+                        "content": "string",
+                        "role": "developer",
+                    }
+                ],
+                "model": "gpt-4o",
+            },
+            extra_headers={"x-stainless-retry-count": Omit()},
+        )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -801,9 +842,20 @@ class TestExcaiSDK:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/assistants").mock(side_effect=retry_handler)
+        respx_mock.post("/chat/completions").mock(side_effect=retry_handler)
 
-        response = client.assistants.with_raw_response.list(extra_headers={"x-stainless-retry-count": "42"})
+        response = client.chat.completions.with_raw_response.create(
+            body={
+                "messages": [
+                    {
+                        "content": "string",
+                        "role": "developer",
+                    }
+                ],
+                "model": "gpt-4o",
+            },
+            extra_headers={"x-stainless-retry-count": "42"},
+        )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
@@ -1531,10 +1583,20 @@ class TestAsyncExcaiSDK:
     async def test_retrying_timeout_errors_doesnt_leak(
         self, respx_mock: MockRouter, async_client: AsyncExcaiSDK
     ) -> None:
-        respx_mock.get("/assistants").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/chat/completions").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            await async_client.assistants.with_streaming_response.list().__aenter__()
+            await async_client.chat.completions.with_streaming_response.create(
+                body={
+                    "messages": [
+                        {
+                            "content": "string",
+                            "role": "developer",
+                        }
+                    ],
+                    "model": "gpt-4o",
+                }
+            ).__aenter__()
 
         assert _get_open_connections(self.client) == 0
 
@@ -1543,10 +1605,20 @@ class TestAsyncExcaiSDK:
     async def test_retrying_status_errors_doesnt_leak(
         self, respx_mock: MockRouter, async_client: AsyncExcaiSDK
     ) -> None:
-        respx_mock.get("/assistants").mock(return_value=httpx.Response(500))
+        respx_mock.post("/chat/completions").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            await async_client.assistants.with_streaming_response.list().__aenter__()
+            await async_client.chat.completions.with_streaming_response.create(
+                body={
+                    "messages": [
+                        {
+                            "content": "string",
+                            "role": "developer",
+                        }
+                    ],
+                    "model": "gpt-4o",
+                }
+            ).__aenter__()
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -1574,9 +1646,19 @@ class TestAsyncExcaiSDK:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/assistants").mock(side_effect=retry_handler)
+        respx_mock.post("/chat/completions").mock(side_effect=retry_handler)
 
-        response = await client.assistants.with_raw_response.list()
+        response = await client.chat.completions.with_raw_response.create(
+            body={
+                "messages": [
+                    {
+                        "content": "string",
+                        "role": "developer",
+                    }
+                ],
+                "model": "gpt-4o",
+            }
+        )
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1599,9 +1681,20 @@ class TestAsyncExcaiSDK:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/assistants").mock(side_effect=retry_handler)
+        respx_mock.post("/chat/completions").mock(side_effect=retry_handler)
 
-        response = await client.assistants.with_raw_response.list(extra_headers={"x-stainless-retry-count": Omit()})
+        response = await client.chat.completions.with_raw_response.create(
+            body={
+                "messages": [
+                    {
+                        "content": "string",
+                        "role": "developer",
+                    }
+                ],
+                "model": "gpt-4o",
+            },
+            extra_headers={"x-stainless-retry-count": Omit()},
+        )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -1623,9 +1716,20 @@ class TestAsyncExcaiSDK:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/assistants").mock(side_effect=retry_handler)
+        respx_mock.post("/chat/completions").mock(side_effect=retry_handler)
 
-        response = await client.assistants.with_raw_response.list(extra_headers={"x-stainless-retry-count": "42"})
+        response = await client.chat.completions.with_raw_response.create(
+            body={
+                "messages": [
+                    {
+                        "content": "string",
+                        "role": "developer",
+                    }
+                ],
+                "model": "gpt-4o",
+            },
+            extra_headers={"x-stainless-retry-count": "42"},
+        )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
