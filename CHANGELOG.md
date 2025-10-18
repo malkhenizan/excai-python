@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3.1 (2025-10-18)
+
+Full Changelog: [v1.3.0...v1.3.1](https://github.com/malkhenizan/excai-python/compare/v1.3.0...v1.3.1)
+
+### Chores
+
+* bump `httpx-aiohttp` version to 0.1.9 ([4c5ab1d](https://github.com/malkhenizan/excai-python/commit/4c5ab1de93561a224f2ab1187b4e5971ef20833f))
+
 ## 1.3.0 (2025-10-15)
 
 Full Changelog: [v1.2.0...v1.3.0](https://github.com/malkhenizan/excai-python/compare/v1.2.0...v1.3.0)
