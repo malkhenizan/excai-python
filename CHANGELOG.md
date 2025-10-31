@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.3.1 (2025-10-31)
+
+Full Changelog: [v1.3.0...v1.3.1](https://github.com/malkhenizan/excai-python/compare/v1.3.0...v1.3.1)
+
+### Bug Fixes
+
+* **client:** close streams without requiring full consumption ([684ac82](https://github.com/malkhenizan/excai-python/commit/684ac8273aef2e0677a6e4813e7553d0db469892))
+
+
+### Chores
+
+* bump `httpx-aiohttp` version to 0.1.9 ([4c5ab1d](https://github.com/malkhenizan/excai-python/commit/4c5ab1de93561a224f2ab1187b4e5971ef20833f))
+* **internal/tests:** avoid race condition with implicit client cleanup ([c23010a](https://github.com/malkhenizan/excai-python/commit/c23010ac7da8c10cf3f371efdd98d0e532924cdc))
+
 ## 1.3.0 (2025-10-15)
 
 Full Changelog: [v1.2.0...v1.3.0](https://github.com/malkhenizan/excai-python/compare/v1.2.0...v1.3.0)
