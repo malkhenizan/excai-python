@@ -1,6 +1,6 @@
 [project]
 name = "excai_sdk"
-version = "1.3.0"
+version = "1.3.1"
 description = "The official Python library for the excai_sdk API"
 dynamic = ["readme"]
 license = "MIT"
@@ -39,7 +39,7 @@ Homepage = "https://github.com/malkhenizan/excai-python"
 Repository = "https://github.com/malkhenizan/excai-python"
 
 [project.optional-dependencies]
-aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.8"]
+aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.9"]
 
 [tool.rye]
 managed = true
