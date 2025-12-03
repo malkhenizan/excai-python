@@ -99,6 +99,7 @@ pip install excai_sdk[aiohttp]
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
+import os
 import asyncio
 from excai_sdk import DefaultAioHttpClient
 from excai_sdk import AsyncExcaiSDK
@@ -106,7 +107,7 @@ from excai_sdk import AsyncExcaiSDK
 
 async def main() -> None:
     async with AsyncExcaiSDK(
-        api_key="My API Key",
+        api_key=os.environ.get("EXCAI_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         create_response = await client.chat.completions.create(
