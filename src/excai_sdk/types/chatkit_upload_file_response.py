@@ -10,6 +10,8 @@ __all__ = ["ChatkitUploadFileResponse", "File", "Image"]
 
 
 class File(BaseModel):
+    """Metadata for a non-image file uploaded through ChatKit."""
+
     id: str
     """Unique identifier for the uploaded file."""
 
@@ -30,6 +32,8 @@ class File(BaseModel):
 
 
 class Image(BaseModel):
+    """Metadata for an image uploaded through ChatKit."""
+
     id: str
     """Unique identifier for the uploaded image."""
 

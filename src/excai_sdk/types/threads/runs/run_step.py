@@ -34,6 +34,11 @@ __all__ = [
 
 
 class LastError(BaseModel):
+    """The last error associated with this run step.
+
+    Will be `null` if there are no errors.
+    """
+
     code: Literal["server_error", "rate_limit_exceeded"]
     """One of `server_error` or `rate_limit_exceeded`."""
 
@@ -47,6 +52,8 @@ class StepDetailsMessageCreationMessageCreation(BaseModel):
 
 
 class StepDetailsMessageCreation(BaseModel):
+    """Details of the message creation by the run step."""
+
     message_creation: StepDetailsMessageCreationMessageCreation
 
     type: Literal["message_creation"]
@@ -54,6 +61,8 @@ class StepDetailsMessageCreation(BaseModel):
 
 
 class StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreterOutputLogs(BaseModel):
+    """Text output from the Code Interpreter tool call as part of a run step."""
+
     logs: str
     """The text output from the Code Interpreter tool call."""
 
@@ -83,6 +92,8 @@ StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreterOutput: TypeAlias = An
 
 
 class StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreter(BaseModel):
+    """The Code Interpreter tool call definition."""
+
     input: str
     """The input to the Code Interpreter tool call."""
 
@@ -95,6 +106,8 @@ class StepDetailsToolCallsToolCallCodeInterpreterCodeInterpreter(BaseModel):
 
 
 class StepDetailsToolCallsToolCallCodeInterpreter(BaseModel):
+    """Details of the Code Interpreter tool call the run step was involved in."""
+
     id: str
     """The ID of the tool call."""
 
@@ -109,6 +122,8 @@ class StepDetailsToolCallsToolCallCodeInterpreter(BaseModel):
 
 
 class StepDetailsToolCallsToolCallFileSearchFileSearchRankingOptions(BaseModel):
+    """The ranking options for the file search."""
+
     ranker: FileSearchRanker
     """The ranker to use for the file search.
 
@@ -131,6 +146,8 @@ class StepDetailsToolCallsToolCallFileSearchFileSearchResultContent(BaseModel):
 
 
 class StepDetailsToolCallsToolCallFileSearchFileSearchResult(BaseModel):
+    """A result instance of the file search."""
+
     file_id: str
     """The ID of the file that result was found in."""
 
@@ -151,6 +168,8 @@ class StepDetailsToolCallsToolCallFileSearchFileSearchResult(BaseModel):
 
 
 class StepDetailsToolCallsToolCallFileSearchFileSearch(BaseModel):
+    """For now, this is always going to be an empty object."""
+
     ranking_options: Optional[StepDetailsToolCallsToolCallFileSearchFileSearchRankingOptions] = None
     """The ranking options for the file search."""
 
@@ -173,6 +192,8 @@ class StepDetailsToolCallsToolCallFileSearch(BaseModel):
 
 
 class StepDetailsToolCallsToolCallFunctionFunction(BaseModel):
+    """The definition of the function that was called."""
+
     arguments: str
     """The arguments passed to the function."""
 
@@ -213,6 +234,8 @@ StepDetailsToolCallsToolCall: TypeAlias = Annotated[
 
 
 class StepDetailsToolCalls(BaseModel):
+    """Details of the tool call."""
+
     tool_calls: List[StepDetailsToolCallsToolCall]
     """An array of tool calls the run step was involved in.
 
@@ -230,6 +253,11 @@ StepDetails: TypeAlias = Annotated[
 
 
 class Usage(BaseModel):
+    """Usage statistics related to the run step.
+
+    This value will be `null` while the run step's status is `in_progress`.
+    """
+
     completion_tokens: int
     """Number of completion tokens used over the course of the run step."""
 
@@ -241,6 +269,8 @@ class Usage(BaseModel):
 
 
 class RunStep(BaseModel):
+    """Represents a step in execution of a run."""
+
     id: str
     """The identifier of the run step, which can be referenced in API endpoints."""
 

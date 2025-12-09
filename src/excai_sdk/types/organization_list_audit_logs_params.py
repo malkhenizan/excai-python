@@ -66,6 +66,8 @@ class OrganizationListAuditLogsParams(TypedDict, total=False):
 
 
 class EffectiveAt(TypedDict, total=False):
+    """Return only events whose `effective_at` (Unix seconds) is in this range."""
+
     gt: int
     """
     Return only events whose `effective_at` (Unix seconds) is greater than this

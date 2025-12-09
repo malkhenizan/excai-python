@@ -9,6 +9,8 @@ __all__ = ["McpApprovalResponseResource"]
 
 
 class McpApprovalResponseResource(BaseModel):
+    """A response to an MCP approval request."""
+
     id: str
     """The unique ID of the approval response"""
 

@@ -8,6 +8,8 @@ __all__ = ["VectorStoreExpirationAfter"]
 
 
 class VectorStoreExpirationAfter(BaseModel):
+    """The expiration policy for a vector store."""
+
     anchor: Literal["last_active_at"]
     """Anchor timestamp after which the expiration policy applies.
 

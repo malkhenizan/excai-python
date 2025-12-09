@@ -8,5 +8,7 @@ __all__ = ["GraderScoreEvalModelParam"]
 
 
 class GraderScoreEvalModelParam(GraderScoreAssignmentModelParam, total=False):
+    """A ScoreModelGrader object that uses a model to assign a score to the input."""
+
     pass_threshold: float
     """The threshold for the score."""

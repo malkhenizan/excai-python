@@ -8,6 +8,8 @@ __all__ = ["ReasoningTextContent"]
 
 
 class ReasoningTextContent(BaseModel):
+    """Reasoning text from the model."""
+
     text: str
     """The reasoning text from the model."""
 

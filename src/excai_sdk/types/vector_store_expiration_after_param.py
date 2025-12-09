@@ -8,6 +8,8 @@ __all__ = ["VectorStoreExpirationAfterParam"]
 
 
 class VectorStoreExpirationAfterParam(TypedDict, total=False):
+    """The expiration policy for a vector store."""
+
     anchor: Required[Literal["last_active_at"]]
     """Anchor timestamp after which the expiration policy applies.
 

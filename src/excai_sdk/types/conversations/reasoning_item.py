@@ -10,6 +10,8 @@ __all__ = ["ReasoningItem", "Summary"]
 
 
 class Summary(BaseModel):
+    """A summary text from the model."""
+
     text: str
     """A summary of the reasoning output from the model so far."""
 
@@ -18,6 +20,13 @@ class Summary(BaseModel):
 
 
 class ReasoningItem(BaseModel):
+    """
+    A description of the chain of thought used by a reasoning model while generating
+    a response. Be sure to include these items in your `input` to the Responses API
+    for subsequent turns of a conversation if you are manually
+    [managing context](https://main.excai.ai/docs/guides/conversation-state).
+    """
+
     id: str
     """The unique identifier of the reasoning content."""
 

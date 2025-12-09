@@ -8,6 +8,10 @@ __all__ = ["GraderStringCheckComparison"]
 
 
 class GraderStringCheckComparison(BaseModel):
+    """
+    A StringCheckGrader object that performs a string comparison between input and reference using a specified operation.
+    """
+
     input: str
     """The input text. This may include template strings."""
 

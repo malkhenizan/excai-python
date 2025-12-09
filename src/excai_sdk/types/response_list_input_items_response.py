@@ -26,6 +26,12 @@ __all__ = ["ResponseListInputItemsResponse", "Data", "DataMessage"]
 
 
 class DataMessage(InputMessage):
+    """
+    A message input to the model with a role indicating instruction following
+    hierarchy. Instructions given with the `developer` or `system` role take
+    precedence over instructions given with the `user` role.
+    """
+
     id: str
     """The unique ID of the message input."""
 
@@ -54,6 +60,8 @@ Data: TypeAlias = Annotated[
 
 
 class ResponseListInputItemsResponse(BaseModel):
+    """A list of Response items."""
+
     data: List[Data]
     """A list of items used to generate this response."""
 

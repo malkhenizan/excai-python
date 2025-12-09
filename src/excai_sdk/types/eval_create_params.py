@@ -56,6 +56,13 @@ class EvalCreateParams(TypedDict, total=False):
 
 
 class DataSourceConfigCustom(TypedDict, total=False):
+    """
+    A CustomDataSourceConfig object that defines the schema for the data source used for the evaluation runs.
+    This schema is used to define the shape of the data that will be:
+    - Used to define your testing criteria and
+    - What data is required when creating a run
+    """
+
     item_schema: Required[Dict[str, object]]
     """The json schema for each row in the data source."""
 
@@ -70,6 +77,11 @@ class DataSourceConfigCustom(TypedDict, total=False):
 
 
 class DataSourceConfigLogs(TypedDict, total=False):
+    """
+    A data source config which specifies the metadata property of your logs query.
+    This is usually metadata like `usecase=chatbot` or `prompt-version=v2`, etc.
+    """
+
     type: Required[Literal["logs"]]
     """The type of data source. Always `logs`."""
 
@@ -78,6 +90,8 @@ class DataSourceConfigLogs(TypedDict, total=False):
 
 
 class DataSourceConfigStoredCompletions(TypedDict, total=False):
+    """Deprecated in favor of LogsDataSourceConfig."""
+
     type: Required[Literal["stored_completions"]]
     """The type of data source. Always `stored_completions`."""
 
@@ -100,6 +114,11 @@ TestingCriterionLabelModelInput: TypeAlias = Union[TestingCriterionLabelModelInp
 
 
 class TestingCriterionLabelModel(TypedDict, total=False):
+    """
+    A LabelModelGrader object which uses a model to assign labels to each item
+    in the evaluation.
+    """
+
     input: Required[Iterable[TestingCriterionLabelModelInput]]
     """A list of chat messages forming the prompt or context.
 

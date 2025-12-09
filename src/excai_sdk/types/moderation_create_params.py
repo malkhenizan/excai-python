@@ -39,11 +39,15 @@ class ModerationCreateParams(TypedDict, total=False):
 
 
 class InputModerationMultiModalArrayImageURLImageURL(TypedDict, total=False):
+    """Contains either an image URL or a data URL for a base64 encoded image."""
+
     url: Required[str]
     """Either a URL of the image or the base64 encoded image data."""
 
 
 class InputModerationMultiModalArrayImageURL(TypedDict, total=False):
+    """An object describing an image to classify."""
+
     image_url: Required[InputModerationMultiModalArrayImageURLImageURL]
     """Contains either an image URL or a data URL for a base64 encoded image."""
 
@@ -52,6 +56,8 @@ class InputModerationMultiModalArrayImageURL(TypedDict, total=False):
 
 
 class InputModerationMultiModalArrayText(TypedDict, total=False):
+    """An object describing text to classify."""
+
     text: Required[str]
     """A string of text to classify."""
 

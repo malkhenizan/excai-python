@@ -30,6 +30,8 @@ __all__ = [
 
 
 class SourceStoredCompletions(BaseModel):
+    """A StoredCompletionsRunDataSource configuration describing a set of filters"""
+
     type: Literal["stored_completions"]
     """The type of source. Always `stored_completions`."""
 
@@ -137,6 +139,8 @@ class SamplingParams(BaseModel):
 
 
 class CompletionsRunDataSource(BaseModel):
+    """A CompletionsRunDataSource object describing a model sampling configuration."""
+
     source: Source
     """Determines what populates the `item` namespace in this run's data source."""
 

@@ -30,6 +30,8 @@ __all__ = [
 
 
 class SourceStoredCompletions(TypedDict, total=False):
+    """A StoredCompletionsRunDataSource configuration describing a set of filters"""
+
     type: Required[Literal["stored_completions"]]
     """The type of source. Always `stored_completions`."""
 
@@ -133,6 +135,8 @@ class SamplingParams(TypedDict, total=False):
 
 
 class CompletionsRunDataSourceParam(TypedDict, total=False):
+    """A CompletionsRunDataSource object describing a model sampling configuration."""
+
     source: Required[Source]
     """Determines what populates the `item` namespace in this run's data source."""
 

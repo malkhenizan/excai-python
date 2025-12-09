@@ -37,6 +37,11 @@ __all__ = [
 
 
 class Function(TypedDict, total=False):
+    """Defines a function in your own code the model can choose to call.
+
+    Learn more about [function calling](https://main.excai.ai/docs/guides/function-calling).
+    """
+
     name: Required[str]
     """The name of the function to call."""
 
@@ -60,6 +65,8 @@ FileSearchFilters: TypeAlias = Union[ComparisonFilterParam, CompoundFilterParam]
 
 
 class FileSearchRankingOptions(TypedDict, total=False):
+    """Ranking options for search."""
+
     ranker: Literal["auto", "default-2024-11-15"]
     """The ranker to use for the file search."""
 
@@ -72,6 +79,11 @@ class FileSearchRankingOptions(TypedDict, total=False):
 
 
 class FileSearch(TypedDict, total=False):
+    """A tool that searches for relevant content from uploaded files.
+
+    Learn more about the [file search tool](https://main.excai.ai/docs/guides/tools-file-search).
+    """
+
     type: Required[Literal["file_search"]]
     """The type of the file search tool. Always `file_search`."""
 
@@ -92,6 +104,11 @@ class FileSearch(TypedDict, total=False):
 
 
 class ComputerUsePreview(TypedDict, total=False):
+    """A tool that controls a virtual computer.
+
+    Learn more about the [computer tool](https://main.excai.ai/docs/guides/tools-computer-use).
+    """
+
     display_height: Required[int]
     """The height of the computer display."""
 
@@ -106,6 +123,8 @@ class ComputerUsePreview(TypedDict, total=False):
 
 
 class WebSearchToolFilters(TypedDict, total=False):
+    """Filters for the search."""
+
     allowed_domains: Optional[SequenceNotStr[str]]
     """Allowed domains for the search.
 
@@ -117,6 +136,8 @@ class WebSearchToolFilters(TypedDict, total=False):
 
 
 class WebSearchToolUserLocation(TypedDict, total=False):
+    """The approximate location of the user."""
+
     city: Optional[str]
     """Free text input for the city of the user, e.g. `San Francisco`."""
 
@@ -140,6 +161,12 @@ class WebSearchToolUserLocation(TypedDict, total=False):
 
 
 class WebSearchTool(TypedDict, total=False):
+    """Search the Internet for sources related to the prompt.
+
+    Learn more about the
+    [web search tool](https://main.excai.ai/docs/guides/tools-web-search).
+    """
+
     type: Required[Literal["web_search", "web_search_2025_08_26"]]
     """The type of the web search tool.
 
@@ -161,6 +188,12 @@ class WebSearchTool(TypedDict, total=False):
 
 
 class CodeInterpreterContainerCodeInterpreterToolAuto(TypedDict, total=False):
+    """Configuration for a code interpreter container.
+
+    Optionally specify the IDs
+    of the files to run the code on.
+    """
+
     type: Required[Literal["auto"]]
     """Always `auto`."""
 
@@ -172,6 +205,8 @@ CodeInterpreterContainer: TypeAlias = Union[str, CodeInterpreterContainerCodeInt
 
 
 class CodeInterpreter(TypedDict, total=False):
+    """A tool that runs Python code to help generate a response to a prompt."""
+
     container: Required[CodeInterpreterContainer]
     """The code interpreter container.
 
@@ -184,6 +219,12 @@ class CodeInterpreter(TypedDict, total=False):
 
 
 class ImageGenerationInputImageMask(TypedDict, total=False):
+    """Optional mask for inpainting.
+
+    Contains `image_url`
+    (string, optional) and `file_id` (string, optional).
+    """
+
     file_id: str
     """File ID for the mask image."""
 
@@ -192,6 +233,8 @@ class ImageGenerationInputImageMask(TypedDict, total=False):
 
 
 class ImageGeneration(TypedDict, total=False):
+    """A tool that generates images using a model like `gpt-image-1`."""
+
     type: Required[Literal["image_generation"]]
     """The type of the image generation tool. Always `image_generation`."""
 
@@ -250,16 +293,22 @@ class ImageGeneration(TypedDict, total=False):
 
 
 class LocalShell(TypedDict, total=False):
+    """A tool that allows the model to execute shell commands in a local environment."""
+
     type: Required[Literal["local_shell"]]
     """The type of the local shell tool. Always `local_shell`."""
 
 
 class CustomFormatText(TypedDict, total=False):
+    """Unconstrained free-form text."""
+
     type: Required[Literal["text"]]
     """Unconstrained text format. Always `text`."""
 
 
 class CustomFormatGrammar(TypedDict, total=False):
+    """A grammar defined by the user."""
+
     definition: Required[str]
     """The grammar definition."""
 
@@ -274,6 +323,12 @@ CustomFormat: TypeAlias = Union[CustomFormatText, CustomFormatGrammar]
 
 
 class Custom(TypedDict, total=False):
+    """A custom tool that processes input using a specified format.
+
+    Learn more about
+    [custom tools](https://main.excai.ai/docs/guides/function-calling#custom-tools).
+    """
+
     name: Required[str]
     """The name of the custom tool, used to identify it in tool calls."""
 
@@ -288,6 +343,8 @@ class Custom(TypedDict, total=False):
 
 
 class WebSearchPreviewToolUserLocation(TypedDict, total=False):
+    """The user's location."""
+
     type: Required[Literal["approximate"]]
     """The type of location approximation. Always `approximate`."""
 
@@ -311,6 +368,11 @@ class WebSearchPreviewToolUserLocation(TypedDict, total=False):
 
 
 class WebSearchPreviewTool(TypedDict, total=False):
+    """This tool searches the web for relevant results to use in a response.
+
+    Learn more about the [web search tool](https://main.excai.ai/docs/guides/tools-web-search).
+    """
+
     type: Required[Literal["web_search_preview", "web_search_preview_2025_03_11"]]
     """The type of the web search tool.
 

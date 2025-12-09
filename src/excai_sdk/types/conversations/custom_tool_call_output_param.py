@@ -11,6 +11,8 @@ __all__ = ["CustomToolCallOutputParam"]
 
 
 class CustomToolCallOutputParam(TypedDict, total=False):
+    """The output of a custom tool call from your code, being sent back to the model."""
+
     call_id: Required[str]
     """The call ID, used to map this custom tool call output to a custom tool call."""
 

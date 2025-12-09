@@ -1,5 +1,30 @@
 # Changelog
 
+## 1.3.1 (2025-12-09)
+
+Full Changelog: [v1.3.0...v1.3.1](https://github.com/malkhenizan/excai-python/compare/v1.3.0...v1.3.1)
+
+### Bug Fixes
+
+* **client:** close streams without requiring full consumption ([684ac82](https://github.com/malkhenizan/excai-python/commit/684ac8273aef2e0677a6e4813e7553d0db469892))
+* compat with Python 3.14 ([f0d8c68](https://github.com/malkhenizan/excai-python/commit/f0d8c689af5e5fd1cd676fed3a4946e52a7ae316))
+* **compat:** update signatures of `model_dump` and `model_dump_json` for Pydantic v1 ([cc24360](https://github.com/malkhenizan/excai-python/commit/cc243604f08158431ea51b1c0e5020590e6fda4c))
+* ensure streams are always closed ([c08591a](https://github.com/malkhenizan/excai-python/commit/c08591ad36f09269ac0751d89367460b7ac5caa7))
+* **types:** allow pyright to infer TypedDict types within SequenceNotStr ([6cc5501](https://github.com/malkhenizan/excai-python/commit/6cc550140b63ce28eb62a02d98c7d62a01fff1ac))
+
+
+### Chores
+
+* add missing docstrings ([c17876c](https://github.com/malkhenizan/excai-python/commit/c17876c29015c628a1ac4cef86ba2978e371060c))
+* add Python 3.14 classifier and testing ([4de4676](https://github.com/malkhenizan/excai-python/commit/4de4676caa6afd5e1c4850a8ffa6f27d9cfbc185))
+* bump `httpx-aiohttp` version to 0.1.9 ([4c5ab1d](https://github.com/malkhenizan/excai-python/commit/4c5ab1de93561a224f2ab1187b4e5971ef20833f))
+* **deps:** mypy 1.18.1 has a regression, pin to 1.17 ([2e2969d](https://github.com/malkhenizan/excai-python/commit/2e2969d9b074db5708849c94bfb7bea0d94568c4))
+* **docs:** use environment variables for authentication in code snippets ([cf6230a](https://github.com/malkhenizan/excai-python/commit/cf6230ae2402ac4fea52e5535c7905ffd4851790))
+* **internal/tests:** avoid race condition with implicit client cleanup ([c23010a](https://github.com/malkhenizan/excai-python/commit/c23010ac7da8c10cf3f371efdd98d0e532924cdc))
+* **internal:** grammar fix (it's -&gt; its) ([25696eb](https://github.com/malkhenizan/excai-python/commit/25696eb32a6652e7acbd4bea5027ecae491b826b))
+* **package:** drop Python 3.8 support ([041e710](https://github.com/malkhenizan/excai-python/commit/041e71019ffc4df0dfa1fe59ac7e72474417f6b9))
+* update lockfile ([e7d2af2](https://github.com/malkhenizan/excai-python/commit/e7d2af2ae6a2f1d18469599168cc1c004f5545fa))
+
 ## 1.3.0 (2025-10-15)
 
 Full Changelog: [v1.2.0...v1.3.0](https://github.com/malkhenizan/excai-python/compare/v1.2.0...v1.3.0)

@@ -98,6 +98,11 @@ class JobCreateParams(TypedDict, total=False):
 
 
 class Hyperparameters(TypedDict, total=False):
+    """
+    The hyperparameters used for the fine-tuning job.
+    This value is now deprecated in favor of `method`, and should be passed in under the `method` parameter.
+    """
+
     batch_size: Union[Literal["auto"], int]
     """Number of examples in each batch.
 
@@ -119,6 +124,13 @@ class Hyperparameters(TypedDict, total=False):
 
 
 class IntegrationWandb(TypedDict, total=False):
+    """The settings for your integration with Weights and Biases.
+
+    This payload specifies the project that
+    metrics will be sent to. Optionally, you can set an explicit display name for your run, add tags
+    to your run, and set a default entity (team, username, etc) to be associated with your run.
+    """
+
     project: Required[str]
     """The name of the project that the new run will be created under."""
 

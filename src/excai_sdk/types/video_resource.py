@@ -12,12 +12,16 @@ __all__ = ["VideoResource", "Error"]
 
 
 class Error(BaseModel):
+    """Error payload that explains why generation failed, if applicable."""
+
     code: str
 
     message: str
 
 
 class VideoResource(BaseModel):
+    """Structured information describing a generated video job."""
+
     id: str
     """Unique identifier for the video job."""
 

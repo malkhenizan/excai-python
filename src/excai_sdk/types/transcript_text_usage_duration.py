@@ -8,6 +8,8 @@ __all__ = ["TranscriptTextUsageDuration"]
 
 
 class TranscriptTextUsageDuration(BaseModel):
+    """Usage statistics for models billed by audio input duration."""
+
     seconds: float
     """Duration of the input audio in seconds."""
 

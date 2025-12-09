@@ -8,6 +8,8 @@ __all__ = ["McpApprovalRequest"]
 
 
 class McpApprovalRequest(BaseModel):
+    """A request for human approval of a tool invocation."""
+
     id: str
     """The unique ID of the approval request."""
 

@@ -85,11 +85,15 @@ __all__ = [
 
 
 class DataActorAPIKeyServiceAccount(BaseModel):
+    """The service account that performed the audit logged action."""
+
     id: Optional[str] = None
     """The service account id."""
 
 
 class DataActorAPIKey(BaseModel):
+    """The API Key used to perform the audit logged action."""
+
     id: Optional[str] = None
     """The tracking id of the API key."""
 
@@ -104,6 +108,8 @@ class DataActorAPIKey(BaseModel):
 
 
 class DataActorSession(BaseModel):
+    """The session in which the audit logged action was performed."""
+
     ip_address: Optional[str] = None
     """The IP address from which the action was performed."""
 
@@ -112,6 +118,8 @@ class DataActorSession(BaseModel):
 
 
 class DataActor(BaseModel):
+    """The actor who performed the audit logged action."""
+
     api_key: Optional[DataActorAPIKey] = None
     """The API Key used to perform the audit logged action."""
 
@@ -123,11 +131,15 @@ class DataActor(BaseModel):
 
 
 class DataAPIKeyCreatedData(BaseModel):
+    """The payload used to create the API key."""
+
     scopes: Optional[List[str]] = None
     """A list of scopes allowed for the API key, e.g. `["api.model.request"]`"""
 
 
 class DataAPIKeyCreated(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The tracking ID of the API key."""
 
@@ -136,16 +148,22 @@ class DataAPIKeyCreated(BaseModel):
 
 
 class DataAPIKeyDeleted(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The tracking ID of the API key."""
 
 
 class DataAPIKeyUpdatedChangesRequested(BaseModel):
+    """The payload used to update the API key."""
+
     scopes: Optional[List[str]] = None
     """A list of scopes allowed for the API key, e.g. `["api.model.request"]`"""
 
 
 class DataAPIKeyUpdated(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The tracking ID of the API key."""
 
@@ -154,6 +172,8 @@ class DataAPIKeyUpdated(BaseModel):
 
 
 class DataCertificateCreated(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The certificate ID."""
 
@@ -162,6 +182,8 @@ class DataCertificateCreated(BaseModel):
 
 
 class DataCertificateDeleted(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The certificate ID."""
 
@@ -173,6 +195,8 @@ class DataCertificateDeleted(BaseModel):
 
 
 class DataCertificateUpdated(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The certificate ID."""
 
@@ -189,6 +213,8 @@ class DataCertificatesActivatedCertificate(BaseModel):
 
 
 class DataCertificatesActivated(BaseModel):
+    """The details for events with this `type`."""
+
     certificates: Optional[List[DataCertificatesActivatedCertificate]] = None
 
 
@@ -201,10 +227,14 @@ class DataCertificatesDeactivatedCertificate(BaseModel):
 
 
 class DataCertificatesDeactivated(BaseModel):
+    """The details for events with this `type`."""
+
     certificates: Optional[List[DataCertificatesDeactivatedCertificate]] = None
 
 
 class DataCheckpointPermissionCreatedData(BaseModel):
+    """The payload used to create the checkpoint permission."""
+
     fine_tuned_model_checkpoint: Optional[str] = None
     """The ID of the fine-tuned model checkpoint."""
 
@@ -213,6 +243,10 @@ class DataCheckpointPermissionCreatedData(BaseModel):
 
 
 class DataCheckpointPermissionCreated(BaseModel):
+    """
+    The project and fine-tuned model checkpoint that the checkpoint permission was created for.
+    """
+
     id: Optional[str] = None
     """The ID of the checkpoint permission."""
 
@@ -221,11 +255,15 @@ class DataCheckpointPermissionCreated(BaseModel):
 
 
 class DataCheckpointPermissionDeleted(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The ID of the checkpoint permission."""
 
 
 class DataExternalKeyRegistered(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The ID of the external key configuration."""
 
@@ -234,16 +272,22 @@ class DataExternalKeyRegistered(BaseModel):
 
 
 class DataExternalKeyRemoved(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The ID of the external key configuration."""
 
 
 class DataGroupCreatedData(BaseModel):
+    """Information about the created group."""
+
     group_name: Optional[str] = None
     """The group name."""
 
 
 class DataGroupCreated(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The ID of the group."""
 
@@ -252,16 +296,22 @@ class DataGroupCreated(BaseModel):
 
 
 class DataGroupDeleted(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The ID of the group."""
 
 
 class DataGroupUpdatedChangesRequested(BaseModel):
+    """The payload used to update the group."""
+
     group_name: Optional[str] = None
     """The updated group name."""
 
 
 class DataGroupUpdated(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The ID of the group."""
 
@@ -270,16 +320,22 @@ class DataGroupUpdated(BaseModel):
 
 
 class DataInviteAccepted(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The ID of the invite."""
 
 
 class DataInviteDeleted(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The ID of the invite."""
 
 
 class DataInviteSentData(BaseModel):
+    """The payload used to create the invite."""
+
     email: Optional[str] = None
     """The email invited to the organization."""
 
@@ -288,6 +344,8 @@ class DataInviteSentData(BaseModel):
 
 
 class DataInviteSent(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The ID of the invite."""
 
@@ -304,6 +362,8 @@ class DataIPAllowlistConfigActivatedConfig(BaseModel):
 
 
 class DataIPAllowlistConfigActivated(BaseModel):
+    """The details for events with this `type`."""
+
     configs: Optional[List[DataIPAllowlistConfigActivatedConfig]] = None
     """The configurations that were activated."""
 
@@ -317,11 +377,15 @@ class DataIPAllowlistConfigDeactivatedConfig(BaseModel):
 
 
 class DataIPAllowlistConfigDeactivated(BaseModel):
+    """The details for events with this `type`."""
+
     configs: Optional[List[DataIPAllowlistConfigDeactivatedConfig]] = None
     """The configurations that were deactivated."""
 
 
 class DataIPAllowlistCreated(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The ID of the IP allowlist configuration."""
 
@@ -333,6 +397,8 @@ class DataIPAllowlistCreated(BaseModel):
 
 
 class DataIPAllowlistDeleted(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The ID of the IP allowlist configuration."""
 
@@ -344,6 +410,8 @@ class DataIPAllowlistDeleted(BaseModel):
 
 
 class DataIPAllowlistUpdated(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The ID of the IP allowlist configuration."""
 
@@ -352,6 +420,8 @@ class DataIPAllowlistUpdated(BaseModel):
 
 
 class DataLoginFailed(BaseModel):
+    """The details for events with this `type`."""
+
     error_code: Optional[str] = None
     """The error code of the failure."""
 
@@ -360,6 +430,8 @@ class DataLoginFailed(BaseModel):
 
 
 class DataLogoutFailed(BaseModel):
+    """The details for events with this `type`."""
+
     error_code: Optional[str] = None
     """The error code of the failure."""
 
@@ -368,6 +440,8 @@ class DataLogoutFailed(BaseModel):
 
 
 class DataOrganizationUpdatedChangesRequested(BaseModel):
+    """The payload used to update the organization settings."""
+
     api_call_logging: Optional[str] = None
     """How your organization logs data from supported API calls.
 
@@ -404,6 +478,8 @@ class DataOrganizationUpdatedChangesRequested(BaseModel):
 
 
 class DataOrganizationUpdated(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The organization ID."""
 
@@ -412,6 +488,11 @@ class DataOrganizationUpdated(BaseModel):
 
 
 class DataProject(BaseModel):
+    """The project that the action was scoped to.
+
+    Absent for actions not scoped to projects. Note that any admin actions taken via Admin API keys are associated with the default project.
+    """
+
     id: Optional[str] = None
     """The project ID."""
 
@@ -420,11 +501,15 @@ class DataProject(BaseModel):
 
 
 class DataProjectArchived(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The project ID."""
 
 
 class DataProjectCreatedData(BaseModel):
+    """The payload used to create the project."""
+
     name: Optional[str] = None
     """The project name."""
 
@@ -433,6 +518,8 @@ class DataProjectCreatedData(BaseModel):
 
 
 class DataProjectCreated(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The project ID."""
 
@@ -441,16 +528,22 @@ class DataProjectCreated(BaseModel):
 
 
 class DataProjectDeleted(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The project ID."""
 
 
 class DataProjectUpdatedChangesRequested(BaseModel):
+    """The payload used to update the project."""
+
     title: Optional[str] = None
     """The title of the project as seen on the dashboard."""
 
 
 class DataProjectUpdated(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The project ID."""
 
@@ -459,11 +552,15 @@ class DataProjectUpdated(BaseModel):
 
 
 class DataRateLimitDeleted(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The rate limit ID"""
 
 
 class DataRateLimitUpdatedChangesRequested(BaseModel):
+    """The payload used to update the rate limits."""
+
     batch_1_day_max_input_tokens: Optional[int] = None
     """The maximum batch input tokens per day. Only relevant for certain models."""
 
@@ -484,6 +581,8 @@ class DataRateLimitUpdatedChangesRequested(BaseModel):
 
 
 class DataRateLimitUpdated(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The rate limit ID"""
 
@@ -492,6 +591,8 @@ class DataRateLimitUpdated(BaseModel):
 
 
 class DataRoleAssignmentCreated(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The identifier of the role assignment."""
 
@@ -509,6 +610,8 @@ class DataRoleAssignmentCreated(BaseModel):
 
 
 class DataRoleAssignmentDeleted(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The identifier of the role assignment."""
 
@@ -526,6 +629,8 @@ class DataRoleAssignmentDeleted(BaseModel):
 
 
 class DataRoleCreated(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The role ID."""
 
@@ -543,11 +648,15 @@ class DataRoleCreated(BaseModel):
 
 
 class DataRoleDeleted(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The role ID."""
 
 
 class DataRoleUpdatedChangesRequested(BaseModel):
+    """The payload used to update the role."""
+
     description: Optional[str] = None
     """The updated role description, when provided."""
 
@@ -571,6 +680,8 @@ class DataRoleUpdatedChangesRequested(BaseModel):
 
 
 class DataRoleUpdated(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The role ID."""
 
@@ -579,21 +690,29 @@ class DataRoleUpdated(BaseModel):
 
 
 class DataScimDisabled(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The ID of the SCIM was disabled for."""
 
 
 class DataScimEnabled(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The ID of the SCIM was enabled for."""
 
 
 class DataServiceAccountCreatedData(BaseModel):
+    """The payload used to create the service account."""
+
     role: Optional[str] = None
     """The role of the service account. Is either `owner` or `member`."""
 
 
 class DataServiceAccountCreated(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The service account ID."""
 
@@ -602,16 +721,22 @@ class DataServiceAccountCreated(BaseModel):
 
 
 class DataServiceAccountDeleted(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The service account ID."""
 
 
 class DataServiceAccountUpdatedChangesRequested(BaseModel):
+    """The payload used to updated the service account."""
+
     role: Optional[str] = None
     """The role of the service account. Is either `owner` or `member`."""
 
 
 class DataServiceAccountUpdated(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The service account ID."""
 
@@ -620,11 +745,15 @@ class DataServiceAccountUpdated(BaseModel):
 
 
 class DataUserAddedData(BaseModel):
+    """The payload used to add the user to the project."""
+
     role: Optional[str] = None
     """The role of the user. Is either `owner` or `member`."""
 
 
 class DataUserAdded(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The user ID."""
 
@@ -633,16 +762,22 @@ class DataUserAdded(BaseModel):
 
 
 class DataUserDeleted(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The user ID."""
 
 
 class DataUserUpdatedChangesRequested(BaseModel):
+    """The payload used to update the user."""
+
     role: Optional[str] = None
     """The role of the user. Is either `owner` or `member`."""
 
 
 class DataUserUpdated(BaseModel):
+    """The details for events with this `type`."""
+
     id: Optional[str] = None
     """The project ID."""
 
@@ -651,6 +786,8 @@ class DataUserUpdated(BaseModel):
 
 
 class Data(BaseModel):
+    """A log of a user action or configuration change within this organization."""
+
     id: str
     """The ID of this log."""
 

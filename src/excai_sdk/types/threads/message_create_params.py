@@ -48,6 +48,8 @@ class MessageCreateParams(TypedDict, total=False):
 
 
 class ContentArrayOfContentPartText(TypedDict, total=False):
+    """The text content that is part of a message."""
+
     text: Required[str]
     """Text content to be sent to the model"""
 

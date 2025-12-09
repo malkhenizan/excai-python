@@ -8,6 +8,8 @@ __all__ = ["ComputerScreenshotImageParam"]
 
 
 class ComputerScreenshotImageParam(TypedDict, total=False):
+    """A computer screenshot image used with the computer use tool."""
+
     type: Required[Literal["computer_screenshot"]]
     """Specifies the event type.
 

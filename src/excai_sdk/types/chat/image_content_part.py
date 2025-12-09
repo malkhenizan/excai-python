@@ -21,6 +21,8 @@ class ImageURL(BaseModel):
 
 
 class ImageContentPart(BaseModel):
+    """Learn about [image inputs](https://main.excai.ai/docs/guides/vision)."""
+
     image_url: ImageURL
 
     type: Literal["image_url"]

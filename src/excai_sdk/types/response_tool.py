@@ -36,6 +36,11 @@ __all__ = [
 
 
 class Function(BaseModel):
+    """Defines a function in your own code the model can choose to call.
+
+    Learn more about [function calling](https://main.excai.ai/docs/guides/function-calling).
+    """
+
     name: str
     """The name of the function to call."""
 
@@ -59,6 +64,8 @@ FileSearchFilters: TypeAlias = Union[ComparisonFilter, CompoundFilter, None]
 
 
 class FileSearchRankingOptions(BaseModel):
+    """Ranking options for search."""
+
     ranker: Optional[Literal["auto", "default-2024-11-15"]] = None
     """The ranker to use for the file search."""
 
@@ -71,6 +78,11 @@ class FileSearchRankingOptions(BaseModel):
 
 
 class FileSearch(BaseModel):
+    """A tool that searches for relevant content from uploaded files.
+
+    Learn more about the [file search tool](https://main.excai.ai/docs/guides/tools-file-search).
+    """
+
     type: Literal["file_search"]
     """The type of the file search tool. Always `file_search`."""
 
@@ -91,6 +103,11 @@ class FileSearch(BaseModel):
 
 
 class ComputerUsePreview(BaseModel):
+    """A tool that controls a virtual computer.
+
+    Learn more about the [computer tool](https://main.excai.ai/docs/guides/tools-computer-use).
+    """
+
     display_height: int
     """The height of the computer display."""
 
@@ -105,6 +122,8 @@ class ComputerUsePreview(BaseModel):
 
 
 class WebSearchToolFilters(BaseModel):
+    """Filters for the search."""
+
     allowed_domains: Optional[List[str]] = None
     """Allowed domains for the search.
 
@@ -116,6 +135,8 @@ class WebSearchToolFilters(BaseModel):
 
 
 class WebSearchToolUserLocation(BaseModel):
+    """The approximate location of the user."""
+
     city: Optional[str] = None
     """Free text input for the city of the user, e.g. `San Francisco`."""
 
@@ -139,6 +160,12 @@ class WebSearchToolUserLocation(BaseModel):
 
 
 class WebSearchTool(BaseModel):
+    """Search the Internet for sources related to the prompt.
+
+    Learn more about the
+    [web search tool](https://main.excai.ai/docs/guides/tools-web-search).
+    """
+
     type: Literal["web_search", "web_search_2025_08_26"]
     """The type of the web search tool.
 
@@ -160,6 +187,12 @@ class WebSearchTool(BaseModel):
 
 
 class CodeInterpreterContainerCodeInterpreterToolAuto(BaseModel):
+    """Configuration for a code interpreter container.
+
+    Optionally specify the IDs
+    of the files to run the code on.
+    """
+
     type: Literal["auto"]
     """Always `auto`."""
 
@@ -171,6 +204,8 @@ CodeInterpreterContainer: TypeAlias = Union[str, CodeInterpreterContainerCodeInt
 
 
 class CodeInterpreter(BaseModel):
+    """A tool that runs Python code to help generate a response to a prompt."""
+
     container: CodeInterpreterContainer
     """The code interpreter container.
 
@@ -183,6 +218,12 @@ class CodeInterpreter(BaseModel):
 
 
 class ImageGenerationInputImageMask(BaseModel):
+    """Optional mask for inpainting.
+
+    Contains `image_url`
+    (string, optional) and `file_id` (string, optional).
+    """
+
     file_id: Optional[str] = None
     """File ID for the mask image."""
 
@@ -191,6 +232,8 @@ class ImageGenerationInputImageMask(BaseModel):
 
 
 class ImageGeneration(BaseModel):
+    """A tool that generates images using a model like `gpt-image-1`."""
+
     type: Literal["image_generation"]
     """The type of the image generation tool. Always `image_generation`."""
 
@@ -249,16 +292,22 @@ class ImageGeneration(BaseModel):
 
 
 class LocalShell(BaseModel):
+    """A tool that allows the model to execute shell commands in a local environment."""
+
     type: Literal["local_shell"]
     """The type of the local shell tool. Always `local_shell`."""
 
 
 class CustomFormatText(BaseModel):
+    """Unconstrained free-form text."""
+
     type: Literal["text"]
     """Unconstrained text format. Always `text`."""
 
 
 class CustomFormatGrammar(BaseModel):
+    """A grammar defined by the user."""
+
     definition: str
     """The grammar definition."""
 
@@ -273,6 +322,12 @@ CustomFormat: TypeAlias = Annotated[Union[CustomFormatText, CustomFormatGrammar]
 
 
 class Custom(BaseModel):
+    """A custom tool that processes input using a specified format.
+
+    Learn more about
+    [custom tools](https://main.excai.ai/docs/guides/function-calling#custom-tools).
+    """
+
     name: str
     """The name of the custom tool, used to identify it in tool calls."""
 
@@ -287,6 +342,8 @@ class Custom(BaseModel):
 
 
 class WebSearchPreviewToolUserLocation(BaseModel):
+    """The user's location."""
+
     type: Literal["approximate"]
     """The type of location approximation. Always `approximate`."""
 
@@ -310,6 +367,11 @@ class WebSearchPreviewToolUserLocation(BaseModel):
 
 
 class WebSearchPreviewTool(BaseModel):
+    """This tool searches the web for relevant results to use in a response.
+
+    Learn more about the [web search tool](https://main.excai.ai/docs/guides/tools-web-search).
+    """
+
     type: Literal["web_search_preview", "web_search_preview_2025_03_11"]
     """The type of the web search tool.
 

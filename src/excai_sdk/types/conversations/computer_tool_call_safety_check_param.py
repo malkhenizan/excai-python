@@ -8,6 +8,8 @@ __all__ = ["ComputerToolCallSafetyCheckParam"]
 
 
 class ComputerToolCallSafetyCheckParam(TypedDict, total=False):
+    """A pending safety check for the computer call."""
+
     id: Required[str]
     """The ID of the pending safety check."""
 

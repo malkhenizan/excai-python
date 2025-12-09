@@ -32,6 +32,13 @@ __all__ = [
 
 
 class AudioInputNoiseReduction(TypedDict, total=False):
+    """Configuration for input audio noise reduction.
+
+    This can be set to `null` to turn off.
+    Noise reduction filters audio added to the input audio buffer before it is sent to VAD and the model.
+    Filtering the audio can improve VAD and turn detection accuracy (reducing false positives) and model performance by improving perception of the input audio.
+    """
+
     type: NoiseReductionType
     """Type of noise reduction.
 
@@ -109,6 +116,8 @@ class AudioOutput(TypedDict, total=False):
 
 
 class Audio(TypedDict, total=False):
+    """Configuration for input and output audio."""
+
     input: AudioInput
 
     output: AudioOutput
@@ -120,6 +129,8 @@ Tool: TypeAlias = Union[RealtimeFunctionToolParam, McpToolParam]
 
 
 class TracingTracingConfiguration(TypedDict, total=False):
+    """Granular configuration for tracing."""
+
     group_id: str
     """
     The group id to attach to this trace to enable filtering and grouping in the
@@ -143,6 +154,8 @@ Tracing: TypeAlias = Union[Literal["auto"], TracingTracingConfiguration]
 
 
 class RealtimeSessionCreateParam(TypedDict, total=False):
+    """Realtime session object configuration."""
+
     type: Required[Literal["realtime"]]
     """The type of session to create. Always `realtime` for the Realtime API."""
 

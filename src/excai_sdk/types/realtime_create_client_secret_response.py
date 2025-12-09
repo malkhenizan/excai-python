@@ -40,6 +40,8 @@ __all__ = [
 
 
 class SessionRealtimeClientSecret(BaseModel):
+    """Ephemeral key returned by the API."""
+
     expires_at: int
     """Timestamp for when the token expires.
 
@@ -55,6 +57,13 @@ class SessionRealtimeClientSecret(BaseModel):
 
 
 class SessionRealtimeAudioInputNoiseReduction(BaseModel):
+    """Configuration for input audio noise reduction.
+
+    This can be set to `null` to turn off.
+    Noise reduction filters audio added to the input audio buffer before it is sent to VAD and the model.
+    Filtering the audio can improve VAD and turn detection accuracy (reducing false positives) and model performance by improving perception of the input audio.
+    """
+
     type: Optional[NoiseReductionType] = None
     """Type of noise reduction.
 
@@ -132,6 +141,8 @@ class SessionRealtimeAudioOutput(BaseModel):
 
 
 class SessionRealtimeAudio(BaseModel):
+    """Configuration for input and output audio."""
+
     input: Optional[SessionRealtimeAudioInput] = None
 
     output: Optional[SessionRealtimeAudioOutput] = None
@@ -143,6 +154,8 @@ SessionRealtimeTool: TypeAlias = Union[RealtimeFunctionTool, McpTool]
 
 
 class SessionRealtimeTracingTracingConfiguration(BaseModel):
+    """Granular configuration for tracing."""
+
     group_id: Optional[str] = None
     """
     The group id to attach to this trace to enable filtering and grouping in the
@@ -166,6 +179,12 @@ SessionRealtimeTracing: TypeAlias = Union[Literal["auto"], SessionRealtimeTracin
 
 
 class SessionRealtime(BaseModel):
+    """A new Realtime session configuration, with an ephemeral key.
+
+    Default TTL
+    for keys is one minute.
+    """
+
     client_secret: SessionRealtimeClientSecret
     """Ephemeral key returned by the API."""
 
@@ -264,6 +283,8 @@ class SessionRealtime(BaseModel):
 
 
 class SessionTranscriptionAudioInputNoiseReduction(BaseModel):
+    """Configuration for input audio noise reduction."""
+
     type: Optional[NoiseReductionType] = None
     """Type of noise reduction.
 
@@ -273,6 +294,13 @@ class SessionTranscriptionAudioInputNoiseReduction(BaseModel):
 
 
 class SessionTranscriptionAudioInputTurnDetection(BaseModel):
+    """Configuration for turn detection.
+
+    Can be set to `null` to turn off. Server
+    VAD means that the model will detect the start and end of speech based on
+    audio volume and respond at the end of user speech.
+    """
+
     prefix_padding_ms: Optional[int] = None
     """Amount of audio to include before the VAD detected speech (in milliseconds).
 
@@ -317,10 +345,14 @@ class SessionTranscriptionAudioInput(BaseModel):
 
 
 class SessionTranscriptionAudio(BaseModel):
+    """Configuration for input audio for the session."""
+
     input: Optional[SessionTranscriptionAudioInput] = None
 
 
 class SessionTranscription(BaseModel):
+    """A Realtime transcription session configuration object."""
+
     id: str
     """Unique identifier for the session that looks like `sess_1234567890abcdef`."""
 
@@ -348,6 +380,8 @@ Session: TypeAlias = Annotated[Union[SessionRealtime, SessionTranscription], Pro
 
 
 class RealtimeCreateClientSecretResponse(BaseModel):
+    """Response from creating a session and client secret for the Realtime API."""
+
     expires_at: int
     """Expiration timestamp for the client secret, in seconds since epoch."""
 

@@ -8,6 +8,8 @@ __all__ = ["AuditLogActorUser"]
 
 
 class AuditLogActorUser(BaseModel):
+    """The user who performed the audit logged action."""
+
     id: Optional[str] = None
     """The user id."""
 
