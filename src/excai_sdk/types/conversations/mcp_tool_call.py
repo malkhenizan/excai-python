@@ -9,6 +9,8 @@ __all__ = ["McpToolCall"]
 
 
 class McpToolCall(BaseModel):
+    """An invocation of a tool on an MCP server."""
+
     id: str
     """The unique ID of the tool call."""
 

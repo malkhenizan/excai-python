@@ -8,6 +8,8 @@ __all__ = ["TextContentPart"]
 
 
 class TextContentPart(BaseModel):
+    """Learn about [text inputs](https://main.excai.ai/docs/guides/text-generation)."""
+
     text: str
     """The text content."""
 

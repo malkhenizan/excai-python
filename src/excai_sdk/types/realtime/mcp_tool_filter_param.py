@@ -10,6 +10,8 @@ __all__ = ["McpToolFilterParam"]
 
 
 class McpToolFilterParam(TypedDict, total=False):
+    """A filter object to specify which tools are allowed."""
+
     read_only: bool
     """Indicates whether or not a tool modifies data or is read-only.
 

@@ -10,6 +10,8 @@ __all__ = ["RealtimeAudioFormats", "AudioPcm", "AudioPcmu", "AudioPcma"]
 
 
 class AudioPcm(BaseModel):
+    """The PCM audio format. Only a 24kHz sample rate is supported."""
+
     rate: Optional[Literal[24000]] = None
     """The sample rate of the audio. Always `24000`."""
 
@@ -18,11 +20,15 @@ class AudioPcm(BaseModel):
 
 
 class AudioPcmu(BaseModel):
+    """The G.711 μ-law format."""
+
     type: Optional[Literal["audio/pcmu"]] = None
     """The audio format. Always `audio/pcmu`."""
 
 
 class AudioPcma(BaseModel):
+    """The G.711 A-law format."""
+
     type: Optional[Literal["audio/pcma"]] = None
     """The audio format. Always `audio/pcma`."""
 

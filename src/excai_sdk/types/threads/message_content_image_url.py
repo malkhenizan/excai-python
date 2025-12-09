@@ -24,6 +24,8 @@ class ImageURL(BaseModel):
 
 
 class MessageContentImageURL(BaseModel):
+    """References an image URL in the content of a message."""
+
     image_url: ImageURL
 
     type: Literal["image_url"]

@@ -24,6 +24,8 @@ __all__ = [
 
 
 class DataResultOrganizationUsageCompletionsResult(BaseModel):
+    """The aggregated completions usage details of the specific time bucket."""
+
     input_tokens: int
     """The aggregated number of text input tokens used, including cached tokens.
 
@@ -86,6 +88,8 @@ class DataResultOrganizationUsageCompletionsResult(BaseModel):
 
 
 class DataResultOrganizationUsageEmbeddingsResult(BaseModel):
+    """The aggregated embeddings usage details of the specific time bucket."""
+
     input_tokens: int
     """The aggregated number of input tokens used."""
 
@@ -120,6 +124,8 @@ class DataResultOrganizationUsageEmbeddingsResult(BaseModel):
 
 
 class DataResultOrganizationUsageModerationsResult(BaseModel):
+    """The aggregated moderations usage details of the specific time bucket."""
+
     input_tokens: int
     """The aggregated number of input tokens used."""
 
@@ -154,6 +160,8 @@ class DataResultOrganizationUsageModerationsResult(BaseModel):
 
 
 class DataResultOrganizationUsageImagesResult(BaseModel):
+    """The aggregated images usage details of the specific time bucket."""
+
     images: int
     """The number of images processed."""
 
@@ -200,6 +208,8 @@ class DataResultOrganizationUsageImagesResult(BaseModel):
 
 
 class DataResultOrganizationUsageAudioSpeechesResult(BaseModel):
+    """The aggregated audio speeches usage details of the specific time bucket."""
+
     characters: int
     """The number of characters processed."""
 
@@ -234,6 +244,8 @@ class DataResultOrganizationUsageAudioSpeechesResult(BaseModel):
 
 
 class DataResultOrganizationUsageAudioTranscriptionsResult(BaseModel):
+    """The aggregated audio transcriptions usage details of the specific time bucket."""
+
     num_model_requests: int
     """The count of requests made to the model."""
 
@@ -268,6 +280,8 @@ class DataResultOrganizationUsageAudioTranscriptionsResult(BaseModel):
 
 
 class DataResultOrganizationUsageVectorStoresResult(BaseModel):
+    """The aggregated vector stores usage details of the specific time bucket."""
+
     object: Literal["organization.usage.vector_stores.result"]
 
     usage_bytes: int
@@ -281,6 +295,10 @@ class DataResultOrganizationUsageVectorStoresResult(BaseModel):
 
 
 class DataResultOrganizationUsageCodeInterpreterSessionsResult(BaseModel):
+    """
+    The aggregated code interpreter sessions usage details of the specific time bucket.
+    """
+
     object: Literal["organization.usage.code_interpreter_sessions.result"]
 
     num_sessions: Optional[int] = None
@@ -294,6 +312,8 @@ class DataResultOrganizationUsageCodeInterpreterSessionsResult(BaseModel):
 
 
 class DataResultOrganizationCostsResultAmount(BaseModel):
+    """The monetary value in its associated currency."""
+
     currency: Optional[str] = None
     """Lowercase ISO-4217 currency e.g. "usd" """
 
@@ -302,6 +322,8 @@ class DataResultOrganizationCostsResultAmount(BaseModel):
 
 
 class DataResultOrganizationCostsResult(BaseModel):
+    """The aggregated costs details of the specific time bucket."""
+
     object: Literal["organization.costs.result"]
 
     amount: Optional[DataResultOrganizationCostsResultAmount] = None

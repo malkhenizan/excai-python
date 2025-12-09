@@ -20,6 +20,8 @@ class ImageURL(TypedDict, total=False):
 
 
 class ImageContentPartParam(TypedDict, total=False):
+    """Learn about [image inputs](https://main.excai.ai/docs/guides/vision)."""
+
     image_url: Required[ImageURL]
 
     type: Required[Literal["image_url"]]

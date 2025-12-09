@@ -25,6 +25,12 @@ __all__ = [
 
 
 class Reasoning(BaseModel):
+    """**gpt-5 and o-series models only**
+
+    Configuration options for
+    [reasoning models](https://main.excai.ai/docs/guides/reasoning).
+    """
+
     effort: Optional[ReasoningEffort] = None
     """
     Constrains effort on reasoning for
@@ -54,6 +60,14 @@ class Reasoning(BaseModel):
 
 
 class Text(BaseModel):
+    """Configuration options for a text response from the model.
+
+    Can be plain
+    text or structured JSON data. Learn more:
+    - [Text inputs and outputs](https://main.excai.ai/docs/guides/text)
+    - [Structured Outputs](https://main.excai.ai/docs/guides/structured-outputs)
+    """
+
     format: Optional[TextResponseFormatConfiguration] = None
     """An object specifying the format that the model must output.
 
@@ -80,6 +94,8 @@ class Text(BaseModel):
 
 
 class ToolChoiceAllowedTools(BaseModel):
+    """Constrains the tools available to the model to a pre-defined set."""
+
     mode: Literal["auto", "required"]
     """Constrains the tools available to the model to a pre-defined set.
 
@@ -108,6 +124,11 @@ class ToolChoiceAllowedTools(BaseModel):
 
 
 class ToolChoiceToolChoiceTypes(BaseModel):
+    """
+    Indicates that the model should use a built-in tool to generate a response.
+    [Learn more about built-in tools](https://main.excai.ai/docs/guides/tools).
+    """
+
     type: Literal[
         "file_search",
         "web_search_preview",
@@ -131,6 +152,8 @@ class ToolChoiceToolChoiceTypes(BaseModel):
 
 
 class ToolChoiceCustom(BaseModel):
+    """Use this option to force the model to call a specific custom tool."""
+
     name: str
     """The name of the custom tool to call."""
 

@@ -39,6 +39,14 @@ class RealtimeCreateClientSecretParams(TypedDict, total=False):
 
 
 class ExpiresAfter(TypedDict, total=False):
+    """Configuration for the client secret expiration.
+
+    Expiration refers to the time after which
+    a client secret will no longer be valid for creating sessions. The session itself may
+    continue after that time once started. A secret can be used to create multiple sessions
+    until it expires.
+    """
+
     anchor: Literal["created_at"]
     """
     The anchor point for the client secret expiration, meaning that `seconds` will
@@ -55,6 +63,13 @@ class ExpiresAfter(TypedDict, total=False):
 
 
 class SessionTranscriptionAudioInputNoiseReduction(TypedDict, total=False):
+    """Configuration for input audio noise reduction.
+
+    This can be set to `null` to turn off.
+    Noise reduction filters audio added to the input audio buffer before it is sent to VAD and the model.
+    Filtering the audio can improve VAD and turn detection accuracy (reducing false positives) and model performance by improving perception of the input audio.
+    """
+
     type: NoiseReductionType
     """Type of noise reduction.
 
@@ -107,10 +122,14 @@ class SessionTranscriptionAudioInput(TypedDict, total=False):
 
 
 class SessionTranscriptionAudio(TypedDict, total=False):
+    """Configuration for input and output audio."""
+
     input: SessionTranscriptionAudioInput
 
 
 class SessionTranscription(TypedDict, total=False):
+    """Realtime transcription session object configuration."""
+
     type: Required[Literal["transcription"]]
     """The type of session to create.
 

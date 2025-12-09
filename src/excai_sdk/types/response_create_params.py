@@ -18,6 +18,8 @@ class ResponseCreateParams(TypedDict, total=False):
 
 
 class BodyConversationConversationParam(TypedDict, total=False):
+    """The conversation that this response belongs to."""
+
     id: Required[str]
     """The unique ID of the conversation."""
 
@@ -26,6 +28,8 @@ BodyConversation: TypeAlias = Union[str, BodyConversationConversationParam]
 
 
 class BodyStreamOptions(TypedDict, total=False):
+    """Options for streaming responses. Only set this when you set `stream: true`."""
+
     include_obfuscation: bool
     """When true, stream obfuscation will be enabled.
 

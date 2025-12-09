@@ -10,6 +10,10 @@ __all__ = ["RealtimeTurnDetection", "ServerVad", "SemanticVad"]
 
 
 class ServerVad(BaseModel):
+    """
+    Server-side voice activity detection (VAD) which flips on when user speech is detected and off after a period of silence.
+    """
+
     type: Literal["server_vad"]
     """Type of turn detection, `server_vad` to turn on simple Server VAD."""
 
@@ -67,6 +71,10 @@ class ServerVad(BaseModel):
 
 
 class SemanticVad(BaseModel):
+    """
+    Server-side semantic turn detection which uses a model to determine when the user has finished speaking.
+    """
+
     type: Literal["semantic_vad"]
     """Type of turn detection, `semantic_vad` to turn on Semantic VAD."""
 

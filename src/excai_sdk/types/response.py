@@ -35,6 +35,8 @@ __all__ = [
 
 
 class ResponseError(BaseModel):
+    """An error object returned when the model fails to generate a Response."""
+
     code: Literal[
         "server_error",
         "rate_limit_exceeded",
@@ -62,6 +64,8 @@ class ResponseError(BaseModel):
 
 
 class ResponseIncompleteDetails(BaseModel):
+    """Details about why the response is incomplete."""
+
     reason: Optional[Literal["max_output_tokens", "content_filter"]] = None
     """The reason why the response is incomplete."""
 
@@ -87,11 +91,18 @@ ResponseOutput: TypeAlias = Annotated[
 
 
 class ResponseConversation(BaseModel):
+    """The conversation that this response belongs to.
+
+    Input items and output items from this response are automatically added to this conversation.
+    """
+
     id: str
     """The unique ID of the conversation."""
 
 
 class ResponseUsageInputTokensDetails(BaseModel):
+    """A detailed breakdown of the input tokens."""
+
     cached_tokens: int
     """The number of tokens that were retrieved from the cache.
 
@@ -100,11 +111,18 @@ class ResponseUsageInputTokensDetails(BaseModel):
 
 
 class ResponseUsageOutputTokensDetails(BaseModel):
+    """A detailed breakdown of the output tokens."""
+
     reasoning_tokens: int
     """The number of reasoning tokens."""
 
 
 class ResponseUsage(BaseModel):
+    """
+    Represents token usage details including input tokens, output tokens,
+    a breakdown of output tokens, and the total tokens used.
+    """
+
     input_tokens: int
     """The number of input tokens."""
 

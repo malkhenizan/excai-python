@@ -24,6 +24,13 @@ __all__ = [
 
 
 class DataSourceConfigCustom(BaseModel):
+    """
+    A CustomDataSourceConfig which specifies the schema of your `item` and optionally `sample` namespaces.
+    The response schema defines the shape of the data that will be:
+    - Used to define your testing criteria and
+    - What data is required when creating a run
+    """
+
     schema_: Dict[str, object] = FieldInfo(alias="schema")
     """
     The json schema for the run data source items. Learn how to build JSON schemas
@@ -35,6 +42,13 @@ class DataSourceConfigCustom(BaseModel):
 
 
 class DataSourceConfigLogs(BaseModel):
+    """
+    A LogsDataSourceConfig which specifies the metadata property of your logs query.
+    This is usually metadata like `usecase=chatbot` or `prompt-version=v2`, etc.
+    The schema returned by this data source config is used to defined what variables are available in your evals.
+    `item` and `sample` are both defined when using this data source config.
+    """
+
     schema_: Dict[str, object] = FieldInfo(alias="schema")
     """
     The json schema for the run data source items. Learn how to build JSON schemas
@@ -56,6 +70,8 @@ class DataSourceConfigLogs(BaseModel):
 
 
 class DataSourceConfigStoredCompletions(BaseModel):
+    """Deprecated in favor of LogsDataSourceConfig."""
+
     schema_: Dict[str, object] = FieldInfo(alias="schema")
     """
     The json schema for the run data source items. Learn how to build JSON schemas
@@ -87,6 +103,15 @@ TestingCriterion: TypeAlias = Union[
 
 
 class Eval(BaseModel):
+    """
+    An Eval object with a data source config and testing criteria.
+    An Eval represents a task to be done for your LLM integration.
+    Like:
+     - Improve the quality of my chatbot
+     - See how well my chatbot handles customer support
+     - Check if o4-mini is better at my usecase than openai/gpt-oss-120b
+    """
+
     id: str
     """Unique identifier for the evaluation."""
 

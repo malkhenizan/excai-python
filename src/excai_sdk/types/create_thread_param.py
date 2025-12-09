@@ -32,6 +32,11 @@ class ToolResourcesCodeInterpreter(TypedDict, total=False):
 
 
 class ToolResourcesFileSearchVectorStoreChunkingStrategyAuto(TypedDict, total=False):
+    """The default strategy.
+
+    This strategy currently uses a `max_chunk_size_tokens` of `800` and `chunk_overlap_tokens` of `400`.
+    """
+
     type: Required[Literal["auto"]]
     """Always `auto`."""
 
@@ -106,12 +111,22 @@ class ToolResourcesFileSearch(TypedDict, total=False):
 
 
 class ToolResources(TypedDict, total=False):
+    """
+    A set of resources that are made available to the assistant's tools in this thread. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+    """
+
     code_interpreter: ToolResourcesCodeInterpreter
 
     file_search: ToolResourcesFileSearch
 
 
 class CreateThreadParam(TypedDict, total=False):
+    """Options to create a new thread.
+
+    If no thread is provided when running a
+    request, an empty thread will be created.
+    """
+
     messages: Iterable[CreateMessageParam]
     """
     A list of [messages](https://main.excai.ai/docs/api-reference/messages) to start

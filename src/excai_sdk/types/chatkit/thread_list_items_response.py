@@ -33,6 +33,8 @@ __all__ = [
 
 
 class DataChatkitUserMessageAttachment(BaseModel):
+    """Attachment metadata included on thread items."""
+
     id: str
     """Identifier for the attachment."""
 
@@ -50,6 +52,8 @@ class DataChatkitUserMessageAttachment(BaseModel):
 
 
 class DataChatkitUserMessageContentInputText(BaseModel):
+    """Text block that a user contributed to the thread."""
+
     text: str
     """Plain-text content supplied by the user."""
 
@@ -58,6 +62,8 @@ class DataChatkitUserMessageContentInputText(BaseModel):
 
 
 class DataChatkitUserMessageContentQuotedText(BaseModel):
+    """Quoted snippet that the user referenced in their message."""
+
     text: str
     """Quoted text content."""
 
@@ -72,11 +78,15 @@ DataChatkitUserMessageContent: TypeAlias = Annotated[
 
 
 class DataChatkitUserMessageInferenceOptionsToolChoice(BaseModel):
+    """Preferred tool to invoke. Defaults to null when ChatKit should auto-select."""
+
     id: str
     """Identifier of the requested tool."""
 
 
 class DataChatkitUserMessageInferenceOptions(BaseModel):
+    """Inference overrides applied to the message. Defaults to null when unset."""
+
     model: Optional[str] = None
     """Model name that generated the response.
 
@@ -88,6 +98,8 @@ class DataChatkitUserMessageInferenceOptions(BaseModel):
 
 
 class DataChatkitUserMessage(BaseModel):
+    """User-authored messages within a thread."""
+
     id: str
     """Identifier of the thread item."""
 
@@ -113,6 +125,8 @@ class DataChatkitUserMessage(BaseModel):
 
 
 class DataChatkitAssistantMessageContentAnnotationFileSource(BaseModel):
+    """File attachment referenced by the annotation."""
+
     filename: str
     """Filename referenced by the annotation."""
 
@@ -121,6 +135,8 @@ class DataChatkitAssistantMessageContentAnnotationFileSource(BaseModel):
 
 
 class DataChatkitAssistantMessageContentAnnotationFile(BaseModel):
+    """Annotation that references an uploaded file."""
+
     source: DataChatkitAssistantMessageContentAnnotationFileSource
     """File attachment referenced by the annotation."""
 
@@ -129,6 +145,8 @@ class DataChatkitAssistantMessageContentAnnotationFile(BaseModel):
 
 
 class DataChatkitAssistantMessageContentAnnotationURLSource(BaseModel):
+    """URL referenced by the annotation."""
+
     type: Literal["url"]
     """Type discriminator that is always `url`."""
 
@@ -137,6 +155,8 @@ class DataChatkitAssistantMessageContentAnnotationURLSource(BaseModel):
 
 
 class DataChatkitAssistantMessageContentAnnotationURL(BaseModel):
+    """Annotation that references a URL."""
+
     source: DataChatkitAssistantMessageContentAnnotationURLSource
     """URL referenced by the annotation."""
 
@@ -151,6 +171,8 @@ DataChatkitAssistantMessageContentAnnotation: TypeAlias = Annotated[
 
 
 class DataChatkitAssistantMessageContent(BaseModel):
+    """Assistant response text accompanied by optional annotations."""
+
     annotations: List[DataChatkitAssistantMessageContentAnnotation]
     """Ordered list of annotations attached to the response text."""
 
@@ -162,6 +184,8 @@ class DataChatkitAssistantMessageContent(BaseModel):
 
 
 class DataChatkitAssistantMessage(BaseModel):
+    """Assistant-authored message within a thread."""
+
     id: str
     """Identifier of the thread item."""
 
@@ -182,6 +206,8 @@ class DataChatkitAssistantMessage(BaseModel):
 
 
 class DataChatkitWidget(BaseModel):
+    """Thread item that renders a widget payload."""
+
     id: str
     """Identifier of the thread item."""
 
@@ -202,6 +228,8 @@ class DataChatkitWidget(BaseModel):
 
 
 class DataChatkitClientToolCall(BaseModel):
+    """Record of a client side tool invocation initiated by the assistant."""
+
     id: str
     """Identifier of the thread item."""
 
@@ -237,6 +265,8 @@ class DataChatkitClientToolCall(BaseModel):
 
 
 class DataChatkitTask(BaseModel):
+    """Task emitted by the workflow to show progress and status updates."""
+
     id: str
     """Identifier of the thread item."""
 
@@ -263,6 +293,8 @@ class DataChatkitTask(BaseModel):
 
 
 class DataChatkitTaskGroupTask(BaseModel):
+    """Task entry that appears within a TaskGroup."""
+
     heading: Optional[str] = None
     """Optional heading for the grouped task. Defaults to null when not provided."""
 
@@ -277,6 +309,8 @@ class DataChatkitTaskGroupTask(BaseModel):
 
 
 class DataChatkitTaskGroup(BaseModel):
+    """Collection of workflow tasks grouped together in the thread."""
+
     id: str
     """Identifier of the thread item."""
 
@@ -310,6 +344,8 @@ Data: TypeAlias = Annotated[
 
 
 class ThreadListItemsResponse(BaseModel):
+    """A paginated list of thread items rendered for the ChatKit API."""
+
     data: List[Data]
     """A list of items"""
 

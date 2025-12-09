@@ -52,6 +52,8 @@ class PerTestingCriteriaResult(BaseModel):
 
 
 class ResultCounts(BaseModel):
+    """Counters summarizing the outcomes of the evaluation run."""
+
     errored: int
     """Number of output items that resulted in an error."""
 
@@ -66,6 +68,8 @@ class ResultCounts(BaseModel):
 
 
 class EvalRun(BaseModel):
+    """A schema representing an evaluation run."""
+
     id: str
     """Unique identifier for the evaluation run."""
 

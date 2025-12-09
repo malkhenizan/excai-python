@@ -10,6 +10,12 @@ __all__ = ["InputMessage"]
 
 
 class InputMessage(BaseModel):
+    """
+    A message input to the model with a role indicating instruction following
+    hierarchy. Instructions given with the `developer` or `system` role take
+    precedence over instructions given with the `user` role.
+    """
+
     content: List[InputContent]
     """
     A list of one or many input items to the model, containing different content

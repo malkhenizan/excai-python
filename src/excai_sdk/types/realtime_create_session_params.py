@@ -126,6 +126,8 @@ class RealtimeCreateSessionParams(TypedDict, total=False):
 
 
 class ClientSecret(TypedDict, total=False):
+    """Ephemeral key returned by the API."""
+
     expires_at: Required[int]
     """Timestamp for when the token expires.
 
@@ -141,6 +143,14 @@ class ClientSecret(TypedDict, total=False):
 
 
 class InputAudioTranscription(TypedDict, total=False):
+    """
+    Configuration for input audio transcription, defaults to off and can be
+    set to `null` to turn off once on. Input audio transcription is not native
+    to the model, since the model consumes audio directly. Transcription runs
+    asynchronously and should be treated as rough guidance
+    rather than the representation understood by the model.
+    """
+
     model: str
     """The model to use for transcription."""
 
@@ -163,6 +173,8 @@ class Tool(TypedDict, total=False):
 
 
 class TracingTracingConfiguration(TypedDict, total=False):
+    """Granular configuration for tracing."""
+
     group_id: str
     """
     The group id to attach to this trace to enable filtering and grouping in the
@@ -186,6 +198,13 @@ Tracing: TypeAlias = Union[Literal["auto"], TracingTracingConfiguration]
 
 
 class TurnDetection(TypedDict, total=False):
+    """Configuration for turn detection.
+
+    Can be set to `null` to turn off. Server
+    VAD means that the model will detect the start and end of speech based on
+    audio volume and respond at the end of user speech.
+    """
+
     prefix_padding_ms: int
     """Amount of audio to include before the VAD detected speech (in milliseconds).
 

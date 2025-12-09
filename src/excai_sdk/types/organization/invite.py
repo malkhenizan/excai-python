@@ -17,6 +17,8 @@ class Project(BaseModel):
 
 
 class Invite(BaseModel):
+    """Represents an individual `invite` to the organization."""
+
     id: str
     """The identifier, which can be referenced in API endpoints"""
 

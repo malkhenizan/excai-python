@@ -11,6 +11,8 @@ __all__ = ["GraderScoreAssignmentModel", "SamplingParams"]
 
 
 class SamplingParams(BaseModel):
+    """The sampling parameters for the model."""
+
     max_completions_tokens: Optional[int] = None
     """The maximum number of tokens the grader model may generate in its response."""
 
@@ -37,6 +39,8 @@ class SamplingParams(BaseModel):
 
 
 class GraderScoreAssignmentModel(BaseModel):
+    """A ScoreModelGrader object that uses a model to assign a score to the input."""
+
     input: List[EvalItem]
     """The input text. This may include template strings."""
 

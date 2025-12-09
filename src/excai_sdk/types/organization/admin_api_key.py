@@ -28,6 +28,8 @@ class Owner(BaseModel):
 
 
 class AdminAPIKey(BaseModel):
+    """Represents an individual Admin API key in an org."""
+
     id: str
     """The identifier, which can be referenced in API endpoints"""
 

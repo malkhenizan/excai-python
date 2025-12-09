@@ -8,6 +8,8 @@ __all__ = ["InputAudio"]
 
 
 class InputAudio(BaseModel):
+    """An audio input to the model."""
+
     data: str
     """Base64-encoded audio data."""
 

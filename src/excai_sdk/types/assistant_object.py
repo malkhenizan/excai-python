@@ -25,6 +25,13 @@ __all__ = [
 
 
 class ToolFileSearchFileSearchRankingOptions(BaseModel):
+    """The ranking options for the file search.
+
+    If not specified, the file search tool will use the `auto` ranker and a score_threshold of 0.
+
+    See the [file search tool documentation](https://main.excai.ai/docs/assistants/tools/file-search#customizing-file-search-settings) for more information.
+    """
+
     score_threshold: float
     """The score threshold for the file search.
 
@@ -39,6 +46,8 @@ class ToolFileSearchFileSearchRankingOptions(BaseModel):
 
 
 class ToolFileSearchFileSearch(BaseModel):
+    """Overrides for the file search tool."""
+
     max_num_results: Optional[int] = None
     """The maximum number of results the file search tool should output.
 
@@ -101,12 +110,19 @@ class ToolResourcesFileSearch(BaseModel):
 
 
 class ToolResources(BaseModel):
+    """A set of resources that are used by the assistant's tools.
+
+    The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+    """
+
     code_interpreter: Optional[ToolResourcesCodeInterpreter] = None
 
     file_search: Optional[ToolResourcesFileSearch] = None
 
 
 class AssistantObject(BaseModel):
+    """Represents an `assistant` that can call the model and use tools."""
+
     id: str
     """The identifier, which can be referenced in API endpoints."""
 

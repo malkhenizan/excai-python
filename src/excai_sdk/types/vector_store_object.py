@@ -28,6 +28,10 @@ class FileCounts(BaseModel):
 
 
 class VectorStoreObject(BaseModel):
+    """
+    A vector store is a collection of processed files can be used by the `file_search` tool.
+    """
+
     id: str
     """The identifier, which can be referenced in API endpoints."""
 

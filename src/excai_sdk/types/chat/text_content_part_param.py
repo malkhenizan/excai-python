@@ -8,6 +8,8 @@ __all__ = ["TextContentPartParam"]
 
 
 class TextContentPartParam(TypedDict, total=False):
+    """Learn about [text inputs](https://main.excai.ai/docs/guides/text-generation)."""
+
     text: Required[str]
     """The text content."""
 

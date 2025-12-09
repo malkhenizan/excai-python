@@ -40,12 +40,16 @@ __all__ = [
 
 
 class MessageContentText(BaseModel):
+    """A text content."""
+
     text: str
 
     type: Literal["text"]
 
 
 class MessageContentSummaryText(BaseModel):
+    """A summary text from the model."""
+
     text: str
     """A summary of the reasoning output from the model so far."""
 
@@ -54,6 +58,8 @@ class MessageContentSummaryText(BaseModel):
 
 
 class MessageContentComputerScreenshot(BaseModel):
+    """A screenshot of a computer."""
+
     file_id: Optional[str] = None
     """The identifier of an uploaded file that contains the screenshot."""
 
@@ -84,6 +90,8 @@ MessageContent: TypeAlias = Annotated[
 
 
 class Message(BaseModel):
+    """A message to or from the model."""
+
     id: str
     """The unique ID of the message."""
 

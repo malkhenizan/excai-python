@@ -9,6 +9,10 @@ __all__ = ["ListFineTuningCheckpointPermissionResponse", "Data"]
 
 
 class Data(BaseModel):
+    """
+    The `checkpoint.permission` object represents a permission for a fine-tuned model checkpoint.
+    """
+
     id: str
     """The permission identifier, which can be referenced in the API endpoints."""
 

@@ -10,6 +10,8 @@ __all__ = ["StaticChunkingStrategyRequestParam"]
 
 
 class StaticChunkingStrategyRequestParam(TypedDict, total=False):
+    """Customize your own chunking strategy by setting chunk size and chunk overlap."""
+
     static: Required[StaticChunkingStrategyParam]
 
     type: Required[Literal["static"]]

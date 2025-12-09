@@ -11,6 +11,10 @@ __all__ = ["FineTuningJob", "Error", "Hyperparameters", "Integration", "Integrat
 
 
 class Error(BaseModel):
+    """
+    For fine-tuning jobs that have `failed`, this will contain more information on the cause of the failure.
+    """
+
     code: str
     """A machine-readable error code."""
 
@@ -25,6 +29,11 @@ class Error(BaseModel):
 
 
 class Hyperparameters(BaseModel):
+    """The hyperparameters used for the fine-tuning job.
+
+    This value will only be returned when running `supervised` jobs.
+    """
+
     batch_size: Union[Literal["auto"], int, None] = None
     """Number of examples in each batch.
 
@@ -46,6 +55,13 @@ class Hyperparameters(BaseModel):
 
 
 class IntegrationWandb(BaseModel):
+    """The settings for your integration with Weights and Biases.
+
+    This payload specifies the project that
+    metrics will be sent to. Optionally, you can set an explicit display name for your run, add tags
+    to your run, and set a default entity (team, username, etc) to be associated with your run.
+    """
+
     project: str
     """The name of the project that the new run will be created under."""
 
@@ -85,6 +101,10 @@ class Integration(BaseModel):
 
 
 class FineTuningJob(BaseModel):
+    """
+    The `fine_tuning.job` object represents a fine-tuning job that has been created through the API.
+    """
+
     id: str
     """The object identifier, which can be referenced in the API endpoints."""
 

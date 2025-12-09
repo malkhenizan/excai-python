@@ -23,6 +23,8 @@ __all__ = [
 
 
 class DpoHyperparameters(BaseModel):
+    """The hyperparameters used for the DPO fine-tuning job."""
+
     batch_size: Union[Literal["auto"], int, None] = None
     """Number of examples in each batch.
 
@@ -51,6 +53,8 @@ class DpoHyperparameters(BaseModel):
 
 
 class Dpo(BaseModel):
+    """Configuration for the DPO fine-tuning method."""
+
     hyperparameters: Optional[DpoHyperparameters] = None
     """The hyperparameters used for the DPO fine-tuning job."""
 
@@ -61,6 +65,8 @@ ReinforcementGrader: TypeAlias = Union[
 
 
 class ReinforcementHyperparameters(BaseModel):
+    """The hyperparameters used for the reinforcement fine-tuning job."""
+
     batch_size: Union[Literal["auto"], int, None] = None
     """Number of examples in each batch.
 
@@ -96,6 +102,8 @@ class ReinforcementHyperparameters(BaseModel):
 
 
 class Reinforcement(BaseModel):
+    """Configuration for the reinforcement fine-tuning method."""
+
     grader: ReinforcementGrader
     """The grader used for the fine-tuning job."""
 
@@ -104,6 +112,8 @@ class Reinforcement(BaseModel):
 
 
 class SupervisedHyperparameters(BaseModel):
+    """The hyperparameters used for the fine-tuning job."""
+
     batch_size: Union[Literal["auto"], int, None] = None
     """Number of examples in each batch.
 
@@ -125,11 +135,15 @@ class SupervisedHyperparameters(BaseModel):
 
 
 class Supervised(BaseModel):
+    """Configuration for the supervised fine-tuning method."""
+
     hyperparameters: Optional[SupervisedHyperparameters] = None
     """The hyperparameters used for the fine-tuning job."""
 
 
 class FineTuneMethod(BaseModel):
+    """The method used for fine-tuning."""
+
     type: Literal["supervised", "dpo", "reinforcement"]
     """The type of method. Is either `supervised`, `dpo`, or `reinforcement`."""
 

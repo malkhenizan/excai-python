@@ -9,6 +9,8 @@ __all__ = ["McpListToolsParam", "Tool"]
 
 
 class Tool(TypedDict, total=False):
+    """A tool available on an MCP server."""
+
     input_schema: Required[object]
     """The JSON schema describing the tool's input."""
 
@@ -23,6 +25,8 @@ class Tool(TypedDict, total=False):
 
 
 class McpListToolsParam(TypedDict, total=False):
+    """A list of tools available on an MCP server."""
+
     id: Required[str]
     """The unique ID of the list."""
 

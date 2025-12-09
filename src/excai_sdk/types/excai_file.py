@@ -9,6 +9,8 @@ __all__ = ["ExcaiFile"]
 
 
 class ExcaiFile(BaseModel):
+    """The `File` object represents a document that has been uploaded to EXCai."""
+
     id: str
     """The file identifier, which can be referenced in the API endpoints."""
 

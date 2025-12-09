@@ -9,6 +9,8 @@ __all__ = ["ImageGenToolCallParam"]
 
 
 class ImageGenToolCallParam(TypedDict, total=False):
+    """An image generation request made by the model."""
+
     id: Required[str]
     """The unique ID of the image generation call."""
 

@@ -42,11 +42,18 @@ class SessionCreateParams(TypedDict, total=False):
 
 
 class WorkflowTracing(TypedDict, total=False):
+    """Optional tracing overrides for the workflow invocation.
+
+    When omitted, tracing is enabled by default.
+    """
+
     enabled: bool
     """Whether tracing is enabled during the session. Defaults to true."""
 
 
 class Workflow(TypedDict, total=False):
+    """Workflow that powers the session."""
+
     id: Required[str]
     """Identifier for the workflow invoked by the session."""
 
@@ -68,11 +75,21 @@ class Workflow(TypedDict, total=False):
 
 
 class ChatkitConfigurationAutomaticThreadTitling(TypedDict, total=False):
+    """Configuration for automatic thread titling.
+
+    When omitted, automatic thread titling is enabled by default.
+    """
+
     enabled: bool
     """Enable automatic thread title generation. Defaults to true."""
 
 
 class ChatkitConfigurationFileUpload(TypedDict, total=False):
+    """Configuration for upload enablement and limits.
+
+    When omitted, uploads are disabled by default (max_files 10, max_file_size 512 MB).
+    """
+
     enabled: bool
     """Enable uploads for this session. Defaults to false."""
 
@@ -87,6 +104,11 @@ class ChatkitConfigurationFileUpload(TypedDict, total=False):
 
 
 class ChatkitConfigurationHistory(TypedDict, total=False):
+    """Configuration for chat history retention.
+
+    When omitted, history is enabled by default with no limit on recent_threads (null).
+    """
+
     enabled: bool
     """Enables chat users to access previous ChatKit threads. Defaults to true."""
 
@@ -98,6 +120,8 @@ class ChatkitConfigurationHistory(TypedDict, total=False):
 
 
 class ChatkitConfiguration(TypedDict, total=False):
+    """Optional overrides for ChatKit runtime configuration features"""
+
     automatic_thread_titling: ChatkitConfigurationAutomaticThreadTitling
     """Configuration for automatic thread titling.
 
@@ -120,6 +144,11 @@ class ChatkitConfiguration(TypedDict, total=False):
 
 
 class ExpiresAfter(TypedDict, total=False):
+    """Optional override for session expiration timing in seconds from creation.
+
+    Defaults to 10 minutes.
+    """
+
     anchor: Required[Literal["created_at"]]
     """Base timestamp used to calculate expiration. Currently fixed to `created_at`."""
 
@@ -128,5 +157,7 @@ class ExpiresAfter(TypedDict, total=False):
 
 
 class RateLimits(TypedDict, total=False):
+    """Optional override for per-minute request limits. When omitted, defaults to 10."""
+
     max_requests_per_1_minute: int
     """Maximum number of requests allowed per minute for the session. Defaults to 10."""

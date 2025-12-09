@@ -8,6 +8,8 @@ __all__ = ["ProjectServiceAccount"]
 
 
 class ProjectServiceAccount(BaseModel):
+    """Represents an individual service account in a project."""
+
     id: str
     """The identifier, which can be referenced in API endpoints"""
 

@@ -10,6 +10,8 @@ __all__ = ["CompletionListResponse"]
 
 
 class CompletionListResponse(BaseModel):
+    """An object representing a list of Chat Completions."""
+
     data: List[CreateResponse]
     """An array of chat completion objects."""
 

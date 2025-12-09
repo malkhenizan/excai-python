@@ -10,6 +10,12 @@ __all__ = ["RealtimeCreateTranscriptionSessionResponse", "ClientSecret", "TurnDe
 
 
 class ClientSecret(BaseModel):
+    """Ephemeral key returned by the API.
+
+    Only present when the session is
+    created on the server via REST API.
+    """
+
     expires_at: int
     """Timestamp for when the token expires.
 
@@ -25,6 +31,13 @@ class ClientSecret(BaseModel):
 
 
 class TurnDetection(BaseModel):
+    """Configuration for turn detection.
+
+    Can be set to `null` to turn off. Server
+    VAD means that the model will detect the start and end of speech based on
+    audio volume and respond at the end of user speech.
+    """
+
     prefix_padding_ms: Optional[int] = None
     """Amount of audio to include before the VAD detected speech (in milliseconds).
 
@@ -50,6 +63,13 @@ class TurnDetection(BaseModel):
 
 
 class RealtimeCreateTranscriptionSessionResponse(BaseModel):
+    """A new Realtime transcription session configuration.
+
+    When a session is created on the server via REST API, the session object
+    also contains an ephemeral key. Default TTL for keys is 10 minutes. This
+    property is not present when a session is updated via the WebSocket API.
+    """
+
     client_secret: ClientSecret
     """Ephemeral key returned by the API.
 

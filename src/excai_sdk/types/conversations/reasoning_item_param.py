@@ -11,6 +11,8 @@ __all__ = ["ReasoningItemParam", "Summary"]
 
 
 class Summary(TypedDict, total=False):
+    """A summary text from the model."""
+
     text: Required[str]
     """A summary of the reasoning output from the model so far."""
 
@@ -19,6 +21,13 @@ class Summary(TypedDict, total=False):
 
 
 class ReasoningItemParam(TypedDict, total=False):
+    """
+    A description of the chain of thought used by a reasoning model while generating
+    a response. Be sure to include these items in your `input` to the Responses API
+    for subsequent turns of a conversation if you are manually
+    [managing context](https://main.excai.ai/docs/guides/conversation-state).
+    """
+
     id: Required[str]
     """The unique identifier of the reasoning content."""
 

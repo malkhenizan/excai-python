@@ -22,6 +22,8 @@ class Owner(BaseModel):
 
 
 class ProjectAPIKey(BaseModel):
+    """Represents an individual API key in a project."""
+
     id: str
     """The identifier, which can be referenced in API endpoints"""
 

@@ -18,11 +18,15 @@ __all__ = [
 
 
 class ChatkitConfigurationAutomaticThreadTitling(BaseModel):
+    """Automatic thread titling preferences."""
+
     enabled: bool
     """Whether automatic thread titling is enabled."""
 
 
 class ChatkitConfigurationFileUpload(BaseModel):
+    """Upload settings for the session."""
+
     enabled: bool
     """Indicates if uploads are enabled for the session."""
 
@@ -34,6 +38,8 @@ class ChatkitConfigurationFileUpload(BaseModel):
 
 
 class ChatkitConfigurationHistory(BaseModel):
+    """History retention configuration."""
+
     enabled: bool
     """Indicates if chat history is persisted for the session."""
 
@@ -45,6 +51,8 @@ class ChatkitConfigurationHistory(BaseModel):
 
 
 class ChatkitConfiguration(BaseModel):
+    """Resolved ChatKit feature configuration for the session."""
+
     automatic_thread_titling: ChatkitConfigurationAutomaticThreadTitling
     """Automatic thread titling preferences."""
 
@@ -56,16 +64,22 @@ class ChatkitConfiguration(BaseModel):
 
 
 class RateLimits(BaseModel):
+    """Resolved rate limit values."""
+
     max_requests_per_1_minute: int
     """Maximum allowed requests per one-minute window."""
 
 
 class WorkflowTracing(BaseModel):
+    """Tracing settings applied to the workflow."""
+
     enabled: bool
     """Indicates whether tracing is enabled."""
 
 
 class Workflow(BaseModel):
+    """Workflow metadata for the session."""
+
     id: str
     """Identifier of the workflow backing the session."""
 
@@ -86,6 +100,8 @@ class Workflow(BaseModel):
 
 
 class ChatSession(BaseModel):
+    """Represents a ChatKit session and its resolved configuration."""
+
     id: str
     """Identifier for the ChatKit session."""
 

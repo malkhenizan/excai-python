@@ -8,6 +8,8 @@ __all__ = ["ReasoningTextContentParam"]
 
 
 class ReasoningTextContentParam(TypedDict, total=False):
+    """Reasoning text from the model."""
+
     text: Required[str]
     """The reasoning text from the model."""
 

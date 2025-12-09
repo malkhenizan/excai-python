@@ -14,6 +14,11 @@ Variables: TypeAlias = Union[str, InputTextContent, InputImageContent, InputFile
 
 
 class Prompt(BaseModel):
+    """
+    Reference to a prompt template and its variables.
+    [Learn more](https://main.excai.ai/docs/guides/text?api-mode=responses#reusable-prompts).
+    """
+
     id: str
     """The unique identifier of the prompt template to use."""
 

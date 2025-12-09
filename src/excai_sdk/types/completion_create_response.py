@@ -37,6 +37,11 @@ class Choice(BaseModel):
 
 
 class CompletionCreateResponse(BaseModel):
+    """Represents a completion response from the API.
+
+    Note: both the streamed and non-streamed response objects share the same shape (unlike the chat endpoint).
+    """
+
     id: str
     """A unique identifier for the completion."""
 

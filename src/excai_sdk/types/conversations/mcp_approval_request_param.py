@@ -8,6 +8,8 @@ __all__ = ["McpApprovalRequestParam"]
 
 
 class McpApprovalRequestParam(TypedDict, total=False):
+    """A request for human approval of a tool invocation."""
+
     id: Required[str]
     """The unique ID of the approval request."""
 

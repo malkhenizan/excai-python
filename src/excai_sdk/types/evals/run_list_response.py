@@ -10,6 +10,8 @@ __all__ = ["RunListResponse"]
 
 
 class RunListResponse(BaseModel):
+    """An object representing a list of runs for an evaluation."""
+
     data: List[EvalRun]
     """An array of eval run objects."""
 

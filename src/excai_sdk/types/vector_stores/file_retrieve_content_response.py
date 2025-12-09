@@ -17,6 +17,8 @@ class Data(BaseModel):
 
 
 class FileRetrieveContentResponse(BaseModel):
+    """Represents the parsed content of a vector store file."""
+
     data: List[Data]
     """Parsed content of the file."""
 
