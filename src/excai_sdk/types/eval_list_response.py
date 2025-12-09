@@ -10,6 +10,8 @@ __all__ = ["EvalListResponse"]
 
 
 class EvalListResponse(BaseModel):
+    """An object representing a list of evals."""
+
     data: List[Eval]
     """An array of eval objects."""
 

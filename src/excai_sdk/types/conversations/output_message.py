@@ -14,6 +14,8 @@ Content: TypeAlias = Annotated[Union[OutputTextContent, RefusalContent], Propert
 
 
 class OutputMessage(BaseModel):
+    """An output message from the model."""
+
     id: str
     """The unique ID of the output message."""
 

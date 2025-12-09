@@ -12,6 +12,8 @@ __all__ = ["GraderScoreAssignmentModelParam", "SamplingParams"]
 
 
 class SamplingParams(TypedDict, total=False):
+    """The sampling parameters for the model."""
+
     max_completions_tokens: Optional[int]
     """The maximum number of tokens the grader model may generate in its response."""
 
@@ -38,6 +40,8 @@ class SamplingParams(TypedDict, total=False):
 
 
 class GraderScoreAssignmentModelParam(TypedDict, total=False):
+    """A ScoreModelGrader object that uses a model to assign a score to the input."""
+
     input: Required[Iterable[EvalItemParam]]
     """The input text. This may include template strings."""
 

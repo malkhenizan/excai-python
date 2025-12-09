@@ -11,6 +11,8 @@ __all__ = ["LocalShellToolCallParam", "Action"]
 
 
 class Action(TypedDict, total=False):
+    """Execute a shell command on the server."""
+
     command: Required[SequenceNotStr[str]]
     """The command to run."""
 
@@ -31,6 +33,8 @@ class Action(TypedDict, total=False):
 
 
 class LocalShellToolCallParam(TypedDict, total=False):
+    """A tool call to run a command on the local shell."""
+
     id: Required[str]
     """The unique ID of the local shell call."""
 

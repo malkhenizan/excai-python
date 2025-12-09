@@ -52,6 +52,13 @@ class RealtimeCreateTranscriptionSessionParams(TypedDict, total=False):
 
 
 class InputAudioNoiseReduction(TypedDict, total=False):
+    """Configuration for input audio noise reduction.
+
+    This can be set to `null` to turn off.
+    Noise reduction filters audio added to the input audio buffer before it is sent to VAD and the model.
+    Filtering the audio can improve VAD and turn detection accuracy (reducing false positives) and model performance by improving perception of the input audio.
+    """
+
     type: NoiseReductionType
     """Type of noise reduction.
 
@@ -61,6 +68,11 @@ class InputAudioNoiseReduction(TypedDict, total=False):
 
 
 class TurnDetection(TypedDict, total=False):
+    """Configuration for turn detection.
+
+    Can be set to `null` to turn off. Server VAD means that the model will detect the start and end of speech based on audio volume and respond at the end of user speech.
+    """
+
     prefix_padding_ms: int
     """Amount of audio to include before the VAD detected speech (in milliseconds).
 

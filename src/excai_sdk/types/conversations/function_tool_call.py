@@ -9,6 +9,12 @@ __all__ = ["FunctionToolCall"]
 
 
 class FunctionToolCall(BaseModel):
+    """A tool call to run a function.
+
+    See the
+    [function calling guide](https://main.excai.ai/docs/guides/function-calling) for more information.
+    """
+
     arguments: str
     """A JSON string of the arguments to pass to the function."""
 

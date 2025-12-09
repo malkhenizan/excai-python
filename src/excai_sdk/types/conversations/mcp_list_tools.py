@@ -9,6 +9,8 @@ __all__ = ["McpListTools", "Tool"]
 
 
 class Tool(BaseModel):
+    """A tool available on an MCP server."""
+
     input_schema: object
     """The JSON schema describing the tool's input."""
 
@@ -23,6 +25,8 @@ class Tool(BaseModel):
 
 
 class McpListTools(BaseModel):
+    """A list of tools available on an MCP server."""
+
     id: str
     """The unique ID of the list."""
 

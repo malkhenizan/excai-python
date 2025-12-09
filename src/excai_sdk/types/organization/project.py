@@ -9,6 +9,8 @@ __all__ = ["Project"]
 
 
 class Project(BaseModel):
+    """Represents an individual project."""
+
     id: str
     """The identifier, which can be referenced in API endpoints"""
 

@@ -12,6 +12,11 @@ __all__ = ["VectorStoreFileObject", "LastError", "ChunkingStrategy", "ChunkingSt
 
 
 class LastError(BaseModel):
+    """The last error associated with this vector store file.
+
+    Will be `null` if there are no errors.
+    """
+
     code: Literal["server_error", "unsupported_file", "invalid_file"]
     """One of `server_error`, `unsupported_file`, or `invalid_file`."""
 
@@ -27,6 +32,11 @@ class ChunkingStrategyStatic(BaseModel):
 
 
 class ChunkingStrategyOther(BaseModel):
+    """This is returned when the chunking strategy is unknown.
+
+    Typically, this is because the file was indexed before the `chunking_strategy` concept was introduced in the API.
+    """
+
     type: Literal["other"]
     """Always `other`."""
 
@@ -37,6 +47,8 @@ ChunkingStrategy: TypeAlias = Annotated[
 
 
 class VectorStoreFileObject(BaseModel):
+    """A list of files attached to a vector store."""
+
     id: str
     """The identifier, which can be referenced in API endpoints."""
 

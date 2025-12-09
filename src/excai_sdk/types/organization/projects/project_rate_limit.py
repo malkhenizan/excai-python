@@ -9,6 +9,8 @@ __all__ = ["ProjectRateLimit"]
 
 
 class ProjectRateLimit(BaseModel):
+    """Represents a project rate limit config."""
+
     id: str
     """The identifier, which can be referenced in API endpoints."""
 

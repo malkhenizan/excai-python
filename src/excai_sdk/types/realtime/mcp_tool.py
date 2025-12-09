@@ -12,6 +12,13 @@ AllowedTools: TypeAlias = Union[List[str], McpToolFilter, None]
 
 
 class RequireApprovalMcpToolApprovalFilter(BaseModel):
+    """Specify which of the MCP server's tools require approval.
+
+    Can be
+    `always`, `never`, or a filter object associated with tools
+    that require approval.
+    """
+
     always: Optional[McpToolFilter] = None
     """A filter object to specify which tools are allowed."""
 
@@ -23,6 +30,11 @@ RequireApproval: TypeAlias = Union[RequireApprovalMcpToolApprovalFilter, Literal
 
 
 class McpTool(BaseModel):
+    """
+    Give the model access to additional tools via remote Model Context Protocol
+    (MCP) servers. [Learn more about MCP](https://main.excai.ai/docs/guides/tools-remote-mcp).
+    """
+
     server_label: str
     """A label for this MCP server, used to identify it in tool calls."""
 

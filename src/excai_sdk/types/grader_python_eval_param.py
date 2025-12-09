@@ -8,5 +8,7 @@ __all__ = ["GraderPythonEvalParam"]
 
 
 class GraderPythonEvalParam(GraderPythonScriptParam, total=False):
+    """A PythonGrader object that runs a python script on the input."""
+
     pass_threshold: float
     """The threshold for the score."""

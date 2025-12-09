@@ -8,6 +8,8 @@ __all__ = ["InputAudioParam"]
 
 
 class InputAudioParam(TypedDict, total=False):
+    """An audio input to the model."""
+
     data: Required[str]
     """Base64-encoded audio data."""
 

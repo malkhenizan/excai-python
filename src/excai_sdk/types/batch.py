@@ -39,6 +39,8 @@ class Errors(BaseModel):
 
 
 class RequestCounts(BaseModel):
+    """The request counts for different statuses within the batch."""
+
     completed: int
     """Number of requests that have been completed successfully."""
 
@@ -50,6 +52,8 @@ class RequestCounts(BaseModel):
 
 
 class UsageInputTokensDetails(BaseModel):
+    """A detailed breakdown of the input tokens."""
+
     cached_tokens: int
     """The number of tokens that were retrieved from the cache.
 
@@ -58,11 +62,19 @@ class UsageInputTokensDetails(BaseModel):
 
 
 class UsageOutputTokensDetails(BaseModel):
+    """A detailed breakdown of the output tokens."""
+
     reasoning_tokens: int
     """The number of reasoning tokens."""
 
 
 class Usage(BaseModel):
+    """
+    Represents token usage details including input tokens, output tokens, a
+    breakdown of output tokens, and the total tokens used. Only populated on
+    batches created after September 7, 2025.
+    """
+
     input_tokens: int
     """The number of input tokens."""
 

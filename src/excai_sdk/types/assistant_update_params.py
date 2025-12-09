@@ -148,12 +148,24 @@ class ToolResourcesFileSearch(TypedDict, total=False):
 
 
 class ToolResources(TypedDict, total=False):
+    """A set of resources that are used by the assistant's tools.
+
+    The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+    """
+
     code_interpreter: ToolResourcesCodeInterpreter
 
     file_search: ToolResourcesFileSearch
 
 
 class ToolFileSearchFileSearchRankingOptions(TypedDict, total=False):
+    """The ranking options for the file search.
+
+    If not specified, the file search tool will use the `auto` ranker and a score_threshold of 0.
+
+    See the [file search tool documentation](https://main.excai.ai/docs/assistants/tools/file-search#customizing-file-search-settings) for more information.
+    """
+
     score_threshold: Required[float]
     """The score threshold for the file search.
 
@@ -168,6 +180,8 @@ class ToolFileSearchFileSearchRankingOptions(TypedDict, total=False):
 
 
 class ToolFileSearchFileSearch(TypedDict, total=False):
+    """Overrides for the file search tool."""
+
     max_num_results: int
     """The maximum number of results the file search tool should output.
 

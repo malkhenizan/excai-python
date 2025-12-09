@@ -28,6 +28,8 @@ __all__ = [
 
 
 class SourceResponses(TypedDict, total=False):
+    """A EvalResponsesSource object describing a run data source configuration."""
+
     type: Required[Literal["responses"]]
     """The type of run data source. Always `responses`."""
 
@@ -123,6 +125,14 @@ InputMessages: TypeAlias = Union[InputMessagesTemplate, InputMessagesItemReferen
 
 
 class SamplingParamsText(TypedDict, total=False):
+    """Configuration options for a text response from the model.
+
+    Can be plain
+    text or structured JSON data. Learn more:
+    - [Text inputs and outputs](https://main.excai.ai/docs/guides/text)
+    - [Structured Outputs](https://main.excai.ai/docs/guides/structured-outputs)
+    """
+
     format: TextResponseFormatConfigurationParam
     """An object specifying the format that the model must output.
 
@@ -193,6 +203,8 @@ class SamplingParams(TypedDict, total=False):
 
 
 class ResponsesRunDataSourceParam(TypedDict, total=False):
+    """A ResponsesRunDataSource object describing a model sampling configuration."""
+
     source: Required[Source]
     """Determines what populates the `item` namespace in this run's data source."""
 

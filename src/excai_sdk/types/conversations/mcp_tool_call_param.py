@@ -9,6 +9,8 @@ __all__ = ["McpToolCallParam"]
 
 
 class McpToolCallParam(TypedDict, total=False):
+    """An invocation of a tool on an MCP server."""
+
     id: Required[str]
     """The unique ID of the tool call."""
 

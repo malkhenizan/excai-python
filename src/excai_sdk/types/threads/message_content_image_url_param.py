@@ -23,6 +23,8 @@ class ImageURL(TypedDict, total=False):
 
 
 class MessageContentImageURLParam(TypedDict, total=False):
+    """References an image URL in the content of a message."""
+
     image_url: Required[ImageURL]
 
     type: Required[Literal["image_url"]]

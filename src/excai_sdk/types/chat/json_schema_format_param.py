@@ -9,6 +9,8 @@ __all__ = ["JsonSchemaFormatParam", "JsonSchema"]
 
 
 class JsonSchema(TypedDict, total=False):
+    """Structured Outputs configuration options, including a JSON Schema."""
+
     name: Required[str]
     """The name of the response format.
 
@@ -39,6 +41,12 @@ class JsonSchema(TypedDict, total=False):
 
 
 class JsonSchemaFormatParam(TypedDict, total=False):
+    """JSON Schema response format.
+
+    Used to generate structured JSON responses.
+    Learn more about [Structured Outputs](https://main.excai.ai/docs/guides/structured-outputs).
+    """
+
     json_schema: Required[JsonSchema]
     """Structured Outputs configuration options, including a JSON Schema."""
 

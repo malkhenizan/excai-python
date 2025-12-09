@@ -24,6 +24,8 @@ __all__ = [
 
 
 class ActionClick(BaseModel):
+    """A click action."""
+
     button: Literal["left", "right", "wheel", "back", "forward"]
     """Indicates which mouse button was pressed during the click.
 
@@ -44,6 +46,8 @@ class ActionClick(BaseModel):
 
 
 class ActionDoubleClick(BaseModel):
+    """A double click action."""
+
     type: Literal["double_click"]
     """Specifies the event type.
 
@@ -58,6 +62,8 @@ class ActionDoubleClick(BaseModel):
 
 
 class ActionDragPath(BaseModel):
+    """A series of x/y coordinate pairs in the drag path."""
+
     x: int
     """The x-coordinate."""
 
@@ -66,6 +72,8 @@ class ActionDragPath(BaseModel):
 
 
 class ActionDrag(BaseModel):
+    """A drag action."""
+
     path: List[ActionDragPath]
     """An array of coordinates representing the path of the drag action.
 
@@ -87,6 +95,8 @@ class ActionDrag(BaseModel):
 
 
 class ActionKeypress(BaseModel):
+    """A collection of keypresses the model would like to perform."""
+
     keys: List[str]
     """The combination of keys the model is requesting to be pressed.
 
@@ -101,6 +111,8 @@ class ActionKeypress(BaseModel):
 
 
 class ActionMove(BaseModel):
+    """A mouse move action."""
+
     type: Literal["move"]
     """Specifies the event type.
 
@@ -115,6 +127,8 @@ class ActionMove(BaseModel):
 
 
 class ActionScreenshot(BaseModel):
+    """A screenshot action."""
+
     type: Literal["screenshot"]
     """Specifies the event type.
 
@@ -123,6 +137,8 @@ class ActionScreenshot(BaseModel):
 
 
 class ActionScroll(BaseModel):
+    """A scroll action."""
+
     scroll_x: int
     """The horizontal scroll distance."""
 
@@ -143,6 +159,8 @@ class ActionScroll(BaseModel):
 
 
 class ActionType(BaseModel):
+    """An action to type in text."""
+
     text: str
     """The text to type."""
 
@@ -154,6 +172,8 @@ class ActionType(BaseModel):
 
 
 class ActionWait(BaseModel):
+    """A wait action."""
+
     type: Literal["wait"]
     """Specifies the event type.
 
@@ -178,6 +198,12 @@ Action: TypeAlias = Annotated[
 
 
 class ComputerToolCall(BaseModel):
+    """A tool call to a computer use tool.
+
+    See the
+    [computer use guide](https://main.excai.ai/docs/guides/tools-computer-use) for more information.
+    """
+
     id: str
     """The unique ID of the computer call."""
 

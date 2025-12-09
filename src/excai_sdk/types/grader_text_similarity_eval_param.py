@@ -10,5 +10,7 @@ __all__ = ["GraderTextSimilarityEvalParam"]
 
 
 class GraderTextSimilarityEvalParam(GraderTextSimilarityFtParam, total=False):
+    """A TextSimilarityGrader object which grades text based on similarity metrics."""
+
     pass_threshold: Required[float]
     """The threshold for the score."""

@@ -9,6 +9,8 @@ __all__ = ["LocalShellToolCall", "Action"]
 
 
 class Action(BaseModel):
+    """Execute a shell command on the server."""
+
     command: List[str]
     """The command to run."""
 
@@ -29,6 +31,8 @@ class Action(BaseModel):
 
 
 class LocalShellToolCall(BaseModel):
+    """A tool call to run a command on the local shell."""
+
     id: str
     """The unique ID of the local shell call."""
 

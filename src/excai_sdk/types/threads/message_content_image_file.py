@@ -24,6 +24,10 @@ class ImageFile(BaseModel):
 
 
 class MessageContentImageFile(BaseModel):
+    """
+    References an image [File](https://main.excai.ai/docs/api-reference/files) in the content of a message.
+    """
+
     image_file: ImageFile
 
     type: Literal["image_file"]

@@ -14,6 +14,8 @@ Content: TypeAlias = Union[OutputTextContentParam, RefusalContentParam]
 
 
 class OutputMessageParam(TypedDict, total=False):
+    """An output message from the model."""
+
     id: Required[str]
     """The unique ID of the output message."""
 

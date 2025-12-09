@@ -9,6 +9,11 @@ __all__ = ["Truncation"]
 
 
 class Truncation(BaseModel):
+    """Controls for how a thread will be truncated prior to the run.
+
+    Use this to control the initial context window of the run.
+    """
+
     type: Literal["auto", "last_messages"]
     """The truncation strategy to use for the thread.
 

@@ -9,6 +9,8 @@ __all__ = ["EmbeddingCreateResponse", "Data", "Usage"]
 
 
 class Data(BaseModel):
+    """Represents an embedding vector returned by embedding endpoint."""
+
     embedding: List[float]
     """The embedding vector, which is a list of floats.
 
@@ -24,6 +26,8 @@ class Data(BaseModel):
 
 
 class Usage(BaseModel):
+    """The usage information for the request."""
+
     prompt_tokens: int
     """The number of tokens used by the prompt."""
 

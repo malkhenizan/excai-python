@@ -10,6 +10,8 @@ __all__ = ["ThreadListResponse"]
 
 
 class ThreadListResponse(BaseModel):
+    """A paginated list of ChatKit threads."""
+
     data: List[ChatkitThread]
     """A list of items"""
 

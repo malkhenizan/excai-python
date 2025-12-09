@@ -8,6 +8,8 @@ __all__ = ["InputTextContentParam"]
 
 
 class InputTextContentParam(TypedDict, total=False):
+    """A text input to the model."""
+
     text: Required[str]
     """The text input to the model."""
 

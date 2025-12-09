@@ -24,6 +24,8 @@ __all__ = [
 
 
 class AudioInputNoiseReduction(BaseModel):
+    """Configuration for input audio noise reduction."""
+
     type: Optional[NoiseReductionType] = None
     """Type of noise reduction.
 
@@ -33,6 +35,8 @@ class AudioInputNoiseReduction(BaseModel):
 
 
 class AudioInputTurnDetection(BaseModel):
+    """Configuration for turn detection."""
+
     prefix_padding_ms: Optional[int] = None
 
     silence_duration_ms: Optional[int] = None
@@ -67,12 +71,16 @@ class AudioOutput(BaseModel):
 
 
 class Audio(BaseModel):
+    """Configuration for input and output audio for the session."""
+
     input: Optional[AudioInput] = None
 
     output: Optional[AudioOutput] = None
 
 
 class TracingTracingConfiguration(BaseModel):
+    """Granular configuration for tracing."""
+
     group_id: Optional[str] = None
     """
     The group id to attach to this trace to enable filtering and grouping in the
@@ -96,6 +104,13 @@ Tracing: TypeAlias = Union[Literal["auto"], TracingTracingConfiguration]
 
 
 class TurnDetection(BaseModel):
+    """Configuration for turn detection.
+
+    Can be set to `null` to turn off. Server
+    VAD means that the model will detect the start and end of speech based on
+    audio volume and respond at the end of user speech.
+    """
+
     prefix_padding_ms: Optional[int] = None
     """Amount of audio to include before the VAD detected speech (in milliseconds).
 
@@ -121,6 +136,8 @@ class TurnDetection(BaseModel):
 
 
 class RealtimeCreateSessionResponse(BaseModel):
+    """A Realtime session configuration object."""
+
     id: Optional[str] = None
     """Unique identifier for the session that looks like `sess_1234567890abcdef`."""
 

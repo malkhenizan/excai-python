@@ -25,6 +25,12 @@ __all__ = [
 
 
 class Reasoning(TypedDict, total=False):
+    """**gpt-5 and o-series models only**
+
+    Configuration options for
+    [reasoning models](https://main.excai.ai/docs/guides/reasoning).
+    """
+
     effort: Optional[ReasoningEffort]
     """
     Constrains effort on reasoning for
@@ -54,6 +60,14 @@ class Reasoning(TypedDict, total=False):
 
 
 class Text(TypedDict, total=False):
+    """Configuration options for a text response from the model.
+
+    Can be plain
+    text or structured JSON data. Learn more:
+    - [Text inputs and outputs](https://main.excai.ai/docs/guides/text)
+    - [Structured Outputs](https://main.excai.ai/docs/guides/structured-outputs)
+    """
+
     format: TextResponseFormatConfigurationParam
     """An object specifying the format that the model must output.
 
@@ -80,6 +94,8 @@ class Text(TypedDict, total=False):
 
 
 class ToolChoiceAllowedTools(TypedDict, total=False):
+    """Constrains the tools available to the model to a pre-defined set."""
+
     mode: Required[Literal["auto", "required"]]
     """Constrains the tools available to the model to a pre-defined set.
 
@@ -108,6 +124,11 @@ class ToolChoiceAllowedTools(TypedDict, total=False):
 
 
 class ToolChoiceToolChoiceTypes(TypedDict, total=False):
+    """
+    Indicates that the model should use a built-in tool to generate a response.
+    [Learn more about built-in tools](https://main.excai.ai/docs/guides/tools).
+    """
+
     type: Required[
         Literal[
             "file_search",
@@ -133,6 +154,8 @@ class ToolChoiceToolChoiceTypes(TypedDict, total=False):
 
 
 class ToolChoiceCustom(TypedDict, total=False):
+    """Use this option to force the model to call a specific custom tool."""
+
     name: Required[str]
     """The name of the custom tool to call."""
 

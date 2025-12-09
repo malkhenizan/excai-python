@@ -32,6 +32,8 @@ class CreateTranscriptionResponseJsonLogprob(BaseModel):
 
 
 class CreateTranscriptionResponseJsonUsageTokensInputTokenDetails(BaseModel):
+    """Details about the input tokens billed for this request."""
+
     audio_tokens: Optional[int] = None
     """Number of audio tokens billed for this request."""
 
@@ -40,6 +42,8 @@ class CreateTranscriptionResponseJsonUsageTokensInputTokenDetails(BaseModel):
 
 
 class CreateTranscriptionResponseJsonUsageTokens(BaseModel):
+    """Usage statistics for models billed by token usage."""
+
     input_tokens: int
     """Number of input tokens billed for this request."""
 
@@ -62,6 +66,10 @@ CreateTranscriptionResponseJsonUsage: TypeAlias = Annotated[
 
 
 class CreateTranscriptionResponseJson(BaseModel):
+    """
+    Represents a transcription response returned by model, based on the provided input.
+    """
+
     text: str
     """The transcribed text."""
 
@@ -88,6 +96,10 @@ class CreateTranscriptionResponseVerboseJsonWord(BaseModel):
 
 
 class CreateTranscriptionResponseVerboseJson(BaseModel):
+    """
+    Represents a verbose json transcription response returned by model, based on the provided input.
+    """
+
     duration: float
     """The duration of the input audio."""
 

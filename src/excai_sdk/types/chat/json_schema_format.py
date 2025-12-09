@@ -11,6 +11,8 @@ __all__ = ["JsonSchemaFormat", "JsonSchema"]
 
 
 class JsonSchema(BaseModel):
+    """Structured Outputs configuration options, including a JSON Schema."""
+
     name: str
     """The name of the response format.
 
@@ -41,6 +43,12 @@ class JsonSchema(BaseModel):
 
 
 class JsonSchemaFormat(BaseModel):
+    """JSON Schema response format.
+
+    Used to generate structured JSON responses.
+    Learn more about [Structured Outputs](https://main.excai.ai/docs/guides/structured-outputs).
+    """
+
     json_schema: JsonSchema
     """Structured Outputs configuration options, including a JSON Schema."""
 

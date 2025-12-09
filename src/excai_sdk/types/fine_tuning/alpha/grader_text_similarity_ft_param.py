@@ -8,6 +8,8 @@ __all__ = ["GraderTextSimilarityFtParam"]
 
 
 class GraderTextSimilarityFtParam(TypedDict, total=False):
+    """A TextSimilarityGrader object which grades text based on similarity metrics."""
+
     evaluation_metric: Required[
         Literal[
             "cosine",

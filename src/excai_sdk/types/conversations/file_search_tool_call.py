@@ -33,6 +33,12 @@ class Result(BaseModel):
 
 
 class FileSearchToolCall(BaseModel):
+    """The results of a file search tool call.
+
+    See the
+    [file search guide](https://main.excai.ai/docs/guides/tools-file-search) for more information.
+    """
+
     id: str
     """The unique ID of the file search tool call."""
 

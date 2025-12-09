@@ -20,6 +20,8 @@ class CertificateDetails(BaseModel):
 
 
 class Certificate(BaseModel):
+    """Represents an individual `certificate` uploaded to the organization."""
+
     id: str
     """The identifier, which can be referenced in API endpoints"""
 

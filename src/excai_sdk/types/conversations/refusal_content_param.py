@@ -8,6 +8,8 @@ __all__ = ["RefusalContentParam"]
 
 
 class RefusalContentParam(TypedDict, total=False):
+    """A refusal from the model."""
+
     refusal: Required[str]
     """The refusal explanation from the model."""
 

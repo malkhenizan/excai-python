@@ -10,6 +10,8 @@ __all__ = ["OutputItemListResponse"]
 
 
 class OutputItemListResponse(BaseModel):
+    """An object representing a list of output items for an evaluation run."""
+
     data: List[EvalRunOutputItem]
     """An array of eval run output item objects."""
 

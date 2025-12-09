@@ -8,6 +8,8 @@ __all__ = ["McpToolFilter"]
 
 
 class McpToolFilter(BaseModel):
+    """A filter object to specify which tools are allowed."""
+
     read_only: Optional[bool] = None
     """Indicates whether or not a tool modifies data or is read-only.
 

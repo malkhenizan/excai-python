@@ -9,6 +9,8 @@ __all__ = ["ImageGenToolCall"]
 
 
 class ImageGenToolCall(BaseModel):
+    """An image generation request made by the model."""
+
     id: str
     """The unique ID of the image generation call."""
 

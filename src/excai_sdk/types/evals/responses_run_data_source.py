@@ -27,6 +27,8 @@ __all__ = [
 
 
 class SourceResponses(BaseModel):
+    """A EvalResponsesSource object describing a run data source configuration."""
+
     type: Literal["responses"]
     """The type of run data source. Always `responses`."""
 
@@ -126,6 +128,14 @@ InputMessages: TypeAlias = Annotated[
 
 
 class SamplingParamsText(BaseModel):
+    """Configuration options for a text response from the model.
+
+    Can be plain
+    text or structured JSON data. Learn more:
+    - [Text inputs and outputs](https://main.excai.ai/docs/guides/text)
+    - [Structured Outputs](https://main.excai.ai/docs/guides/structured-outputs)
+    """
+
     format: Optional[TextResponseFormatConfiguration] = None
     """An object specifying the format that the model must output.
 
@@ -196,6 +206,8 @@ class SamplingParams(BaseModel):
 
 
 class ResponsesRunDataSource(BaseModel):
+    """A ResponsesRunDataSource object describing a model sampling configuration."""
+
     source: Source
     """Determines what populates the `item` namespace in this run's data source."""
 

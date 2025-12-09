@@ -23,6 +23,10 @@ class ImageFile(TypedDict, total=False):
 
 
 class MessageContentImageFileParam(TypedDict, total=False):
+    """
+    References an image [File](https://main.excai.ai/docs/api-reference/files) in the content of a message.
+    """
+
     image_file: Required[ImageFile]
 
     type: Required[Literal["image_file"]]
